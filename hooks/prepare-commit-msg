@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+echo "[$STORY_NUMBER] | <$COMMIT_MSG> | <$AUTHOR>/<$PAIR>" > $1
