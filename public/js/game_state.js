@@ -1,5 +1,9 @@
-export const updateTiles = (tile, tilesOnBoard, playerTiles) => {
-  const tileIndex = playerTiles.indexOf(tile);
-  playerTiles.splice(tileIndex, 1);
-  tilesOnBoard.push(tile);
+import { postData } from "./controllers.js";
+
+export const updateTiles = async (tile) => {
+  const { playerTiles, tilesOnBoard } = await postData(
+    "/update-player-tiles",
+    { tile },
+  );
+  return { playerTiles, tilesOnBoard };
 };

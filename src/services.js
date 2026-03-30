@@ -5,6 +5,7 @@ export class Services {
   #unplacedTiles;
   #player;
   #placedTiles;
+
   constructor(tiles) {
     this.#player = { amount: 6000 };
     this.#tiles = tiles;
@@ -21,6 +22,14 @@ export class Services {
 
   #placeTiles() {
     this.#placedTiles = this.#unplacedTiles.splice(0, 6);
+  }
+
+  updatePlayerTiles(tile) {
+    const playerTiles = this.#player.playerTiles;
+    const tileIndex = playerTiles.indexOf(tile);
+    playerTiles.splice(tileIndex, 1);
+    this.#placedTiles.push(tile);
+    return { playerTiles, tilesOnBoard: this.#placedTiles };
   }
 
   initialSetup(shuffleFn = shuffle) {

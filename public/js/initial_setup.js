@@ -54,5 +54,5 @@ export const initialBoardSetup = (initialData) => {
   const { tilesOnBoard, amount, playerTiles } = initialData;
   renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
-  addListener(tilesOnBoard, playerTiles);
+  addListener();
 };

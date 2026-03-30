@@ -2,3 +2,13 @@ export const fetchData = async () => {
   const response = await fetch("/initial-setup");
   return await response.json();
 };
+
+export const postData = async (endPoint, content) => {
+  const response = await fetch(endPoint, {
+    method: "post",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(content),
+  });
+
+  return await response.json();
+};
