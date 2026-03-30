@@ -13,7 +13,7 @@ const focusPlayerTiles = (board, playerTiles) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-player-hand");
   });
-}
+};
 
 const renderBoard = (tiles, playerTiles) => {
   const board = document.querySelector(".board");
