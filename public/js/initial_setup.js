@@ -8,8 +8,16 @@ const fetch = () => {
   return response;
 };
 
-const renderBoard = (tiles) => {
+const focusPlayerTiles = (board, playerTiles) => {
+  playerTiles.forEach((tile) => {
+    const tileContainer = board.querySelector(`#tile-${tile}`);
+    tileContainer.classList.add("tiles-in-player-hand");
+  });
+}
+
+const renderBoard = (tiles, playerTiles) => {
   const board = document.querySelector(".board");
+  focusPlayerTiles(board, playerTiles);
   tiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
@@ -50,7 +58,7 @@ export const createBoard = () => {
 
 export const initialBoardSetup = () => {
   const { initialTilesOnBoard, initialAmount, playerTiles } = fetch();
-  renderBoard(initialTilesOnBoard);
+  renderBoard(initialTilesOnBoard, playerTiles);
   putInitialAmount(initialAmount);
   displayPlayerTiles(playerTiles);
 };
