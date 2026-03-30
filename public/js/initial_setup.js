@@ -1,11 +1,6 @@
-const fetch = () => {
-  const response = {
-    initialTilesOnBoard: ["1a", "5i", "9h", "12d", "10a", "2h"],
-    initialAmount: 6000,
-    playerTiles: ["2e", "8i", "3g", "10b", "9c", "11e"],
-  };
-
-  return response;
+const fetchData = async () => {
+  const response = await fetch("/initial-setup");
+  return await response.json();
 };
 
 const renderBoard = (tiles) => {
@@ -48,9 +43,9 @@ export const createBoard = () => {
   }
 };
 
-export const initialBoardSetup = () => {
-  const { initialTilesOnBoard, initialAmount, playerTiles } = fetch();
-  renderBoard(initialTilesOnBoard);
-  putInitialAmount(initialAmount);
+export const initialBoardSetup = async () => {
+  const { tilesOnBoard, amount, playerTiles } = await fetchData();
+  renderBoard(tilesOnBoard);
+  putInitialAmount(amount);
   displayPlayerTiles(playerTiles);
 };
