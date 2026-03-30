@@ -9,7 +9,6 @@ const focusPlayerTiles = (board, playerTiles) => {
 
 export const renderBoard = (tilesOnBoard, playerTiles) => {
   const board = document.querySelector(".board");
-  focusPlayerTiles(board, playerTiles);
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
@@ -52,7 +51,9 @@ export const createBoard = () => {
 
 export const initialBoardSetup = (initialData) => {
   const { tilesOnBoard, amount, playerTiles } = initialData;
+  const board = document.querySelector(".board");
+  focusPlayerTiles(board, playerTiles);
   renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
-  addListenerToBoard();
+  addListenerToBoard(playerTiles);
 };
