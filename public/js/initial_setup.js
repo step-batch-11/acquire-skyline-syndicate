@@ -1,4 +1,4 @@
-import { addListener } from "./board_events.js";
+import { addListenerToBoard } from "./board_events.js";
 
 const focusPlayerTiles = (board, playerTiles) => {
   playerTiles.forEach((tile) => {
@@ -54,5 +54,5 @@ export const initialBoardSetup = (initialData) => {
   const { tilesOnBoard, amount, playerTiles } = initialData;
   renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
-  addListener();
+  addListenerToBoard();
 };
