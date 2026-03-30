@@ -2,13 +2,14 @@ import { shuffle } from "@std/random";
 
 export class Services {
   #tiles;
+  #hotels;
   #unplacedTiles;
   #player;
   #placedTiles;
-
-  constructor(tiles) {
+  constructor(tiles, hotels) {
     this.#player = { amount: 6000 };
     this.#tiles = tiles;
+    this.#hotels = hotels;
   }
 
   #shuffleTiles(shuffleFn) {
@@ -36,6 +37,10 @@ export class Services {
     this.#shuffleTiles(shuffleFn);
     this.#placeTiles();
     this.#allocateTilesToPlayers();
-    return { ...this.#player, tilesOnBoard: this.#placedTiles };
+    return {
+      ...this.#player,
+      tilesOnBoard: this.#placedTiles,
+      bankData: this.#hotels,
+    };
   }
 }

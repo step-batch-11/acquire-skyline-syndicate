@@ -1,4 +1,4 @@
-import { addListener } from "./board_events.js";
+import { addListenerToBoard } from "./board_events.js";
 
 const focusPlayerTiles = (board, playerTiles) => {
   playerTiles.forEach((tile) => {
@@ -9,7 +9,6 @@ const focusPlayerTiles = (board, playerTiles) => {
 
 export const renderBoard = (tilesOnBoard, playerTiles) => {
   const board = document.querySelector(".board");
-  focusPlayerTiles(board, playerTiles);
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
@@ -52,7 +51,9 @@ export const createBoard = () => {
 
 export const initialBoardSetup = (initialData) => {
   const { tilesOnBoard, amount, playerTiles } = initialData;
+  const board = document.querySelector(".board");
+  focusPlayerTiles(board, playerTiles);
   renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
-  addListener();
+  addListenerToBoard(playerTiles);
 };

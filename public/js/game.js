@@ -6,5 +6,5 @@ globalThis.onload = async () => {
   const initialData = await fetchData();
   createBoard();
   initialBoardSetup(initialData);
-  initBank();
+  initBank(initialData.bankData);
 };
