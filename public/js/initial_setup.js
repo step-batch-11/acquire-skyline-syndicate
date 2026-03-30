@@ -1,3 +1,5 @@
+import { addListener } from "./board_events.js";
+
 const fetch = () => {
   const response = {
     tilesOnBoard: ["1a", "5i", "9h", "12d", "10a", "2h"],
@@ -15,7 +17,7 @@ const focusPlayerTiles = (board, playerTiles) => {
   });
 };
 
-const renderBoard = (tilesOnBoard, playerTiles) => {
+export const renderBoard = (tilesOnBoard, playerTiles) => {
   const board = document.querySelector(".board");
   focusPlayerTiles(board, playerTiles);
   tilesOnBoard.forEach((tile) => {
@@ -56,30 +58,6 @@ export const createBoard = () => {
       boardContainer.appendChild(tileContainer);
     }
   }
-};
-
-const removeFocus = (board, playerTiles) => {
-  playerTiles.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
-    tileContainer.classList.remove("tiles-in-player-hand");
-  });
-};
-
-const updateTiles = (tile, tilesOnBoard, playerTiles) => {
-  const tileIndex = playerTiles.indexOf(tile);
-  playerTiles.splice(tileIndex, 1);
-  tilesOnBoard.push(tile);
-};
-
-const addListener = (tilesOnBoard, playerTiles) => {
-  const board = document.querySelector(".board");
-  board.addEventListener("click", (e) => {
-    const tileContainer = e.target.closest("div");
-    const tile = tileContainer.querySelector("p").textContent;
-    updateTiles(tile, tilesOnBoard, playerTiles);
-    removeFocus(board, playerTiles);
-    renderBoard(tilesOnBoard, playerTiles);
-  });
 };
 
 export const initialBoardSetup = () => {
