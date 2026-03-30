@@ -92,6 +92,8 @@ main {
   height: 100%;
   border: 1px solid black;
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
 }
@@ -163,6 +165,11 @@ footer {
   align-items: center;
   justify-content: space-around;
   width: 100%;
+}
+
+.confirm-btn {
+  padding: 5px;
+  font-size: 1em;
 }
 
 .hotel-icon {

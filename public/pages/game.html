@@ -1,63 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic layout</title>
-    <link rel="stylesheet" href="../styles/game.css" />
-    <script type="module" src="../js/game.js"></script>
-    <template id="board-tile">
-      <div class="tile"><p>1a</p></div>
-    </template>
-  </head>
 
-  <body>
-    <main>
-      <div class="market-notification-players">
-        <div class="notification-box"></div>
-        <div class="player-market">
-          <div class="players">
-            <div class="player" id="player-1"></div>
-            <div class="player" id="player-2"></div>
-            <div class="player" id="player-3"></div>
-            <div class="player" id="player-4"></div>
-            <div class="player" id="player-5"></div>
-            <div class="player" id="player-6"></div>
-          </div>
-          <div class="board"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic layout</title>
+  <link rel="stylesheet" href="../styles/game.css" />
+  <script type="module" src="../js/game.js"></script>
+  <template id="board-tile">
+    <div class="tile">
+      <p>1a</p>
+    </div>
+  </template>
+
+  <template id="button">
+    <button class="confirm-btn"></button>
+  </template>
+
+  <template id="hotel-card">
+    <section class="hotel">
+      <div class="hotel-info">
+        <h3 id="hotel-name"></h3>
+        <div class="information">
+          <div id="price">$ 400</div>
+          <div id="tiles">% 3</div>
+          <div id="stock-left">& 25</div>
         </div>
       </div>
-      <div class="bank">
-        <!-- Bank Section -->
-        <section class="hotel">
-          <div class="hotel-info">
-            <h3>Worldwide</h3>
-            <div class="information">
-              <div>$ 400</div>
-              <div>% 3</div>
-              <div>& 25</div>
-            </div>
-          </div>
-          <div class="hotel-icon">
-            <img src="../assets/worldwide.svg" alt="image of worldwide">
-          </div>
-        </section>
+      <div class="hotel-icon">
+        <img>
       </div>
-    </main>
-    <footer>
-      <div class="amount-container">
-        <p></p>
+    </section>
+  </template>
+</head>
+
+<body>
+  <main>
+    <div class="market-notification-players">
+      <div class="notification-box"></div>
+      <div class="player-market">
+        <div class="players">
+          <div class="player" id="player-1"></div>
+          <div class="player" id="player-2"></div>
+          <div class="player" id="player-3"></div>
+          <div class="player" id="player-4"></div>
+          <div class="player" id="player-5"></div>
+          <div class="player" id="player-6"></div>
+        </div>
+        <div class="board"></div>
       </div>
-      <div class="stocks">
-        <div class="stock"></div>
-        <div class="stock"></div>
-        <div class="stock"></div>
-        <div class="stock"></div>
-        <div class="stock"></div>
-        <div class="stock"></div>
-        <div class="stock"></div>
-      </div>
-      <div class="tiles"></div>
-    </footer>
-  </body>
+    </div>
+    <div class="bank">
+      <!-- Bank Section -->
+    </div>
+  </main>
+  <footer>
+    <div class="amount-container">
+      <p></p>
+      <div class="stock"></div>
+      <div class="stock"></div>
+      <div class="stock"></div>
+      <div class="stock"></div>
+      <div class="stock"></div>
+      <div class="stock"></div>
+      <div class="stock"></div>
+    </div>
+    <div class="tiles"></div>
+  </footer>
+</body>
+
 </html>
