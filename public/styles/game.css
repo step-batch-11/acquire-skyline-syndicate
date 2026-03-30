@@ -146,9 +146,11 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  border-radius: 5px;
   width: 60%;
-  padding: 5px;
+  padding: 5px 10px;
+  color: white;
 }
 
 .hotel-info h3 {
@@ -179,4 +181,32 @@ footer {
 
 .tiles-in-player-hand {
   box-shadow: 0px 0px 7px 3px rgb(108, 93, 93);
+}
+
+.imperial {
+  background-color: #f29b12;
+}
+
+.continental {
+  background-color: #5683FF;
+}
+
+.festival {
+  background-color: #43AA90;
+}
+
+.worldwide {
+  background-color: #2F6F83;
+}
+
+.american {
+  background-color: #0d00d1;
+}
+
+.sackson {
+  background-color: #FF0004;
+}
+
+.tower {
+  background-color: hsl(62 84% 48% / 1);
 }
