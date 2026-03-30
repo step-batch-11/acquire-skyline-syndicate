@@ -5,6 +5,7 @@ import { Services } from "../src/services.js";
 
 describe("App test", () => {
   let service;
+  let app;
   beforeEach(() => {
     service = new Services([
       "1a",
@@ -20,24 +21,24 @@ describe("App test", () => {
       "2b",
       "2c",
     ]);
+    app = createApp(service);
   });
 
   it("Test /initial-setup route", async () => {
-    const app = createApp(service);
     const response = await app.request("/initial-setup");
+    const body = await response.json();
 
     assertEquals(response.status, 200);
-    const body = await response.json();
     assertEquals(body.amount, 6000);
     assertEquals(body.tilesOnBoard.length, 6);
   });
 
-  it("Test the inital setup with bank detail", async () => {
+  it("Test the initial setup with bank detail", async () => {
     const mockData = {
       "Continental": {
         "tiles": [],
         "stocks": 25,
-        "orginTile": null,
+        "originTile": null,
         "price": 0,
       },
     };
@@ -52,7 +53,6 @@ describe("App test", () => {
   });
 
   it("POST /update-player-tiles", async () => {
-    const app = createApp(service);
     const tile = "1c";
     await app.request("/initial-setup");
     const response = await app.request("/update-player-tiles", {
@@ -60,9 +60,27 @@ describe("App test", () => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ tile }),
     });
-    assertEquals(response.status, 200);
     const body = await response.json();
+
+    assertEquals(response.status, 200);
     assertEquals(body.tilesOnBoard.includes(tile), true);
     assertEquals(body.playerTiles.includes(tile), false);
+  });
+
+  it("POST /assign-new-tile", async () => {
+    const tile = "1c";
+    await app.request("/initial-setup");
+    await app.request("/update-player-tiles", {
+      method: "post",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ tile }),
+    });
+    const response = await app.request("/assign-new-tile", {
+      method: "post",
+    });
+    const body = await response.json();
+
+    assertEquals(response.status, 200);
+    assertEquals(body.playerTiles.length, 6);
   });
 });
