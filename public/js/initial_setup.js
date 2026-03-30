@@ -19,7 +19,7 @@ export const renderBoard = (tilesOnBoard, playerTiles) => {
 
 const putInitialAmount = (amount) => {
   const amountContainer = document.querySelector(".amount-container p");
-  amountContainer.innerText = `₹${amount}`;
+  amountContainer.innerText = `$${amount}`;
 };
 
 const createTileElement = (tile) => {
