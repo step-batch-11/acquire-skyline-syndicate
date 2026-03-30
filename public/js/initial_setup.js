@@ -1,14 +1,25 @@
+import { addListener } from "./board_events.js";
+
 const fetchData = async () => {
   const response = await fetch("/initial-setup");
   return await response.json();
 };
 
-const renderBoard = (tiles) => {
+const focusPlayerTiles = (board, playerTiles) => {
+  playerTiles.forEach((tile) => {
+    const tileContainer = board.querySelector(`#tile-${tile}`);
+    tileContainer.classList.add("tiles-in-player-hand");
+  });
+};
+
+export const renderBoard = (tilesOnBoard, playerTiles) => {
   const board = document.querySelector(".board");
-  tiles.forEach((tile) => {
+  focusPlayerTiles(board, playerTiles);
+  tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
   });
+  renderPlayerTiles(playerTiles);
 };
 
 const putInitialAmount = (amount) => {
@@ -26,10 +37,11 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-const displayPlayerTiles = (tiles) => {
+const renderPlayerTiles = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles");
-  const playerTiles = tiles.map(createTileElement);
-  tilesContainer.append(...playerTiles);
+  const playerTileElements = playerTiles.map(createTileElement);
+  tilesContainer.innerHTML = "";
+  tilesContainer.append(...playerTileElements);
 };
 
 export const createBoard = () => {
@@ -45,7 +57,7 @@ export const createBoard = () => {
 
 export const initialBoardSetup = async () => {
   const { tilesOnBoard, amount, playerTiles } = await fetchData();
-  renderBoard(tilesOnBoard);
+  renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
-  displayPlayerTiles(playerTiles);
+  addListener(tilesOnBoard, playerTiles);
 };
