@@ -43,11 +43,10 @@ main {
 }
 
 .tile:hover {
-  box-shadow: 5px 5px 7px 7px rgba(255, 255, 255, 0.6);
   cursor: pointer;
 }
 
-.grid {
+.board {
   background-color: rgb(208, 210, 209);
   display: grid;
   padding: 0.7em;
@@ -103,13 +102,13 @@ footer {
   grid-template-columns: 1fr 7fr 2fr;
 }
 
-.amount {
+.amount-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.amount p {
+.amount-container p {
   padding: 1em 2em;
   border: 2px solid black;
 }
