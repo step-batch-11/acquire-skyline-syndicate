@@ -8,17 +8,23 @@ const fetch = () => {
   return response;
 };
 
-const highlightInitTiles = (tiles) => {
+const renderBoard = (tiles) => {
   const board = document.querySelector(".board");
   tiles.forEach((tile) => {
-    const tileToHighlight = board.querySelector(`#tile-${tile}`);
-    tileToHighlight.classList.add("tiles-in-market");
+    const tileContainer = board.querySelector(`#tile-${tile}`);
+    tileContainer.classList.add("tiles-in-market");
   });
 };
 
+const putInitialAmount = (amount) => {
+  const amountContainer = document.querySelector(".amount-container p");
+  amountContainer.innerText = `₹${amount}`;
+};
+
 const initialBoardSetup = () => {
-  const { initialTilesOnBoard } = fetch();
-  highlightInitTiles(initialTilesOnBoard);
+  const { initialTilesOnBoard, initialAmount } = fetch();
+  renderBoard(initialTilesOnBoard);
+  putInitialAmount(initialAmount);
 };
 
 globalThis.onload = () => {
