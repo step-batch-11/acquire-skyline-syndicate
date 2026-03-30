@@ -5,7 +5,7 @@ const cloneElement = (templateId) => {
 
 const addHotelData = (hotelName, value, bankSection) => {
   const hotelCard = cloneElement("#hotel-card");
-  hotelCard.setAttribute("id", hotelName.toLowerCase())
+  hotelCard.setAttribute("id", hotelName.toLowerCase());
   hotelCard.querySelector("#hotel-name").textContent = hotelName;
   hotelCard.querySelector("#price").textContent = `$ ${value.price}`;
   hotelCard.querySelector("#tiles").textContent = `🧱 ${value.tiles.length}`;
