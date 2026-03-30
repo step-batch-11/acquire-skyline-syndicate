@@ -21,7 +21,7 @@ const putInitialAmount = (amount) => {
   amountContainer.innerText = `₹${amount}`;
 };
 
-const createTileElement = (tile) => {
+const createPlayerTileElement = (tile) => {
   const tileContainer = document.createElement("div");
   tileContainer.classList.add("tile");
   tileContainer.id = `tile-${tile}`;
@@ -33,7 +33,7 @@ const createTileElement = (tile) => {
 
 const displayPlayerTiles = (tiles) => {
   const tilesContainer = document.querySelector(".tiles");
-  const playerTiles = tiles.map(createTileElement);
+  const playerTiles = tiles.map(createPlayerTileElement);
   tilesContainer.append(...playerTiles);
 };
 
