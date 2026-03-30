@@ -27,4 +27,23 @@ describe("App test", () => {
     assertEquals(body.amount, 6000);
     assertEquals(body.tilesOnBoard.length, 6);
   });
+
+  it("Test the inital setup with bank detail", async () => {
+    const mockData = {
+      "Continental": {
+        "tiles": [],
+        "stocks": 25,
+        "orginTile": null,
+        "price": 0,
+      },
+    };
+
+    const service = new Services([], mockData);
+    const app = createApp(service);
+    const response = await app.request("/initial-setup");
+    const body = await response.json();
+    assertEquals(response.status, 200);
+    assertEquals(body.tilesOnBoard, []);
+    assertEquals(body.bankData, mockData);
+  });
 });

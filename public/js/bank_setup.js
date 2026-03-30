@@ -1,9 +1,3 @@
-import { bankData } from "./bank_data.js";
-
-const fetchHotelsData = () => {
-  return bankData;
-};
-
 const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
   return template.content.querySelector("*").cloneNode(true);
@@ -31,7 +25,6 @@ const renderBankSection = (hotels) => {
   bankSection.append(button);
 };
 
-export const initBank = async () => {
-  const hotels = await fetchHotelsData();
+export const initBank = (hotels) => {
   renderBankSection(hotels);
 };
