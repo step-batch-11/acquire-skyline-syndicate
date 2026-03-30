@@ -6,6 +6,9 @@
     <title>Basic layout</title>
     <link rel="stylesheet" href="../styles/game.css" />
     <script type="module" src="../js/game.js"></script>
+    <template id="board-tile">
+      <div class="tile"><p>1a</p></div>
+    </template>
   </head>
   <body>
     <main>
@@ -20,124 +23,7 @@
             <div class="player" id="player-5"></div>
             <div class="player" id="player-6"></div>
           </div>
-          <div class="board">
-            <div id="tile-1a" class="tile"><p>1a</p></div>
-            <div id="tile-2a" class="tile"><p>2a</p></div>
-            <div id="tile-3a" class="tile"><p>3a</p></div>
-            <div id="tile-4a" class="tile"><p>4a</p></div>
-            <div id="tile-5a" class="tile"><p>5a</p></div>
-            <div id="tile-6a" class="tile"><p>6a</p></div>
-            <div id="tile-7a" class="tile"><p>7a</p></div>
-            <div id="tile-8a" class="tile"><p>8a</p></div>
-            <div id="tile-9a" class="tile"><p>9a</p></div>
-            <div id="tile-10a" class="tile"><p>10a</p></div>
-            <div id="tile-11a" class="tile"><p>11a</p></div>
-            <div id="tile-12a" class="tile"><p>12a</p></div>
-
-            <div id="tile-1b" class="tile"><p>1b</p></div>
-            <div id="tile-2b" class="tile"><p>2b</p></div>
-            <div id="tile-3b" class="tile"><p>3b</p></div>
-            <div id="tile-4b" class="tile"><p>4b</p></div>
-            <div id="tile-5b" class="tile"><p>5b</p></div>
-            <div id="tile-6b" class="tile"><p>6b</p></div>
-            <div id="tile-7b" class="tile"><p>7b</p></div>
-            <div id="tile-8b" class="tile"><p>8b</p></div>
-            <div id="tile-9b" class="tile"><p>9b</p></div>
-            <div id="tile-10b" class="tile"><p>10b</p></div>
-            <div id="tile-11b" class="tile"><p>11b</p></div>
-            <div id="tile-12b" class="tile"><p>12b</p></div>
-
-            <div id="tile-1c" class="tile"></div>
-            <div id="tile-2c" class="tile"></div>
-            <div id="tile-3c" class="tile"></div>
-            <div id="tile-4c" class="tile"></div>
-            <div id="tile-5c" class="tile"></div>
-            <div id="tile-6c" class="tile"></div>
-            <div id="tile-7c" class="tile"></div>
-            <div id="tile-8c" class="tile"></div>
-            <div id="tile-9c" class="tile"></div>
-            <div id="tile-10c" class="tile"></div>
-            <div id="tile-11c" class="tile"></div>
-            <div id="tile-12c" class="tile"></div>
-
-            <div id="tile-1d" class="tile"></div>
-            <div id="tile-2d" class="tile"></div>
-            <div id="tile-3d" class="tile"></div>
-            <div id="tile-4d" class="tile"></div>
-            <div id="tile-5d" class="tile"></div>
-            <div id="tile-6d" class="tile"></div>
-            <div id="tile-7d" class="tile"></div>
-            <div id="tile-8d" class="tile"></div>
-            <div id="tile-9d" class="tile"></div>
-            <div id="tile-10d" class="tile"></div>
-            <div id="tile-11d" class="tile"></div>
-            <div id="tile-12d" class="tile"></div>
-
-            <div id="tile-1e" class="tile"></div>
-            <div id="tile-2e" class="tile"></div>
-            <div id="tile-3e" class="tile"></div>
-            <div id="tile-4e" class="tile"></div>
-            <div id="tile-5e" class="tile"></div>
-            <div id="tile-6e" class="tile"></div>
-            <div id="tile-7e" class="tile"></div>
-            <div id="tile-8e" class="tile"></div>
-            <div id="tile-9e" class="tile"></div>
-            <div id="tile-10e" class="tile"></div>
-            <div id="tile-11e" class="tile"></div>
-            <div id="tile-12e" class="tile"></div>
-
-            <div id="tile-1f" class="tile"></div>
-            <div id="tile-2f" class="tile"></div>
-            <div id="tile-3f" class="tile"></div>
-            <div id="tile-4f" class="tile"></div>
-            <div id="tile-5f" class="tile"></div>
-            <div id="tile-6f" class="tile"></div>
-            <div id="tile-7f" class="tile"></div>
-            <div id="tile-8f" class="tile"></div>
-            <div id="tile-9f" class="tile"></div>
-            <div id="tile-10f" class="tile"></div>
-            <div id="tile-11f" class="tile"></div>
-            <div id="tile-12f" class="tile"></div>
-
-            <div id="tile-1g" class="tile"></div>
-            <div id="tile-2g" class="tile"></div>
-            <div id="tile-3g" class="tile"></div>
-            <div id="tile-4g" class="tile"></div>
-            <div id="tile-5g" class="tile"></div>
-            <div id="tile-6g" class="tile"></div>
-            <div id="tile-7g" class="tile"></div>
-            <div id="tile-8g" class="tile"></div>
-            <div id="tile-9g" class="tile"></div>
-            <div id="tile-10g" class="tile"></div>
-            <div id="tile-11g" class="tile"></div>
-            <div id="tile-12g" class="tile"></div>
-
-            <div id="tile-1h" class="tile"></div>
-            <div id="tile-2h" class="tile"></div>
-            <div id="tile-3h" class="tile"></div>
-            <div id="tile-4h" class="tile"></div>
-            <div id="tile-5h" class="tile"></div>
-            <div id="tile-6h" class="tile"></div>
-            <div id="tile-7h" class="tile"></div>
-            <div id="tile-8h" class="tile"></div>
-            <div id="tile-9h" class="tile"></div>
-            <div id="tile-10h" class="tile"></div>
-            <div id="tile-11h" class="tile"></div>
-            <div id="tile-12h" class="tile"></div>
-
-            <div id="tile-1i" class="tile"></div>
-            <div id="tile-2i" class="tile"></div>
-            <div id="tile-3i" class="tile"></div>
-            <div id="tile-4i" class="tile"></div>
-            <div id="tile-5i" class="tile"></div>
-            <div id="tile-6i" class="tile"></div>
-            <div id="tile-7i" class="tile"></div>
-            <div id="tile-8i" class="tile"></div>
-            <div id="tile-9i" class="tile"></div>
-            <div id="tile-10i" class="tile"></div>
-            <div id="tile-11i" class="tile"></div>
-            <div id="tile-12i" class="tile"></div>
-          </div>
+          <div class="board"></div>
         </div>
       </div>
       <div class="bank">

@@ -21,7 +21,7 @@ const putInitialAmount = (amount) => {
   amountContainer.innerText = `₹${amount}`;
 };
 
-const createPlayerTileElement = (tile) => {
+const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
   tileContainer.classList.add("tile");
   tileContainer.id = `tile-${tile}`;
@@ -33,8 +33,19 @@ const createPlayerTileElement = (tile) => {
 
 const displayPlayerTiles = (tiles) => {
   const tilesContainer = document.querySelector(".tiles");
-  const playerTiles = tiles.map(createPlayerTileElement);
+  const playerTiles = tiles.map(createTileElement);
   tilesContainer.append(...playerTiles);
+};
+
+export const createBoard = () => {
+  const boardContainer = document.querySelector(".board");
+  const string = "abcdefghi";
+  for (let col = 0; col < string.length; col++) {
+    for (let row = 1; row <= 12; row++) {
+      const tileContainer = createTileElement(`${row}${string[col]}`);
+      boardContainer.appendChild(tileContainer);
+    }
+  }
 };
 
 export const initialBoardSetup = () => {
