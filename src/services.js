@@ -6,6 +6,7 @@ export class Services {
   #unplacedTiles;
   #player;
   #placedTiles;
+
   constructor(tiles, hotels) {
     this.#player = { amount: 6000 };
     this.#tiles = tiles;
