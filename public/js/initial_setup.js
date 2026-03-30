@@ -1,10 +1,5 @@
 import { addListener } from "./board_events.js";
 
-const fetchData = async () => {
-  const response = await fetch("/initial-setup");
-  return await response.json();
-};
-
 const focusPlayerTiles = (board, playerTiles) => {
   playerTiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
@@ -55,8 +50,8 @@ export const createBoard = () => {
   }
 };
 
-export const initialBoardSetup = async () => {
-  const { tilesOnBoard, amount, playerTiles } = await fetchData();
+export const initialBoardSetup = (initialData) => {
+  const { tilesOnBoard, amount, playerTiles } = initialData;
   renderBoard(tilesOnBoard, playerTiles);
   putInitialAmount(amount);
   addListener(tilesOnBoard, playerTiles);

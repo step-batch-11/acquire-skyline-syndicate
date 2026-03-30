@@ -1,6 +1,7 @@
 import { createBoard, initialBoardSetup } from "./initial_setup.js";
-
-globalThis.onload = () => {
+import { fetchData } from "./controllers.js";
+globalThis.onload = async () => {
+  const initialData = await fetchData();
   createBoard();
-  initialBoardSetup();
+  initialBoardSetup(initialData);
 };
