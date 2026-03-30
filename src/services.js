@@ -34,6 +34,13 @@ export class Services {
     return { playerTiles, tilesOnBoard: this.#placedTiles };
   }
 
+  assignNewTile(shuffleFn = shuffle) {
+    const newTile = shuffleFn(this.#unplacedTiles)[0];
+    const playerTiles = this.#player.playerTiles;
+    playerTiles.push(newTile);
+    return { playerTiles, tilesOnBoard: this.#placedTiles };
+  }
+
   initialSetup(shuffleFn = shuffle) {
     this.#shuffleTiles(shuffleFn);
     this.#placeTiles();
