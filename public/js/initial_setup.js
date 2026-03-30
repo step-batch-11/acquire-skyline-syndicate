@@ -8,8 +8,16 @@ const fetch = () => {
   return response;
 };
 
-const renderBoard = (tiles) => {
+const focusPlayerTiles = (board, playerTiles) => {
+  playerTiles.forEach((tile) => {
+    const tileContainer = board.querySelector(`#tile-${tile}`);
+    tileContainer.classList.add("tiles-in-player-hand");
+  });
+};
+
+const renderBoard = (tiles, playerTiles) => {
   const board = document.querySelector(".board");
+  focusPlayerTiles(board, playerTiles);
   tiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
@@ -21,7 +29,7 @@ const putInitialAmount = (amount) => {
   amountContainer.innerText = `₹${amount}`;
 };
 
-const createPlayerTileElement = (tile) => {
+const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
   tileContainer.classList.add("tile");
   tileContainer.id = `tile-${tile}`;
@@ -33,13 +41,24 @@ const createPlayerTileElement = (tile) => {
 
 const displayPlayerTiles = (tiles) => {
   const tilesContainer = document.querySelector(".tiles");
-  const playerTiles = tiles.map(createPlayerTileElement);
+  const playerTiles = tiles.map(createTileElement);
   tilesContainer.append(...playerTiles);
+};
+
+export const createBoard = () => {
+  const boardContainer = document.querySelector(".board");
+  const string = "abcdefghi";
+  for (let col = 0; col < string.length; col++) {
+    for (let row = 1; row <= 12; row++) {
+      const tileContainer = createTileElement(`${row}${string[col]}`);
+      boardContainer.appendChild(tileContainer);
+    }
+  }
 };
 
 export const initialBoardSetup = () => {
   const { initialTilesOnBoard, initialAmount, playerTiles } = fetch();
-  renderBoard(initialTilesOnBoard);
+  renderBoard(initialTilesOnBoard, playerTiles);
   putInitialAmount(initialAmount);
   displayPlayerTiles(playerTiles);
 };

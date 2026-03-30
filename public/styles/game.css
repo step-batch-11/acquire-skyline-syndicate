@@ -168,3 +168,7 @@ footer {
 .hotel-icon {
   width: 20%;
 }
+
+.tiles-in-player-hand {
+  box-shadow: 0px 0px 7px 3px rgb(108, 93, 93);
+}
