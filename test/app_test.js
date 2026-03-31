@@ -64,7 +64,7 @@ describe("App test", () => {
 
     assertEquals(response.status, 200);
     assertEquals(body.tilesOnBoard.includes(tile), true);
-    assertEquals(body.playerTiles.includes(tile), false);
+    assertEquals(body.updatedPlayerTiles.includes(tile), false);
   });
 
   it("POST /assign-new-tile", async () => {
