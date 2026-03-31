@@ -51,4 +51,9 @@ export class Services {
       bankData: this.#hotels,
     };
   }
+
+  expandHotel(tile, hotelName) {
+    this.#hotels[hotelName].tiles.push(tile);
+    return { hotelName, ...this.#hotels[hotelName] };
+  }
 }
