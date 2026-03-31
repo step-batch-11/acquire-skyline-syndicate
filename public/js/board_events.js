@@ -16,10 +16,14 @@ const eventsForPlacingATile = {
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
-  board.addEventListener("click", (event) => {
+
+  const listener = (event) => {
     const tileContainer = event.target.closest("div");
     handlePlacingTile(board, tileContainer, tilesInPlayerHand);
+    board.removeEventListener("click", listener);
     eventsForPlacingATile[updatedTiles.actionForPlacingTile](tile);
     handleAssignTile(tile);
-  });
+  };
+
+  board.addEventListener("click", listener);
 };
