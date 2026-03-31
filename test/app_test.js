@@ -97,7 +97,7 @@ describe("App test", () => {
     });
     const response = await app.request("/build-hotel", {
       method: "post",
-      body: JSON.stringify({ hotel: "Festival" }),
+      body: JSON.stringify({ hotel: "festival" }),
     });
 
     assertEquals(response.status, 200);

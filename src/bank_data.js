@@ -1,42 +1,42 @@
 export const bankData = {
-  "Continental": {
+  "continental": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
-  "Imperial": {
+  "imperial": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
-  "American": {
+  "american": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
-  "Festival": {
+  "festival": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
-  "Worldwide": {
+  "worldwide": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
 
-  "Sackson": {
+  "sackson": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,
     "price": 0,
   },
-  "Tower": {
+  "tower": {
     "tiles": [],
     "stocks": 25,
     "orginTile": null,

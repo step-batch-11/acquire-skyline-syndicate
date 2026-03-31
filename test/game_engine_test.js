@@ -8,25 +8,25 @@ describe("GameEngine", () => {
   beforeEach(() => {
     gameEngine = new GameEngine();
     hotels = {
-      "Continental": {
+      "continental": {
         "tiles": ["1a", "2a", "2b"],
       },
-      "Imperial": {
+      "imperial": {
         "tiles": ["8c", "8d"],
       },
-      "American": {
+      "american": {
         "tiles": ["4g", "5g"],
       },
-      "Festival": {
+      "festival": {
         "tiles": ["12e", "12f"],
       },
-      "Worldwide": {
+      "worldwide": {
         "tiles": [],
       },
-      "Sackson": {
+      "sackson": {
         "tiles": [],
       },
-      "Tower": {
+      "tower": {
         "tiles": [],
       },
     };
@@ -89,7 +89,7 @@ describe("GameEngine", () => {
     it("should return an adjacent hotel if expansion is possible", () => {
       const adjacentTiles = gameEngine.adjacentTilesOf("3b");
       assertEquals(gameEngine.getAdjacentHotel(adjacentTiles, hotels), {
-        hotelName: "Continental",
+        hotelName: "continental",
       });
     });
     it("should return empty object if expansion is not possible", () => {
