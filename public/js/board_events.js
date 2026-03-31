@@ -1,6 +1,6 @@
 import { removeFocus } from "./board_ui.js";
 import { renderBoard } from "./initial_setup.js";
-import { updateTiles, assignNewTiles } from "./game_state.js";
+import { assignNewTiles, updateTiles } from "./game_state.js";
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
