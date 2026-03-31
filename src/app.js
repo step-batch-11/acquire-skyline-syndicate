@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import {
+  buildHotel,
   handleAssignTile,
   handleInitialSetup,
   handleUpdateTiles,
@@ -16,6 +17,7 @@ export const createApp = (service, gameEngine) => {
     await next();
   });
   app.post("/update-player-tiles", handleUpdateTiles);
+  app.post("/build-hotel", buildHotel);
   app.post("/assign-new-tile", handleAssignTile);
   app.get("/initial-setup", handleInitialSetup);
   app.get("*", serveStatic({ root: "public" }));

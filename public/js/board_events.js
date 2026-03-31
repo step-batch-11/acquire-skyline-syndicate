@@ -1,16 +1,24 @@
+import { postData } from "./controllers.js";
 import { handleAssignTile, handlePlacingTile } from "./event_handlers.js";
 
-const buildAHotel = () => {
+export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
-
-  bankContainer.addEventListener("click", (e) => {
+  let hotel = "";
+  const selectHotel = (e) => {
     e.preventDefault();
-  });
+    if (e.target.id === "confirm") {
+      postData("/build-hotel", { hotel });
+      tileContainer.classList.add(`${hotel}-icon`);
+      return bankContainer.removeEventListener("click", selectHotel);
+    }
+    hotel = e.target.parentNode.id;
+  };
+  bankContainer.addEventListener("click", selectHotel);
 };
 
-const eventsForPlacingATile = {
-  "building hotel": buildAHotel,
+export const eventsForPlacingATile = {
+  "build hotel": buildAHotel,
   nothing: () => "",
 };
 
@@ -21,8 +29,7 @@ export const addListenerToBoard = (tilesInPlayerHand) => {
     const tileContainer = event.target.closest("div");
     handlePlacingTile(board, tileContainer, tilesInPlayerHand);
     board.removeEventListener("click", listener);
-    eventsForPlacingATile[updatedTiles.actionForPlacingTile](tile);
-    handleAssignTile(tile);
+    handleAssignTile();
   };
 
   board.addEventListener("click", listener);
