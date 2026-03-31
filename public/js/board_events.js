@@ -8,7 +8,6 @@ const buildAHotel = () => {
 
   bankContainer.addEventListener("click", (e) => {
     e.preventDefault();
-    console.log(e.target.parentNode);
   });
 };
 
