@@ -17,7 +17,7 @@ export const createApp = (service, gameEngine) => {
     await next();
   });
   app.post("/update-player-tiles", handleUpdateTiles);
-  app.post("build-hotel", buildHotel);
+  app.post("/build-hotel", buildHotel);
   app.post("/assign-new-tile", handleAssignTile);
   app.get("/initial-setup", handleInitialSetup);
   app.get("*", serveStatic({ root: "public" }));

@@ -3,6 +3,7 @@ import { assertEquals } from "@std/assert";
 import { createApp } from "../src/app.js";
 import { Services } from "../src/services.js";
 import { GameEngine } from "../src/game_engine.js";
+import { bankData } from "../src/bank_data.js";
 
 describe("App test", () => {
   let service;
@@ -21,7 +22,7 @@ describe("App test", () => {
       "2a",
       "2b",
       "2c",
-    ]);
+    ], bankData);
     const engine = new GameEngine();
     app = createApp(service, engine);
   });
@@ -84,5 +85,21 @@ describe("App test", () => {
 
     assertEquals(response.status, 200);
     assertEquals(body.playerTiles.length, 6);
+  });
+
+  it("Post /build-hotel", async () => {
+    const tile = "1c";
+    await app.request("/initial-setup");
+    await app.request("/update-player-tiles", {
+      method: "post",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ tile }),
+    });
+    const response = await app.request("/build-hotel", {
+      method: "post",
+      body: JSON.stringify({ hotel: "Festival" }),
+    });
+
+    assertEquals(response.status, 200);
   });
 });

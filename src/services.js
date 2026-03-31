@@ -39,6 +39,10 @@ export class Services {
     this.#hotels[hotel].tiles.push(this.#lastTile);
   }
 
+  getHotel() {
+    return this.#hotels;
+  }
+
   updatePlayerTiles(tile) {
     const playerTiles = this.#player.playerTiles;
     const tileIndex = playerTiles.indexOf(tile);

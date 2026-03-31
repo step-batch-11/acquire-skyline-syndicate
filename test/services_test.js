@@ -1,30 +1,38 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { Services } from "../src/services.js";
+import { GameEngine } from "../src/game_engine.js";
 
 describe("Test service class", () => {
   let service;
   const hotels = {
     Continental: {
-      tiles: ["1a", "2a", "2b"],
+      tiles: ["2a", "2b"],
+      orginTile: null,
     },
     Imperial: {
       tiles: ["8c", "8d"],
+      orginTile: null,
     },
     American: {
       tiles: ["4g", "5g"],
+      orginTile: null,
     },
     Festival: {
       tiles: ["12e", "12f"],
+      orginTile: null,
     },
     Worldwide: {
       tiles: [],
+      orginTile: null,
     },
     Sackson: {
       tiles: [],
+      orginTile: null,
     },
     Tower: {
       tiles: [],
+      orginTile: null,
     },
   };
 
@@ -69,8 +77,20 @@ describe("Test service class", () => {
     it("should expand and return the expanded hotel", () => {
       assertEquals(service.expandHotel("3b", "Continental"), {
         hotelName: "Continental",
-        tiles: ["1a", "2a", "2b", "3b"],
+        ...hotels["Continental"],
       });
+    });
+  });
+
+  describe("bulidHotesl", () => {
+    const engine = new GameEngine();
+    it("building a hotel", () => {
+      service.initialSetup((tiles) => tiles);
+      service.placeTileOnBoard("9c", engine);
+      service.buildHotel("Imperial");
+      const updatedHotels = service.getHotel();
+      assertEquals(updatedHotels["Imperial"].orginTile, "9c");
+      assertEquals(updatedHotels["Imperial"].tiles, ["8c", "8d", "9c"]);
     });
   });
 });
