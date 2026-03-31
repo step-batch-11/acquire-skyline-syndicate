@@ -8,8 +8,6 @@ export const buildAHotel = (tileContainer) => {
   const selectHotel = (e) => {
     e.preventDefault();
     if (e.target.id === "confirm") {
-      console.log(hotel);
-
       postData("/build-hotel", { hotel });
       tileContainer.classList.add(`${hotel}-icon`);
       return bankContainer.removeEventListener("click", selectHotel);

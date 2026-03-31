@@ -34,7 +34,7 @@ const handleBuyStocks = (e) => {
   e.preventDefault();
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  console.log(cart);
+  return cart;
 };
 
 const createTradeConfirmationBtn = () => {
