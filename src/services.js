@@ -31,7 +31,7 @@ export class Services {
     const tileIndex = playerTiles.indexOf(tile);
     playerTiles.splice(tileIndex, 1);
     this.#placedTiles.push(tile);
-    return { updatedPlayerTiles: playerTiles, tilesOnBoard: this.#placedTiles };
+    return { playerTiles, tilesOnBoard: this.#placedTiles };
   }
 
   assignNewTile(shuffleFn = shuffle) {

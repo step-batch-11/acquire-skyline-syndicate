@@ -32,7 +32,7 @@ describe("Test service class", () => {
     service.initialSetup((tiles) => tiles);
     const playerTile = "2c";
     const response = service.updatePlayerTiles(playerTile);
-    assertEquals(response.updatedPlayerTiles.includes("2c"), false);
+    assertEquals(response.playerTiles.includes("2c"), false);
     assertEquals(response.tilesOnBoard.includes("2c"), true);
   });
 
