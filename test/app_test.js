@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
 import { createApp } from "../src/app.js";
 import { Services } from "../src/services.js";
+import { GameEngine } from "../src/game_engine.js";
 
 describe("App test", () => {
   let service;
@@ -21,7 +22,8 @@ describe("App test", () => {
       "2b",
       "2c",
     ]);
-    app = createApp(service);
+    const engine = new GameEngine();
+    app = createApp(service, engine);
   });
 
   it("Test /initial-setup route", async () => {
@@ -35,11 +37,11 @@ describe("App test", () => {
 
   it("Test the initial setup with bank detail", async () => {
     const mockData = {
-      "Continental": {
-        "tiles": [],
-        "stocks": 25,
-        "originTile": null,
-        "price": 0,
+      Continental: {
+        tiles: [],
+        stocks: 25,
+        originTile: null,
+        price: 0,
       },
     };
 

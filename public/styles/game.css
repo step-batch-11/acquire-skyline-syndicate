@@ -175,13 +175,17 @@ footer {
   font-size: 1em;
 }
 
-.hotel-icon {
+.hotel-container {
   width: 20%;
   height: 100%;
   display: inline-block;
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.dim {
+  opacity: 30%;
 }
 
 .tiles-in-player-hand {
@@ -192,7 +196,11 @@ footer {
   background-color: #f29b12;
 }
 
-#imperial .hotel-icon {
+/* #imperial .hotel-icon {
+  background-image: url("/assets/imperial.svg");
+} */
+
+.imperial-icon {
   background-image: url("/assets/imperial.svg");
 }
 
@@ -200,46 +208,70 @@ footer {
   background-color: #5683FF;
 }
 
-#continental .hotel-icon {
+.continental-icon {
   background-image: url("/assets/continental.svg");
 }
+
+/* #continental .hotel-icon {
+  background-image: url("/assets/continental.svg");
+} */
 
 #festival .hotel-info {
   background-color: #43AA90;
 }
 
-#festival .hotel-icon {
+.festival-icon {
   background-image: url("/assets/festival.svg");
 }
+
+/* #festival .hotel-icon {
+  background-image: url("/assets/festival.svg");
+} */
 
 #worldwide .hotel-info{
   background-color: #2F6F83;
 }
 
-#worldwide .hotel-icon {
+.worldwide-icon {
   background-image: url("/assets/worldwide.svg");
 }
+
+/* #worldwide .hotel-icon {
+  background-image: url("/assets/worldwide.svg");
+} */
 
 #american .hotel-info {
   background-color: #0ea5e9;
 }
 
-#american .hotel-icon {
+.american-icon {
   background-image: url("/assets/american.svg");
 }
+
+/* #american .hotel-icon {
+  background-image: url("/assets/american.svg");
+} */
 
 #sackson .hotel-info {
   background-color: #b91c1c;
 }
 
-#sackson .hotel-icon {
+.sackson-icon {
   background-image: url("/assets/sackson.svg");
 }
+
+/* #sackson .hotel-icon {
+  background-image: url("/assets/sackson.svg");
+} */
 
 #tower .hotel-info {
   background-color: #f9735b;
 }
 
-#tower .hotel-icon {
+.tower-icon {
   background-image: url("/assets/tower.svg");
 }
+
+/* #tower .hotel-icon {
+  background-image: url("/assets/tower.svg");
+} */

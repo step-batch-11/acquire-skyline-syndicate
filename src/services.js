@@ -6,6 +6,7 @@ export class Services {
   #unplacedTiles;
   #player;
   #placedTiles;
+  #lastTile;
 
   constructor(tiles, hotels) {
     this.#player = { amount: 6000 };
@@ -24,6 +25,18 @@ export class Services {
 
   #placeTiles() {
     this.#placedTiles = this.#unplacedTiles.splice(0, 6);
+  }
+
+  placeTileOnBoard(tile, engine) {
+    const action = engine.actionForPlacingTile(tile, this.#placedTiles);
+    const result = this.updatePlayerTiles(tile);
+    this.#lastTile = tile;
+    return { ...result, action };
+  }
+
+  buildHotel(hotel) {
+    this.#hotels[hotel].orginTile = this.#lastTile;
+    this.#hotels[hotel].tiles.push(this.#lastTile);
   }
 
   updatePlayerTiles(tile) {

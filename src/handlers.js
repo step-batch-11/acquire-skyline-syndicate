@@ -1,8 +1,15 @@
 export const handleUpdateTiles = async (context) => {
   const { tile } = await context.req.json();
   const service = context.get("service");
-  const response = service.updatePlayerTiles(tile);
+  const gameEngine = context.get("engine");
+  const response = service.placeTileOnBoard(tile, gameEngine);
+  return context.json(response);
+};
 
+export const buildHotel = async (context) => {
+  const { hotel } = await context.req.json();
+  const service = context.get("service");
+  const response = service.buildHotel(hotel);
   return context.json(response);
 };
 
