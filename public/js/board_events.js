@@ -1,5 +1,5 @@
 import { renderBoard } from "./initial_setup.js";
-import { updateTiles } from "./game_state.js";
+import { assignNewTiles, updateTiles } from "./game_state.js";
 import { removeFocus } from "./board_ui.js";
 
 const buildAHotel = () => {
@@ -17,15 +17,17 @@ const eventsForPlacingATile = {
   nothing: () => {},
 };
 
-export const addListenerToBoard = (playerTiles) => {
+export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
   board.addEventListener("click", async (e) => {
     const tileContainer = e.target.closest("div");
     const tile = tileContainer.querySelector("p").textContent;
-    removeFocus(board, playerTiles);
-    const { updatedPlayerTiles, tilesOnBoard } = await updateTiles(tile);
+    removeFocus(board, tilesInPlayerHand);
+    const updatedTiles = await updateTiles(tile);
+    renderBoard(updatedTiles.tilesOnBoard, updatedTiles.playerTiles);
+    eventsForPlacingATile[updatedTiles.actionForPlacingTile](tile);
 
-    renderBoard(tilesOnBoard, updatedPlayerTiles);
-    eventsForPlacingATile[actionForPlacingTile](tile);
+    const { playerTiles, tilesOnBoard } = await assignNewTiles(tile);
+    renderBoard(tilesOnBoard, playerTiles);
   });
 };

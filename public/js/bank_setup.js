@@ -5,12 +5,11 @@ const cloneElement = (templateId) => {
 
 const addHotelData = (hotelName, value, bankSection) => {
   const hotelCard = cloneElement("#hotel-card");
-  const image = hotelCard.querySelector("img");
-  image.setAttribute("src", `../assets/${hotelName}.svg`);
+  hotelCard.setAttribute("id", hotelName.toLowerCase());
   hotelCard.querySelector("#hotel-name").textContent = hotelName;
   hotelCard.querySelector("#price").textContent = `$ ${value.price}`;
-  hotelCard.querySelector("#tiles").textContent = `% ${value.tiles.length}`;
-  hotelCard.querySelector("#stock-left").textContent = `& ${value.stocks}`;
+  hotelCard.querySelector("#tiles").textContent = `🧱 ${value.tiles.length}`;
+  hotelCard.querySelector("#stock-left").textContent = `📈 ${value.stocks}`;
   bankSection.append(hotelCard);
 };
 

@@ -1,10 +1,16 @@
 import { postData } from "./controllers.js";
 
 export const updateTiles = async (tile) => {
-  const response = await postData(
+  const updatedTiles = await postData(
     "/update-player-tiles",
     { tile },
   );
+  return updatedTiles;
+};
 
-  return response;
+export const assignNewTiles = async () => {
+  const { playerTiles, tilesOnBoard } = await postData(
+    "/assign-new-tile",
+  );
+  return { playerTiles, tilesOnBoard };
 };

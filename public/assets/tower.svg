@@ -1,33 +1,10 @@
-<!-- <svg
-  xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 0 200 200"
-  width="100%"
-  height="100%"
->
-  <g
-    stroke="#ffa500"
-    stroke-width="2"
-    fill="ffffff"
-    stroke-linejoin="miter"
-    stroke-linecap="square"
-  >
-    <line x1="20" y1="150" x2="180" y2="150" />
-
-    <polyline points="50,150 50,65 95,80 95,150" />
-
-    <polyline points="75,150 75,30 125,45 125,150" />
-
-    <polyline points="105,150 105,85 150,100 150,150" />
-  </g>
-</svg> -->
-
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 200 200"
   width="100%"
   height="100%"
 >
-  <g fill="#FFF200">
+  <g fill="#f9735b">
     <rect x="20" y="150" width="160" height="3" />
 
     <polygon points="45,150 45,75 75,65 75,150" />

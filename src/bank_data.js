@@ -11,6 +11,12 @@ export const bankData = {
     "orginTile": null,
     "price": 0,
   },
+  "American": {
+    "tiles": [],
+    "stocks": 25,
+    "orginTile": null,
+    "price": 0,
+  },
   "Festival": {
     "tiles": [],
     "stocks": 25,
@@ -23,12 +29,7 @@ export const bankData = {
     "orginTile": null,
     "price": 0,
   },
-  "American": {
-    "tiles": [],
-    "stocks": 25,
-    "orginTile": null,
-    "price": 0,
-  },
+
   "Sackson": {
     "tiles": [],
     "stocks": 25,
