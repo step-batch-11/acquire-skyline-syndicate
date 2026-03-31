@@ -243,3 +243,23 @@ footer {
 #tower .hotel-icon {
   background-image: url("/assets/tower.svg");
 }
+
+.hotel-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.counter {
+  display: flex;
+  gap: 15px;
+  border: 1px solid white;
+  padding: 0.2em;
+  border-radius: 5px;
+}
+
+.counter button {
+  border: none;
+  background: none;
+  color: white;
+}

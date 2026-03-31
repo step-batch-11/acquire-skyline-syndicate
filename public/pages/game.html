@@ -20,7 +20,14 @@
   <template id="hotel-card">
     <section class="hotel">
       <div class="hotel-info">
-        <h3 id="hotel-name"></h3>
+        <div class="hotel-card-header">
+          <h3 class="hotel-name"></h3>
+          <div class="counter">
+            <button data-action="incr">+</button>
+            <span>0</span>
+            <button data-action="decr">-</button>
+          </div>
+        </div>
         <div class="information">
           <div id="price">$ 400</div>
           <div id="tiles">% 3</div>
