@@ -3,8 +3,34 @@ import { beforeEach, describe, it } from "@std/testing/bdd";
 import { GameEngine } from "../src/game_engine.js";
 
 describe("GameEngine", () => {
+  let hotels;
   let gameEngine;
-  beforeEach(() => gameEngine = new GameEngine());
+  beforeEach(() => {
+    gameEngine = new GameEngine();
+    hotels = {
+      "continental": {
+        "tiles": ["1a", "2a", "2b"],
+      },
+      "imperial": {
+        "tiles": ["8c", "8d"],
+      },
+      "american": {
+        "tiles": ["4g", "5g"],
+      },
+      "festival": {
+        "tiles": ["12e", "12f"],
+      },
+      "worldwide": {
+        "tiles": [],
+      },
+      "sackson": {
+        "tiles": [],
+      },
+      "tower": {
+        "tiles": [],
+      },
+    };
+  });
 
   describe("adjacentTiles", () => {
     it("should return adjacent tiles of the tile having 4 adjacent tiles", () => {
@@ -36,6 +62,39 @@ describe("GameEngine", () => {
       const expected = ["2a", "1b"];
 
       assertEquals(gameEngine.adjacentTilesOf("1a"), expected);
+    });
+  });
+
+  describe("actionForPlacingTile", () => {
+    it("the adjacent tiles are not placed", () => {
+      const placedTiles = ["2a", "3a"];
+      const action = gameEngine.actionForPlacingTile("7b", placedTiles, hotels);
+      assertEquals(action, "nothing");
+    });
+
+    it("the adjacent tiles are already placed ", () => {
+      const placedTiles = ["2a", "3a"];
+      const action = gameEngine.actionForPlacingTile("4a", placedTiles, hotels);
+      assertEquals(action, "build hotel");
+    });
+
+    it("the all adjacent tiles are already placed ", () => {
+      const placedTiles = ["2a", "3a", "1b"];
+      const action = gameEngine.actionForPlacingTile("1a", placedTiles, hotels);
+      assertEquals(action, "expand");
+    });
+  });
+
+  describe("getAdjacentHotel", () => {
+    it("should return an adjacent hotel if expansion is possible", () => {
+      const adjacentTiles = gameEngine.adjacentTilesOf("3b");
+      assertEquals(gameEngine.getAdjacentHotel(adjacentTiles, hotels), {
+        hotelName: "continental",
+      });
+    });
+    it("should return empty object if expansion is not possible", () => {
+      const adjacentTiles = gameEngine.adjacentTilesOf("3h");
+      assertEquals(gameEngine.getAdjacentHotel(adjacentTiles, hotels), {});
     });
   });
 });
