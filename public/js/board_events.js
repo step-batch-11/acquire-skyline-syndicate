@@ -5,14 +5,15 @@ export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
   let hotel = "";
-  const selectHotel = (e) => {
-    e.preventDefault();
-    if (e.target.id === "confirm") {
+  const selectHotel = (event) => {
+    event.preventDefault();
+    if (event.target.id === "confirm") {
       postData("/build-hotel", { hotel });
       tileContainer.classList.add(`${hotel}-icon`);
-      return bankContainer.removeEventListener("click", selectHotel);
+      bankContainer.removeEventListener("click", selectHotel);
+      handleAssignTile();
     }
-    hotel = e.target.parentNode.id;
+    hotel = event.target.parentNode.id;
   };
   bankContainer.addEventListener("click", selectHotel);
 };
@@ -29,7 +30,6 @@ export const addListenerToBoard = (tilesInPlayerHand) => {
     const tileContainer = event.target.closest("div");
     handlePlacingTile(board, tileContainer, tilesInPlayerHand);
     board.removeEventListener("click", listener);
-    handleAssignTile();
   };
 
   board.addEventListener("click", listener);
