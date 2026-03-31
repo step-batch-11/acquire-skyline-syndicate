@@ -7,6 +7,15 @@ export class Services {
   #player;
   #placedTiles;
   #lastTile;
+  #HOTEL_PRICE_SCALE = {
+    "Continental": 200,
+    "Imperial": 200,
+    "American": 100,
+    "Festival": 100,
+    "Worldwide": 100,
+    "Sackson": 0,
+    "Tower": 0,
+  };
 
   constructor(tiles, hotels) {
     this.#player = { amount: 6000 };
@@ -67,6 +76,32 @@ export class Services {
       tilesOnBoard: this.#placedTiles,
       bankData: this.#hotels,
     };
+  }
+
+  #getNumberOfTiles(tiles) {
+    if (tiles.length >= 6 && tiles.length <= 10) {
+      return 6;
+    }
+    if (tiles.length >= 11 && tiles.length <= 20) {
+      return 7;
+    }
+    if (tiles.length >= 21 && tiles.length <= 30) {
+      return 8;
+    }
+    if (tiles.length >= 31 && tiles.length <= 40) {
+      return 9;
+    }
+    if (tiles.length >= 41) {
+      return 10;
+    }
+    return tiles.length;
+  }
+
+  getCurrentStockPrice(hotel) {
+    const numberOfTiles = this.#getNumberOfTiles(hotel.tiles);
+    const scale = this.#HOTEL_PRICE_SCALE[hotel.hotelName];
+
+    return numberOfTiles * 100 + scale;
   }
 
   expandHotel(tile, hotelName) {
