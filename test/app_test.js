@@ -63,6 +63,6 @@ describe("App test", () => {
     assertEquals(response.status, 200);
     const body = await response.json();
     assertEquals(body.tilesOnBoard.includes(tile), true);
-    assertEquals(body.playerTiles.includes(tile), false);
+    assertEquals(body.updatedPlayerTiles.includes(tile), false);
   });
 });

@@ -3,11 +3,12 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { handleInitialSetup, handleUpdateTiles } from "./handlers.js";
 
-export const createApp = (service) => {
+export const createApp = (service, gameEngine) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
     context.set("service", service);
+    context.set("engine", gameEngine);
     await next();
   });
   app.post("/update-player-tiles", handleUpdateTiles);
