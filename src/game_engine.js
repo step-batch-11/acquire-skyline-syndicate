@@ -29,12 +29,29 @@ export class GameEngine {
     return adjacentTiles;
   }
 
-  actionForPlacingTile(tile, placedTiles) {
+  actionForPlacingTile(tile, placedTiles, hotels) {
     const adjacentTiles = this.adjacentTilesOf(tile);
     const isAdjacentTile = adjacentTiles.some((tile) =>
       placedTiles.includes(tile)
     );
     if (!isAdjacentTile) return "nothing";
+
+    if (
+      this.getAdjacentHotel(adjacentTiles, hotels)["hotelName"] !== undefined
+    ) {
+      return "expand";
+    }
     return "build hotel";
+  }
+
+  getAdjacentHotel(adjacentTiles, hotels) {
+    for (const hotel in hotels) {
+      const isTileInHotelChain = adjacentTiles.some((adjacentTile) =>
+        hotels[hotel].tiles.includes(adjacentTile)
+      );
+
+      if (isTileInHotelChain) return { hotelName: hotel };
+    }
+    return {};
   }
 }
