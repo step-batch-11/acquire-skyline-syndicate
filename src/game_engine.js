@@ -28,4 +28,13 @@ export class GameEngine {
 
     return adjacentTiles;
   }
+
+  actionForPlacingTile(tile, placedTiles) {
+    const adjacentTiles = this.adjacentTilesOf(tile);
+    const isAdjacentTile = adjacentTiles.some((tile) =>
+      placedTiles.includes(tile)
+    );
+    if (!isAdjacentTile) return "nothing";
+    return "build hotel";
+  }
 }
