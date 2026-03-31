@@ -10,9 +10,10 @@ export const buildAHotel = (tileContainer) => {
     if (e.target.id === "confirm") {
       postData("/build-hotel", { hotel });
       tileContainer.classList.add(`${hotel}-icon`);
-      return bankContainer.removeEventListener("click", selectHotel);
+      bankContainer.removeEventListener("click", selectHotel);
+      handleAssignTile();
     }
-    hotel = e.target.parentNode.id;
+    hotel = event.target.parentNode.id;
   };
   bankContainer.addEventListener("click", selectHotel);
 };
@@ -24,9 +25,12 @@ export const eventsForPlacingATile = {
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
-  board.addEventListener("click", (event) => {
+
+  const listener = (event) => {
     const tileContainer = event.target.closest("div");
     handlePlacingTile(board, tileContainer, tilesInPlayerHand);
-    handleAssignTile();
-  });
+    board.removeEventListener("click", listener);
+  };
+
+  board.addEventListener("click", listener);
 };
