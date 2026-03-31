@@ -1,9 +1,10 @@
-import { renderBoard } from "./initial_setup.js";
-import { assignNewTiles, updateTiles } from "./game_state.js";
+// import { renderBoard } from "./initial_setup.js";
+// import { assignNewTiles, updateTiles } from "./game_state.js";
 import { postData } from "./controllers.js";
-import { removeFocus } from "./board_ui.js";
+// import { removeFocus } from "./board_ui.js";
+import { handleAssignTile, handlePlacingTile } from "./event_handlers.js";
 
-const buildAHotel = (tileContainer) => {
+export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
   let hotel = "";
@@ -19,23 +20,16 @@ const buildAHotel = (tileContainer) => {
   bankContainer.addEventListener("click", selectHotel);
 };
 
-const eventsForPlacingATile = {
+export const eventsForPlacingATile = {
   "build hotel": buildAHotel,
-  nothing: () => {},
+  nothing: () => "",
 };
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
-  board.addEventListener("click", async (e) => {
-    const tileContainer = e.target.closest("div");
-    const tile = tileContainer.querySelector("p").textContent;
-    removeFocus(board, tilesInPlayerHand);
-    const updatedTiles = await updateTiles(tile);
-    renderBoard(updatedTiles.tilesOnBoard, updatedTiles.updatedPlayerTiles);
-
-    eventsForPlacingATile[updatedTiles.action](tileContainer);
-
-    const { playerTiles, tilesOnBoard } = await assignNewTiles(tile);
-    renderBoard(tilesOnBoard, playerTiles);
+  board.addEventListener("click", (event) => {
+    const tileContainer = event.target.closest("div");
+    handlePlacingTile(board, tileContainer, tilesInPlayerHand);
+    handleAssignTile();
   });
 };

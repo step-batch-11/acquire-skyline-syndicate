@@ -44,7 +44,7 @@ export class Services {
     const tileIndex = playerTiles.indexOf(tile);
     playerTiles.splice(tileIndex, 1);
     this.#placedTiles.push(tile);
-    return { updatedPlayerTiles: playerTiles, tilesOnBoard: this.#placedTiles };
+    return { playerTiles, tilesOnBoard: this.#placedTiles };
   }
 
   assignNewTile(shuffleFn = shuffle) {
@@ -63,5 +63,10 @@ export class Services {
       tilesOnBoard: this.#placedTiles,
       bankData: this.#hotels,
     };
+  }
+
+  expandHotel(tile, hotelName) {
+    this.#hotels[hotelName].tiles.push(tile);
+    return { hotelName, ...this.#hotels[hotelName] };
   }
 }
