@@ -8,7 +8,7 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-const renderTilesInHand = (playerTiles) => {
+export const renderTilesInHand = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles-in-hand");
   const playerTileElements = playerTiles.map(createTileElement);
   tilesContainer.innerHTML = "";

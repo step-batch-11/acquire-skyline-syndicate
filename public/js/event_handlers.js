@@ -2,6 +2,9 @@ import { eventsForPlacingATile } from "./board_events.js";
 import { removeFocus } from "./board_ui.js";
 import { assignNewTiles, updateTiles } from "./game_state.js";
 import { renderBoard } from "./initial_setup.js";
+import { renderTilesInHand } from "./render.js";
+
+const noOp = () => {};
 
 export const handleTilePlacement = async (
   board,
@@ -12,8 +15,10 @@ export const handleTilePlacement = async (
 
   const updatedTiles = await updateTiles(tile);
   removeFocus(board, tilesInPlayerHand);
-  renderBoard(updatedTiles.tilesOnBoard, updatedTiles.playerTiles);
-  eventsForPlacingATile[updatedTiles.action](tileContainer);
+  renderBoard(updatedTiles.tilesOnBoard);
+  renderTilesInHand(updatedTiles.playerTiles);
+  const action = eventsForPlacingATile[updatedTiles.action] || noOp;
+  action(tileContainer);
 };
 
 export const handleAssignTile = async () => {
