@@ -1,22 +1,27 @@
-import { postData } from "./controllers.js";
-import { handleAssignTile, handlePlacingTile } from "./event_handlers.js";
+import { handleTilePlacement } from "./event_handlers.js";
+import { canPlaceTile } from "./validators.js";
+import {
+  listenerForFoundingHotel,
+  listenerForHotelSelection,
+} from "./listeners.js";
 
 export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
-  let hotel = "";
-  const selectHotel = (e) => {
-    e.preventDefault();
-    if (e.target.id === "confirm") {
-      console.log(hotel);
+  const foundBtn = bankContainer.querySelector("#found");
+  foundBtn.classList.remove("hidden");
 
-      postData("/build-hotel", { hotel });
-      tileContainer.classList.add(`${hotel}-icon`);
-      return bankContainer.removeEventListener("click", selectHotel);
-    }
-    hotel = e.target.parentNode.id;
-  };
-  bankContainer.addEventListener("click", selectHotel);
+  let hotelToFound = "";
+
+  foundBtn.addEventListener(
+    "click",
+    (e) =>
+      listenerForFoundingHotel(e, hotelToFound, tileContainer, bankContainer),
+  );
+
+  bankContainer.addEventListener("click", (e) => {
+    hotelToFound = listenerForHotelSelection(e);
+  });
 };
 
 export const eventsForPlacingATile = {
@@ -26,9 +31,14 @@ export const eventsForPlacingATile = {
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
-  board.addEventListener("click", (event) => {
+
+  const tileSelectionListener = (event) => {
     const tileContainer = event.target.closest("div");
-    handlePlacingTile(board, tileContainer, tilesInPlayerHand);
-    handleAssignTile();
-  });
+    if (canPlaceTile(tileContainer, tilesInPlayerHand)) {
+      handleTilePlacement(board, tileContainer, tilesInPlayerHand);
+      board.removeEventListener("click", tileSelectionListener);
+    }
+  };
+
+  board.addEventListener("click", tileSelectionListener);
 };

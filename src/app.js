@@ -1,6 +1,8 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
+import { lobby } from "./routes/lobbyRouter.js";
+import { turn } from "./routes/turnRouter.js";
 import {
   buildHotel,
   handleAssignTile,
@@ -16,6 +18,8 @@ export const createApp = (service, gameEngine) => {
     context.set("engine", gameEngine);
     await next();
   });
+  app.route("/lobby", lobby);
+  app.route("/turn", turn);
   app.post("/update-player-tiles", handleUpdateTiles);
   app.post("/build-hotel", buildHotel);
   app.post("/assign-new-tile", handleAssignTile);

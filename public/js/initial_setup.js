@@ -1,25 +1,7 @@
+import { setupHotelSection } from "./bank_setup.js";
 import { addListenerToBoard } from "./board_events.js";
-
-const focusPlayerTiles = (board, playerTiles) => {
-  playerTiles.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
-    tileContainer.classList.add("tiles-in-player-hand");
-  });
-};
-
-export const renderBoard = (tilesOnBoard, playerTiles) => {
-  const board = document.querySelector(".board");
-  tilesOnBoard.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
-    tileContainer.classList.add("tiles-in-market");
-  });
-  renderPlayerTiles(playerTiles);
-};
-
-const putInitialAmount = (amount) => {
-  const amountContainer = document.querySelector(".amount-container p");
-  amountContainer.innerText = `$${amount}`;
-};
+import { renderBoard, renderUserSection } from "./ui_renderers.js";
+import { highlightPlayableTiles } from "./utils.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -29,13 +11,6 @@ const createTileElement = (tile) => {
   p.textContent = tile;
   tileContainer.append(p);
   return tileContainer;
-};
-
-const renderPlayerTiles = (playerTiles) => {
-  const tilesContainer = document.querySelector(".tiles");
-  const playerTileElements = playerTiles.map(createTileElement);
-  tilesContainer.innerHTML = "";
-  tilesContainer.append(...playerTileElements);
 };
 
 export const createBoard = () => {
@@ -49,11 +24,12 @@ export const createBoard = () => {
   }
 };
 
-export const initialBoardSetup = (initialData) => {
-  const { tilesOnBoard, amount, playerTiles } = initialData;
+export const initializeGameSetup = (initialData) => {
+  const { tilesOnBoard, amount, bankData, playerTiles } = initialData;
   const board = document.querySelector(".board");
-  focusPlayerTiles(board, playerTiles);
+  highlightPlayableTiles(board, playerTiles);
   renderBoard(tilesOnBoard, playerTiles);
-  putInitialAmount(amount);
+  renderUserSection({ amount, playerTiles });
+  setupHotelSection(bankData);
   addListenerToBoard(playerTiles);
 };

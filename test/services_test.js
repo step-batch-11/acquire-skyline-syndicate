@@ -93,4 +93,62 @@ describe("Test service class", () => {
       assertEquals(updatedHotels["Imperial"].tiles, ["8c", "8d", "9c"]);
     });
   });
+
+  describe("getCurrentStockPrice", () => {
+    it("should return current stock price of medium hotels with 4 tiles", () => {
+      const hotel = {
+        hotelName: "American",
+        tiles: ["2a", "1a", "3a", "4a"],
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 500);
+    });
+    it("should return current stock price of large hotels with 6 tiles", () => {
+      const hotel = {
+        hotelName: "Imperial",
+        tiles: ["2a", "1a", "3a", "4a", "5a", "6a"],
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 800);
+    });
+    it("should return current stock price of small hotels with 12 tiles", () => {
+      const hotel = {
+        hotelName: "Sackson",
+        tiles: [
+          "2a",
+          "1a",
+          "3a",
+          "4a",
+          "5a",
+          "6a",
+          "7a",
+          "8a",
+          "9a",
+          "10a",
+          "11a",
+          "12a",
+        ],
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 700);
+    });
+    it("should return current stock price of medium hotels with 22 tiles", () => {
+      const hotel = {
+        hotelName: "Festival",
+        tiles: Array.from({ length: 22 }, (_) => 0),
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 900);
+    });
+    it("should return current stock price of large hotels with 35 tiles", () => {
+      const hotel = {
+        hotelName: "Continental",
+        tiles: Array.from({ length: 35 }, (_) => 0),
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 1100);
+    });
+    it("should return current stock price of small hotels with 41 tiles", () => {
+      const hotel = {
+        hotelName: "Tower",
+        tiles: Array.from({ length: 41 }, (_) => 0),
+      };
+      assertEquals(service.getCurrentStockPrice(hotel), 1000);
+    });
+  });
 });

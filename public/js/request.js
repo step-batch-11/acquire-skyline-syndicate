@@ -1,5 +1,5 @@
-export const fetchData = async () => {
-  const response = await fetch("/initial-setup");
+export const startGame = async () => {
+  const response = await fetch("/lobby/startGame");
   return await response.json();
 };
 

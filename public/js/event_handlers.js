@@ -1,26 +1,50 @@
 import { eventsForPlacingATile } from "./board_events.js";
-import { removeFocus } from "./board_ui.js";
 import { assignNewTiles, updateTiles } from "./game_state.js";
-import { renderBoard } from "./initial_setup.js";
+import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
+import { removeFocus } from "./utils.js";
 
-export const handlePlacingTile = async (
+const noOp = () => {};
+
+export const handleTilePlacement = async (
   board,
   tileContainer,
   tilesInPlayerHand,
 ) => {
-  const containerClass = tileContainer.getAttribute("class");
-  if (containerClass === "board") return;
+  const tile = tileContainer.id.split("-")[1];
 
-  const tile = tileContainer.querySelector("p").textContent;
-  if (!tilesInPlayerHand.includes(tile)) return;
-
-  removeFocus(board, tilesInPlayerHand);
   const updatedTiles = await updateTiles(tile);
-  renderBoard(updatedTiles.tilesOnBoard, updatedTiles.playerTiles);
-  eventsForPlacingATile[updatedTiles.action](tileContainer);
+  removeFocus(board, tilesInPlayerHand);
+  renderBoard(updatedTiles.tilesOnBoard);
+  renderTilesInHand(updatedTiles.playerTiles);
+  const action = eventsForPlacingATile[updatedTiles.action] || noOp;
+  action(tileContainer);
 };
 
 export const handleAssignTile = async () => {
   const { playerTiles, tilesOnBoard } = await assignNewTiles();
-  renderBoard(tilesOnBoard, playerTiles);
+  renderBoard(tilesOnBoard);
+  renderTilesInHand(playerTiles);
+};
+
+const incrementStocks = (parent) => {
+  const counter = parent.querySelector("span");
+  const counterValue = parseInt(counter.innerText);
+  counter.textContent = counterValue + 1;
+};
+
+const decrementStocks = (parent) => {
+  const counter = parent.querySelector("span");
+  const counterValue = parseInt(counter.innerText);
+  counter.textContent = counterValue - 1;
+};
+
+const clickActions = {
+  "incr": incrementStocks,
+  "decr": decrementStocks,
+};
+
+export const handleCartUpdation = (action, parent) => {
+  if (action in clickActions) {
+    clickActions[action](parent);
+  }
 };
