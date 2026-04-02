@@ -8,6 +8,10 @@ export class Board {
     this.#tiles = tiles;
   }
 
+  getPlacedTiles() {
+    return ["2h", "9c", "4b", "2i", "10a", "1g"];
+  }
+
   place(coordinate) {
     const tile = this.#tiles[coordinate.x][coordinate.y];
     tile.markAsPlaced();

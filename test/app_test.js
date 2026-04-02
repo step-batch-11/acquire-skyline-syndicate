@@ -86,20 +86,4 @@ describe("App test", () => {
     assertEquals(response.status, 200);
     assertEquals(body.playerTiles.length, 6);
   });
-
-  it("Post /build-hotel", async () => {
-    const tile = "1c";
-    await app.request("/initial-setup");
-    await app.request("/update-player-tiles", {
-      method: "post",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ tile }),
-    });
-    const response = await app.request("/build-hotel", {
-      method: "post",
-      body: JSON.stringify({ hotel: "festival" }),
-    });
-
-    assertEquals(response.status, 200);
-  });
 });

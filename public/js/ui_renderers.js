@@ -47,31 +47,30 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = (hotelName, value, bankSection) => {
-  const name = hotelName;
+const addHotelData = ({ name, tileCount, stocksLeft, price }, bankSection) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
-  hotelCard.querySelector(".hotel-name").textContent = hotelName;
-  hotelCard.querySelector("#price").textContent = `$ ${value.price}`;
-  hotelCard.querySelector("#tiles").textContent = `🧱 ${value.tiles.length}`;
-  hotelCard.querySelector("#stock-left").textContent = `📈 ${value.stocks}`;
+  hotelCard.querySelector(".hotel-name").textContent = name;
+  hotelCard.querySelector("#price").textContent = `$ ${price}`;
+  hotelCard.querySelector("#tiles").textContent = `🧱 ${tileCount}`;
+  hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
 
   bankSection.append(hotelCard);
 };
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
-  Object.entries(hotels).forEach(([key, value]) =>
-    addHotelData(key, value, bankSection)
-  );
 
+  hotels.forEach((hotel) => {
+    addHotelData(hotel, bankSection);
+  });
   const button = createTradeConfirmationBtn();
   bankSection.append(button);
 };
 
-export const renderUserSection = ({ amount, playerTiles }) => {
-  renderTilesInHand(playerTiles);
-  displayInitialAmount(amount);
+export const renderUserSection = ({ money, tiles }) => {
+  renderTilesInHand(tiles);
+  displayInitialAmount(money);
 };

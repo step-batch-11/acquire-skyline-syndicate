@@ -14,20 +14,26 @@ export class Player {
   }
 
   getDetails() {
-    return this.#player;
+    return {
+      id: this.#id,
+      name: this.#name,
+      tiles: structuredClone(this.#tiles),
+      money: this.#money,
+      stocks: structuredClone(this.#stocks),
+    };
   }
 
   addInitialTiles(tiles) {
-    const playerTiles = this.#player.tiles;
+    const playerTiles = this.#tiles;
     tiles.map((tile) => playerTiles.push(tile));
   }
 
   removeTile(tile) {
-    const tileIndex = this.#player.tiles.indexOf(tile);
-    this.#player.tiles.splice(tileIndex, 1);
+    const tileIndex = this.#tiles.indexOf(tile);
+    this.#tiles.splice(tileIndex, 1);
   }
 
   addNewTile(tile) {
-    this.#player.tiles.push(tile);
+    this.#tiles.push(tile);
   }
 }

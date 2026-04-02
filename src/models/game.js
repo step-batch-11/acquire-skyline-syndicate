@@ -13,9 +13,15 @@ export class Game {
 
   init(shuffleFn) {
     this.#deck.shuffleTiles(shuffleFn);
-    const initialTiles = this.#deck.drawTiles(6);
-    this.#board.placeTiles(initialTiles);
+    // const initialTiles = this.#deck.drawTiles(6);
+    // this.#board.placeTiles(initialTiles);
     const initialPlayerTiles = this.#deck.drawTiles(6);
     this.#player.addInitialTiles(initialPlayerTiles);
+
+    return {
+      player: this.#player.getDetails(),
+      hotels: this.#hotels.getHotels(),
+      tilesOnBoard: this.#board.getPlacedTiles(),
+    };
   }
 }

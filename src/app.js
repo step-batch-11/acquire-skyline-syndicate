@@ -10,12 +10,13 @@ import {
   handleUpdateTiles,
 } from "./handlers.js";
 
-export const createApp = (service, gameEngine) => {
+export const createApp = (service, gameEngine, game) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
     context.set("service", service);
     context.set("engine", gameEngine);
+    context.set("game", game);
     await next();
   });
   app.route("/lobby", lobby);
