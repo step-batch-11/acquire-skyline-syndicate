@@ -1,36 +1,27 @@
-import { postData } from "./request.js";
-import { handleAssignTile, handleTilePlacement } from "./event_handlers.js";
+import { handleTilePlacement } from "./event_handlers.js";
 import { canPlaceTile } from "./validators.js";
-
-const hotelFoundationListener = (
-  e,
-  hotelToFound,
-  tileContainer,
-  bankContainer,
-) => {
-  e.preventDefault();
-  postData("/build-hotel", { hotelToFound });
-  tileContainer.classList.add(`${hotelToFound}-icon`);
-  bankContainer.removeEventListener("click", selectHotel);
-  handleAssignTile();
-};
+import {
+  listenerForFoundingHotel,
+  listenerForHotelSelection,
+} from "./listeners.js";
 
 export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
   const foundBtn = bankContainer.querySelector("#found");
   foundBtn.classList.remove("hidden");
+
   let hotelToFound = "";
-  const selectHotel = (e) => {
-    e.preventDefault();
-    hotelToFound = event.target.parentNode.id;
-  };
+
   foundBtn.addEventListener(
     "click",
     (e) =>
-      hotelFoundationListener(e, hotelToFound, tileContainer, bankContainer),
+      listenerForFoundingHotel(e, hotelToFound, tileContainer, bankContainer),
   );
-  bankContainer.addEventListener("click", selectHotel);
+
+  bankContainer.addEventListener("click", (e) => {
+    hotelToFound = listenerForHotelSelection(e);
+  });
 };
 
 export const eventsForPlacingATile = {

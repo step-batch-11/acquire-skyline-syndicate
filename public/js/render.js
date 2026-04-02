@@ -1,3 +1,5 @@
+import { listenerForBuyingStocks } from "./listeners.js";
+
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
   tileContainer.classList.add("tile");
@@ -8,7 +10,15 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-const renderTilesInHand = (playerTiles) => {
+export const renderBoard = (tilesOnBoard) => {
+  const board = document.querySelector(".board");
+  tilesOnBoard.forEach((tile) => {
+    const tileContainer = board.querySelector(`#tile-${tile}`);
+    tileContainer.classList.add("tiles-in-market");
+  });
+};
+
+export const renderTilesInHand = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles-in-hand");
   const playerTileElements = playerTiles.map(createTileElement);
   tilesContainer.innerHTML = "";
@@ -20,24 +30,6 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-const extractSelectedStocks = (cart, hotelHeader) => {
-  const selectedStocks = parseInt(
-    hotelHeader.querySelector("span").innerText,
-  );
-  const hotelName = hotelHeader.querySelector(".hotel-name").innerText;
-  if (selectedStocks > 0) {
-    cart.push({ hotelName, selectedStocks });
-  }
-  return cart;
-};
-
-const handleBuyStocks = (e) => {
-  e.preventDefault();
-  const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
-  const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  return cart;
-};
-
 const createTradeConfirmationBtn = () => {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
@@ -45,7 +37,7 @@ const createTradeConfirmationBtn = () => {
   button.textContent = "Found";
   button.id = "found";
   button.classList.add("hidden");
-  button.addEventListener("click", handleBuyStocks);
+  button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
 };

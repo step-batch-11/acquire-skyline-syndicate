@@ -21,6 +21,11 @@ main {
   display: flex;
 }
 
+:root {
+  --board-bg :  rgb(208, 210, 209); 
+  --occupied-tile-bg : rgb(100, 100, 100); 
+}
+
 .market-notification-players {
   position: relative;
   height: 100%;
@@ -39,8 +44,8 @@ main {
 }
 
 .tile {
-  height: 3em;
-  width: 3em;
+  height: 3.1em;
+  width: 3.1em;
   border: 0.2px solid black;
   border-radius: 0.3em;
   background-color: white;
@@ -59,7 +64,7 @@ main {
 }
 
 .board {
-  background-color: rgb(208, 210, 209);
+  background-color: var(--board-bg);
   display: grid;
   padding: 0.7em;
   grid-template-columns: repeat(12, 1fr);
@@ -67,11 +72,11 @@ main {
   gap: 0.5em;
   border-radius: 0.4em;
   margin-top: 5%;
-  margin-right: 15%;
+  margin-right: 26%;
 }
 
 .tiles-in-market {
-  background-color: rgb(100, 100, 100);
+  background-color: var(--occupied-tile-bg);
   color: white;
 }
 

@@ -1,21 +1,7 @@
 import { setupHotelSection } from "./bank_setup.js";
 import { addListenerToBoard } from "./board_events.js";
-import { renderUserSection } from "./render.js";
-
-const highlightPlayableTiles = (board, playerTiles) => {
-  playerTiles.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
-    tileContainer.classList.add("tiles-in-player-hand");
-  });
-};
-
-export const renderBoard = (tilesOnBoard) => {
-  const board = document.querySelector(".board");
-  tilesOnBoard.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
-    tileContainer.classList.add("tiles-in-market");
-  });
-};
+import { renderBoard, renderUserSection } from "./render.js";
+import { highlightPlayableTiles } from "./utils.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
