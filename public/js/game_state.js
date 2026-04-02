@@ -1,4 +1,4 @@
-import { postData } from "./controllers.js";
+import { postData } from "./request.js";
 
 export const updateTiles = async (tile) => {
   const updatedTiles = await postData(

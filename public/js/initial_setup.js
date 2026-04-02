@@ -1,24 +1,19 @@
 import { addListenerToBoard } from "./board_events.js";
+import { renderBankSection, renderUserSection } from "./render.js";
 
-const focusPlayerTiles = (board, playerTiles) => {
+const highlightPlayableTiles = (board, playerTiles) => {
   playerTiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-player-hand");
   });
 };
 
-export const renderBoard = (tilesOnBoard, playerTiles) => {
+export const renderBoard = (tilesOnBoard) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-market");
   });
-  renderPlayerTiles(playerTiles);
-};
-
-const putInitialAmount = (amount) => {
-  const amountContainer = document.querySelector(".amount-container p");
-  amountContainer.innerText = `$${amount}`;
 };
 
 const createTileElement = (tile) => {
@@ -29,13 +24,6 @@ const createTileElement = (tile) => {
   p.textContent = tile;
   tileContainer.append(p);
   return tileContainer;
-};
-
-const renderPlayerTiles = (playerTiles) => {
-  const tilesContainer = document.querySelector(".tiles");
-  const playerTileElements = playerTiles.map(createTileElement);
-  tilesContainer.innerHTML = "";
-  tilesContainer.append(...playerTileElements);
 };
 
 export const createBoard = () => {
@@ -49,11 +37,12 @@ export const createBoard = () => {
   }
 };
 
-export const initialBoardSetup = (initialData) => {
-  const { tilesOnBoard, amount, playerTiles } = initialData;
+export const initialiseGameSetup = (initialData) => {
+  const { tilesOnBoard, amount, bankData, playerTiles } = initialData;
   const board = document.querySelector(".board");
-  focusPlayerTiles(board, playerTiles);
+  highlightPlayableTiles(board, playerTiles);
   renderBoard(tilesOnBoard, playerTiles);
-  putInitialAmount(amount);
+  renderUserSection({ amount, playerTiles });
+  renderBankSection(bankData);
   addListenerToBoard(playerTiles);
 };

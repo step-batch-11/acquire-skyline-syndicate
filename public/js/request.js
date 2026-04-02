@@ -1,5 +1,5 @@
-export const fetchData = async () => {
-  const response = await fetch("/initial-setup");
+export const fetchData = async (route) => {
+  const response = await fetch(route);
   return await response.json();
 };
 

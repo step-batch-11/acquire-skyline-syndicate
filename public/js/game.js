@@ -1,10 +1,8 @@
-import { initBank } from "./bank_setup.js";
-import { createBoard, initialBoardSetup } from "./initial_setup.js";
-import { fetchData } from "./controllers.js";
+import { createBoard, initialiseGameSetup } from "./initial_setup.js";
+import { fetchData } from "./request.js";
 
 globalThis.onload = async () => {
-  const initialData = await fetchData();
   createBoard();
-  initialBoardSetup(initialData);
-  initBank(initialData.bankData);
+  const initialData = await fetchData("/initial-setup");
+  initialiseGameSetup(initialData);
 };

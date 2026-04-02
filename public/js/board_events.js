@@ -1,20 +1,35 @@
-import { postData } from "./controllers.js";
-import { handleAssignTile, handlePlacingTile } from "./event_handlers.js";
+import { postData } from "./request.js";
+import { handleAssignTile, handleTilePlacement } from "./event_handlers.js";
+import { canPlaceTile } from "./validators.js";
+
+const hotelFoundationListener = (
+  e,
+  hotelToFound,
+  tileContainer,
+  bankContainer,
+) => {
+  e.preventDefault();
+  postData("/build-hotel", { hotelToFound });
+  tileContainer.classList.add(`${hotelToFound}-icon`);
+  bankContainer.removeEventListener("click", selectHotel);
+  handleAssignTile();
+};
 
 export const buildAHotel = (tileContainer) => {
   alert("build hotel");
   const bankContainer = document.querySelector(".bank");
-  let hotel = "";
+  const foundBtn = bankContainer.querySelector("#found");
+  foundBtn.classList.remove("hidden");
+  let hotelToFound = "";
   const selectHotel = (e) => {
     e.preventDefault();
-    if (e.target.id === "confirm") {
-      postData("/build-hotel", { hotel });
-      tileContainer.classList.add(`${hotel}-icon`);
-      bankContainer.removeEventListener("click", selectHotel);
-      handleAssignTile();
-    }
-    hotel = event.target.parentNode.id;
+    hotelToFound = event.target.parentNode.id;
   };
+  foundBtn.addEventListener(
+    "click",
+    (e) =>
+      hotelFoundationListener(e, hotelToFound, tileContainer, bankContainer),
+  );
   bankContainer.addEventListener("click", selectHotel);
 };
 
@@ -26,11 +41,13 @@ export const eventsForPlacingATile = {
 export const addListenerToBoard = (tilesInPlayerHand) => {
   const board = document.querySelector(".board");
 
-  const listener = (event) => {
+  const tileSelectionListener = (event) => {
     const tileContainer = event.target.closest("div");
-    handlePlacingTile(board, tileContainer, tilesInPlayerHand);
-    board.removeEventListener("click", listener);
+    if (canPlaceTile(tileContainer, tilesInPlayerHand)) {
+      handleTilePlacement(board, tileContainer, tilesInPlayerHand);
+      board.removeEventListener("click", tileSelectionListener);
+    }
   };
 
-  board.addEventListener("click", listener);
+  board.addEventListener("click", tileSelectionListener);
 };
