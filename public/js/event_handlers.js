@@ -3,6 +3,8 @@ import { assignNewTiles, updateTiles } from "./game_state.js";
 import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
 import { removeFocus } from "./utils.js";
 
+const noOp = () => {};
+
 export const handleTilePlacement = async (
   board,
   tileContainer,
@@ -10,11 +12,12 @@ export const handleTilePlacement = async (
 ) => {
   const tile = tileContainer.id.split("-")[1];
 
-  const { tilesOnBoard, playerTiles, action } = await updateTiles(tile);
+  const updatedTiles = await updateTiles(tile);
   removeFocus(board, tilesInPlayerHand);
-  renderBoard(tilesOnBoard);
-  renderTilesInHand(playerTiles);
-  eventsForPlacingATile[action](tileContainer);
+  renderBoard(updatedTiles.tilesOnBoard);
+  renderTilesInHand(updatedTiles.playerTiles);
+  const action = eventsForPlacingATile[updatedTiles.action] || noOp;
+  action(tileContainer);
 };
 
 export const handleAssignTile = async () => {

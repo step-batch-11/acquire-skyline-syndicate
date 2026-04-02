@@ -24,7 +24,7 @@ export const createBoard = () => {
   }
 };
 
-export const initialiseGameSetup = (initialData) => {
+export const initializeGameSetup = (initialData) => {
   const { tilesOnBoard, amount, bankData, playerTiles } = initialData;
   const board = document.querySelector(".board");
   highlightPlayableTiles(board, playerTiles);
