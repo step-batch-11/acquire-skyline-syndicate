@@ -45,4 +45,3 @@ export const handleCartUpdation = (action, parent) => {
     clickActions[action](parent);
   }
 };
-
