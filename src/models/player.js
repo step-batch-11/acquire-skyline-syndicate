@@ -31,6 +31,7 @@ export class Player {
   removeTile(tile) {
     const tileIndex = this.#tiles.indexOf(tile);
     this.#tiles.splice(tileIndex, 1);
+    return [...this.#tiles];
   }
 
   addNewTile(tile) {

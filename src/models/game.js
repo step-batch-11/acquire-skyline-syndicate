@@ -24,4 +24,12 @@ export class Game {
       tilesOnBoard: this.#board.getPlacedTiles(),
     };
   }
+
+  placeTile(tile) {
+    const tilesOnBoard = this.#board.getPlacedTiles();
+    tilesOnBoard.push(tile);
+    const playerTiles = this.#player.removeTile(tile);
+    console.log(playerTiles);
+    return { playerTiles, tilesOnBoard };
+  }
 }
