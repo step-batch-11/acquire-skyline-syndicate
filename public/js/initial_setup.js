@@ -1,6 +1,6 @@
 import { setupHotelSection } from "./bank_setup.js";
 import { addListenerToBoard } from "./board_events.js";
-import { renderBoard, renderUserSection } from "./render.js";
+import { renderBoard, renderUserSection } from "./ui_renderers.js";
 import { highlightPlayableTiles } from "./utils.js";
 
 const createTileElement = (tile) => {

@@ -1,5 +1,5 @@
 import { handleAssignTile } from "./event_handlers.js";
-import { handleCartUpdation } from "./handlers.js";
+import { handleCartUpdation } from "./event_handlers.js";
 import { postData } from "./request.js";
 import { extractSelectedStocks } from "./utils.js";
 
