@@ -1,5 +1,6 @@
+import { setupHotelSection } from "./bank_setup.js";
 import { addListenerToBoard } from "./board_events.js";
-import { renderBankSection, renderUserSection } from "./render.js";
+import { renderUserSection } from "./render.js";
 
 const highlightPlayableTiles = (board, playerTiles) => {
   playerTiles.forEach((tile) => {
@@ -43,6 +44,6 @@ export const initialiseGameSetup = (initialData) => {
   highlightPlayableTiles(board, playerTiles);
   renderBoard(tilesOnBoard, playerTiles);
   renderUserSection({ amount, playerTiles });
-  renderBankSection(bankData);
+  setupHotelSection(bankData);
   addListenerToBoard(playerTiles);
 };

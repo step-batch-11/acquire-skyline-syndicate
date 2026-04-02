@@ -15,7 +15,7 @@ const clickActions = {
   "decr": decrementStocks,
 };
 
-export const handleClickActions = (e) => {
+export const cartListener = (e) => {
   const action = e.target.dataset.action;
   const parent = e.target.parentElement;
   if (action in clickActions) {
