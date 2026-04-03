@@ -41,6 +41,11 @@ export class Player {
     return this.getTileIds();
   }
 
+  addStocks(hotelName, noOfStocks) {
+    this.#stocks[hotelName] = this.#stocks[hotelName] || 0;
+    this.#stocks[hotelName] += noOfStocks;
+  }
+
   addNewTile(tile) {
     this.#tiles.push(...tile);
     return this.getTileIds();
