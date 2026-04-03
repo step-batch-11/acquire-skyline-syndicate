@@ -43,10 +43,20 @@ export class Game {
     return true;
   }
 
+  #isExpansion(tileId) {
+    return (
+      this.#hotels.isTileInAnyHotel(tileId) &&
+      this.#board.hasAdjacentForLastTile()
+    );
+  }
+
   placeTile(tileId) {
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
+
+      if (this.#isExpansion(tileId)) this.expandHotel(tileId);
+
       const playerTiles = this.#player.removeTile(tileId);
       return {
         playerTiles,
@@ -60,6 +70,11 @@ export class Game {
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: "NO_ACTION",
     };
+  }
+
+  expandHotel(tileId) {
+    this.#hotels.expand(tileId);
+    this.#state = "EXPAND_HOTEL";
   }
 
   buildHotel(hotelName) {

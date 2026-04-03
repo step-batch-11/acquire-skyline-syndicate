@@ -12,7 +12,6 @@ const buildHotel = async (c) => {
   const { hotelToFound } = await c.req.json();
   const game = c.get("game");
   game.buildHotel(hotelToFound);
-
   return c.json(game.currentState());
 };
 

@@ -24,15 +24,22 @@ export const listenerForHotelSelection = (e) => {
   return event.target.parentNode.id;
 };
 
-export const listenerForFoundingHotel = (
+export const listenerForFoundingHotel = async (
   e,
   hotelToFound,
   tileContainer,
   bankContainer,
 ) => {
   e.preventDefault();
-  postData("/turn/buildHotel", { hotelToFound });
+  const { hotels, tilesOnBoard } = await postData("/turn/buildHotel", {
+    hotelToFound,
+  });
   tileContainer.classList.add(`${hotelToFound}-icon`);
   bankContainer.removeEventListener("click", listenerForHotelSelection);
+
+  const foundBtn = bankContainer.querySelector("#found");
+  foundBtn.classList.add("hidden");
+  renderBankSection(hotels);
+  renderBoard(tilesOnBoard);
   handleAssignTile();
 };

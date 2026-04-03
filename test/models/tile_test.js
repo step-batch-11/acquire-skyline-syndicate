@@ -40,5 +40,35 @@ describe("TILE", () => {
 
       assertEquals(tile1.isNeighbouringTile(tile2), false);
     });
+    it("should return false for the lower right diagonal tile", () => {
+      const tile1 = new Tile("4f");
+      const tile2 = new Tile("5g");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), false);
+    });
+    it("should return false for the lower left diagonal tile", () => {
+      const tile1 = new Tile("6d");
+      const tile2 = new Tile("5e");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), false);
+    });
+    it("should return false for the left upper diagonal tile", () => {
+      const tile1 = new Tile("8g");
+      const tile2 = new Tile("7f");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), false);
+    });
+    it("should return false for the right upper diagonal tile", () => {
+      const tile1 = new Tile("10c");
+      const tile2 = new Tile("11b");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), false);
+    });
+    it("should return false for the right upper diagonal tile", () => {
+      const tile1 = new Tile("10h");
+      const tile2 = new Tile("11g");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), false);
+    });
   });
 });

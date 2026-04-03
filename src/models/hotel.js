@@ -24,7 +24,11 @@ export class Hotel {
   }
 
   addTiles(tiles) {
-    this.#tiles.push(...tiles);
+    this.#tiles.push(...[...tiles, this.#originTile]);
+  }
+
+  getTiles() {
+    return [...this.#tiles];
   }
 
   setOriginTile(originTile) {
@@ -34,7 +38,7 @@ export class Hotel {
   #calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
-    return numberOfTiles * 100 + this.#priceOffset;
+    return (numberOfTiles * 100) + this.#priceOffset;
   }
 
   getState() {
@@ -49,6 +53,10 @@ export class Hotel {
     };
   }
 
+  tileIncludes(tile) {
+    return this.#tiles.some((hotelTile) => hotelTile.id === tile);
+  }
+
   isActive() {
     return this.#tiles.length > 0;
   }
@@ -60,5 +68,6 @@ export class Hotel {
   found(originTile, adjacentTiles) {
     this.setOriginTile(originTile);
     this.addTiles(adjacentTiles);
+    this.decreaseStockCount(1);
   }
 }

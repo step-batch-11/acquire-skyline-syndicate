@@ -51,12 +51,12 @@
         <div class="notification-box"></div>
         <div class="player-market">
           <div class="players">
-            <div class="player" id="player-1"></div>
-            <div class="player" id="player-2"></div>
-            <div class="player" id="player-3"></div>
-            <div class="player" id="player-4"></div>
-            <div class="player" id="player-5"></div>
-            <div class="player" id="player-6"></div>
+            <template id="player-template">
+              <div class="player-container">
+                <div class="player-profile"></div>
+                <div class="player-name"></div>
+              </div>
+            </template>
           </div>
           <div class="board"></div>
         </div>
@@ -69,36 +69,7 @@
       <div class="amount-container">
         <p></p>
       </div>
-      <div class="stocks">
-        <!-- <div class="stock continental">
-          <h3 class="stock-heading">continental</h3>
-          <span>0</span>
-        </div>
-        <div class="stock imperial">
-          <h3 class="stock-heading">imperial</h3>
-          <span>0</span>
-        </div>
-        <div class="stock festival">
-          <h3 class="stock-heading">festival</h3>
-          <span>0</span>
-        </div>
-        <div class="stock american">
-          <h3 class="stock-heading">american</h3>
-          <span>0</span>
-        </div>
-        <div class="stock worldwide">
-          <h3 class="stock-heading">worldwide</h3>
-          <span>0</span>
-        </div>
-        <div class="stock sackson">
-          <h3 class="stock-heading">sackson</h3>
-          <span>0</span>
-        </div>
-        <div class="stock tower">
-          <h3 class="stock-heading">tower</h3>
-          <span>0</span>
-        </div> -->
-      </div>
+      <div class="stocks"></div>
       <div class="tiles tiles-in-hand"></div>
     </footer>
   </body>
