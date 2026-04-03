@@ -1,5 +1,6 @@
 export class Board {
   #placedTiles;
+  lastTile;
 
   constructor() {
     this.#placedTiles = [];
@@ -9,7 +10,8 @@ export class Board {
     return [...this.#placedTiles];
   }
 
-  place(tileId) {
-    this.#placedTiles.push(tileId);
+  place(tile) {
+    this.#placedTiles.push(tile);
+    this.lastTile = tile;
   }
 }

@@ -13,7 +13,7 @@ const createTileElement = (tile) => {
 export const renderBoard = (tilesOnBoard) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
+    const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
 };

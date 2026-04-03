@@ -37,7 +37,8 @@ export class Player {
     return this.getTiles(this.#tiles);
   }
 
-  addNewTile(tileId) {
-    this.#tiles.push(tileId);
+  addNewTile(tile) {
+    this.#tiles.push(...tile);
+    return this.getTiles(this.#tiles);
   }
 }

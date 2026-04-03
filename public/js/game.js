@@ -3,8 +3,6 @@ import { startGame } from "./request.js";
 
 globalThis.onload = async () => {
   const initialData = await startGame();
-  console.log(initialData);
-
   createBoard();
   initializeGameSetup(initialData);
 };
