@@ -6,6 +6,11 @@ export class Board {
     this.#placedTiles = [];
   }
 
+  isTileOnBoard(tileId) {
+    const placedTileIds = this.#placedTiles.map((tile) => tile.id);
+    return placedTileIds.includes(tileId);
+  }
+
   getPlacedTiles() {
     return [...this.#placedTiles];
   }

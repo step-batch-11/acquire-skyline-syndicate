@@ -29,12 +29,29 @@ export class Game {
     };
   }
 
+  isValidTilePlacement(tileId) {
+    if (!this.#player.isPlayerTile(tileId)) return false;
+    if (this.#board.isTileOnBoard(tileId)) return false;
+    return true;
+  }
+
   placeTile(tileId) {
-    this.#board.place(new Tile(tileId));
-    this.#state = "BUILD_HOTEL";
-    const playerTiles = this.#player.removeTile(tileId);
+    console.log(this.isValidTilePlacement(tileId));
+    
+    if (this.isValidTilePlacement(tileId)) {
+
+      this.#board.place(new Tile(tileId));
+      this.#state = "BUILD_HOTEL";
+      const playerTiles = this.#player.removeTile(tileId);
+      return {
+        playerTiles,
+        tilesOnBoard: this.#board.getPlacedTiles(),
+        state: this.#state,
+      };
+    }
+
     return {
-      playerTiles,
+      playerTiles: this.#player.getTileIds(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
     };
