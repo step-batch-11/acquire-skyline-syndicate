@@ -52,6 +52,7 @@ export class Hotel {
   isActive() {
     return this.#tiles.length > 0;
   }
+
   decreaseStockCount(count) {
     this.#stocks -= count;
   }
