@@ -39,4 +39,11 @@ export class Game {
       state: this.#state,
     };
   }
+
+  assignNewTile() {
+    const tile = this.#deck.drawTiles(1);
+    const playerTiles = this.#player.addNewTile(tile);
+    const tilesOnBoard = this.#board.getPlacedTiles();
+    return { playerTiles, tilesOnBoard };
+  }
 }

@@ -12,5 +12,12 @@ const placeTile = async (c) => {
 const buildHotel = async () => {
 };
 
+const assignNewTile = (c) => {
+  const game = c.get("game");
+  return c.json(game.assignNewTile());
+};
+
 turn.post("/placeTile", placeTile);
 turn.post("/buildHotel", buildHotel);
+turn.post("/assignNewTileToPlayer", assignNewTile);
+  
