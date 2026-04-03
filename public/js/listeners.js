@@ -1,6 +1,7 @@
 import { handleAssignTile } from "./event_handlers.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { postData } from "./request.js";
+import { renderBankSection } from "./ui_renderers.js";
 import { extractSelectedStocks } from "./utils.js";
 
 export const listenerForCart = (e) => {
@@ -13,8 +14,8 @@ export const listenerForBuyingStocks = async (e) => {
   e.preventDefault();
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  const response = await postData("/turn/buy-stocks", cart);
-  console.log(response);
+  const { hotels } = await postData("/turn/buy-stocks", cart);
+  renderBankSection(hotels);
 };
 
 export const listenerForHotelSelection = (e) => {

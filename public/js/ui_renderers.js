@@ -57,7 +57,7 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tiles, stocksLeft, stockPrice }, bankSection) => {
+const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
@@ -67,18 +67,16 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice }, bankSection) => {
   hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
   hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
 
-  bankSection.append(hotelCard);
+  return hotelCard;
 };
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
+  const hotelCards = hotels.map(addHotelData);
 
-  hotels.forEach((hotel) => {
-    addHotelData(hotel, bankSection);
-  });
+  bankSection.replaceChildren(...hotelCards);
   const button = createTradeConfirmationBtn();
   const buyButton = createBuyButton();
-  console.log(buyButton);
   bankSection.append(button);
   bankSection.append(buyButton);
 };
