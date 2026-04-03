@@ -24,7 +24,7 @@ export class Hotel {
   }
 
   addTiles(tiles) {
-    this.#tiles.push(...tiles);
+    this.#tiles.push(...[...tiles, this.#originTile]);
   }
 
   setOriginTile(originTile) {
@@ -34,7 +34,7 @@ export class Hotel {
   #calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
-    return numberOfTiles * 100 + this.#priceOffset;
+    return (numberOfTiles * 100) + this.#priceOffset;
   }
 
   getState() {

@@ -33,5 +33,8 @@ export const listenerForFoundingHotel = (
   postData("/turn/buildHotel", { hotelToFound });
   tileContainer.classList.add(`${hotelToFound}-icon`);
   bankContainer.removeEventListener("click", listenerForHotelSelection);
+
+  const foundBtn = bankContainer.querySelector("#found");
+  foundBtn.classList.add("hidden");
   handleAssignTile();
 };

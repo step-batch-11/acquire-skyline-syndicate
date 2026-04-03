@@ -46,6 +46,7 @@ export class Game {
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
+      console.log(this.#state);
       const playerTiles = this.#player.removeTile(tileId);
       return {
         playerTiles,
