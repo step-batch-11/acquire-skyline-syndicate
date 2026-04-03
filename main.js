@@ -39,6 +39,7 @@ const main = () => {
   const game = new Game(deck, board, hotelsManager, player);
   game.init();
   const app = createApp(service, gameEngine, game);
+  debugger;
   Deno.serve({ port }, app.fetch);
 };
 

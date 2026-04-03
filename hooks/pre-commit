@@ -3,5 +3,6 @@
 set -e
 deno lint --fix
 deno test -A
+deno fmt
 deno fmt --check
 deno task test:coverage

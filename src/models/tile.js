@@ -7,7 +7,7 @@ export class Tile {
   }
 
   isNeighbouringTile(tile) {
-    return this.#isNeighbourByRow(tile) || this.#isNeighbourByColumn(tile);
+    return Boolean(this.#isNeighbourByRow(tile) ^ this.#isNeighbourByColumn(tile));
   }
 
   #labelIndex(tileId) {

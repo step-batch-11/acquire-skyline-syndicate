@@ -15,6 +15,12 @@ export class Board {
     this.lastTile = tile;
   }
 
+  hasAdjacentForLastTile() {
+    return this.#placedTiles.some((placedTile) =>
+      this.lastTile.isNeighbouringTile(placedTile)
+    );
+  }
+
   adjacentTiles(tile) {
     return this.#placedTiles.filter((placedTile) =>
       placedTile.isNeighbouringTile(tile)

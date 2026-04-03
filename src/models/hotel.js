@@ -45,8 +45,12 @@ export class Hotel {
       stocksLeft: this.#stocks,
       stockPrice,
       originTile: this.#originTile,
-      isActive: this.#tiles.length > 0,
+      isActive: this.isActive(),
     };
+  }
+
+  isActive() {
+    return this.#tiles.length > 0;
   }
 
   found(originTile, adjacentTiles) {
