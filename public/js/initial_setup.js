@@ -1,5 +1,6 @@
 import { setupHotelSection } from "./bank_setup.js";
 import { addListenerToBoard } from "./board_events.js";
+import { renderPlayers } from "./players_sections.js";
 import { renderBoard, renderUserSection } from "./ui_renderers.js";
 import { highlightPlayableTiles } from "./utils.js";
 
@@ -27,6 +28,9 @@ export const createBoard = () => {
 export const initializeGameSetup = (initialData) => {
   const { tilesOnBoard, player, hotels } = initialData;
   const board = document.querySelector(".board");
+  const players = [{ "name": "player1" }, { "name": "player2" }];
+  const currentPlayer = { "name": "player1" };
+  renderPlayers(players, currentPlayer);
   highlightPlayableTiles(board, player.tiles);
   renderBoard(tilesOnBoard, player.tiles);
   renderUserSection(player);
