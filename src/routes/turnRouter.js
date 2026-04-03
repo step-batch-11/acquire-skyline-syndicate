@@ -20,4 +20,3 @@ const assignNewTile = (c) => {
 turn.post("/placeTile", placeTile);
 turn.post("/buildHotel", buildHotel);
 turn.post("/assignNewTileToPlayer", assignNewTile);
-  
