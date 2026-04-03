@@ -37,4 +37,8 @@ export class Hotel {
       price,
     };
   }
+
+  decreaseStockCount(count){
+    this.#stocks -= count;
+  }
 }

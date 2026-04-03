@@ -9,11 +9,12 @@ export const listenerForCart = (e) => {
   handleCartUpdation(action, parent);
 };
 
-export const listenerForBuyingStocks = (e) => {
+export const listenerForBuyingStocks = async (e) => {
   e.preventDefault();
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  postData("/turn/buy-stocks", cart)
+  const response = await postData("/turn/buy-stocks", cart);
+  console.log(response);
 };
 
 export const listenerForHotelSelection = (e) => {

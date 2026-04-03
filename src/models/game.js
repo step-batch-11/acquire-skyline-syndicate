@@ -47,7 +47,10 @@ export class Game {
     return { playerTiles, tilesOnBoard };
   }
 
-  buyStocks() {
-    return {};
+  buyStocks(cart) {
+    this.#hotels.decreaseHotelStocks(cart);
+    const hotels = this.#hotels.getHotels();
+    debugger;
+    return { hotels };
   }
 }

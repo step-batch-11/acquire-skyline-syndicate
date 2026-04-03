@@ -3,18 +3,18 @@
 - [/login](#login)
 
 - /lobby
-    - [/create](#lobbycreate)
-    - [/join](#lobbyjoin) 
-    - [/startGame](#lobbystartgame)
+  - [/create](#lobbycreate)
+  - [/join](#lobbyjoin)
+  - [/startGame](#lobbystartgame)
 
 - [/currentGameState](#currentgamestate)
 
-- /turn 
-    - [/placeTile](#turnplacetile)
-    - [/buildHotel](#turnbuildhotel)
-    - [/buyStock](#turnbuystocks)
-    - [/assignTileToPlayer](#turnassigntiletoplayer)
-    - [/merge]
+- /turn
+  - [/placeTile](#turnplacetile)
+  - [/buildHotel](#turnbuildhotel)
+  - [/buyStock](#turnbuystocks)
+  - [/assignTileToPlayer](#turnassigntiletoplayer)
+  - [/merge]
 
 /shiftTurn
 
@@ -101,7 +101,6 @@ headers: cookie(sessionId)
 action: fetches the current board state, player hand based on sessionId, current hotels, players' order
 
 response: provides the current board state, current player, player hand based on sessionId, current hotels, players' order
-
 ```
 
 ### /turn/placeTile
@@ -147,7 +146,6 @@ headers: coookie(sessionId)
 action: adds stocks of particular hotel to the player's hand, deducts money from the player, deducts stocks from the hotel
 
 response: gives updated player's hand back
-
 ```
 
 ### /turn/assignTileToPlayer
@@ -162,7 +160,6 @@ headers: coookie(sessionId)
 action: assigns a random tile to the current player
 
 respnse: gives updated player's hand back
-
 ```
 
 ### /shiftTurn
@@ -177,3 +174,4 @@ headers: coookie(sessionId)
 action: shifts the turn from current player to next player
 
 response: gives back the current player
+```

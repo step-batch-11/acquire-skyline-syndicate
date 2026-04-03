@@ -5,7 +5,6 @@ export const turn = new Hono();
 const placeTile = async (c) => {
   const { tile } = await c.req.json();
   const game = c.get("game");
-
   return c.json(game.placeTile(tile));
 };
 
@@ -19,7 +18,8 @@ const assignNewTile = (c) => {
 const buyStocks = async (c) => {
   const cart = await c.req.json();
   const game = c.get("game");
-  return c.json(game.buyStocks(cart));
+  const res = game.buyStocks(cart);
+  return c.json(res);
 };
 
 turn.post("/placeTile", placeTile);
