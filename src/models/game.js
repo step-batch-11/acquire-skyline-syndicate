@@ -4,14 +4,16 @@ export class Game {
   #deck;
   #board;
   #hotels;
-  #player;
+  #currentPlayer;
   #state;
+  #players;
 
-  constructor(deck, board, hotels, player) {
+  constructor(deck, board, hotels, players) {
     this.#deck = deck;
     this.#board = board;
     this.#hotels = hotels;
-    this.#player = player;
+    this.#currentPlayer = players[0];
+    this.#players = players;
     this.#state = "";
   }
 
@@ -19,15 +21,16 @@ export class Game {
     const initialBoardTiles = this.#deck.drawTiles(6);
     const initialPlayerTiles = this.#deck.drawTiles(6);
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
-    this.#player.addInitialTiles(initialPlayerTiles);
+    this.#currentPlayer.addInitialTiles(initialPlayerTiles);
   }
 
   currentState() {
     return {
-      player: this.#player.getDetails(),
+      currentPlayer: this.#currentPlayer.getDetails(),
       hotels: this.#hotels.getHotels(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
+      players: this.#players.map((player) => player.getDetails()),
     };
   }
 
@@ -38,7 +41,7 @@ export class Game {
   }
 
   isValidTilePlacement(tileId) {
-    if (!this.#player.isPlayerTile(tileId)) return false;
+    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
     return true;
   }
@@ -57,7 +60,7 @@ export class Game {
 
       if (this.#isExpansion(tileId)) this.expandHotel(tileId);
 
-      const playerTiles = this.#player.removeTile(tileId);
+      const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
         playerTiles,
         tilesOnBoard: this.#board.getPlacedTiles(),
@@ -66,7 +69,7 @@ export class Game {
     }
 
     return {
-      playerTiles: this.#player.getTileIds(),
+      playerTiles: this.#currentPlayer.getTileIds(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: "NO_ACTION",
     };
@@ -81,12 +84,12 @@ export class Game {
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTiles(lastTile);
     this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
-    this.#player.addStocks(hotelName, 1);
+    this.#currentPlayer.addStocks(hotelName, 1);
   }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    const playerTiles = this.#player.addNewTile(tile);
+    const playerTiles = this.#currentPlayer.addNewTile(tile);
     const tilesOnBoard = this.#board.getPlacedTiles();
     return { playerTiles, tilesOnBoard };
   }

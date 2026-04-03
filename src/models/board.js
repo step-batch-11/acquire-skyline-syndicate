@@ -12,7 +12,7 @@ export class Board {
   }
 
   getPlacedTiles() {
-    return [...this.#placedTiles];
+    return this.#placedTiles.map((tile) => ({ id: tile.id }));
   }
 
   place(tile) {
