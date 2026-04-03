@@ -5,15 +5,37 @@ import { Hotels } from "../../src/models/hotels.js";
 describe("Hotels entity tests", () => {
   describe("get hotels method", () => {
     it("should return the information about all the hotels", () => {
-      const hotels = [{ name: "sackson", scale: 0 }, {
-        name: "Tower",
-        scale: 0,
-      }];
+      const hotels = [
+        { name: "sackson", scale: 0 },
+        {
+          name: "Tower",
+          scale: 0,
+        },
+      ];
       const hotelsInstance = Hotels.instantiateHotels(hotels);
       const hotelsInfo = hotelsInstance.getHotels();
       assertEquals(hotelsInfo.length, 2);
       assertEquals(hotelsInfo[0].name, "sackson");
       assertEquals(hotelsInfo[1].name, "Tower");
     });
+  });
+
+  it("decrease the hotel stocks in the hotel inventory", () => {
+    const hotels = [
+      { name: "sackson", scale: 0 },
+      {
+        name: "Tower",
+        scale: 0,
+      },
+    ];
+
+    const hotelsInstance = Hotels.instantiateHotels(hotels);
+    hotelsInstance.decreaseHotelStocks([
+      { hotelName: "sackson", selectedStocks: 2 },
+    ]);
+
+    const hotelsInfo = hotelsInstance.getHotels();
+    assertEquals(hotelsInfo[0].name, "sackson");
+    assertEquals(hotelsInfo[0].stocksLeft, 23);
   });
 });
