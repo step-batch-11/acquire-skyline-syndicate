@@ -13,4 +13,14 @@ describe("Hotel entity tests", () => {
       assertEquals(hotelDetails.stocksLeft, 25);
     });
   });
+
+  it("decrease the hotel stocks", () => {
+    const hotelName = "Sackson";
+    const scale = 0;
+    const hotel = new Hotel(hotelName, scale);
+    hotel.decreaseStockCount(2);
+    const hotelDetails = hotel.getState();
+    assertEquals(hotelDetails.name, hotelName);
+    assertEquals(hotelDetails.stocksLeft, 23);
+  });
 });

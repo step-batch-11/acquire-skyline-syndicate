@@ -9,20 +9,10 @@ describe("App test", () => {
   let service;
   let app;
   beforeEach(() => {
-    service = new Services([
-      "1a",
-      "1b",
-      "1c",
-      "1d",
-      "1e",
-      "1f",
-      "1g",
-      "1h",
-      "1i",
-      "2a",
-      "2b",
-      "2c",
-    ], bankData);
+    service = new Services(
+      ["1a", "1b", "1c", "1d", "1e", "1f", "1g", "1h", "1i", "2a", "2b", "2c"],
+      bankData,
+    );
     const engine = new GameEngine();
     app = createApp(service, engine);
   });
