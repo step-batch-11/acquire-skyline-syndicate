@@ -19,4 +19,10 @@ export class Board {
     this.#placedTiles.push(tile);
     this.lastTile = tile;
   }
+
+  adjacentTiles(tile) {
+    return this.#placedTiles.filter((placedTile) =>
+      placedTile.isNeighbouringTile(tile)
+    );
+  }
 }

@@ -47,14 +47,14 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tileCount, stocksLeft, price }, bankSection) => {
+const addHotelData = ({ name, tiles, stocksLeft, stockPrice }, bankSection) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
   hotelCard.querySelector(".hotel-name").textContent = name;
-  hotelCard.querySelector("#price").textContent = `$ ${price}`;
-  hotelCard.querySelector("#tiles").textContent = `🧱 ${tileCount}`;
+  hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
+  hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
   hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
 
   bankSection.append(hotelCard);

@@ -28,7 +28,7 @@ export const listenerForFoundingHotel = (
   bankContainer,
 ) => {
   e.preventDefault();
-  postData("/build-hotel", { hotelToFound });
+  postData("/turn/buildHotel", { hotelToFound });
   tileContainer.classList.add(`${hotelToFound}-icon`);
   bankContainer.removeEventListener("click", listenerForHotelSelection);
   handleAssignTile();
