@@ -13,15 +13,15 @@ export class Player {
     this.#stocks = {};
   }
 
-  getTiles(tiles) {
-    return tiles.map((tile) => tile.id);
+  getTiles() {
+    return this.#tiles.map((tile) => tile.id);
   }
 
   getDetails() {
     return {
       id: this.#id,
       name: this.#name,
-      tiles: structuredClone(this.getTiles(this.#tiles)),
+      tiles: structuredClone(this.getTiles()),
       money: this.#money,
       stocks: structuredClone(this.#stocks),
     };
@@ -34,11 +34,11 @@ export class Player {
   removeTile(tileId) {
     const tileIndex = this.#tiles.findIndex(({ id }) => id === tileId);
     this.#tiles.splice(tileIndex, 1);
-    return this.getTiles(this.#tiles);
+    return this.getTiles();
   }
 
   addNewTile(tile) {
     this.#tiles.push(...tile);
-    return this.getTiles(this.#tiles);
+    return this.getTiles();
   }
 }
