@@ -60,6 +60,8 @@ const cloneElement = (templateId) => {
 const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
+  const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
+  hotelInfoContainer.classList.add(name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
   hotelCard.querySelector(".hotel-name").textContent = name;
