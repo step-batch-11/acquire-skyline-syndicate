@@ -49,4 +49,11 @@ export class Game {
     this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
     this.#player.addStocks(hotelName, 1);
   }
+
+  assignNewTile() {
+    const tile = this.#deck.drawTiles(1);
+    const playerTiles = this.#player.addNewTile(tile);
+    const tilesOnBoard = this.#board.getPlacedTiles();
+    return { playerTiles, tilesOnBoard };
+  }
 }

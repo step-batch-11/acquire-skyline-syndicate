@@ -31,14 +31,14 @@ export class Hotel {
     this.#originTile = originTile;
   }
 
-  calculateStockPrice() {
+  #calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
     return numberOfTiles * 100 + this.#priceOffset;
   }
 
   getState() {
-    const stockPrice = this.calculateStockPrice();
+    const stockPrice = this.#calculateStockPrice();
     return {
       name: this.#name,
       tiles: structuredClone(this.#tiles),
