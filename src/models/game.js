@@ -32,8 +32,9 @@ export class Game {
   }
 
   #isBuildPossible() {
-    return this.#hotels.isAnyInActiveHotel() &&
-      this.#board.hasAdjacentForLastTile();
+    return (
+      this.#hotels.isAnyInActiveHotel() && this.#board.hasAdjacentForLastTile()
+    );
   }
 
   isValidTilePlacement(tileId) {
@@ -43,8 +44,10 @@ export class Game {
   }
 
   #isExpansion(tileId) {
-    return this.#hotels.isTileInAnyHotel(tileId) &&
-      (this.#board.hasAdjacentForLastTile());
+    return (
+      this.#hotels.isTileInAnyHotel(tileId) &&
+      this.#board.hasAdjacentForLastTile()
+    );
   }
 
   placeTile(tileId) {

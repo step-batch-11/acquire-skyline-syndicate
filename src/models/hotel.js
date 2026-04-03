@@ -68,5 +68,6 @@ export class Hotel {
   found(originTile, adjacentTiles) {
     this.setOriginTile(originTile);
     this.addTiles(adjacentTiles);
+    this.decreaseStockCount(1);
   }
 }
