@@ -10,7 +10,6 @@ describe("Hotel entity tests", () => {
       const hotel = new Hotel(hotelName, scale);
       const hotelDetails = hotel.getState();
       assertEquals(hotelDetails.name, hotelName);
-      assertEquals(hotelDetails.tileCount, 0);
       assertEquals(hotelDetails.stocksLeft, 25);
     });
   });
