@@ -35,8 +35,10 @@ const main = () => {
   const deck = new Deck(shuffleTiles(tiles));
   const board = new Board();
   const hotelsManager = Hotels.instantiateHotels(hotels);
-  const player = new Player("Gopi", 1);
-  const game = new Game(deck, board, hotelsManager, player);
+  const players = ["player1", "player2"].map((playerName, id) =>
+    new Player(playerName, id)
+  );
+  const game = new Game(deck, board, hotelsManager, players);
   game.init();
   const app = createApp(service, gameEngine, game);
   Deno.serve({ port }, app.fetch);

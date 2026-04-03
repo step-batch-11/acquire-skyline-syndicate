@@ -26,16 +26,12 @@ export const createBoard = () => {
 };
 
 export const initializeGameSetup = (initialData) => {
-  const { tilesOnBoard, player, hotels } = initialData;
-  console.log(hotels);
-
+  const { tilesOnBoard, currentPlayer, hotels, players } = initialData;
   const board = document.querySelector(".board");
-  const players = [{ "name": "player1" }, { "name": "player2" }];
-  const currentPlayer = { "name": "player1" };
   renderPlayers(players, currentPlayer);
-  highlightPlayableTiles(board, player.tiles);
-  renderBoard(tilesOnBoard, player.tiles);
-  renderUserSection(player);
+  highlightPlayableTiles(board, currentPlayer.tiles);
+  renderBoard(tilesOnBoard, currentPlayer.tiles);
+  renderUserSection(currentPlayer);
   setupHotelSection(hotels);
-  addListenerToBoard(player.tiles);
+  addListenerToBoard(currentPlayer.tiles);
 };
