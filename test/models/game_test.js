@@ -39,7 +39,8 @@ describe("Game entity tests", () => {
   });
   describe("init method", () => {
     it("should return the initial data which game needs", () => {
-      const initialData = game.init();
+      game.init();
+      const initialData = game.currentState();
       assertEquals(initialData.player.name, "Gopi");
       assertEquals(initialData.player.tiles.length, 6);
       assertEquals(initialData.hotels.length, 2);
@@ -50,7 +51,8 @@ describe("Game entity tests", () => {
 
   describe("place tile method", () => {
     it("Should return the new player tiles after removing the placed tile", () => {
-      const initialData = game.init();
+      game.init();
+      const initialData = game.currentState();
       const tileToPlace = initialData.player.tiles[0];
       const result = game.placeTile(tileToPlace);
       assertEquals(result.playerTiles.length, 5);
@@ -60,7 +62,8 @@ describe("Game entity tests", () => {
 
   describe("Assign new tile method", () => {
     it("Should assign new Tile to the player and return the new player tile", () => {
-      const initialData = game.init();
+      game.init();
+      const initialData = game.currentState();
       const tileToPlace = initialData.player.tiles[0];
       game.placeTile(tileToPlace);
       const result = game.assignNewTile();

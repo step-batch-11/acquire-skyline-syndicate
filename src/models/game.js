@@ -38,8 +38,6 @@ export class Game {
   }
 
   placeTile(tileId) {
-    console.log(this.isValidTilePlacement(tileId));
-
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = "BUILD_HOTEL";
