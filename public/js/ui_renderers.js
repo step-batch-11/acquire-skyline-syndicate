@@ -83,7 +83,40 @@ export const renderBankSection = (hotels) => {
   bankSection.append(buyButton);
 };
 
-export const renderUserSection = ({ money, tiles }) => {
+const renderHotelStock = (hotel, stocks) => {
+  const stockTemplate = cloneElement("#stock-template");
+  const stockName = stockTemplate.querySelector(".stock-name");
+  stockName.textContent = hotel;
+  const stockCount = stockTemplate.querySelector(".count");
+  stockCount.textContent = 0;
+  stockTemplate.classList.add(hotel);
+
+  if (hotel in stocks) {
+    stockCount.textContent = stocks[hotel];
+  } else {
+    stockTemplate.classList.add("blur");
+  }
+
+  return stockTemplate;
+};
+
+const renderHeldStocks = (stocks) => {
+  const hotels = [
+    "tower",
+    "imperial",
+    "continental",
+    "american",
+    "festival",
+    "sackson",
+    "worldwide",
+  ];
+  const stockCards = hotels.map((hotel) => renderHotelStock(hotel, stocks));
+  const stocksSection = document.querySelector(".stocks");
+  stocksSection.replaceChildren(...stockCards);
+};
+
+export const renderUserSection = ({ money, tiles, stocks }) => {
   renderTilesInHand(tiles);
   displayInitialAmount(money);
+  renderHeldStocks(stocks);
 };

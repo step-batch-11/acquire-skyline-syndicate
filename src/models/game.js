@@ -32,8 +32,9 @@ export class Game {
   }
 
   #isBuildPossible() {
-    return this.#hotels.isAnyInActiveHotel() &&
-      this.#board.hasAdjacentForLastTile();
+    return (
+      this.#hotels.isAnyInActiveHotel() && this.#board.hasAdjacentForLastTile()
+    );
   }
 
   isValidTilePlacement(tileId) {
@@ -78,6 +79,11 @@ export class Game {
   buyStocks(cart) {
     this.#hotels.decreaseHotelStocks(cart);
     const hotels = this.#hotels.getHotels();
-    return { hotels };
+    cart.forEach(({ hotelName, selectedStocks }) =>
+      this.#player.addStocks(hotelName.toLowerCase(), selectedStocks)
+    );
+
+    const playerInfo = this.#player.getDetails();
+    return { hotels, playerInfo };
   }
 }

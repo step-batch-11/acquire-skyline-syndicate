@@ -155,14 +155,15 @@ footer {
   height: 90%;
   width: 10%;
   color: whitesmoke;
+  border-radius: 5px;
 }
 
-.stock span {
+.stock .count {
   justify-self: flex-end;
   font-size: 30px;
 }
 
-.stock .stock-heading {
+.stock .stock-name {
   margin-top: 5px;
 }
 
@@ -323,4 +324,10 @@ footer {
 
 .hidden {
   display: none;
+}
+
+.blur {
+  border: 1px dashed black;
+  content-visibility: hidden;
+  background: none;
 }
