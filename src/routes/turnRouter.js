@@ -4,16 +4,31 @@ export const turn = new Hono();
 
 const placeTile = async (c) => {
   const { tile } = await c.req.json();
-  const playerTiles = ["8g", "1f", "2c", "7a", "3a", "9d"];
-  const tilesOnBoard = ["2h", "9c", "4b", "2i", "10a", "1g"];
-  const tileIndex = playerTiles.indexOf(tile);
+  const game = c.get("game");
+  return c.json(game.placeTile(tile));
+};
 
-  playerTiles.splice(tileIndex, 1);
-  tilesOnBoard.push(tile);
+const buildHotel = async (c) => {
+  const { hotelToFound } = await c.req.json();
+  const game = c.get("game");
+  game.buildHotel(hotelToFound);
 
-  const res = { playerTiles, tilesOnBoard };
+  return c.json(game.currentState());
+};
 
+const assignNewTile = (c) => {
+  const game = c.get("game");
+  return c.json(game.assignNewTile());
+};
+
+const buyStocks = async (c) => {
+  const cart = await c.req.json();
+  const game = c.get("game");
+  const res = game.buyStocks(cart);
   return c.json(res);
 };
 
 turn.post("/placeTile", placeTile);
+turn.post("/buildHotel", buildHotel);
+turn.post("/assignNewTileToPlayer", assignNewTile);
+turn.post("/buy-stocks", buyStocks);

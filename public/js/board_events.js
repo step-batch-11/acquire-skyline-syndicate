@@ -25,8 +25,8 @@ export const buildAHotel = (tileContainer) => {
 };
 
 export const eventsForPlacingATile = {
-  "build hotel": buildAHotel,
-  nothing: () => "",
+  "BUILD_HOTEL": buildAHotel,
+  "NO_ACTION": () => "",
 };
 
 export const addListenerToBoard = (tilesInPlayerHand) => {

@@ -13,7 +13,7 @@ const createTileElement = (tile) => {
 export const renderBoard = (tilesOnBoard) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile}`);
+    const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
 };
@@ -37,6 +37,16 @@ const createTradeConfirmationBtn = () => {
   button.textContent = "Found";
   button.id = "found";
   button.classList.add("hidden");
+  buttonContainer.append(button);
+  return buttonContainer;
+};
+
+const createBuyButton = () => {
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+
+  const button = cloneElement("#button");
+  button.textContent = "buy";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
@@ -47,27 +57,28 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tileCount, stocksLeft, price }, bankSection) => {
+const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
   hotelCard.querySelector(".hotel-name").textContent = name;
-  hotelCard.querySelector("#price").textContent = `$ ${price}`;
-  hotelCard.querySelector("#tiles").textContent = `🧱 ${tileCount}`;
+  hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
+  hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
   hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
 
-  bankSection.append(hotelCard);
+  return hotelCard;
 };
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
+  const hotelCards = hotels.map(addHotelData);
 
-  hotels.forEach((hotel) => {
-    addHotelData(hotel, bankSection);
-  });
+  bankSection.replaceChildren(...hotelCards);
   const button = createTradeConfirmationBtn();
+  const buyButton = createBuyButton();
   bankSection.append(button);
+  bankSection.append(buyButton);
 };
 
 export const renderUserSection = ({ money, tiles }) => {

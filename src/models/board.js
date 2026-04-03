@@ -1,27 +1,34 @@
-import { Tile } from "./tile.js";
-
 export class Board {
-  #tiles;
   #placedTiles;
+  lastTile;
 
-  constructor(tiles) {
-    this.#tiles = tiles;
+  constructor() {
+    this.#placedTiles = [];
+  }
+
+  isTileOnBoard(tileId) {
+    const placedTileIds = this.#placedTiles.map((tile) => tile.id);
+    return placedTileIds.includes(tileId);
   }
 
   getPlacedTiles() {
-    return ["2h", "9c", "4b", "2i", "10a", "1g"];
+    return [...this.#placedTiles];
   }
 
-  place(coordinate) {
-    const tile = this.#tiles[coordinate.x][coordinate.y];
-    tile.markAsPlaced();
+  place(tile) {
+    this.#placedTiles.push(tile);
+    this.lastTile = tile;
   }
 
-  static create(rowCount, columnCount) {
-    const rows = new Array(rowCount).fill();
-    const tiles = rows.map((_, rowId) =>
-      new Array(columnCount).fill().map((_, colId) => new Tile(rowId, colId))
+  hasAdjacentForLastTile() {
+    return this.#placedTiles.some((placedTile) =>
+      this.lastTile.isNeighbouringTile(placedTile)
     );
-    return new Board(tiles);
+  }
+
+  adjacentTiles(tile) {
+    return this.#placedTiles.filter((placedTile) =>
+      placedTile.isNeighbouringTile(tile)
+    );
   }
 }

@@ -13,27 +13,41 @@ export class Player {
     this.#stocks = {};
   }
 
+  getTileIds() {
+    return this.#tiles.map((tile) => tile.id);
+  }
+
+  isPlayerTile(tileId) {
+    return this.getTileIds().includes(tileId);
+  }
+
   getDetails() {
     return {
       id: this.#id,
       name: this.#name,
-      tiles: structuredClone(this.#tiles),
+      tiles: structuredClone(this.getTileIds()),
       money: this.#money,
       stocks: structuredClone(this.#stocks),
     };
   }
 
   addInitialTiles(tiles) {
-    const playerTiles = this.#tiles;
-    tiles.map((tile) => playerTiles.push(tile));
+    this.#tiles.push(...tiles);
   }
 
-  removeTile(tile) {
-    const tileIndex = this.#tiles.indexOf(tile);
+  removeTile(tileId) {
+    const tileIndex = this.#tiles.findIndex(({ id }) => id === tileId);
     this.#tiles.splice(tileIndex, 1);
+    return this.getTileIds();
+  }
+
+  addStocks(hotelName, noOfStocks) {
+    this.#stocks[hotelName] = this.#stocks[hotelName] || 0;
+    this.#stocks[hotelName] += noOfStocks;
   }
 
   addNewTile(tile) {
-    this.#tiles.push(tile);
+    this.#tiles.push(...tile);
+    return this.getTileIds();
   }
 }

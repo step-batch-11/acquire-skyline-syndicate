@@ -8,23 +8,31 @@ export class Hotels {
   }
 
   getHotels() {
-    const hotelsInfo = [];
+    return Object
+      .values(this.#hotels)
+      .map((hotel) => hotel.getState());
+  }
 
-    for (const name in this.#hotels) {
-      const hotel = this.#hotels[name];
-      hotelsInfo.push(hotel.getState());
-    }
+  buildHotel(hotelName, originTile, adjacentTilesForHotel) {
+    this.#hotels[hotelName].found(originTile, adjacentTilesForHotel);
+  }
 
-    return hotelsInfo;
+  isAnyInActiveHotel() {
+    return Object.values(this.#hotels).some((hotel) => !hotel.isActive());
   }
 
   static instantiateHotels(hotelsInfo) {
-    const hotels = {};
-
-    hotelsInfo.forEach(({ name, scale }) => {
+    const hotels = hotelsInfo.reduce((hotels, { name, scale }) => {
       hotels[name] = new Hotel(name, scale);
-    });
+      return hotels;
+    }, {});
 
     return new Hotels(hotels);
+  }
+
+  decreaseHotelStocks(cart) {
+    cart.forEach(({ hotelName, selectedStocks }) => {
+      this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
+    });
   }
 }
