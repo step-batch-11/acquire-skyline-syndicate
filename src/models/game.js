@@ -31,6 +31,11 @@ export class Game {
     };
   }
 
+  #isBuildPossible() {
+    return this.#hotels.isAnyInActiveHotel() &&
+      this.#board.hasAdjacentForLastTile();
+  }
+
   isValidTilePlacement(tileId) {
     if (!this.#player.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
@@ -40,7 +45,7 @@ export class Game {
   placeTile(tileId) {
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
-      this.#state = "BUILD_HOTEL";
+      this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
       const playerTiles = this.#player.removeTile(tileId);
       return {
         playerTiles,
@@ -52,7 +57,7 @@ export class Game {
     return {
       playerTiles: this.#player.getTileIds(),
       tilesOnBoard: this.#board.getPlacedTiles(),
-      state: this.#state,
+      state: "NO_ACTION",
     };
   }
 
