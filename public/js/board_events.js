@@ -13,10 +13,8 @@ export const buildAHotel = (tileContainer) => {
 
   let hotelToFound = "";
 
-  foundBtn.addEventListener(
-    "click",
-    (e) =>
-      listenerForFoundingHotel(e, hotelToFound, tileContainer, bankContainer),
+  foundBtn.addEventListener("click", (e) =>
+    listenerForFoundingHotel(e, hotelToFound, tileContainer, bankContainer),
   );
 
   bankContainer.addEventListener("click", (e) => {
