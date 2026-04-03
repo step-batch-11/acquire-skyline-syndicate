@@ -29,4 +29,10 @@ export class Hotels {
 
     return new Hotels(hotels);
   }
+
+  decreaseHotelStocks(cart) {
+    cart.forEach(({ hotelName, selectedStocks }) => {
+      this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
+    });
+  }
 }
