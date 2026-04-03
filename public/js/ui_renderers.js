@@ -68,6 +68,7 @@ export const renderBankSection = (hotels) => {
   });
   const button = createTradeConfirmationBtn();
   bankSection.append(button);
+  console.log(bankSection)
 };
 
 export const renderUserSection = ({ money, tiles }) => {
