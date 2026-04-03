@@ -57,7 +57,7 @@ export class Game {
     return {
       playerTiles: this.#player.getTileIds(),
       tilesOnBoard: this.#board.getPlacedTiles(),
-      state: this.#state,
+      state: "NO_ACTION",
     };
   }
 
