@@ -97,6 +97,11 @@ export class Game {
   buyStocks(cart) {
     this.#hotels.decreaseHotelStocks(cart);
     const hotels = this.#hotels.getHotels();
-    return { hotels };
+    cart.forEach(({ hotelName, selectedStocks }) =>
+      this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
+    );
+
+    const playerInfo = this.#currentPlayer.getDetails();
+    return { hotels, playerInfo };
   }
 }
