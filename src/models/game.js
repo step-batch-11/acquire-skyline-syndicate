@@ -11,10 +11,7 @@ export class Game {
     this.#player = player;
   }
 
-  init(shuffleFn) {
-    this.#deck.shuffleTiles(shuffleFn);
-    // const initialTiles = this.#deck.drawTiles(6);
-    // this.#board.placeTiles(initialTiles);
+  init() {
     const initialPlayerTiles = this.#deck.drawTiles(6);
     this.#player.addInitialTiles(initialPlayerTiles);
 
@@ -25,11 +22,10 @@ export class Game {
     };
   }
 
-  placeTile(tile) {
+  placeTile(tileId) {
     const tilesOnBoard = this.#board.getPlacedTiles();
-    tilesOnBoard.push(tile);
-    const playerTiles = this.#player.removeTile(tile);
-    console.log(playerTiles);
+    tilesOnBoard.push(tileId);
+    const playerTiles = this.#player.removeTile(tileId);
     return { playerTiles, tilesOnBoard };
   }
 }

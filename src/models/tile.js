@@ -1,11 +1,7 @@
 export class Tile {
-  #tile;
+  id;
 
-  constructor(xCoordinate, yCoordinate) {
-    this.#tile = { xCoordinate, yCoordinate, isPlaced: false };
-  }
-
-  markAsPlaced() {
-    this.#tile.isPlaced = true;
+  constructor(tileId) {
+    this.id = tileId;
   }
 }
