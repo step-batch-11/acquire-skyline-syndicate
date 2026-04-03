@@ -50,4 +50,8 @@ export class Player {
     this.#tiles.push(...tile);
     return this.getTileIds();
   }
+
+  deductMoney(moneyToDeduct) {
+    this.#money -= moneyToDeduct;
+  }
 }

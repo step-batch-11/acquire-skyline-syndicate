@@ -92,12 +92,13 @@ export class Game {
   }
 
   buyStocks(cart) {
-    this.#hotels.decreaseHotelStocks(cart);
+    this.#hotels.deductStocks(cart);
     const hotels = this.#hotels.getHotels();
     cart.forEach(({ hotelName, selectedStocks }) =>
       this.#player.addStocks(hotelName.toLowerCase(), selectedStocks)
     );
-
+    const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    this.#player.deductMoney(moneyToDeduct);
     const playerInfo = this.#player.getDetails();
     return { hotels, playerInfo };
   }

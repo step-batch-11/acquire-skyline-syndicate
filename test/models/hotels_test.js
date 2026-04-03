@@ -46,7 +46,7 @@ describe("Hotels entity tests", () => {
       ];
 
       const hotelsInstance = Hotels.instantiateHotels(hotels);
-      hotelsInstance.decreaseHotelStocks([
+      hotelsInstance.deductStocks([
         { hotelName: "sackson", selectedStocks: 2 },
       ]);
 
