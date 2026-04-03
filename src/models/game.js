@@ -1,3 +1,5 @@
+import { Tile } from "./tile.js";
+
 export class Game {
   #deck;
   #board;
@@ -16,7 +18,7 @@ export class Game {
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
     const initialPlayerTiles = this.#deck.drawTiles(6);
-    initialBoardTiles.forEach(({ id }) => this.#board.place(id));
+    initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#player.addInitialTiles(initialPlayerTiles);
 
     return {
@@ -28,7 +30,7 @@ export class Game {
   }
 
   placeTile(tileId) {
-    this.#board.place(tileId);
+    this.#board.place(new Tile(tileId));
     this.#state = "BUILD_HOTEL";
     const playerTiles = this.#player.removeTile(tileId);
     return {

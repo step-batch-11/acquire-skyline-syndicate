@@ -9,4 +9,8 @@ const placeTile = async (c) => {
   return c.json(game.placeTile(tile));
 };
 
+const buildHotel = async () => {
+};
+
 turn.post("/placeTile", placeTile);
+turn.post("/buildHotel", buildHotel);
