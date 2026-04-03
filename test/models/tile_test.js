@@ -34,11 +34,11 @@ describe("TILE", () => {
 
       assertEquals(tile1.isNeighbouringTile(tile2), true);
     });
-    it("should return false for the same tile", ()=>{
+    it("should return false for the same tile", () => {
       const tile1 = new Tile("2a");
       const tile2 = new Tile("2a");
 
       assertEquals(tile1.isNeighbouringTile(tile2), false);
-    })
+    });
   });
 });

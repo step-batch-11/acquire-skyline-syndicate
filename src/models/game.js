@@ -32,14 +32,14 @@ export class Game {
   }
 
   #isBuildPossible() {
-    return this.#hotels.isAnyInActiveHotel() && this.#board.hasAdjacentForLastTile();
+    return this.#hotels.isAnyInActiveHotel() &&
+      this.#board.hasAdjacentForLastTile();
   }
 
   placeTile(tileId) {
     this.#board.place(new Tile(tileId));
     this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
-    console.log(this.#state);
-    
+
     const playerTiles = this.#player.removeTile(tileId);
     return {
       playerTiles,
