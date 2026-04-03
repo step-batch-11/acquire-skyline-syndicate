@@ -37,6 +37,7 @@ const main = () => {
   const hotelsManager = Hotels.instantiateHotels(hotels);
   const player = new Player("Gopi", 1);
   const game = new Game(deck, board, hotelsManager, player);
+  game.init();
   const app = createApp(service, gameEngine, game);
   Deno.serve({ port }, app.fetch);
 };

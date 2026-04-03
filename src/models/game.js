@@ -20,7 +20,9 @@ export class Game {
     const initialPlayerTiles = this.#deck.drawTiles(6);
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#player.addInitialTiles(initialPlayerTiles);
+  }
 
+  currentState() {
     return {
       player: this.#player.getDetails(),
       hotels: this.#hotels.getHotels(),
@@ -38,5 +40,13 @@ export class Game {
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
     };
+  }
+
+  buildHotel(hotelName) {
+    const lastTile = this.#board.lastTile;
+    const adjacentTiles = this.#board.adjacentTiles(lastTile);
+
+    this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
+    this.#player.addStocks(hotelName, 1);
   }
 }

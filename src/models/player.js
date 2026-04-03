@@ -40,4 +40,9 @@ export class Player {
   addNewTile(tileId) {
     this.#tiles.push(tileId);
   }
+
+  addStocks(hotelName, countOfStocks) {
+    this.#stocks[hotelName] = this.#stocks[hotelName] || 0;
+    this.#stocks[hotelName] += countOfStocks;
+  }
 }

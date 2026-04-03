@@ -3,6 +3,7 @@ export class Hotel {
   #tiles;
   #stocks;
   #priceOffset;
+  #originTile;
 
   constructor(name, priceOffset) {
     this.#name = name;
@@ -22,6 +23,14 @@ export class Hotel {
     return 10;
   }
 
+  addTiles(tiles) {
+    this.#tiles.push(...tiles);
+  }
+
+  setOriginTile(originTile) {
+    this.#originTile = originTile;
+  }
+
   calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
@@ -29,12 +38,19 @@ export class Hotel {
   }
 
   getState() {
-    const price = this.calculateStockPrice();
+    const stockPrice = this.calculateStockPrice();
     return {
       name: this.#name,
-      tileCount: this.#tiles.length,
+      tiles: structuredClone(this.#tiles),
       stocksLeft: this.#stocks,
-      price,
+      stockPrice,
+      originTile: this.#originTile,
+      isActive: this.#tiles.length > 0,
     };
+  }
+
+  found(originTile, adjacentTiles) {
+    this.setOriginTile(originTile);
+    this.addTiles(adjacentTiles);
   }
 }
