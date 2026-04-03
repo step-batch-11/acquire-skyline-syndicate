@@ -42,10 +42,16 @@ export class Game {
     return true;
   }
 
+  #isExpansion(tileId) {
+    return this.#hotels.isTileInAnyHotel(tileId) &&
+      (this.#board.hasAdjacentForLastTile());
+  }
+
   placeTile(tileId) {
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
+
       const playerTiles = this.#player.removeTile(tileId);
       return {
         playerTiles,

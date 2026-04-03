@@ -49,9 +49,14 @@ export class Hotel {
     };
   }
 
+  tileIncludes(tile) {
+    return this.#tiles.some((hotelTile) => hotelTile.id === tile);
+  }
+
   isActive() {
     return this.#tiles.length > 0;
   }
+
   decreaseStockCount(count) {
     this.#stocks -= count;
   }

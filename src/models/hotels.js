@@ -21,6 +21,16 @@ export class Hotels {
     return Object.values(this.#hotels).some((hotel) => !hotel.isActive());
   }
 
+  isTileInAnyHotel(tileId) {
+    return Object.values(this.#hotels).some((hotel) =>
+      hotel.tileIncludes(tileId)
+    );
+  }
+
+  addTilesToHotel(hotelName, tiles) {
+    this.#hotels[hotelName].addTiles(tiles);
+  }
+
   static instantiateHotels(hotelsInfo) {
     const hotels = hotelsInfo.reduce((hotels, { name, scale }) => {
       hotels[name] = new Hotel(name, scale);
