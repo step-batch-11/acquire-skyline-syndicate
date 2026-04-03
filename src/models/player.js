@@ -28,8 +28,7 @@ export class Player {
   }
 
   addInitialTiles(tiles) {
-    const playerTiles = this.#tiles;
-    tiles.map((tile) => playerTiles.push(tile));
+    this.#tiles.push(...tiles);
   }
 
   removeTile(tileId) {

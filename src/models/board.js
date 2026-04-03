@@ -6,11 +6,10 @@ export class Board {
   }
 
   getPlacedTiles() {
-    return this.#placedTiles.map((tile) => tile.id);
+    return [...this.#placedTiles];
   }
 
   place(tileId) {
     this.#placedTiles.push(tileId);
-    return this.getPlacedTiles();
   }
 }

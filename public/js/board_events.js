@@ -25,7 +25,7 @@ export const buildAHotel = (tileContainer) => {
 };
 
 export const eventsForPlacingATile = {
-  "build hotel": buildAHotel,
+  "BUILD_HOTEL": buildAHotel,
   nothing: () => "",
 };
 

@@ -3,29 +3,38 @@ export class Game {
   #board;
   #hotels;
   #player;
+  #state;
 
   constructor(deck, board, hotels, player) {
     this.#deck = deck;
     this.#board = board;
     this.#hotels = hotels;
     this.#player = player;
+    this.#state = "";
   }
 
   init() {
+    const initialBoardTiles = this.#deck.drawTiles(6);
     const initialPlayerTiles = this.#deck.drawTiles(6);
+    initialBoardTiles.forEach(({ id }) => this.#board.place(id));
     this.#player.addInitialTiles(initialPlayerTiles);
 
     return {
       player: this.#player.getDetails(),
       hotels: this.#hotels.getHotels(),
       tilesOnBoard: this.#board.getPlacedTiles(),
+      state: this.#state,
     };
   }
 
   placeTile(tileId) {
-    const tilesOnBoard = this.#board.getPlacedTiles();
-    tilesOnBoard.push(tileId);
+    this.#board.place(tileId);
+    this.#state = "BUILD_HOTEL";
     const playerTiles = this.#player.removeTile(tileId);
-    return { playerTiles, tilesOnBoard };
+    return {
+      playerTiles,
+      tilesOnBoard: this.#board.getPlacedTiles(),
+      state: this.#state,
+    };
   }
 }

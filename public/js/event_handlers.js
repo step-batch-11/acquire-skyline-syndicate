@@ -16,7 +16,7 @@ export const handleTilePlacement = async (
   removeFocus(board, tilesInPlayerHand);
   renderBoard(updatedTiles.tilesOnBoard);
   renderTilesInHand(updatedTiles.playerTiles);
-  const action = eventsForPlacingATile[updatedTiles.action] || noOp;
+  const action = eventsForPlacingATile[updatedTiles.state] || noOp;
   action(tileContainer);
 };
 
