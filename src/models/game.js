@@ -70,7 +70,6 @@ export class Game {
   buildHotel(hotelName) {
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTiles(lastTile);
-
     this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
     this.#player.addStocks(hotelName, 1);
   }

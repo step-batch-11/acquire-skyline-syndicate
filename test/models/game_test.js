@@ -9,14 +9,18 @@ import { Tile } from "../../src/models/tile.js";
 
 describe("Game entity tests", () => {
   let game;
+  let board;
+  let player;
+  let hotels;
+  let hotelsInfo;
   beforeEach(() => {
-    const board = new Board();
-    const player = new Player("Gopi", 1);
-    const hotelsInfo = [{ name: "sackson", scale: 0 }, {
+    board = new Board();
+    player = new Player("Gopi", 1);
+    hotelsInfo = [{ name: "sackson", scale: 0 }, {
       name: "worldwide",
       scale: 100,
     }];
-    const hotels = Hotels.instantiateHotels(hotelsInfo);
+    hotels = Hotels.instantiateHotels(hotelsInfo);
     const tiles = [
       "1a",
       "3d",
@@ -27,7 +31,7 @@ describe("Game entity tests", () => {
       "11i",
       "10g",
       "2d",
-      "11h",
+      "1b",
       "2e",
       "5f",
       "7h",
@@ -57,6 +61,43 @@ describe("Game entity tests", () => {
       const result = game.placeTile(tileToPlace);
       assertEquals(result.playerTiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
+    });
+
+    it("Should not place tile on the board, tile is not in player hand.", () => {
+      game.init();
+      const initialData = game.currentState();
+      const tileToPlace = "12i";
+      const result = game.placeTile(tileToPlace);
+      assertEquals(result.playerTiles.length, 6);
+      assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
+    });
+
+    it("Should not place tile on the board, tile is in player hand and on board.", () => {
+      const tiles = [
+        "1a",
+        "3d",
+        "4b",
+        "8i",
+        "4e",
+        "12f",
+        "11i",
+        "10g",
+        "2d",
+        "4e",
+        "2e",
+        "5f",
+        "7h",
+        "6i",
+      ];
+      const tilesInstances = tiles.map((tile) => new Tile(tile));
+      const deck = new Deck(tilesInstances, () => tilesInstances);
+      const game = new Game(deck, board, hotels, player);
+      game.init();
+      const initialData = game.currentState();
+      const tileToPlace = "4e";
+      const result = game.placeTile(tileToPlace);
+      assertEquals(result.playerTiles.length, 6);
+      assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
     });
   });
 

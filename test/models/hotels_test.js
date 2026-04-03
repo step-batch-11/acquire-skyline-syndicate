@@ -33,5 +33,23 @@ describe("Hotels entity tests", () => {
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("9a"), false);
     });
+    it("decrease the hotel stocks in the hotel inventory", () => {
+      const hotels = [
+        { name: "sackson", scale: 0 },
+        {
+          name: "Tower",
+          scale: 0,
+        },
+      ];
+
+      const hotelsInstance = Hotels.instantiateHotels(hotels);
+      hotelsInstance.decreaseHotelStocks([
+        { hotelName: "sackson", selectedStocks: 2 },
+      ]);
+
+      const hotelsInfo = hotelsInstance.getHotels();
+      assertEquals(hotelsInfo[0].name, "sackson");
+      assertEquals(hotelsInfo[0].stocksLeft, 23);
+    });
   });
 });
