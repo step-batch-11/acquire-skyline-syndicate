@@ -33,6 +33,9 @@ describe("Hotels entity tests", () => {
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("9a"), false);
     });
+  });
+
+  describe("decreaseHotelStocks", () => {
     it("decrease the hotel stocks in the hotel inventory", () => {
       const hotels = [
         { name: "sackson", scale: 0 },
@@ -50,6 +53,16 @@ describe("Hotels entity tests", () => {
       const hotelsInfo = hotelsInstance.getHotels();
       assertEquals(hotelsInfo[0].name, "sackson");
       assertEquals(hotelsInfo[0].stocksLeft, 23);
+    });
+  });
+
+  describe("expand", () => {
+    it("should add tile into its adjacent hotel chain", () => {
+      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
+      const updatedHotel = hotelsInstance.expand("3a");
+
+      assertEquals(updatedHotel.getTiles().length, 3);
     });
   });
 });

@@ -27,6 +27,10 @@ export class Hotel {
     this.#tiles.push(...tiles);
   }
 
+  getTiles() {
+    return [...this.#tiles];
+  }
+
   setOriginTile(originTile) {
     this.#originTile = originTile;
   }
