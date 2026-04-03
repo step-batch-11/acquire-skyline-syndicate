@@ -38,7 +38,7 @@ export class Hotel {
     };
   }
 
-  decreaseStockCount(count){
+  decreaseStockCount(count) {
     this.#stocks -= count;
   }
 }
