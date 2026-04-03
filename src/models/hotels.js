@@ -18,6 +18,10 @@ export class Hotels {
     return hotelsInfo;
   }
 
+  buildHotel(hotelName, originTile, adjacentTilesForHotel) {
+    this.#hotels[hotelName].found(originTile, adjacentTilesForHotel);
+  }
+
   static instantiateHotels(hotelsInfo) {
     const hotels = {};
 

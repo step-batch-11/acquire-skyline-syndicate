@@ -8,7 +8,13 @@ const placeTile = async (c) => {
   return c.json(game.placeTile(tile));
 };
 
-const buildHotel = async () => {};
+const buildHotel = async (c) => {
+  const { hotelToFound } = await c.req.json();
+  const game = c.get("game");
+  game.buildHotel(hotelToFound);
+
+  return c.json(game.currentState());
+};
 
 const assignNewTile = (c) => {
   const game = c.get("game");
