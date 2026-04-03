@@ -22,14 +22,14 @@ export class Hotel {
     return 10;
   }
 
-  calculateStockPrice() {
+  #calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
     return numberOfTiles * 100 + this.#priceOffset;
   }
 
   getState() {
-    const price = this.calculateStockPrice();
+    const price = this.#calculateStockPrice();
     return {
       name: this.#name,
       tileCount: this.#tiles.length,
