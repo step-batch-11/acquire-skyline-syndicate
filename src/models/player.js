@@ -38,7 +38,6 @@ export class Player {
   removeTile(tileId) {
     const tileIndex = this.#tiles.findIndex(({ id }) => id === tileId);
     this.#tiles.splice(tileIndex, 1);
-    return this.getTileIds();
   }
 
   addStocks(hotelName, noOfStocks) {

@@ -10,7 +10,7 @@ export class Tile {
     return { col: tile.slice(0, tile.length - 1), row: tile.slice(-1) };
   }
 
-  #neighbourTiles() {
+  neighbourTiles() {
     const tilePositions = this.splitTile(this.id);
     return [
       this.topNeighbour(tilePositions),
@@ -21,7 +21,7 @@ export class Tile {
   }
 
   isNeighbouringTile(tile) {
-    const adjacents = this.#neighbourTiles();
+    const adjacents = this.neighbourTiles();
 
     return adjacents.includes(tile.id) && tile.id !== this.id;
   }

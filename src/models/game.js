@@ -57,12 +57,7 @@ export class Game {
 
       if (this.#isExpansion(tileId)) this.expandHotel(tileId);
 
-      const playerTiles = this.#player.removeTile(tileId);
-      return {
-        playerTiles,
-        tilesOnBoard: this.#board.getPlacedTiles(),
-        state: this.#state,
-      };
+      this.#player.removeTile(tileId);
     }
 
     return {

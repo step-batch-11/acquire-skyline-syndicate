@@ -10,12 +10,27 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-export const renderBoard = (tilesOnBoard) => {
+const addColorToHotelTile = (tileId, name) => {
+  const tile = document.querySelector(`#tile-${tileId}`);
+  tile.classList.add(name);
+};
+
+const addColorToHotelTiles = (hotels) => {
+  hotels.forEach((hotel) => {
+    if (hotel.tiles.length > 0) {
+      hotel.tiles.forEach((tileId) => addColorToHotelTile(tileId, hotel.name));
+    }
+  });
+};
+
+export const renderBoard = (tilesOnBoard, hotels) => {
   const board = document.querySelector(".board");
-  tilesOnBoard.forEach((tile) => {
-    const tileContainer = board.querySelector(`#tile-${tile.id}`);
+  tilesOnBoard.forEach((tileId) => {
+    const tileContainer = board.querySelector(`#tile-${tileId}`);
     tileContainer.classList.add("tiles-in-market");
   });
+
+  addColorToHotelTiles(hotels);
 };
 
 export const renderTilesInHand = (playerTiles) => {
@@ -64,6 +79,9 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   hotelInfoContainer.classList.add(name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
+
+  if (tiles.length > 0) hotelContainer.classList.add("dim");
+
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
   hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;

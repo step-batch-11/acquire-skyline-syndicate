@@ -1,7 +1,7 @@
 import { handleAssignTile } from "./event_handlers.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { postData } from "./request.js";
-import { renderBankSection } from "./ui_renderers.js";
+import { renderBankSection, renderBoard } from "./ui_renderers.js";
 import { extractSelectedStocks } from "./utils.js";
 
 export const listenerForCart = (e) => {
@@ -39,6 +39,6 @@ export const listenerForFoundingHotel = async (
   const foundBtn = bankContainer.querySelector("#found");
   foundBtn.classList.add("hidden");
   renderBankSection(hotels);
-  renderBoard(tilesOnBoard);
+  renderBoard(tilesOnBoard, hotels);
   handleAssignTile();
 };

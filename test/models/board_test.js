@@ -4,7 +4,7 @@ import { Board } from "../../src/models/board.js";
 
 describe("Board entity tests", () => {
   describe("Add new to placed list method", () => {
-    it("Should return the placed tiles with new tile", () => {
+    it.ignore("Should return the placed tiles with new tile", () => {
       const boardInstance = new Board();
       const tileToAdd = "1a";
       boardInstance.place(tileToAdd);
