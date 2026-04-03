@@ -22,7 +22,6 @@ export class Tile {
 
   isNeighbouringTile(tile) {
     const adjacents = this.#neighbourTiles();
-    console.log(adjacents, tile);
 
     return adjacents.includes(tile.id) && tile.id !== this.id;
   }
@@ -66,38 +65,8 @@ export class Tile {
 
   rightNeighbour({ row, col }) {
     const right = this.getColumnLabel(col) + 1;
-    console.log({ col });
     const updatedLeftColumn = right === 13 ? 12 : right;
 
     return this.createTile(updatedLeftColumn, row);
   }
-
-  // #labelIndex(tileId) {
-  //   return this.#rowLabels.indexOf(tileId.slice(-1)) + 1;
-  // }
-
-  // #isNeighbourByColumn(tile) {
-  //   const difference = this.#labelIndex(this.id) - this.#labelIndex(tile.id);
-  //   console.log(
-  //     this.#labelIndex(this.id),
-  //     this.#labelIndex(tile.id),
-  //     difference,
-  //     tile.id,
-  //     "column",
-  //   );
-
-  //   return difference === 0;
-  // }
-
-  // #isNeighbourByRow(tile) {
-  //   const currentTileRow = Number(this.id.slice(0, this.id.length - 1));
-  //   const newTileRow = Number(tile.id.slice(0, tile.id.length - 1));
-  //   const difference = currentTileRow - newTileRow;
-  //   console.log(
-  //     { currentTileRow, newTileRow, difference, tileId: tile.id },
-  //     "row",
-  //   );
-
-  //   return difference === 0;
-  // }
 }

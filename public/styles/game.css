@@ -22,8 +22,15 @@ main {
 }
 
 :root {
-  --board-bg :  rgb(208, 210, 209); 
-  --occupied-tile-bg : rgb(100, 100, 100); 
+  --board-bg: rgb(208, 210, 209);
+  --occupied-tile-bg: rgb(100, 100, 100);
+  --imperial: #f29b12;
+  --continental: #5683ff;
+  --festival: #43aa90;
+  --worldwide: #2f6f83;
+  --american: #0ea5e9;
+  --sackson: #b91c1c;
+  --tower: #f9735b;
 }
 
 .market-notification-players {
@@ -142,9 +149,22 @@ footer {
 }
 
 .stock {
-  height: 10em;
-  width: 8em;
-  border: 2px dashed black;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  height: 90%;
+  width: 10%;
+  color: whitesmoke;
+}
+
+.stock span {
+  justify-self: flex-end;
+  font-size: 30px;
+}
+
+.stock .stock-heading {
+  margin-top: 5px;
 }
 
 .tiles {
@@ -168,7 +188,7 @@ footer {
 }
 
 .hotel-info h3 {
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 .information {
@@ -221,56 +241,56 @@ footer {
   animation: animateTilesInPlayerHand 0.5s alternate-reverse infinite;
 }
 
-#imperial .hotel-info {
-  background-color: #f29b12;
+.imperial {
+  background-color: var(--imperial);
 }
 
 .imperial-icon {
   background-image: url("/assets/imperial.svg");
 }
 
-#continental .hotel-info {
-  background-color: #5683ff;
+.continental {
+  background-color: var(--continental);
 }
 
 .continental-icon {
   background-image: url("/assets/continental.svg");
 }
 
-#festival .hotel-info {
-  background-color: #43aa90;
+.festival {
+  background-color: var(--festival);
 }
 
 .festival-icon {
   background-image: url("/assets/festival.svg");
 }
 
-#worldwide .hotel-info {
-  background-color: #2f6f83;
+.worldwide {
+  background-color: var(--worldwide);
 }
 
 .worldwide-icon {
   background-image: url("/assets/worldwide.svg");
 }
 
-#american .hotel-info {
-  background-color: #0ea5e9;
+.american {
+  background-color: var(--american);
 }
 
 .american-icon {
   background-image: url("/assets/american.svg");
 }
 
-#sackson .hotel-info {
-  background-color: #b91c1c;
+.sackson {
+  background-color: var(--sackson);
 }
 
 .sackson-icon {
   background-image: url("/assets/sackson.svg");
 }
 
-#tower .hotel-info {
-  background-color: #f9735b;
+.tower {
+  background-color: var(--tower);
 }
 
 .tower-icon {

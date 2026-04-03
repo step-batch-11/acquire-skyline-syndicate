@@ -27,6 +27,10 @@ export class Hotel {
     this.#tiles.push(...[...tiles, this.#originTile]);
   }
 
+  getTiles() {
+    return [...this.#tiles];
+  }
+
   setOriginTile(originTile) {
     this.#originTile = originTile;
   }
@@ -47,6 +51,10 @@ export class Hotel {
       originTile: this.#originTile,
       isActive: this.isActive(),
     };
+  }
+
+  tileIncludes(tile) {
+    return this.#tiles.some((hotelTile) => hotelTile.id === tile);
   }
 
   isActive() {

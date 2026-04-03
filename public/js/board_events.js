@@ -24,7 +24,12 @@ export const buildAHotel = (tileContainer) => {
   });
 };
 
-export const eventsForPlacingATile = {
+const expandHotel = (_tileContainer) => {
+  alert("hotel expanded");
+};
+
+export const turnActions = {
+  "EXPAND_HOTEL": expandHotel,
   "BUILD_HOTEL": buildAHotel,
   "NO_ACTION": () => "",
 };
