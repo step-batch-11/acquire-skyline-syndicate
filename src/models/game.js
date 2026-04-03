@@ -46,4 +46,8 @@ export class Game {
     const tilesOnBoard = this.#board.getPlacedTiles();
     return { playerTiles, tilesOnBoard };
   }
+
+  buyStocks() {
+    return {};
+  }
 }

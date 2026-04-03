@@ -9,14 +9,20 @@ const placeTile = async (c) => {
   return c.json(game.placeTile(tile));
 };
 
-const buildHotel = async () => {
-};
+const buildHotel = async () => {};
 
 const assignNewTile = (c) => {
   const game = c.get("game");
   return c.json(game.assignNewTile());
 };
 
+const buyStocks = async (c) => {
+  const cart = await c.req.json();
+  const game = c.get("game");
+  return c.json(game.buyStocks(cart));
+};
+
 turn.post("/placeTile", placeTile);
 turn.post("/buildHotel", buildHotel);
 turn.post("/assignNewTileToPlayer", assignNewTile);
+turn.post("/buy-stocks", buyStocks);

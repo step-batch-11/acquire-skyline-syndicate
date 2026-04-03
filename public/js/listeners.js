@@ -13,7 +13,7 @@ export const listenerForBuyingStocks = (e) => {
   e.preventDefault();
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  return cart;
+  postData("/turn/buy-stocks", cart)
 };
 
 export const listenerForHotelSelection = (e) => {

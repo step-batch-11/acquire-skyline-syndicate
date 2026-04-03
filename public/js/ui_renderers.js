@@ -37,6 +37,16 @@ const createTradeConfirmationBtn = () => {
   button.textContent = "Found";
   button.id = "found";
   button.classList.add("hidden");
+  buttonContainer.append(button);
+  return buttonContainer;
+};
+
+const createBuyButton = () => {
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+
+  const button = cloneElement("#button");
+  button.textContent = "buy";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
@@ -67,8 +77,10 @@ export const renderBankSection = (hotels) => {
     addHotelData(hotel, bankSection);
   });
   const button = createTradeConfirmationBtn();
+  const buyButton = createBuyButton();
+  console.log(buyButton);
   bankSection.append(button);
-  console.log(bankSection)
+  bankSection.append(buyButton);
 };
 
 export const renderUserSection = ({ money, tiles }) => {
