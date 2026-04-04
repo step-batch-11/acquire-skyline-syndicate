@@ -38,6 +38,11 @@ describe("Game entity tests", () => {
       "5f",
       "7h",
       "6i",
+      "9i",
+      "10i",
+      "4a",
+      "5a",
+      "7g",
     ];
     const tilesInstances = tiles.map((tile) => new Tile(tile));
     const deck = new Deck(tilesInstances, () => tilesInstances);
@@ -110,6 +115,7 @@ describe("Game entity tests", () => {
       const tileToPlace = initialData.currentPlayer.tiles[0];
       game.placeTile(tileToPlace);
       const result = game.assignNewTile();
+
       assertEquals(result.playerTiles.length, 6);
       assertEquals(result.tilesOnBoard.length, 7);
     });
