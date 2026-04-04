@@ -16,11 +16,9 @@ const addColorToHotelTile = (tile, name) => {
 };
 
 const addColorToHotelTiles = (hotels) => {
-  console.log(hotels);
-
   hotels.forEach((hotel) => {
-    if (hotel.tiles.length > 0) {
-      hotel.tiles.forEach((tileId) => addColorToHotelTile(tileId, hotel.name));
+    if (hotel.isActive) {
+      hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
     }
   });
 };
@@ -51,7 +49,7 @@ const createTradeConfirmationBtn = () => {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
   const button = cloneElement("#button");
-  button.textContent = "Found";
+  button.textContent = "Build";
   button.id = "found";
   button.classList.add("hidden");
   buttonContainer.append(button);
@@ -103,35 +101,26 @@ export const renderBankSection = (hotels) => {
   bankSection.append(buyButton);
 };
 
-const renderHotelStock = (hotel, stocks) => {
-  const stockTemplate = cloneElement("#stock-template");
-  const stockName = stockTemplate.querySelector(".stock-name");
-  stockName.textContent = hotel;
-  const stockCount = stockTemplate.querySelector(".count");
-  stockCount.textContent = 0;
-  stockTemplate.classList.add(hotel);
-
-  if (hotel in stocks) {
-    stockCount.textContent = stocks[hotel];
-  } else {
-    stockTemplate.classList.add("blur");
-  }
-
-  return stockTemplate;
+const addDetailsToCard = (stockCard, name, count) => {
+  stockCard.classList.add(name);
+  stockCard.classList.remove("empty");
+  stockCard.querySelector(".stock-name").textContent = name;
+  stockCard.querySelector(".count").textContent = count;
 };
 
-const renderHeldStocks = (stocks) => {
-  const hotels = [
-    "tower",
-    "imperial",
-    "continental",
-    "american",
-    "festival",
-    "sackson",
-    "worldwide",
-  ];
-  const stockCards = hotels.map((hotel) => renderHotelStock(hotel, stocks));
+const cloneStockCards = () => {
+  return Array.from(
+    { length: 7 },
+    () => cloneElement("#stock-template"),
+  );
+};
+
+export const renderHeldStocks = (stocks) => {
   const stocksSection = document.querySelector(".stocks");
+  const stockCards = cloneStockCards();
+  Object.entries(stocks).forEach(([name, count], index) =>
+    addDetailsToCard(stockCards[index], name, count)
+  );
   stocksSection.replaceChildren(...stockCards);
 };
 

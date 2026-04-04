@@ -9,8 +9,8 @@ export const updateTiles = async (tile) => {
 };
 
 export const assignNewTiles = async () => {
-  const { playerTiles, tilesOnBoard } = await postData(
+  const currentState = await postData(
     "/turn/assignNewTileToPlayer",
   );
-  return { playerTiles, tilesOnBoard };
+  return currentState;
 };

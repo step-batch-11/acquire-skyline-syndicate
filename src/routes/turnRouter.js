@@ -24,7 +24,8 @@ const assignNewTile = (c) => {
   // const game = c.get("game");
   const lobby = c.get("lobby");
   const game = lobby.getGame();
-  return c.json(game.assignNewTile());
+  game.assignNewTile();
+  return c.json(game.currentState());
 };
 
 const buyStocks = async (c) => {

@@ -121,9 +121,9 @@ describe("Game entity tests", () => {
       const initialData = game.currentState();
       const tileToPlace = initialData.currentPlayer.tiles[0];
       game.placeTile(tileToPlace);
-      const result = game.assignNewTile();
-
-      assertEquals(result.playerTiles.length, 6);
+      game.assignNewTile();
+      const result = game.currentState();
+      assertEquals(result.currentPlayer.tiles.length, 6);
       assertEquals(result.tilesOnBoard.length, 7);
     });
   });
@@ -132,6 +132,7 @@ describe("Game entity tests", () => {
     it.ignore(
       "should build hotel and add a free stock of that hotel player",
       () => {
+        game.init();
         game.placeTile("2a");
         game.placeTile("3a");
         const hotelName = "sackson";

@@ -49,7 +49,7 @@ describe("Board entity tests", () => {
       const anotherTile = new Tile("4d");
       board.place(tile);
       board.place(anotherTile);
-      const adjacentTiles = board.adjacentTiles(tile);
+      const adjacentTiles = board.adjacentTilesOfLastTile();
       assertEquals(adjacentTiles.length, 1);
     });
   });
