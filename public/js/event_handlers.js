@@ -52,7 +52,7 @@ export const handleCartUpdation = (action, parent) => {
   if (action in clickActions) {
     const cartElement = parent.querySelector(".cart-value");
     const counterValue = Number(cartElement.value);
-    
+
     clickActions[action](cartElement, counterValue);
   }
 };
