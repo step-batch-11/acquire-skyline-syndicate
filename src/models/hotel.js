@@ -46,7 +46,7 @@ export class Hotel {
     const stockPrice = this.calculateStockPrice();
     return {
       name: this.#name,
-      tiles: this.#tiles.map((id) => ({ id })),
+      tiles: this.#tiles.map(({ id }) => ({ id })),
       stocksLeft: this.#stocks,
       stockPrice,
       originTile: this.#originTile,

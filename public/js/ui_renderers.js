@@ -18,7 +18,7 @@ const addColorToHotelTile = (tile, name) => {
 const addColorToHotelTiles = (hotels) => {
   hotels.forEach((hotel) => {
     if (hotel.tiles.length > 0) {
-      hotel.tiles.forEach((tileId) => addColorToHotelTile(tileId, hotel.name));
+      hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
     }
   });
 };
