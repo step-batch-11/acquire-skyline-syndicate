@@ -19,12 +19,10 @@ const renderNames = (activePlayers) => {
 
   const elementsList = activePlayers.map((player) => {
     const element = cloneElement("#name-display-template");
-    console.log(player);
     element.querySelector("#name").textContent = player;
     return element;
   });
   listContainer.innerHTML = "";
-  console.log({ elementsList });
   listContainer.append(...elementsList);
 };
 
