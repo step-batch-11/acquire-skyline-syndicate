@@ -29,8 +29,8 @@ const expandHotel = (_tileContainer) => {
 };
 
 export const turnActions = {
-  "EXPAND_HOTEL": expandHotel,
   "BUILD_HOTEL": buildAHotel,
+  "EXPAND_HOTEL": expandHotel,
   "NO_ACTION": () => "",
 };
 

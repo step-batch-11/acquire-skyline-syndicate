@@ -28,6 +28,7 @@ export class Hotel {
   }
 
   getTiles() {
+    console.log(this.#tiles);
     return [...this.#tiles];
   }
 

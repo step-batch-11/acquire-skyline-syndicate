@@ -16,6 +16,7 @@
 }
 
 main {
+  
   height: 83vh;
   margin: 0.3em 0 0 0.3em;
   display: flex;
@@ -134,6 +135,7 @@ main {
 }
 
 footer {
+  background-color: whitesmoke;
   padding: 5px;
   height: 15vh;
   box-shadow: 0px 0px 5px gray;
@@ -265,12 +267,20 @@ footer {
   background-image: url("/assets/imperial.svg");
 }
 
+.board-imperial-icon {
+  background-image: url("/hotel-on-board/imperial.svg");
+}
+
 .continental {
   background-color: var(--continental);
 }
 
 .continental-icon {
   background-image: url("/assets/continental.svg");
+}
+
+.board-continental-icon {
+  background-image: url("/hotel-on-board/continental.svg");
 }
 
 .festival {
@@ -281,12 +291,20 @@ footer {
   background-image: url("/assets/festival.svg");
 }
 
+.board-festival-icon {
+  background-image: url("/hotel-on-board/festival.svg");
+}
+
 .worldwide {
   background-color: var(--worldwide);
 }
 
 .worldwide-icon {
   background-image: url("/assets/worldwide.svg");
+}
+
+.board-worldwide-icon {
+  background-image: url("/hotel-on-board/worldwide.svg");
 }
 
 .american {
@@ -297,6 +315,10 @@ footer {
   background-image: url("/assets/american.svg");
 }
 
+.board-american-icon {
+  background-image: url("/hotel-on-board/american.svg");
+}
+
 .sackson {
   background-color: var(--sackson);
 }
@@ -305,12 +327,20 @@ footer {
   background-image: url("/assets/sackson.svg");
 }
 
+.board-sackson-icon {
+  background-image: url("/hotel-on-board/sackson.svg");
+}
+
 .tower {
   background-color: var(--tower);
 }
 
 .tower-icon {
   background-image: url("/assets/tower.svg");
+}
+
+.board-tower-icon {
+  background-image: url("/hotel-on-board/tower.svg");
 }
 
 .hotel-card-header {
@@ -342,16 +372,14 @@ footer {
   display: none;
 }
 
-.blur {
-  border: 1px dashed black;
-  content-visibility: hidden;
-  background: none;
-}
-
 .tiles-in-hand .tile {
   border: 1px solid black;
 }
 
 .players {
   width: 10%;
+}
+
+.empty {
+  border: 1px dashed black;
 }

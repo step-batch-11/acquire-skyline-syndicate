@@ -43,7 +43,8 @@ export const listenerForFoundingHotel = async (
       hotelToFound,
     },
   );
-  tileContainer.classList.add(`${hotelToFound}-icon`);
+  tileContainer.classList.add(`board-${hotelToFound}-icon`);
+  tileContainer.innerText = "";
   bankContainer.removeEventListener("click", listenerForHotelSelection);
 
   const foundBtn = bankContainer.querySelector("#found");
