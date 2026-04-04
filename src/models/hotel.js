@@ -24,7 +24,7 @@ export class Hotel {
   }
 
   addTiles(tiles) {
-    this.#tiles.push(...[...tiles, this.#originTile]);
+    this.#tiles.push(...tiles);
   }
 
   getTiles() {

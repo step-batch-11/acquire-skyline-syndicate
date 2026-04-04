@@ -13,15 +13,19 @@ describe("Game entity tests", () => {
   let hotels;
   let hotelsInfo;
   let players;
+
   beforeEach(() => {
     board = new Board();
-    players = ["Gopi", "Haider"].map((playerName, id) =>
-      new Player(playerName, id)
+    players = ["Gopi", "Haider"].map(
+      (playerName, id) => new Player(playerName, id),
     );
-    hotelsInfo = [{ name: "sackson", scale: 0 }, {
-      name: "worldwide",
-      scale: 100,
-    }];
+    hotelsInfo = [
+      { name: "sackson", scale: 0 },
+      {
+        name: "worldwide",
+        scale: 100,
+      },
+    ];
     hotels = Hotels.instantiateHotels(hotelsInfo);
     const tiles = [
       "1a",
@@ -48,6 +52,7 @@ describe("Game entity tests", () => {
     const deck = new Deck(tilesInstances, () => tilesInstances);
     game = new Game(deck, board, hotels, players);
   });
+
   describe("init method", () => {
     it("should return the initial data which game needs", () => {
       game.init();
@@ -59,6 +64,7 @@ describe("Game entity tests", () => {
       assertEquals(initialData.state, "");
     });
   });
+
   describe("placeTile method", () => {
     it("Should return the new player tiles after removing the placed tile", () => {
       game.init();
@@ -105,6 +111,7 @@ describe("Game entity tests", () => {
       assertEquals(result.currentPlayer.tiles.length, 5);
     });
   });
+
   describe("assignNewTile method", () => {
     it("Should assign new Tile to the player and return the new player tile", () => {
       game.init();
@@ -117,6 +124,7 @@ describe("Game entity tests", () => {
       assertEquals(result.tilesOnBoard.length, 7);
     });
   });
+
   describe("buildHotel method", () => {
     it("should build hotel and add a free stock of that hotel player", () => {
       game.placeTile("2a");
@@ -126,6 +134,34 @@ describe("Game entity tests", () => {
       const result = game.currentState();
       const stock = result.currentPlayer.stocks[hotelName];
       assertEquals(stock, 1);
+    });
+  });
+
+  describe("buy stocks method", () => {
+    it("buy the stocks of sackson", () => {
+      const { playerInfo, hotels } = game.buyStocks([
+        { hotelName: "sackson", selectedStocks: 3 },
+      ]);
+
+      assertEquals(playerInfo.stocks, { sackson: 3 });
+      assertEquals(hotels, [
+        {
+          name: "sackson",
+          tiles: [],
+          stocksLeft: 22,
+          stockPrice: 0,
+          originTile: undefined,
+          isActive: false,
+        },
+        {
+          name: "worldwide",
+          tiles: [],
+          stocksLeft: 25,
+          stockPrice: 0,
+          originTile: undefined,
+          isActive: false,
+        },
+      ]);
     });
   });
 });
