@@ -27,8 +27,10 @@ export class Board {
   }
 
   adjacentTiles(tile) {
-    return this.#placedTiles.filter((placedTile) =>
-      placedTile.isNeighbouringTile(tile)
-    );
+    return tile
+      .neighbourTiles()
+      .filter((tile) =>
+        this.#placedTiles.find((placedTile) => placedTile.id === tile)
+      );
   }
 }

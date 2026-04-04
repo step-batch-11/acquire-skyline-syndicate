@@ -30,7 +30,7 @@ export const initializeGameSetup = (initialData) => {
   const board = document.querySelector(".board");
   renderPlayers(players, currentPlayer);
   highlightPlayableTiles(board, currentPlayer.tiles);
-  renderBoard(tilesOnBoard, currentPlayer.tiles);
+  renderBoard(tilesOnBoard, hotels);
   renderUserSection(currentPlayer);
   setupHotelSection(hotels);
   addListenerToBoard(currentPlayer.tiles);

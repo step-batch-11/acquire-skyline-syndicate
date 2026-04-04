@@ -44,6 +44,6 @@ export const listenerForFoundingHotel = async (
   const foundBtn = bankContainer.querySelector("#found");
   foundBtn.classList.add("hidden");
   renderBankSection(hotels);
-  renderBoard(tilesOnBoard);
+  renderBoard(tilesOnBoard, hotels);
   handleAssignTile();
 };

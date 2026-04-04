@@ -57,26 +57,19 @@ export class Game {
     );
   }
 
+  #actionForTilePlacement(tileId) {
+    if (this.#isBuildPossible()) this.#state = "BUILD_HOTEL";
+    else if (this.#isExpansion(tileId)) this.expandHotel(tileId);
+    else this.#state = "NO_ACTION";
+  }
+
   placeTile(tileId) {
     if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
-      this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
+      this.#actionForTilePlacement(tileId);
 
-      if (this.#isExpansion(tileId)) this.expandHotel(tileId);
-
-      const playerTiles = this.#currentPlayer.removeTile(tileId);
-      return {
-        playerTiles,
-        tilesOnBoard: this.#board.getPlacedTiles(),
-        state: this.#state,
-      };
+      this.#currentPlayer.removeTile(tileId);
     }
-
-    return {
-      playerTiles: this.#currentPlayer.getTileIds(),
-      tilesOnBoard: this.#board.getPlacedTiles(),
-      state: "NO_ACTION",
-    };
   }
 
   expandHotel(tileId) {
