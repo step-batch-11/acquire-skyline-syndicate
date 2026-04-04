@@ -265,12 +265,20 @@ footer {
   background-image: url("/assets/imperial.svg");
 }
 
+.board-imperial-icon {
+  background-image: url("/hotel-on-board/imperial.svg");
+}
+
 .continental {
   background-color: var(--continental);
 }
 
 .continental-icon {
   background-image: url("/assets/continental.svg");
+}
+
+.board-continental-icon {
+  background-image: url("/hotel-on-board/continental.svg");
 }
 
 .festival {
@@ -281,12 +289,20 @@ footer {
   background-image: url("/assets/festival.svg");
 }
 
+.board-festival-icon {
+  background-image: url("/hotel-on-board/festival.svg");
+}
+
 .worldwide {
   background-color: var(--worldwide);
 }
 
 .worldwide-icon {
   background-image: url("/assets/worldwide.svg");
+}
+
+.board-worldwide-icon {
+  background-image: url("/hotel-on-board/worldwide.svg");
 }
 
 .american {
@@ -297,6 +313,10 @@ footer {
   background-image: url("/assets/american.svg");
 }
 
+.board-american-icon {
+  background-image: url("/hotel-on-board/american.svg");
+}
+
 .sackson {
   background-color: var(--sackson);
 }
@@ -305,12 +325,20 @@ footer {
   background-image: url("/assets/sackson.svg");
 }
 
+.board-sackson-icon {
+  background-image: url("/hotel-on-board/sackson.svg");
+}
+
 .tower {
   background-color: var(--tower);
 }
 
 .tower-icon {
   background-image: url("/assets/tower.svg");
+}
+
+.board-tower-icon {
+  background-image: url("/hotel-on-board/tower.svg");
 }
 
 .hotel-card-header {

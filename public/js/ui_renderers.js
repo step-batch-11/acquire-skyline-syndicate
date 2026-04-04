@@ -17,7 +17,7 @@ const addColorToHotelTile = (tile, name) => {
 
 const addColorToHotelTiles = (hotels) => {
   hotels.forEach((hotel) => {
-    if (hotel.tiles.length > 0) {
+    if (hotel.isActive) {
       hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
     }
   });
@@ -49,7 +49,7 @@ const createTradeConfirmationBtn = () => {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
   const button = cloneElement("#button");
-  button.textContent = "Found";
+  button.textContent = "Build";
   button.id = "found";
   button.classList.add("hidden");
   buttonContainer.append(button);
