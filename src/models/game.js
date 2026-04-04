@@ -64,8 +64,9 @@ export class Game {
   }
 
   placeTile(tileId) {
+    const tile = new Tile(tileId);
     if (this.#isValidTilePlacement(tileId)) {
-      this.#board.place(new Tile(tileId));
+      this.#board.place(tile);
       this.#actionForTilePlacement(tileId);
 
       this.#currentPlayer.removeTile(tileId);

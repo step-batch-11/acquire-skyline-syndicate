@@ -2,6 +2,10 @@
 
 set -e
 deno lint --fix
-deno test -A
 deno fmt --check
+deno test -A 
+if [$? -ne 0]; then
+  echo "Tests failed"
+  exit 1
+fi
 deno task test:coverage
