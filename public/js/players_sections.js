@@ -1,5 +1,6 @@
 export const renderPlayers = (players, currentPlayer) => {
   const playersSection = document.querySelector(".players");
+  playersSection.replaceChildren();
   const playerTemplate = document.querySelector("#player-template");
 
   players.forEach(({ name }, id) => {

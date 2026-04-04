@@ -1,8 +1,10 @@
 import { turnActions } from "./board_events.js";
 import { assignNewTiles, updateTiles } from "./game_state.js";
+import { initializeGameSetup } from "./initial_setup.js";
 import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
 import { removeFocus } from "./utils.js";
 
+const TOTAL_SELECTED_STOCKS = [];
 const noOp = () => {};
 
 export const handleTilePlacement = async (
@@ -23,22 +25,33 @@ export const handleTilePlacement = async (
   action(tileContainer);
 };
 
+export const handleShiftTurn = async () => {
+  const currentState = await fetch("/shiftTurn", { method: "post" });
+  const data = await currentState.json();
+  initializeGameSetup(data);
+};
+
 export const handleAssignTile = async () => {
   const { playerTiles, tilesOnBoard } = await assignNewTiles();
   renderBoard(tilesOnBoard);
   renderTilesInHand(playerTiles);
+  handleShiftTurn();
 };
 
-const incrementStocks = (parent) => {
-  const counter = parent.querySelector("span");
-  const counterValue = parseInt(counter.innerText);
-  counter.textContent = counterValue + 1;
+const incrementStocks = (cartElement, counterValue) => {
+  if (counterValue < 3 && TOTAL_SELECTED_STOCKS.length < 3) {
+    cartElement.textContent = counterValue + 1;
+    cartElement.value = counterValue + 1;
+    TOTAL_SELECTED_STOCKS.push(1);
+  }
 };
 
-const decrementStocks = (parent) => {
-  const counter = parent.querySelector("span");
-  const counterValue = parseInt(counter.innerText);
-  counter.textContent = counterValue - 1;
+const decrementStocks = (cartElement, counterValue) => {
+  if (counterValue > 0) {
+    cartElement.textContent = counterValue - 1;
+    cartElement.value = counterValue - 1;
+    TOTAL_SELECTED_STOCKS.pop();
+  }
 };
 
 const clickActions = {
@@ -48,6 +61,9 @@ const clickActions = {
 
 export const handleCartUpdation = (action, parent) => {
   if (action in clickActions) {
-    clickActions[action](parent);
+    const cartElement = parent.querySelector(".cart-value");
+    const counterValue = Number(cartElement.value);
+
+    clickActions[action](cartElement, counterValue);
   }
 };

@@ -7,7 +7,7 @@ export class Board {
   }
 
   isTileOnBoard(tileId) {
-    const placedTileIds = this.#placedTiles.map((tile) => tile.id);
+    const placedTileIds = this.#placedTiles.map((tile) => tile);
     return placedTileIds.includes(tileId);
   }
 

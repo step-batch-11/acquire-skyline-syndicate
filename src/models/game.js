@@ -7,21 +7,25 @@ export class Game {
   #currentPlayer;
   #state;
   #players;
+  #currentPlayerIndex;
 
   constructor(deck, board, hotels, players) {
     this.#deck = deck;
     this.#board = board;
     this.#hotels = hotels;
+    this.#currentPlayerIndex = 0;
+    this.#currentPlayer = players[this.#currentPlayerIndex];
     this.#players = players;
-    this.#currentPlayer = players[0];
     this.#state = "";
   }
 
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
-    const initialPlayerTiles = this.#deck.drawTiles(6);
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
-    this.#currentPlayer.addInitialTiles(initialPlayerTiles);
+    this.#players.forEach((player) => {
+      const initialPlayerTiles = this.#deck.drawTiles(6);
+      player.addInitialTiles(initialPlayerTiles);
+    });
   }
 
   currentState() {
@@ -40,7 +44,7 @@ export class Game {
     );
   }
 
-  isValidTilePlacement(tileId) {
+  #isValidTilePlacement(tileId) {
     if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
     return true;
@@ -60,9 +64,7 @@ export class Game {
   }
 
   placeTile(tileId) {
-    // a separate method to decide the action
-
-    if (this.isValidTilePlacement(tileId)) {
+    if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#actionForTilePlacement(tileId);
 
@@ -86,6 +88,7 @@ export class Game {
     const tile = this.#deck.drawTiles(1);
     const playerTiles = this.#currentPlayer.addNewTile(tile);
     const tilesOnBoard = this.#board.getPlacedTiles();
+
     return { playerTiles, tilesOnBoard };
   }
 
@@ -99,5 +102,10 @@ export class Game {
     this.#currentPlayer.deductMoney(moneyToDeduct);
     const playerInfo = this.#currentPlayer.getDetails();
     return { hotels, playerInfo };
+  }
+
+  shiftTurn() {
+    this.#currentPlayer =
+      this.#players[++this.#currentPlayerIndex % this.#players.length];
   }
 }

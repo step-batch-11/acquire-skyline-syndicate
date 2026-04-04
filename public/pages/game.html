@@ -1,76 +1,78 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic layout</title>
-    <link rel="stylesheet" href="../styles/game.css" />
-    <script type="module" src="../js/game.js"></script>
-    <template id="board-tile">
-      <div class="tile">
-        <p>1a</p>
-      </div>
-    </template>
 
-    <template id="button">
-      <button class="confirm-btn"></button>
-    </template>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic layout</title>
+  <link rel="stylesheet" href="../styles/game.css" />
+  <script type="module" src="../js/game.js"></script>
+  <template id="board-tile">
+    <div class="tile">
+      <p>1a</p>
+    </div>
+  </template>
 
-    <template id="stock-template">
-      <div class="stock">
-        <h3 class="stock-name"></h3>
-        <span class="count"></span>
-      </div>
-    </template>
+  <template id="button">
+    <button class="confirm-btn"></button>
+  </template>
 
-    <template id="hotel-card">
-      <section class="hotel">
-        <div class="hotel-info">
-          <div class="hotel-card-header">
-            <h3 class="hotel-name"></h3>
-            <div class="counter">
-              <button data-action="decr">-</button>
-              <span>0</span>
-              <button data-action="incr">+</button>
-            </div>
-          </div>
-          <div class="information">
-            <div id="price">$ 400</div>
-            <div id="tiles">% 3</div>
-            <div id="stock-left">& 25</div>
+  <template id="stock-template">
+    <div class="stock">
+      <h3 class="stock-name"></h3>
+      <span class="count"></span>
+    </div>
+  </template>
+
+  <template id="hotel-card">
+    <section class="hotel">
+      <div class="hotel-info">
+        <div class="hotel-card-header">
+          <h3 class="hotel-name"></h3>
+          <div class="counter">
+            <button data-action="decr">-</button>
+            <data class="cart-value" value="0">0</data>
+            <button data-action="incr">+</button>
           </div>
         </div>
-        <div class="hotel-container"></div>
-      </section>
-    </template>
-  </head>
-
-  <body>
-    <main>
-      <div class="market-notification-players">
-        <div class="notification-box"></div>
-        <div class="player-market">
-          <div class="players">
-            <template id="player-template">
-              <div class="player-container">
-                <div class="player-profile"></div>
-                <div class="player-name"></div>
-              </div>
-            </template>
-          </div>
-          <div class="board"></div>
+        <div class="information">
+          <div id="price">$ 400</div>
+          <div id="tiles">% 3</div>
+          <div id="stock-left">& 25</div>
         </div>
       </div>
-      <div class="bank">
-        <!-- Bank Section -->
+      <div class="hotel-container"></div>
+    </section>
+  </template>
+</head>
+
+<body>
+  <template id="player-template">
+    <div class="player-container">
+      <div class="player-profile"></div>
+      <div class="player-name"></div>
+    </div>
+  </template>
+  <main>
+    <div class="market-notification-players">
+      <div class="notification-box"></div>
+      <div class="player-market">
+        <div class="players">
+        </div>
+        <div class="board"></div>
       </div>
-    </main>
-    <footer>
-      <div class="amount-container">
-        <p></p>
-      </div>
-      <div class="stocks"></div>
-      <div class="tiles tiles-in-hand"></div>
-    </footer>
-  </body>
+    </div>
+    <div class="bank">
+      <!-- Bank Section -->
+    </div>
+  </main>
+  <footer>
+    <div class="amount-container">
+      <p></p>
+    </div>
+    <div class="stocks"></div>
+    <div class="tiles tiles-in-hand"></div>
+  </footer>
+</body>
+
 </html>

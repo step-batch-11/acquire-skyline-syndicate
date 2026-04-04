@@ -1,0 +1,1 @@
+- [ ] actions should be disabled for inactive player
