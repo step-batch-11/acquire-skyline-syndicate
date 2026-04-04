@@ -35,6 +35,7 @@ export class Hotels {
     // Create instance once
     const hotel = Object.values(this.#hotels).find((hotel) => {
       const tiles = hotel.getTiles();
+
       return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
     });
 

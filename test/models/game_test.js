@@ -129,15 +129,18 @@ describe("Game entity tests", () => {
   });
 
   describe("buildHotel method", () => {
-    it.ignore("should build hotel and add a free stock of that hotel player", () => {
-      game.placeTile("2a");
-      game.placeTile("3a");
-      const hotelName = "sackson";
-      game.buildHotel(hotelName);
-      const result = game.currentState();
-      const stock = result.currentPlayer.stocks[hotelName];
-      assertEquals(stock, 1);
-    });
+    it.ignore(
+      "should build hotel and add a free stock of that hotel player",
+      () => {
+        game.placeTile("2a");
+        game.placeTile("3a");
+        const hotelName = "sackson";
+        game.buildHotel(hotelName);
+        const result = game.currentState();
+        const stock = result.currentPlayer.stocks[hotelName];
+        assertEquals(stock, 1);
+      },
+    );
   });
 
   describe("buy stocks method", () => {
