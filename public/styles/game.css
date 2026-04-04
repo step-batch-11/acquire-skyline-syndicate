@@ -96,7 +96,7 @@ main {
   margin: 5%;
 }
 
-.player {
+.player-profile{
   height: 30px;
   width: 30px;
   border: 1.5px solid black;
@@ -105,7 +105,7 @@ main {
   margin-left: 100%;
 }
 
-#player-1 {
+.active-player {
   background-color: orange;
 }
 
@@ -156,14 +156,15 @@ footer {
   height: 90%;
   width: 10%;
   color: whitesmoke;
+  border-radius: 5px;
 }
 
-.stock span {
+.stock .count {
   justify-self: flex-end;
   font-size: 30px;
 }
 
-.stock .stock-heading {
+.stock .stock-name {
   margin-top: 5px;
 }
 
@@ -232,6 +233,7 @@ footer {
     background-color: white;
     border: 0.2px solid black;
   }
+
   to {
     box-shadow: 0 0 7px 3px rgb(108, 93, 93);
   }
@@ -324,4 +326,10 @@ footer {
 
 .hidden {
   display: none;
+}
+
+.blur {
+  border: 1px dashed black;
+  content-visibility: hidden;
+  background: none;
 }

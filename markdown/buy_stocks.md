@@ -1,12 +1,13 @@
 ## Buy stocks
 
-- [ ] Create buy button
-- [ ] Add event for buy button
-- [ ] Extract the selected stocks and their hotel names
-- [ ] Send the request to the backemd /turn/buyStocks with extracted hotel
+- [x] Create buy button
+- [x] Add event for buy button
+- [x] Extract the selected stocks and their hotel names
+- [x] Send the request to the backemd /turn/buyStocks with extracted hotel
       stocks
 - [ ] Mock the data of response of buy stocks in backend
-- [ ] Reflect the response in user section and bank section
+- [x] Reflect the response in and bank section
+- [ ] Reflect the response in user section
 
 ## Models we need to use
 

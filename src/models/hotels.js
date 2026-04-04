@@ -9,13 +9,12 @@ export class Hotels {
   }
 
   getHotels() {
-    return Object
-      .values(this.#hotels)
-      .map((hotel) => hotel.getState());
+    return Object.values(this.#hotels).map((hotel) => hotel.getState());
   }
 
   buildHotel(hotelName, originTile, adjacentTilesForHotel) {
-    this.#hotels[hotelName].found(originTile, adjacentTilesForHotel);
+    const adjacents = adjacentTilesForHotel.map((tileId) => new Tile(tileId));
+    this.#hotels[hotelName].found(originTile, adjacents);
   }
 
   isAnyInActiveHotel() {
@@ -33,12 +32,11 @@ export class Hotels {
   }
 
   expand(tileId) {
-    const hotel = Object
-      .values(this.#hotels)
-      .find((hotel) => {
-        const tiles = hotel.getTiles();
-        return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
-      });
+    // Create instance once
+    const hotel = Object.values(this.#hotels).find((hotel) => {
+      const tiles = hotel.getTiles();
+      return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
+    });
 
     hotel.addTiles([new Tile(tileId)]);
     return hotel;
@@ -53,9 +51,19 @@ export class Hotels {
     return new Hotels(hotels);
   }
 
-  decreaseHotelStocks(cart) {
+  deductStocks(cart) {
     cart.forEach(({ hotelName, selectedStocks }) => {
       this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
     });
+  }
+
+  // Have method calculateMoney and extract things outside
+
+  calculateMoneyToDeduct(cart) {
+    return cart.reduce((calculatedMoney, { hotelName, selectedStocks }) => {
+      return (calculatedMoney +=
+        this.#hotels[hotelName.toLowerCase()].calculateStockPrice() *
+        selectedStocks);
+    }, 0);
   }
 }

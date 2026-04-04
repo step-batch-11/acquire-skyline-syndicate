@@ -10,12 +10,14 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-const addColorToHotelTile = (tileId, name) => {
-  const tile = document.querySelector(`#tile-${tileId}`);
-  tile.classList.add(name);
+const addColorToHotelTile = (tile, name) => {
+  const tileElement = document.querySelector(`#tile-${tile.id}`);
+  tileElement.classList.add(name);
 };
 
 const addColorToHotelTiles = (hotels) => {
+  console.log(hotels);
+
   hotels.forEach((hotel) => {
     if (hotel.tiles.length > 0) {
       hotel.tiles.forEach((tileId) => addColorToHotelTile(tileId, hotel.name));
@@ -25,8 +27,8 @@ const addColorToHotelTiles = (hotels) => {
 
 export const renderBoard = (tilesOnBoard, hotels) => {
   const board = document.querySelector(".board");
-  tilesOnBoard.forEach((tileId) => {
-    const tileContainer = board.querySelector(`#tile-${tileId}`);
+  tilesOnBoard.forEach((tile) => {
+    const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
 
@@ -101,7 +103,40 @@ export const renderBankSection = (hotels) => {
   bankSection.append(buyButton);
 };
 
-export const renderUserSection = ({ money, tiles }) => {
+const renderHotelStock = (hotel, stocks) => {
+  const stockTemplate = cloneElement("#stock-template");
+  const stockName = stockTemplate.querySelector(".stock-name");
+  stockName.textContent = hotel;
+  const stockCount = stockTemplate.querySelector(".count");
+  stockCount.textContent = 0;
+  stockTemplate.classList.add(hotel);
+
+  if (hotel in stocks) {
+    stockCount.textContent = stocks[hotel];
+  } else {
+    stockTemplate.classList.add("blur");
+  }
+
+  return stockTemplate;
+};
+
+const renderHeldStocks = (stocks) => {
+  const hotels = [
+    "tower",
+    "imperial",
+    "continental",
+    "american",
+    "festival",
+    "sackson",
+    "worldwide",
+  ];
+  const stockCards = hotels.map((hotel) => renderHotelStock(hotel, stocks));
+  const stocksSection = document.querySelector(".stocks");
+  stocksSection.replaceChildren(...stockCards);
+};
+
+export const renderUserSection = ({ money, tiles, stocks }) => {
   renderTilesInHand(tiles);
   displayInitialAmount(money);
+  renderHeldStocks(stocks);
 };

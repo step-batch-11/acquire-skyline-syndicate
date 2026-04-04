@@ -12,10 +12,13 @@ export const handleTilePlacement = async (
 ) => {
   const tile = tileContainer.id.split("-")[1];
 
-  const { player, tilesOnBoard, hotels, state } = await updateTiles(tile);
+  const { currentPlayer, tilesOnBoard, hotels, state } = await updateTiles(
+    tile,
+  );
+
   removeFocus(board, tilesInPlayerHand);
   renderBoard(tilesOnBoard, hotels);
-  renderTilesInHand(player.tiles);
+  renderTilesInHand(currentPlayer.tiles);
   const action = turnActions[state] || noOp;
   action(tileContainer);
 };

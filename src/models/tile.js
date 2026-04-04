@@ -1,7 +1,11 @@
 export class Tile {
   id;
   #rowLabels;
+  #maxCol;
+  #minCol;
   constructor(tileId) {
+    this.#maxCol = 12;
+    this.#minCol = 1;
     this.#rowLabels = "abcdefghi";
     this.id = tileId;
   }
@@ -10,63 +14,61 @@ export class Tile {
     return { col: tile.slice(0, tile.length - 1), row: tile.slice(-1) };
   }
 
+  updateColumn(col, dc) {
+    const newCol = col + dc;
+    if (newCol < this.#minCol) return 1;
+    if (newCol > this.#maxCol) return 12;
+    return newCol;
+  }
+
+  updateRowIndex(row, dr) {
+    const newRow = this.getRowIndex(row) + dr;
+    if (newRow < 0) return 0;
+    if (newRow > 8) return 8;
+    return newRow;
+  }
+
   neighbourTiles() {
-    const tilePositions = this.splitTile(this.id);
-    return [
-      this.topNeighbour(tilePositions),
-      this.bottomNeighbour(tilePositions),
-      this.leftNeighbour(tilePositions),
-      this.rightNeighbour(tilePositions),
+    const neighbours = [
+      { columnDelta: 1, rowDelta: 0 },
+      { columnDelta: -1, rowDelta: 0 },
+      { columnDelta: 0, rowDelta: 1 },
+      { columnDelta: 0, rowDelta: -1 },
     ];
+    const currentTile = this.splitTile(this.id);
+
+    const adjacents = neighbours.map(({ columnDelta, rowDelta }) => {
+      const updatedCol = this.updateColumn(
+        Number(currentTile.col),
+        columnDelta,
+      );
+      const updatedRowIndex = this.updateRowIndex(currentTile.row, rowDelta);
+      const updatedRow = this.#rowLabels[updatedRowIndex];
+
+      return `${updatedCol}${updatedRow}`;
+    });
+    return adjacents;
   }
 
   isNeighbouringTile(tile) {
-    const adjacents = this.neighbourTiles();
+    if (this.id === tile.id) return false;
 
-    return adjacents.includes(tile.id) && tile.id !== this.id;
+    const currentTilePosition = this.splitTile(this.id);
+    const newTilePosition = this.splitTile(tile.id);
+
+    const rowDifference = Math.abs(
+      this.getRowIndex(currentTilePosition.row) -
+        this.getRowIndex(newTilePosition.row),
+    );
+    const columnDifference = Math.abs(
+      currentTilePosition.col - newTilePosition.col,
+    );
+    const difference = rowDifference + columnDifference;
+
+    return difference === 1;
   }
 
-  createTile(col, row) {
-    return `${col}${row}`;
-  }
-
-  getColumnLabel(col) {
-    return Number(col);
-  }
-
-  getRowLabel(row) {
+  getRowIndex(row) {
     return Number(this.#rowLabels.indexOf(row));
-  }
-
-  topNeighbour({ row, col }) {
-    const top = this.getRowLabel(row) - 1;
-    const updatedTopRow = top === -1
-      ? this.#rowLabels[0]
-      : this.#rowLabels[top];
-
-    return this.createTile(col, updatedTopRow);
-  }
-
-  bottomNeighbour({ row, col }) {
-    const bottom = this.getRowLabel(row) + 1;
-    const updatedBottomRow = bottom === 9
-      ? this.#rowLabels[8]
-      : this.#rowLabels[bottom];
-
-    return this.createTile(col, updatedBottomRow);
-  }
-
-  leftNeighbour({ row, col }) {
-    const left = this.getColumnLabel(col) - 1;
-    const updatedLeftColumn = left === 0 ? 1 : left;
-
-    return this.createTile(updatedLeftColumn, row);
-  }
-
-  rightNeighbour({ row, col }) {
-    const right = this.getColumnLabel(col) + 1;
-    const updatedLeftColumn = right === 13 ? 12 : right;
-
-    return this.createTile(updatedLeftColumn, row);
   }
 }

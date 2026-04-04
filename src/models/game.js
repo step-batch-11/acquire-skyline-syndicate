@@ -4,14 +4,16 @@ export class Game {
   #deck;
   #board;
   #hotels;
-  #player;
+  #currentPlayer;
   #state;
+  #players;
 
-  constructor(deck, board, hotels, player) {
+  constructor(deck, board, hotels, players) {
     this.#deck = deck;
     this.#board = board;
     this.#hotels = hotels;
-    this.#player = player;
+    this.#players = players;
+    this.#currentPlayer = players[0];
     this.#state = "";
   }
 
@@ -19,15 +21,16 @@ export class Game {
     const initialBoardTiles = this.#deck.drawTiles(6);
     const initialPlayerTiles = this.#deck.drawTiles(6);
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
-    this.#player.addInitialTiles(initialPlayerTiles);
+    this.#currentPlayer.addInitialTiles(initialPlayerTiles);
   }
 
   currentState() {
     return {
-      player: this.#player.getDetails(),
+      currentPlayer: this.#currentPlayer.getDetails(),
       hotels: this.#hotels.getHotels(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
+      players: this.#players.map((player) => player.getDetails()),
     };
   }
 
@@ -38,7 +41,7 @@ export class Game {
   }
 
   isValidTilePlacement(tileId) {
-    if (!this.#player.isPlayerTile(tileId)) return false;
+    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
     return true;
   }
@@ -50,21 +53,21 @@ export class Game {
     );
   }
 
+  #actionForTilePlacement(tileId) {
+    if (this.#isBuildPossible()) this.#state = "BUILD_HOTEL";
+    else if (this.#isExpansion(tileId)) this.expandHotel(tileId);
+    else this.#state = "NO_ACTION";
+  }
+
   placeTile(tileId) {
+    // a separate method to decide the action
+
     if (this.isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
-      this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
+      this.#actionForTilePlacement(tileId);
 
-      if (this.#isExpansion(tileId)) this.expandHotel(tileId);
-
-      this.#player.removeTile(tileId);
+      this.#currentPlayer.removeTile(tileId);
     }
-
-    return {
-      playerTiles: this.#player.getTileIds(),
-      tilesOnBoard: this.#board.getPlacedTiles(),
-      state: "NO_ACTION",
-    };
   }
 
   expandHotel(tileId) {
@@ -76,19 +79,25 @@ export class Game {
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTiles(lastTile);
     this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
-    this.#player.addStocks(hotelName, 1);
+    this.#currentPlayer.addStocks(hotelName, 1);
   }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    const playerTiles = this.#player.addNewTile(tile);
+    const playerTiles = this.#currentPlayer.addNewTile(tile);
     const tilesOnBoard = this.#board.getPlacedTiles();
     return { playerTiles, tilesOnBoard };
   }
 
   buyStocks(cart) {
-    this.#hotels.decreaseHotelStocks(cart);
+    this.#hotels.deductStocks(cart);
     const hotels = this.#hotels.getHotels();
-    return { hotels };
+    cart.forEach(({ hotelName, selectedStocks }) =>
+      this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
+    );
+    const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    this.#currentPlayer.deductMoney(moneyToDeduct);
+    const playerInfo = this.#currentPlayer.getDetails();
+    return { hotels, playerInfo };
   }
 }

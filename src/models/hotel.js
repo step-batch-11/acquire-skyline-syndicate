@@ -24,28 +24,29 @@ export class Hotel {
   }
 
   addTiles(tiles) {
-    this.#tiles.push(...[...tiles, this.#originTile]);
+    this.#tiles.push(...tiles);
   }
 
   getTiles() {
-    return [...this.#tiles];
+    return this.#tiles.map((tile) => ({ id: tile.id }));
   }
 
   setOriginTile(originTile) {
     this.#originTile = originTile;
+    this.#tiles.push(originTile);
   }
 
-  #calculateStockPrice() {
+  calculateStockPrice() {
     if (this.#tiles.length === 0) return 0;
     const numberOfTiles = this.#getNumberOfTiles();
-    return (numberOfTiles * 100) + this.#priceOffset;
+    return numberOfTiles * 100 + this.#priceOffset;
   }
 
   getState() {
-    const stockPrice = this.#calculateStockPrice();
+    const stockPrice = this.calculateStockPrice();
     return {
       name: this.#name,
-      tiles: structuredClone(this.#tiles),
+      tiles: this.getTiles(),
       stocksLeft: this.#stocks,
       stockPrice,
       originTile: this.#originTile,
