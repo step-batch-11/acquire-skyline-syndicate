@@ -17,7 +17,6 @@ export class Board {
 
   place(tile) {
     this.#placedTiles.push(tile);
-    console.log(tile);
     this.lastTile = tile;
   }
 
