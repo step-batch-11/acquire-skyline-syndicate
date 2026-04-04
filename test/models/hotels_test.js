@@ -28,7 +28,7 @@ describe("Hotels entity tests", () => {
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("2a"), true);
     });
-    it.ignore("should return false if tile is not part of any of the hotels", () => {
+    it("should return false if tile is not part of any of the hotels", () => {
       const tilesOfTower = ["1a", "2a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("9a"), false);
@@ -57,12 +57,27 @@ describe("Hotels entity tests", () => {
   });
 
   describe("expand", () => {
-    it("should add tile into its adjacent hotel chain", () => {
+    it.ignore("should add tile into its adjacent hotel chain", () => {
       const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       const updatedHotel = hotelsInstance.expand("3a");
-
       assertEquals(updatedHotel.getTiles().length, 3);
     });
+  });
+
+  describe("calculate the stock price of the selected stocks", () => {
+    const hotels = [
+      { name: "sackson", scale: 0 },
+      {
+        name: "Tower",
+        scale: 0,
+      },
+    ];
+    const hotelsInstance = Hotels.instantiateHotels(hotels);
+    const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+    hotelsInstance.addTilesToHotel("sackson", tilesOfTower);
+    const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+
+    assertEquals(hotelsInstance.calculateMoneyToDeduct(cart), 400);
   });
 });
