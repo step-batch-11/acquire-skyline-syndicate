@@ -83,35 +83,26 @@ export const renderBankSection = (hotels) => {
   bankSection.append(buyButton);
 };
 
-const renderHotelStock = (hotel, stocks) => {
-  const stockTemplate = cloneElement("#stock-template");
-  const stockName = stockTemplate.querySelector(".stock-name");
-  stockName.textContent = hotel;
-  const stockCount = stockTemplate.querySelector(".count");
-  stockCount.textContent = 0;
-  stockTemplate.classList.add(hotel);
+const addDetailsToCard = (stockCard, name, count) => {
+  stockCard.classList.add(name);
+  stockCard.classList.remove("empty");
+  stockCard.querySelector(".stock-name").textContent = name;
+  stockCard.querySelector(".count").textContent = count;
+};
 
-  if (hotel in stocks) {
-    stockCount.textContent = stocks[hotel];
-  } else {
-    stockTemplate.classList.add("blur");
-  }
-
-  return stockTemplate;
+const cloneStockCards = () => {
+  return Array.from(
+    { length: 7 },
+    () => cloneElement("#stock-template"),
+  );
 };
 
 const renderHeldStocks = (stocks) => {
-  const hotels = [
-    "tower",
-    "imperial",
-    "continental",
-    "american",
-    "festival",
-    "sackson",
-    "worldwide",
-  ];
-  const stockCards = hotels.map((hotel) => renderHotelStock(hotel, stocks));
   const stocksSection = document.querySelector(".stocks");
+  const stockCards = cloneStockCards();
+  Object.entries(stocks).forEach(([name, count], index) =>
+    addDetailsToCard(stockCards[index], name, count)
+  );
   stocksSection.replaceChildren(...stockCards);
 };
 

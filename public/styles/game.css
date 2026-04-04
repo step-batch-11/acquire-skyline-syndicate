@@ -16,6 +16,7 @@
 }
 
 main {
+  
   height: 83vh;
   margin: 0.3em 0 0 0.3em;
   display: flex;
@@ -134,6 +135,7 @@ main {
 }
 
 footer {
+  background-color: whitesmoke;
   padding: 5px;
   height: 15vh;
   box-shadow: 0px 0px 5px gray;
@@ -342,16 +344,14 @@ footer {
   display: none;
 }
 
-.blur {
-  border: 1px dashed black;
-  content-visibility: hidden;
-  background: none;
-}
-
 .tiles-in-hand .tile {
   border: 1px solid black;
 }
 
 .players {
   width: 10%;
+}
+
+.empty {
+  border: 1px dashed black;
 }
