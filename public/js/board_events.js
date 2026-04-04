@@ -11,6 +11,13 @@ export const buildAHotel = (tileContainer) => {
   const foundBtn = bankContainer.querySelector("#found");
   foundBtn.classList.remove("hidden");
 
+  const allHotels = document.querySelectorAll(".hotel-container");
+  const inactiveHotels = Array.from(allHotels).forEach((hotel) => {
+    if (!hotel.classList.contains("dim")) hotel.classList.add("inactive");
+  });
+
+  console.log(inactiveHotels);
+
   let hotelToFound = "";
 
   foundBtn.addEventListener(
@@ -29,9 +36,9 @@ const expandHotel = (_tileContainer) => {
 };
 
 export const turnActions = {
-  "EXPAND_HOTEL": expandHotel,
-  "BUILD_HOTEL": buildAHotel,
-  "NO_ACTION": () => "",
+  EXPAND_HOTEL: expandHotel,
+  BUILD_HOTEL: buildAHotel,
+  NO_ACTION: () => "",
 };
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
