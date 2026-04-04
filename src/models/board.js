@@ -26,8 +26,8 @@ export class Board {
     );
   }
 
-  adjacentTiles(tile) {
-    return tile
+  adjacentTilesOfLastTile() {
+    return this.lastTile
       .neighbourTiles()
       .filter((tile) =>
         this.#placedTiles.find((placedTile) => placedTile.id === tile)

@@ -28,7 +28,7 @@ export class Hotel {
   }
 
   getTiles() {
-    return this.#tiles.map((tile) => ({ id: tile.id }));
+    return [...this.#tiles];
   }
 
   setOriginTile(originTile) {
@@ -46,7 +46,7 @@ export class Hotel {
     const stockPrice = this.calculateStockPrice();
     return {
       name: this.#name,
-      tiles: this.getTiles(),
+      tiles: this.#tiles.map((id) => ({ id })),
       stocksLeft: this.#stocks,
       stockPrice,
       originTile: this.#originTile,
