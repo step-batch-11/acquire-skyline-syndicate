@@ -18,7 +18,8 @@ const buildHotel = async (c) => {
 
 const assignNewTile = (c) => {
   const game = c.get("game");
-  return c.json(game.assignNewTile());
+  game.assignNewTile();
+  return c.json(game.currentState());
 };
 
 const buyStocks = async (c) => {

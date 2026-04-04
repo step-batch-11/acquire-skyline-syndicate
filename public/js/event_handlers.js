@@ -32,9 +32,8 @@ export const handleShiftTurn = async () => {
 };
 
 export const handleAssignTile = async () => {
-  const { playerTiles, tilesOnBoard } = await assignNewTiles();
-  renderBoard(tilesOnBoard);
-  renderTilesInHand(playerTiles);
+  const currentState = await assignNewTiles();
+  renderTilesInHand(currentState.currentPlayer.tiles);
   handleShiftTurn();
 };
 

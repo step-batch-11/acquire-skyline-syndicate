@@ -87,10 +87,8 @@ export class Game {
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    const playerTiles = this.#currentPlayer.addNewTile(tile);
-    const tilesOnBoard = this.#board.getPlacedTiles();
-
-    return { playerTiles, tilesOnBoard };
+    this.#currentPlayer.addNewTile(tile);
+    this.#board.getPlacedTiles();
   }
 
   buyStocks(cart) {
