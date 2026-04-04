@@ -55,6 +55,9 @@ export class Hotel {
   }
 
   tileIncludes(tile) {
+    // console.log({tile}, this.#tiles);
+    // console.log(this.#tiles.some((hotelTile) => hotelTile.id === tile));
+
     return this.#tiles.some((hotelTile) => hotelTile.id === tile);
   }
 

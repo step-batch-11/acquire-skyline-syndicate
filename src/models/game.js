@@ -39,8 +39,14 @@ export class Game {
   }
 
   #isBuildPossible() {
+    const adjacentTiles = this.#board.lastTile.neighbourTiles();
+    const notInAnyHotel = !adjacentTiles.some((tile) =>
+      this.#hotels.isTileInAnyHotel(tile)
+    );
+
     return (
-      this.#hotels.isAnyInActiveHotel() && this.#board.hasAdjacentForLastTile()
+      this.#hotels.isAnyInActiveHotel() &&
+      this.#board.hasAdjacentForLastTile() && notInAnyHotel
     );
   }
 
@@ -51,8 +57,8 @@ export class Game {
   }
 
   #isExpansion() {
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
-    return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile.id));
+    const adjacentTiles = this.#board.lastTile.neighbourTiles();
+    return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
   #actionForTilePlacement(tileId) {
@@ -65,8 +71,6 @@ export class Game {
     if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#actionForTilePlacement(tileId);
-
-      if (this.#isExpansion(tileId)) this.expandHotel(tileId);
 
       const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
