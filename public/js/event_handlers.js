@@ -54,8 +54,8 @@ const decrementStocks = (cartElement, counterValue) => {
 };
 
 const clickActions = {
-  "incr": incrementStocks,
-  "decr": decrementStocks,
+  incr: incrementStocks,
+  decr: decrementStocks,
 };
 
 export const handleCartUpdation = (action, parent) => {

@@ -16,8 +16,6 @@ const addColorToHotelTile = (tile, name) => {
 };
 
 const addColorToHotelTiles = (hotels) => {
-  console.log(hotels);
-
   hotels.forEach((hotel) => {
     if (hotel.tiles.length > 0) {
       hotel.tiles.forEach((tileId) => addColorToHotelTile(tileId, hotel.name));
@@ -120,7 +118,7 @@ const renderHotelStock = (hotel, stocks) => {
   return stockTemplate;
 };
 
-const renderHeldStocks = (stocks) => {
+export const renderHeldStocks = (stocks) => {
   const hotels = [
     "tower",
     "imperial",
