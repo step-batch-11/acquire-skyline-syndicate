@@ -12,11 +12,9 @@ export const buildAHotel = (tileContainer) => {
   foundBtn.classList.remove("hidden");
 
   const allHotels = document.querySelectorAll(".hotel-container");
-  const inactiveHotels = Array.from(allHotels).forEach((hotel) => {
+  Array.from(allHotels).forEach((hotel) => {
     if (!hotel.classList.contains("dim")) hotel.classList.add("inactive");
   });
-
-  console.log(inactiveHotels);
 
   let hotelToFound = "";
 
@@ -36,9 +34,9 @@ const expandHotel = (_tileContainer) => {
 };
 
 export const turnActions = {
-  "BUILD_HOTEL": buildAHotel,
-  "EXPAND_HOTEL": expandHotel,
-  "NO_ACTION": () => "",
+  BUILD_HOTEL: buildAHotel,
+  EXPAND_HOTEL: expandHotel,
+  NO_ACTION: () => "",
 };
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
