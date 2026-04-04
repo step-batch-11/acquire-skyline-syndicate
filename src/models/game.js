@@ -44,7 +44,7 @@ export class Game {
     );
   }
 
-  isValidTilePlacement(tileId) {
+  #isValidTilePlacement(tileId) {
     if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
     return true;
@@ -58,7 +58,7 @@ export class Game {
   }
 
   placeTile(tileId) {
-    if (this.isValidTilePlacement(tileId)) {
+    if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
 
@@ -100,12 +100,13 @@ export class Game {
   }
 
   buyStocks(cart) {
-    this.#hotels.decreaseHotelStocks(cart);
+    this.#hotels.deductStocks(cart);
     const hotels = this.#hotels.getHotels();
     cart.forEach(({ hotelName, selectedStocks }) =>
       this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
     );
-
+    const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    this.#currentPlayer.deductMoney(moneyToDeduct);
     const playerInfo = this.#currentPlayer.getDetails();
     return { hotels, playerInfo };
   }

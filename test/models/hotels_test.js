@@ -29,7 +29,7 @@ describe("Hotels entity tests", () => {
       assertEquals(hotelsInstance.isTileInAnyHotel("2a"), true);
     });
     it.ignore("should return false if tile is not part of any of the hotels", () => {
-      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      const tilesOfTower = ["1a", "2a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("9a"), false);
     });
@@ -46,7 +46,7 @@ describe("Hotels entity tests", () => {
       ];
 
       const hotelsInstance = Hotels.instantiateHotels(hotels);
-      hotelsInstance.decreaseHotelStocks([
+      hotelsInstance.deductStocks([
         { hotelName: "sackson", selectedStocks: 2 },
       ]);
 
@@ -60,6 +60,7 @@ describe("Hotels entity tests", () => {
     it.ignore("should add tile into its adjacent hotel chain", () => {
       const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
+      console.log(hotelsInstance.getHotels());
       const updatedHotel = hotelsInstance.expand("3a");
 
       assertEquals(updatedHotel.getTiles().length, 3);

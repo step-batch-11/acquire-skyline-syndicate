@@ -61,4 +61,21 @@ describe("Player entity tests", () => {
       assertEquals(player.tiles.includes("3d"), false);
     });
   });
+  describe("Add stocks method", () => {
+    it("Should return hotel with added new stocks", () => {
+      const hotelName = "Tower";
+      const noOfStocks = 3;
+      playerInstance.addStocks(hotelName, noOfStocks);
+      const player = playerInstance.getDetails();
+      assertEquals(player.stocks[hotelName], noOfStocks);
+    });
+  });
+  describe("Deduct money method", () => {
+    it("Should return the new money after deducting", () => {
+      const moneyToDeduct = 1000;
+      playerInstance.deductMoney(moneyToDeduct);
+      const player = playerInstance.getDetails();
+      assertEquals(player.money, 5000);
+    });
+  });
 });
