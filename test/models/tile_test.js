@@ -70,5 +70,11 @@ describe("TILE", () => {
 
       assertEquals(tile1.isNeighbouringTile(tile2), false);
     });
+    it("should return true for the left column tile", () => {
+      const tile1 = new Tile("10h");
+      const tile2 = new Tile("10i");
+
+      assertEquals(tile1.isNeighbouringTile(tile2), true);
+    });
   });
 });

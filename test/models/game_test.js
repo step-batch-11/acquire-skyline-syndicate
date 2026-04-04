@@ -54,8 +54,7 @@ describe("Game entity tests", () => {
       assertEquals(initialData.state, "");
     });
   });
-
-  describe("place tile method", () => {
+  describe("placeTile method", () => {
     it("Should return the new player tiles after removing the placed tile", () => {
       game.init();
       const initialData = game.currentState();
@@ -95,15 +94,13 @@ describe("Game entity tests", () => {
       const deck = new Deck(tilesInstances, () => tilesInstances);
       const game = new Game(deck, board, hotels, players);
       game.init();
-      const initialData = game.currentState();
       const tileToPlace = "4e";
-      const result = game.placeTile(tileToPlace);
-      assertEquals(result.playerTiles.length, 6);
-      assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
+      game.placeTile(tileToPlace);
+      const result = game.currentState();
+      assertEquals(result.currentPlayer.tiles.length, 5);
     });
   });
-
-  describe("Assign new tile method", () => {
+  describe("assignNewTile method", () => {
     it("Should assign new Tile to the player and return the new player tile", () => {
       game.init();
       const initialData = game.currentState();
@@ -112,6 +109,17 @@ describe("Game entity tests", () => {
       const result = game.assignNewTile();
       assertEquals(result.playerTiles.length, 6);
       assertEquals(result.tilesOnBoard.length, 7);
+    });
+  });
+  describe("buildHotel method", () => {
+    it("should build hotel and add a free stock of that hotel player", () => {
+      game.placeTile("2a");
+      game.placeTile("3a");
+      const hotelName = "sackson";
+      game.buildHotel(hotelName);
+      const result = game.currentState();
+      const stock = result.currentPlayer.stocks[hotelName];
+      assertEquals(stock, 1);
     });
   });
 });

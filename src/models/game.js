@@ -40,7 +40,7 @@ export class Game {
     );
   }
 
-  isValidTilePlacement(tileId) {
+  #isValidTilePlacement(tileId) {
     if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
     return true;
@@ -54,7 +54,7 @@ export class Game {
   }
 
   placeTile(tileId) {
-    if (this.isValidTilePlacement(tileId)) {
+    if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#isBuildPossible() ? "BUILD_HOTEL" : "NO_ACTION";
 
