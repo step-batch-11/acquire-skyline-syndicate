@@ -1,0 +1,94 @@
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+  background: linear-gradient(135deg, #1f4037, #99f2c8);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: white;
+}
+
+header {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  font-size: 24px;
+  letter-spacing: 2px;
+}
+
+#players-name-display {
+  margin-top: 30px;
+}
+
+#players-list {
+  list-style: none;
+  padding: 0;
+}
+
+#players-list li {
+  background: rgba(0, 0, 0, 0.3);
+  margin: 10px auto;
+  padding: 12px;
+  width: 250px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.waiting-container {
+  margin-top: 40px;
+}
+
+.spinner {
+  margin: 20px auto;
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-top: 6px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.starting-container {
+  margin-top: 40px;
+}
+
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background-color: #ffffff;
+  animation: load 5s linear forwards;
+}
+
+@keyframes load {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
