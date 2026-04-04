@@ -3,6 +3,11 @@ export const startGame = async () => {
   return await response.json();
 };
 
+export const listActivePlayers = async () => {
+  const response = await fetch("/lobby/active-players");
+  return await response.json();
+};
+
 export const postData = async (endPoint, content) => {
   const response = await fetch(endPoint, {
     method: "post",

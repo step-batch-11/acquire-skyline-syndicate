@@ -9,6 +9,7 @@ import { Hotels } from "./src/models/hotels.js";
 import { Player } from "./src/models/player.js";
 import { Game } from "./src/models/game.js";
 import { shuffle } from "@std/random/shuffle";
+import { Lobby } from "./src/models/lobby.js";
 
 const createTiles = () => {
   const tiles = [];
@@ -38,7 +39,8 @@ const main = () => {
   const player = new Player("Gopi", 1);
   const game = new Game(deck, board, hotelsManager, player);
   game.init();
-  const app = createApp(service, gameEngine, game);
+  const lobbyInstance = new Lobby(game);
+  const app = createApp(service, gameEngine, game, lobbyInstance);
   Deno.serve({ port }, app.fetch);
 };
 

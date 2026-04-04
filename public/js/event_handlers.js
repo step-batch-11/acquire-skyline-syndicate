@@ -1,4 +1,4 @@
-import { turnActions } from "./board_events.js";
+import { eventsForPlacingATile } from "./board_events.js";
 import { assignNewTiles, updateTiles } from "./game_state.js";
 import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
 import { removeFocus } from "./utils.js";
@@ -16,7 +16,7 @@ export const handleTilePlacement = async (
   removeFocus(board, tilesInPlayerHand);
   renderBoard(updatedTiles.tilesOnBoard);
   renderTilesInHand(updatedTiles.playerTiles);
-  const action = turnActions[updatedTiles.state] || noOp;
+  const action = eventsForPlacingATile[updatedTiles.state] || noOp;
   action(tileContainer);
 };
 
