@@ -9,6 +9,7 @@ import {
   handleInitialSetup,
   handleUpdateTiles,
 } from "./handlers.js";
+import { handleShiftTurn } from "./handlers/game_handler.js";
 
 export const createApp = (service, gameEngine, game, lobbyInstance) => {
   const app = new Hono();
@@ -22,6 +23,7 @@ export const createApp = (service, gameEngine, game, lobbyInstance) => {
   });
   app.route("/lobby", lobby);
   app.route("/turn", turn);
+  app.post("/shiftTurn", handleShiftTurn);
   app.post("/update-player-tiles", handleUpdateTiles);
   app.post("/build-hotel", buildHotel);
   app.post("/assign-new-tile", handleAssignTile);

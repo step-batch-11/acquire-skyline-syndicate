@@ -16,13 +16,13 @@
 }
 
 main {
-  height: 80vh;
+  height: 83vh;
   margin: 0.3em 0 0 0.3em;
   display: flex;
 }
 
 :root {
-  --board-bg: rgb(208, 210, 209);
+  --board-bg: rgb(207, 207, 207);
   --occupied-tile-bg: rgb(100, 100, 100);
   --imperial: #f29b12;
   --continental: #5683ff;
@@ -37,7 +37,6 @@ main {
   position: relative;
   height: 100%;
   width: 75%;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,15 +50,17 @@ main {
 }
 
 .tile {
-  height: 3.1em;
-  width: 3.1em;
-  border: 0.2px solid black;
+  height: 3.5em;
+  width: 3.5em;
+  /* border: 0.2px solid black; */
+  box-sizing: border-box;
   border-radius: 0.3em;
   background-color: white;
   transition: 1s;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-transform: uppercase;
 }
 
 .tile p {
@@ -72,6 +73,7 @@ main {
 
 .board {
   background-color: var(--board-bg);
+  box-shadow: 0px 0px 20px var(--board-bg);
   display: grid;
   padding: 0.7em;
   grid-template-columns: repeat(12, 1fr);
@@ -79,12 +81,18 @@ main {
   gap: 0.5em;
   border-radius: 0.4em;
   margin-top: 5%;
-  margin-right: 26%;
+  margin-right: 15%;
 }
 
 .tiles-in-market {
   background-color: var(--occupied-tile-bg);
   color: white;
+}
+
+.players {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .player-market {
@@ -95,33 +103,40 @@ main {
   margin: 5%;
 }
 
-.player {
+.player-profile{
   height: 30px;
   width: 30px;
   border: 1.5px solid black;
   border-radius: 50%;
-  margin-top: 50%;
-  margin-left: 100%;
 }
 
-#player-1 {
-  background-color: orange;
+.player-container {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.active-player {
+  background-color: rgb(255, 166, 0);
+  transform: scale(1.3);
 }
 
 .bank {
   width: 25%;
-  height: 100%;
-  border: 1px solid black;
+  height: 99.8%;
+  box-shadow: -5px 0px 5px -5px gray;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
 }
 
 footer {
-  height: 18.3vh;
-  border: 1px solid black;
+  padding: 5px;
+  height: 15vh;
+  box-shadow: 0px 0px 5px gray;
   margin-left: 0.3em;
   width: 99.3%;
   display: grid;
@@ -155,14 +170,15 @@ footer {
   height: 90%;
   width: 10%;
   color: whitesmoke;
+  border-radius: 5px;
 }
 
-.stock span {
+.stock .count {
   justify-self: flex-end;
   font-size: 30px;
 }
 
-.stock .stock-heading {
+.stock .stock-name {
   margin-top: 5px;
 }
 
@@ -223,7 +239,7 @@ footer {
 }
 
 .dim {
-  opacity: 30%;
+  opacity: 40%;
 }
 
 @keyframes animateTilesInPlayerHand {
@@ -231,13 +247,14 @@ footer {
     background-color: white;
     border: 0.2px solid black;
   }
+
   to {
-    box-shadow: 0 0 7px 3px rgb(108, 93, 93);
+    box-shadow: 0 0 7px 4px rgb(0, 0, 0);
   }
 }
 
 .tiles-in-player-hand {
-  animation: animateTilesInPlayerHand 0.5s alternate-reverse infinite;
+  animation: animateTilesInPlayerHand 0.7s alternate-reverse infinite;
 }
 
 .imperial {
@@ -323,4 +340,18 @@ footer {
 
 .hidden {
   display: none;
+}
+
+.blur {
+  border: 1px dashed black;
+  content-visibility: hidden;
+  background: none;
+}
+
+.tiles-in-hand .tile {
+  border: 1px solid black;
+}
+
+.players {
+  width: 10%;
 }

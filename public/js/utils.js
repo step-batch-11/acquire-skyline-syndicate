@@ -14,7 +14,7 @@ export const removeFocus = (board, playerTiles) => {
 
 export const extractSelectedStocks = (cart, hotelHeader) => {
   const selectedStocks = parseInt(
-    hotelHeader.querySelector("span").innerText,
+    hotelHeader.querySelector(".cart-value").innerText,
   );
   const hotelName = hotelHeader.querySelector(".hotel-name").innerText;
   if (selectedStocks > 0) {

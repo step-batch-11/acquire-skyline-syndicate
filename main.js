@@ -11,18 +11,18 @@ import { Game } from "./src/models/game.js";
 import { shuffle } from "@std/random/shuffle";
 import { Lobby } from "./src/models/lobby.js";
 
-const createTiles = () => {
-  const tiles = [];
-  const string = "abcdefghi";
-  for (let col = 0; col < string.length; col++) {
-    for (let row = 1; row <= 12; row++) {
-      const tileId = `${row}${string[col]}`;
-      const tile = new Tile(tileId);
-      tiles.push(tile);
-    }
-  }
-  return tiles;
+const createRowTiles = (col) => {
+  const rowLabel = "abcdefghi";
+  return Array.from(
+    { length: 9 },
+    (_, row) => new Tile(`${col + 1}${rowLabel[row]}`),
+  );
 };
+
+const createTiles = () =>
+  Array.from({ length: 12 }, (_, col) => createRowTiles(col)).flatMap(
+    (tile) => tile,
+  );
 
 const shuffleTiles = (tiles, shuffleFn = shuffle) => {
   return shuffleFn(tiles);
@@ -36,8 +36,11 @@ const main = () => {
   const deck = new Deck(shuffleTiles(tiles));
   const board = new Board();
   const hotelsManager = Hotels.instantiateHotels(hotels);
-  const player = new Player("Gopi", 1);
-  const game = new Game(deck, board, hotelsManager, player);
+  const players = ["player1", "player2"].map(
+    (playerName, id) => new Player(playerName, id),
+  );
+
+  const game = new Game(deck, board, hotelsManager, players);
   game.init();
   const lobbyInstance = new Lobby(game);
   const app = createApp(service, gameEngine, game, lobbyInstance);

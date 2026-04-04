@@ -33,7 +33,6 @@ describe("Hotel entity tests", () => {
       hotel.addTiles(tiles);
 
       const adjacentTile = "7a";
-
       assertEquals(hotel.tileIncludes(adjacentTile), false);
     });
     it("decrease the hotel stocks", () => {

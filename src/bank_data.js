@@ -5,6 +5,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 200,
   },
   {
     name: "imperial",
@@ -12,6 +13,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 200,
   },
   {
     name: "american",
@@ -19,6 +21,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 100,
   },
   {
     name: "festival",
@@ -26,6 +29,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 100,
   },
   {
     name: "worldwide",
@@ -33,6 +37,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 100,
   },
 
   {
@@ -41,6 +46,7 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 0,
   },
   {
     name: "tower",
@@ -48,5 +54,6 @@ export const bankData = [
     stocks: 25,
     orginTile: null,
     price: 0,
+    scale: 0,
   },
 ];

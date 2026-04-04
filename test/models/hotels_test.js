@@ -29,10 +29,13 @@ describe("Hotels entity tests", () => {
       assertEquals(hotelsInstance.isTileInAnyHotel("2a"), true);
     });
     it("should return false if tile is not part of any of the hotels", () => {
-      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      const tilesOfTower = ["1a", "2a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       assertEquals(hotelsInstance.isTileInAnyHotel("9a"), false);
     });
+  });
+
+  describe("decreaseHotelStocks", () => {
     it("decrease the hotel stocks in the hotel inventory", () => {
       const hotels = [
         { name: "sackson", scale: 0 },
@@ -43,7 +46,7 @@ describe("Hotels entity tests", () => {
       ];
 
       const hotelsInstance = Hotels.instantiateHotels(hotels);
-      hotelsInstance.decreaseHotelStocks([
+      hotelsInstance.deductStocks([
         { hotelName: "sackson", selectedStocks: 2 },
       ]);
 
@@ -51,5 +54,32 @@ describe("Hotels entity tests", () => {
       assertEquals(hotelsInfo[0].name, "sackson");
       assertEquals(hotelsInfo[0].stocksLeft, 23);
     });
+  });
+
+  describe("expanding the hotel chain", () => {
+    it.ignore("should add tile into its adjacent hotel chain", () => {
+      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
+      console.log(tilesOfTower);
+
+      const updatedHotel = hotelsInstance.expand("3a");
+      assertEquals(updatedHotel.getTiles().length, 3);
+    });
+  });
+
+  describe("calculate the stock price of the selected stocks", () => {
+    const hotels = [
+      { name: "sackson", scale: 0 },
+      {
+        name: "Tower",
+        scale: 0,
+      },
+    ];
+    const hotelsInstance = Hotels.instantiateHotels(hotels);
+    const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+    hotelsInstance.addTilesToHotel("sackson", tilesOfTower);
+    const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+
+    assertEquals(hotelsInstance.calculateMoneyToDeduct(cart), 400);
   });
 });

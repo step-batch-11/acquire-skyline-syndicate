@@ -7,12 +7,12 @@ export class Board {
   }
 
   isTileOnBoard(tileId) {
-    const placedTileIds = this.#placedTiles.map((tile) => tile.id);
+    const placedTileIds = this.#placedTiles.map((tile) => tile);
     return placedTileIds.includes(tileId);
   }
 
   getPlacedTiles() {
-    return [...this.#placedTiles];
+    return this.#placedTiles.map((tile) => ({ id: tile.id }));
   }
 
   place(tile) {
@@ -27,8 +27,10 @@ export class Board {
   }
 
   adjacentTiles(tile) {
-    return this.#placedTiles.filter((placedTile) =>
-      placedTile.isNeighbouringTile(tile)
-    );
+    return tile
+      .neighbourTiles()
+      .filter((tile) =>
+        this.#placedTiles.find((placedTile) => placedTile.id === tile)
+      );
   }
 }
