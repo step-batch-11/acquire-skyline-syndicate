@@ -1,7 +1,11 @@
 import { handleAssignTile } from "./event_handlers.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { postData } from "./request.js";
-import { renderBankSection, renderUserSection } from "./ui_renderers.js";
+import {
+  renderBankSection,
+  renderBoard,
+  renderUserSection,
+} from "./ui_renderers.js";
 import { extractSelectedStocks } from "./utils.js";
 
 export const listenerForCart = (e) => {
