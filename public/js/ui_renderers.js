@@ -10,12 +10,27 @@ const createTileElement = (tile) => {
   return tileContainer;
 };
 
-export const renderBoard = (tilesOnBoard) => {
+const addColorToHotelTile = (tile, name) => {
+  const tileElement = document.querySelector(`#tile-${tile.id}`);
+  tileElement.classList.add(name);
+};
+
+const addColorToHotelTiles = (hotels) => {
+  hotels.forEach((hotel) => {
+    if (hotel.tiles.length > 0) {
+      hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
+    }
+  });
+};
+
+export const renderBoard = (tilesOnBoard, hotels) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
+
+  addColorToHotelTiles(hotels);
 };
 
 export const renderTilesInHand = (playerTiles) => {
@@ -64,6 +79,9 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   hotelInfoContainer.classList.add(name);
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
+
+  if (tiles.length > 0) hotelContainer.classList.add("dim");
+
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
   hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
@@ -97,7 +115,7 @@ const cloneStockCards = () => {
   );
 };
 
-const renderHeldStocks = (stocks) => {
+export const renderHeldStocks = (stocks) => {
   const stocksSection = document.querySelector(".stocks");
   const stockCards = cloneStockCards();
   Object.entries(stocks).forEach(([name, count], index) =>

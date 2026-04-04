@@ -13,7 +13,8 @@ export class Hotels {
   }
 
   buildHotel(hotelName, originTile, adjacentTilesForHotel) {
-    this.#hotels[hotelName].found(originTile, adjacentTilesForHotel);
+    const adjacents = adjacentTilesForHotel.map((tileId) => new Tile(tileId));
+    this.#hotels[hotelName].found(originTile, adjacents);
   }
 
   isAnyInActiveHotel() {
@@ -33,6 +34,7 @@ export class Hotels {
   expand(tileId) {
     const hotel = Object.values(this.#hotels).find((hotel) => {
       const tiles = hotel.getTiles();
+
       return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
     });
 
@@ -54,6 +56,8 @@ export class Hotels {
       this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
     });
   }
+
+  // Have method calculateMoney and extract things outside
 
   calculateMoneyToDeduct(cart) {
     return cart.reduce((calculatedMoney, { hotelName, selectedStocks }) => {

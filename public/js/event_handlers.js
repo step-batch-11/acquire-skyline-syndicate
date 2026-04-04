@@ -14,11 +14,14 @@ export const handleTilePlacement = async (
 ) => {
   const tile = tileContainer.id.split("-")[1];
 
-  const updatedTiles = await updateTiles(tile);
+  const { currentPlayer, tilesOnBoard, hotels, state } = await updateTiles(
+    tile,
+  );
+
   removeFocus(board, tilesInPlayerHand);
-  renderBoard(updatedTiles.tilesOnBoard);
-  renderTilesInHand(updatedTiles.playerTiles);
-  const action = turnActions[updatedTiles.state] || noOp;
+  renderBoard(tilesOnBoard, hotels);
+  renderTilesInHand(currentPlayer.tiles);
+  const action = turnActions[state] || noOp;
   action(tileContainer);
 };
 
@@ -29,9 +32,8 @@ export const handleShiftTurn = async () => {
 };
 
 export const handleAssignTile = async () => {
-  const { playerTiles, tilesOnBoard } = await assignNewTiles();
-  renderBoard(tilesOnBoard);
-  renderTilesInHand(playerTiles);
+  const currentState = await assignNewTiles();
+  renderTilesInHand(currentState.currentPlayer.tiles);
   handleShiftTurn();
 };
 
@@ -52,8 +54,8 @@ const decrementStocks = (cartElement, counterValue) => {
 };
 
 const clickActions = {
-  "incr": incrementStocks,
-  "decr": decrementStocks,
+  incr: incrementStocks,
+  decr: decrementStocks,
 };
 
 export const handleCartUpdation = (action, parent) => {

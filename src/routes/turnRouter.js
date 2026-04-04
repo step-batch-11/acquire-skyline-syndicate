@@ -5,7 +5,8 @@ export const turn = new Hono();
 const placeTile = async (c) => {
   const { tile } = await c.req.json();
   const game = c.get("game");
-  return c.json(game.placeTile(tile));
+  game.placeTile(tile);
+  return c.json(game.currentState());
 };
 
 const buildHotel = async (c) => {
@@ -17,7 +18,8 @@ const buildHotel = async (c) => {
 
 const assignNewTile = (c) => {
   const game = c.get("game");
-  return c.json(game.assignNewTile());
+  game.assignNewTile();
+  return c.json(game.currentState());
 };
 
 const buyStocks = async (c) => {

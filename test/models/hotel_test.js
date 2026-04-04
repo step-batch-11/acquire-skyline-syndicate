@@ -28,12 +28,11 @@ describe("Hotel entity tests", () => {
 
       assertEquals(hotel.tileIncludes(adjacentTile), true);
     });
-    it.ignore("should return false if tile is not part of hotel", () => {
+    it("should return false if tile is not part of hotel", () => {
       const hotel = new Hotel("sackson", 0);
       hotel.addTiles(tiles);
 
       const adjacentTile = "7a";
-
       assertEquals(hotel.tileIncludes(adjacentTile), false);
     });
     it("decrease the hotel stocks", () => {
