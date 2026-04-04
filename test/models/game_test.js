@@ -132,6 +132,7 @@ describe("Game entity tests", () => {
     it.ignore(
       "should build hotel and add a free stock of that hotel player",
       () => {
+        game.init();
         game.placeTile("2a");
         game.placeTile("3a");
         const hotelName = "sackson";
