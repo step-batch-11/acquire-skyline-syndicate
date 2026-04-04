@@ -1,6 +1,14 @@
-export const startGame = async () => {
-  const response = await fetch("/lobby/startGame");
+const getData = async (endPoint) => {
+  const response = await fetch(endPoint);
   return await response.json();
+};
+
+export const startGame = async () => {
+  return await getData("/lobby/startGame");
+};
+
+export const getLobbyState = async () => {
+  return await getData("/lobby/state");
 };
 
 export const listActivePlayers = async () => {

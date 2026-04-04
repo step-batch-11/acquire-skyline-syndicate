@@ -2,7 +2,8 @@ import { Hono } from "hono";
 export const lobby = new Hono();
 
 const startGame = (c) => {
-  const game = c.get("game");
+  const lobby = c.get("lobby");
+  const game = lobby.getGame();
   return c.json(game.currentState());
 };
 
@@ -27,7 +28,15 @@ const activePlayers = (c) => {
   return c.json(players);
 };
 
+const createGame = async (c) => {
+  const lobby = c.get("lobby");
+  const players = lobby.getActivePlayers();
+  lobby.createGame(players);
+  return await c.redirect("/pages/game.html", 302);
+};
+
 lobby.post("/join", joinLobby);
 lobby.get("/state", currentState);
+lobby.get("/createGame", createGame);
 lobby.get("/startGame", startGame);
 lobby.get("/active-players", activePlayers);

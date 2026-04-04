@@ -13,13 +13,13 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  color: white;
+  color: black;
   text-align: center;
 }
 
 header {
   padding: 40px 20px 20px 20px;
+  border-bottom: 1px solid black;
 }
 
 header h1 {
@@ -30,7 +30,7 @@ header h1 {
 
 .tagline {
   font-size: 16px;
-  color: #cfd8dc;
+  color: black;
 }
 
 .login-container {
@@ -44,7 +44,6 @@ header h1 {
   padding: 30px;
   border-radius: 15px;
   width: 320px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .login-form label {
@@ -67,7 +66,7 @@ header h1 {
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background-color: #00c853;
+  background-color: black;
   color: white;
   font-size: 16px;
   cursor: pointer;
@@ -75,7 +74,6 @@ header h1 {
 }
 
 .login-form button:hover {
-  background-color: #00e676;
   transform: scale(1.05);
 }
 

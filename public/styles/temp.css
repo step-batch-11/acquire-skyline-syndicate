@@ -1,3 +1,4 @@
+
 body {
   font-family:
     system-ui,
@@ -11,11 +12,11 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-  background:white;
+  background: linear-gradient(135deg, #1f4037, #99f2c8);
   margin: 0;
   padding: 0;
   text-align: center;
-  color: black;
+  color: white;
 }
 
 header {
@@ -57,8 +58,23 @@ header {
   animation: spin 1s linear infinite;
 }
 
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .starting-container {
   margin-top: 40px;
+}
+
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 20px auto;
+  overflow: hidden;
 }
 
 .progress {
@@ -66,4 +82,13 @@ header {
   width: 0%;
   background-color: #ffffff;
   animation: load 5s linear forwards;
+}
+
+@keyframes load {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
