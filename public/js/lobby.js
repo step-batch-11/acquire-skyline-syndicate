@@ -10,7 +10,7 @@ globalThis.onload = () => {
       clearInterval(id);
 
       setTimeout(async () => {
-        const response = await fetch("/lobby/createGame");
+        const response = await fetch("/lobby/create-game");
         globalThis.location.href = await response.url;
       }, 3000);
     }

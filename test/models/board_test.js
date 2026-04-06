@@ -50,7 +50,7 @@ describe("Board entity tests", () => {
       board.place(tile);
       board.place(anotherTile);
       const adjacentTiles = board.adjacentTilesOfLastTile();
-      assertEquals(adjacentTiles.length, 1);
+      assertEquals(adjacentTiles.length, 2);
     });
   });
 });

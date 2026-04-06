@@ -1,9 +1,11 @@
-import { handleTilePlacement } from "./event_handlers.js";
+import { handleTilePlacement } from "./handlers/event_handlers.js";
 import { canPlaceTile } from "./validators.js";
 import {
   listenerForFoundingHotel,
   listenerForHotelSelection,
-} from "./listeners.js";
+} from "./handlers/hotel_selection_handler.js";
+import { renderBankSection } from "./ui_renderers.js";
+import { gameState } from "./request.js";
 
 export const buildAHotel = (tileContainer) => {
   alert("build hotel");
@@ -12,11 +14,9 @@ export const buildAHotel = (tileContainer) => {
   foundBtn.classList.remove("hidden");
 
   const allHotels = document.querySelectorAll(".hotel-container");
-  const inactiveHotels = Array.from(allHotels).forEach((hotel) => {
-    if (!hotel.classList.contains("dim")) hotel.classList.add("inactive");
+  Array.from(allHotels).forEach((hotel) => {
+    if (!hotel.classList.contains("active")) hotel.classList.add("inactive");
   });
-
-  console.log(inactiveHotels);
 
   let hotelToFound = "";
 
@@ -31,14 +31,16 @@ export const buildAHotel = (tileContainer) => {
   });
 };
 
-const expandHotel = (_tileContainer) => {
+const expandHotel = async (_tileContainer) => {
   alert("hotel expanded");
+  const { hotels } = await gameState();
+  renderBankSection(hotels);
 };
 
 export const turnActions = {
-  "BUILD_HOTEL": buildAHotel,
-  "EXPAND_HOTEL": expandHotel,
-  "NO_ACTION": () => "",
+  BUILD_HOTEL: buildAHotel,
+  EXPAND_HOTEL: expandHotel,
+  NO_ACTION: () => "",
 };
 
 export const addListenerToBoard = (tilesInPlayerHand) => {
@@ -49,6 +51,7 @@ export const addListenerToBoard = (tilesInPlayerHand) => {
     if (canPlaceTile(tileContainer, tilesInPlayerHand)) {
       handleTilePlacement(board, tileContainer, tilesInPlayerHand);
       board.removeEventListener("click", tileSelectionListener);
+      activateBuyingStocks();
     }
   };
 

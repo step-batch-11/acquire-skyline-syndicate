@@ -1,10 +1,10 @@
-import { turnActions } from "./board_events.js";
-import { assignNewTiles, updateTiles } from "./game_state.js";
-import { initializeGameSetup } from "./initial_setup.js";
-import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
-import { removeFocus } from "./utils.js";
+import { turnActions } from "../board_events.js";
+import { assignNewTiles, updateTiles } from "../game_state.js";
+import { renderGame } from "../initial_setup.js";
+import { removeFocus } from "../utils.js";
+import { renderBoard, renderTilesInHand } from "../ui_renderers.js";
 
-const TOTAL_SELECTED_STOCKS = [];
+export const TOTAL_SELECTED_STOCKS = [];
 const noOp = () => {};
 
 export const handleTilePlacement = async (
@@ -26,9 +26,9 @@ export const handleTilePlacement = async (
 };
 
 export const handleShiftTurn = async () => {
-  const currentState = await fetch("/shiftTurn", { method: "post" });
+  const currentState = await fetch("/shift-turn", { method: "post" });
   const data = await currentState.json();
-  initializeGameSetup(data);
+  renderGame(data);
 };
 
 export const handleAssignTile = async () => {

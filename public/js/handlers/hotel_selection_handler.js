@@ -1,13 +1,16 @@
-import { handleAssignTile } from "./event_handlers.js";
-import { handleCartUpdation } from "./event_handlers.js";
-import { postData } from "./request.js";
+import { postData } from "../request.js";
+import { extractSelectedStocks } from "../utils.js";
+import {
+  handleAssignTile,
+  handleCartUpdation,
+  TOTAL_SELECTED_STOCKS,
+} from "./event_handlers.js";
 import {
   renderBankSection,
   renderBoard,
   renderHeldStocks,
   renderUserSection,
-} from "./ui_renderers.js";
-import { extractSelectedStocks } from "./utils.js";
+} from "../ui_renderers.js";
 
 export const listenerForCart = (e) => {
   const action = e.target.dataset.action;
@@ -20,6 +23,7 @@ export const listenerForBuyingStocks = async (e) => {
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
   const { hotels, playerInfo } = await postData("/turn/buy-stocks", cart);
+  TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
   renderUserSection(playerInfo);
   handleAssignTile();
@@ -33,18 +37,17 @@ export const listenerForHotelSelection = (e) => {
 export const listenerForFoundingHotel = async (
   e,
   hotelToFound,
-  tileContainer,
+  _tileContainer,
   bankContainer,
 ) => {
   e.preventDefault();
   const { hotels, tilesOnBoard, currentPlayer } = await postData(
-    "/turn/buildHotel",
+    "/turn/build-hotel",
     {
       hotelToFound,
     },
   );
-  tileContainer.classList.add(`board-${hotelToFound}-icon`);
-  tileContainer.innerText = "";
+
   bankContainer.removeEventListener("click", listenerForHotelSelection);
 
   const foundBtn = bankContainer.querySelector("#found");

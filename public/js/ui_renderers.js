@@ -1,4 +1,4 @@
-import { listenerForBuyingStocks } from "./listeners.js";
+import { listenerForBuyingStocks } from "./handlers/hotel_selection_handler.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -19,18 +19,23 @@ const addColorToHotelTiles = (hotels) => {
   hotels.forEach((hotel) => {
     if (hotel.isActive) {
       hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
+      const tileElement = document.querySelector(
+        `#tile-${hotel.originTile.id}`,
+      );
+      tileElement.classList.add(`board-${hotel.name}-icon`);
+      tileElement.innerText = "";
     }
   });
 };
 
-export const renderBoard = (tilesOnBoard, hotels) => {
+export const renderBoard = (tilesOnBoard, hotelsOnBoard) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
 
-  addColorToHotelTiles(hotels);
+  addColorToHotelTiles(hotelsOnBoard);
 };
 
 export const renderTilesInHand = (playerTiles) => {
@@ -61,7 +66,7 @@ const createBuyButton = () => {
   buttonContainer.classList.add("button-container");
 
   const button = cloneElement("#button");
-  button.textContent = "buy";
+  button.textContent = "confirm";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
@@ -80,7 +85,12 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
 
-  if (isActive) hotelContainer.classList.add("dim");
+  if (isActive) {
+    hotelContainer.classList.add("dim");
+    const counter = hotelCard.querySelector(".counter");
+    counter.classList.remove("hidden");
+  }
+  if (isActive) hotelContainer.classList.add("active");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
