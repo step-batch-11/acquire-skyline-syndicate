@@ -16,7 +16,7 @@ export class Game {
     this.#currentPlayerIndex = 0;
     this.#currentPlayer = players[this.#currentPlayerIndex];
     this.#players = players;
-    this.#state = "";
+    this.#state = "PLACE_TILE";
   }
 
   init() {

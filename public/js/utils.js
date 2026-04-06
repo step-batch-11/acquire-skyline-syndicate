@@ -1,4 +1,5 @@
-export const highlightPlayableTiles = (board, playerTiles) => {
+export const highlightPlayableTiles = (playerTiles) => {
+  const board = document.querySelector(".board");
   playerTiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-player-hand");

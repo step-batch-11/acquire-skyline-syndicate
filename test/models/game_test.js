@@ -61,7 +61,7 @@ describe("Game entity tests", () => {
       assertEquals(initialData.currentPlayer.tiles.length, 6);
       assertEquals(initialData.hotels.length, 2);
       assertEquals(initialData.tilesOnBoard.length, 6);
-      assertEquals(initialData.state, "");
+      assertEquals(initialData.state, "PLACE_TILE");
     });
   });
 
