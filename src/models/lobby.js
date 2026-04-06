@@ -3,8 +3,7 @@ export class Lobby {
   #lobbyState = "waiting";
   #threshold = 2;
   #game;
-  constructor() {
-  }
+  constructor() {}
 
   addPlayerToLobby(playerName) {
     this.#players.push(playerName);
@@ -19,5 +18,9 @@ export class Lobby {
 
   getActivePlayers() {
     return [...this.#players];
+  }
+
+  isFull() {
+    return true;
   }
 }

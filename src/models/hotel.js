@@ -33,7 +33,6 @@ export class Hotel {
 
   setOriginTile(originTile) {
     this.#originTile = originTile;
-    this.#tiles.push(originTile);
   }
 
   calculateStockPrice() {

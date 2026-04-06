@@ -5,15 +5,17 @@ import { getCookie, setCookie } from "hono/cookie";
 import { lobby } from "./routes/lobbyRouter.js";
 import { turn } from "./routes/turnRouter.js";
 
-export const createApp = (lobbyInstance, sessions) => {
+export const createApp = (lobbyInstance, game, sessions) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
+    context.set("game", game);
     context.set("lobby", lobbyInstance);
 
     context.set("sessions", sessions);
     await next();
   });
+
   app.route("/lobby", lobby);
   app.route("/turn", turn);
   app.post("/login", async (c) => {

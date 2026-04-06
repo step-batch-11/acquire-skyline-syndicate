@@ -19,6 +19,11 @@ const addColorToHotelTiles = (hotels) => {
   hotels.forEach((hotel) => {
     if (hotel.isActive) {
       hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
+      const tileElement = document.querySelector(
+        `#tile-${hotel.originTile.id}`,
+      );
+      tileElement.classList.add(`board-${hotel.name}-icon`);
+      tileElement.innerText = "";
     }
   });
 };

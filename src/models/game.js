@@ -21,10 +21,11 @@ export class Game {
 
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
+    console.log({ initialBoardTiles });
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#players.forEach((player) => {
       const initialPlayerTiles = this.#deck.drawTiles(6);
-      player.addInitialTiles(initialPlayerTiles);
+      player.addInitialTiles(initialPlayerTiles.map((tile) => tile));
     });
   }
 
@@ -46,7 +47,8 @@ export class Game {
 
     return (
       this.#hotels.isAnyInActiveHotel() &&
-      this.#board.hasAdjacentForLastTile() && notInAnyHotel
+      this.#board.hasAdjacentForLastTile() &&
+      notInAnyHotel
     );
   }
 
@@ -61,10 +63,16 @@ export class Game {
     return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
+  #isGoingToMerge() {
+    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
+    return this.#hotels.getAdjacentHotelChains(adjacentTiles).length > 1;
+  }
+
   #actionForTilePlacement(tileId) {
-    if (this.#isBuildPossible()) this.#state = "BUILD_HOTEL";
-    else if (this.#isExpansion(tileId)) this.expandHotel(tileId);
-    else this.#state = "NO_ACTION";
+    if (this.#isGoingToMerge()) return (this.#state = "MERGE");
+    if (this.#isExpansion()) return this.expandHotel(tileId);
+    if (this.#isBuildPossible()) return (this.#state = "BUILD_HOTEL");
+    this.#state = "NO_ACTION";
   }
 
   placeTile(tileId) {
@@ -95,14 +103,13 @@ export class Game {
   buildHotel(hotelName) {
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
-    this.#hotels.buildHotel(hotelName, lastTile, adjacentTiles);
+    this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
   }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
     this.#currentPlayer.addNewTile(tile);
-    this.#board.getPlacedTiles();
   }
 
   buyStocks(cart) {
