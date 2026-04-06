@@ -61,7 +61,7 @@ const createBuyButton = () => {
   buttonContainer.classList.add("button-container");
 
   const button = cloneElement("#button");
-  button.textContent = "buy";
+  button.textContent = "confirm";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
