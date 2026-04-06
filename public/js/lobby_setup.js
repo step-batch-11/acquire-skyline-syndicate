@@ -25,7 +25,17 @@ const renderNames = (activePlayers) => {
   listContainer.append(...elementsList);
 };
 
+const renderLobbyId = (lobbyId) => {
+  const idContainer = document.querySelector("#lobby-id-container");
+
+  const element = cloneElement("#lobby-id-template");
+  idContainer.innerHTML = "";
+  element.textContent = lobbyId;
+  idContainer.append(element);
+};
+
 export const renderLobby = (state, lobbyDetails) => {
   renderBuffer(state);
   renderNames(lobbyDetails.playerNames);
+  renderLobbyId(lobbyDetails.lobbyId);
 };

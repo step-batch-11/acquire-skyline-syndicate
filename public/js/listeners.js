@@ -52,3 +52,18 @@ export const listenerForFoundingHotel = async (
   renderBoard(tilesOnBoard, hotels);
   renderHeldStocks(currentPlayer.stocks);
 };
+
+export const addListenerToCopyBtn = (copyBtn) => {
+  copyBtn.addEventListener("click", async () => {
+    const lobbyIdEl = document.getElementById("lobbyId");
+    const status = document.getElementById("copyStatus");
+    const lobbyId = lobbyIdEl.textContent;
+
+    try {
+      await navigator.clipboard.writeText(lobbyId);
+      status.textContent = "Copied!";
+    } catch {
+      status.textContent = "Failed to copy";
+    }
+  });
+};

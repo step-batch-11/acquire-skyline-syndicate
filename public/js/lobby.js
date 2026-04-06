@@ -1,7 +1,11 @@
+import { addListenerToCopyBtn } from "./listeners.js";
 import { renderLobby } from "./lobby_setup.js";
 import { getLobbyDetails, getLobbyState } from "./request.js";
 
 globalThis.onload = () => {
+  const copyBtn = document.getElementById("copyBtn");
+  addListenerToCopyBtn(copyBtn);
+
   const id = setInterval(async () => {
     const { state } = await getLobbyState();
     const lobbyDetails = await getLobbyDetails();
