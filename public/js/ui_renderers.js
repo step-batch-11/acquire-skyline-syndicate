@@ -17,7 +17,7 @@ const addColorToHotelTile = (tile, name) => {
 
 const addColorToHotelTiles = (hotels) => {
   hotels.forEach((hotel) => {
-    if (hotel.tiles.length > 0) {
+    if (hotel.isActive) {
       hotel.tiles.forEach((tile) => addColorToHotelTile(tile, hotel.name));
     }
   });
@@ -49,7 +49,7 @@ const createTradeConfirmationBtn = () => {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
   const button = cloneElement("#button");
-  button.textContent = "Found";
+  button.textContent = "Build";
   button.id = "found";
   button.classList.add("hidden");
   buttonContainer.append(button);
@@ -72,7 +72,7 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
+const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
@@ -80,7 +80,7 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
 
-  if (tiles.length > 0) hotelContainer.classList.add("dim");
+  if (isActive) hotelContainer.classList.add("dim");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;

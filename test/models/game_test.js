@@ -171,4 +171,22 @@ describe("Game entity tests", () => {
       ]);
     });
   });
+
+  describe("isExpansion", () => {
+    it.ignore("should return true if expansion is possible", () => {
+      game.init();
+      const initialData = game.currentState();
+      game.placeTile(initialData.currentPlayer.tiles[0]);
+      game.placeTile(initialData.currentPlayer.tiles[0]);
+      game.buildHotel("sackson");
+      const hotel = game.currentState().hotels.find(({ name }) =>
+        name === "sackson"
+      );
+      game.placeTile(initialData.currentPlayer.tiles[0]);
+      const updatedHotel = game.currentState().hotels.find(({ name }) =>
+        name === "sackson"
+      );
+      assertEquals(hotel.tiles.length + 1, updatedHotel.tiles.length);
+    });
+  });
 });

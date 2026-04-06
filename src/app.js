@@ -11,13 +11,14 @@ import {
 } from "./handlers.js";
 import { handleShiftTurn } from "./handlers/game_handler.js";
 
-export const createApp = (service, gameEngine, game) => {
+// export const createApp = (service, gameEngine, lobbyInstance) => {
+export const createApp = (lobbyInstance) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
-    context.set("service", service);
-    context.set("engine", gameEngine);
-    context.set("game", game);
+    // context.set("service", service);
+    // context.set("engine", gameEngine);
+    context.set("lobby", lobbyInstance);
     await next();
   });
   app.route("/lobby", lobby);
