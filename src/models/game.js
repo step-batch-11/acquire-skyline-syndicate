@@ -106,7 +106,8 @@ export class Game {
   }
 
   expandHotel(tileId) {
-    this.#hotels.expand(tileId);
+    const tilesOnBoard = this.#board.getPlacedTiles();
+    this.#hotels.expand(tileId, tilesOnBoard);
     this.#state = "EXPAND_HOTEL";
   }
 

@@ -32,7 +32,6 @@ export const buildAHotel = (tileContainer) => {
 };
 
 const expandHotel = async (_tileContainer) => {
-  alert("hotel expanded");
   const { hotels } = await gameState();
   renderBankSection(hotels);
 };
