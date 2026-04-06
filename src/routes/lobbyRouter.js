@@ -10,7 +10,6 @@ const gameState = (c) => {
 const hostLobby = (c) => {
   const sessions = c.get("sessions");
   const sessionId = getCookie(c, "sessionId");
-  // const playerName = sessions.getPlayerName(sessionId)
   const playerId = sessions.getPlayerId(sessionId);
   const lobbyId = crypto.randomUUID();
   const lobby = c.get("lobby");
@@ -23,10 +22,14 @@ const hostLobby = (c) => {
 
 const joinLobby = async (c) => {
   const formData = await c.req.formData();
-  const playerName = formData.get("player_name");
+  const _lobbyId = formData.get("lobby_id");
 
+  const sessions = c.get("sessions");
+  const sessionId = getCookie(c, "sessionId");
+
+  const playerId = sessions.getPlayerId(sessionId);
   const lobby = c.get("lobby");
-  lobby.addPlayerToLobby(playerName);
+  lobby.setPlayer(playerId);
 
   return c.redirect("/pages/lobby.html", 302);
 };
@@ -58,8 +61,13 @@ const createGame = async (context) => {
   return await context.json({ "done": true });
 };
 
+const redirectToJoinLobby = (c) => {
+  return c.redirect("/pages/join_lobby.html", 302);
+};
+
 lobby.get("/host", hostLobby);
-lobby.post("/join", joinLobby);
+lobby.get("/join", redirectToJoinLobby);
+lobby.post("/join-lobby", joinLobby);
 lobby.get("/state", currentState);
 lobby.get("/create-game", createGame);
 lobby.get("/start-game", gameState);

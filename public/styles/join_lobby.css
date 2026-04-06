@@ -33,26 +33,26 @@ header h1 {
   color: black;
 }
 
-.login-container {
+.join-lobby-container {
   margin-top: 50px;
   display: flex;
   justify-content: center;
 }
 
-.login-form {
+.join-lobby-form {
   background: rgba(0, 0, 0, 0.4);
   padding: 30px;
   border-radius: 15px;
   width: 320px;
 }
 
-.login-form label {
+.join-lobby-form label {
   display: block;
   margin-bottom: 10px;
   font-size: 14px;
 }
 
-.login-form input {
+.join-lobby-form input {
   width: 100%;
   padding: 10px;
   border: none;
@@ -61,7 +61,7 @@ header h1 {
   font-size: 16px;
 }
 
-.login-form button {
+.join-lobby-form button {
   width: 100%;
   padding: 12px;
   border: none;
@@ -73,6 +73,6 @@ header h1 {
   transition: 0.3s;
 }
 
-.login-form button:hover {
+.join-lobby-form button:hover {
   transform: scale(1.05);
 }

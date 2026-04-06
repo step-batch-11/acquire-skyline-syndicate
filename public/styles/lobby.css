@@ -77,9 +77,11 @@ button {
   margin-top: 40px;
 }
 
-.progress {
-  height: 100%;
-  width: 0%;
-  background-color: #ffffff;
-  animation: load 5s linear forwards;
+#start-btn{
+  padding: 10px 20px;
+  border-radius: 5%;
+  border: 1px solid black;
+  background-color: greenyellow;
+  color: black;
+  font-size: large;
 }
