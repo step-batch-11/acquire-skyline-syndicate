@@ -1,4 +1,4 @@
-const getData = async (endPoint) => {
+export const getData = async (endPoint) => {
   const response = await fetch(endPoint);
   return await response.json();
 };

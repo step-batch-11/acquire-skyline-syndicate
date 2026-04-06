@@ -1,4 +1,4 @@
-const cloneElement = (templateId) => {
+export const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
   return template.content.querySelector("*").cloneNode(true);
 };
@@ -13,7 +13,6 @@ const renderBuffer = (state) => {
   bufferContainer.innerHTML = "";
   bufferContainer.appendChild(element);
 };
-
 const renderNames = (activePlayers) => {
   const listContainer = document.querySelector("#players-list");
 
