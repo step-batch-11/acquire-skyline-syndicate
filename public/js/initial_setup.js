@@ -1,11 +1,9 @@
 import { renderHotelSection } from "./bank_setup.js";
-import { addListenerToBoard } from "./board_events.js";
 import { renderPlayers } from "./players_sections.js";
 import {
   renderBoard as renderBoardState,
   renderUserSection,
 } from "./ui_renderers.js";
-import { highlightPlayableTiles } from "./utils.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -38,7 +36,4 @@ export const renderGame = (gameData) => {
   renderPlayers(players, currentPlayer);
   renderUserSection(currentPlayer);
   renderHotelSection(hotels);
-
-  highlightPlayableTiles(currentPlayer.tiles);
-  addListenerToBoard(currentPlayer.tiles);
 };

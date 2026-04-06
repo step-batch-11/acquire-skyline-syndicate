@@ -68,15 +68,24 @@ export class Game {
   }
 
   #actionForTilePlacement(tileId) {
-    if (this.#isGoingToMerge()) return (this.#state = "MERGE");
-    if (this.#isExpansion()) return this.expandHotel(tileId);
-    if (this.#isBuildPossible()) return (this.#state = "BUILD_HOTEL");
-    this.#state = "NO_ACTION";
+    if (this.#isGoingToMerge()) {
+      this.#state = "MERGE";
+      return;
+    }
+    if (this.#isExpansion()) {
+      this.expandHotel(tileId);
+      return;
+    }
+    if (this.#isBuildPossible()) {
+      this.#state = "BUILD_HOTEL";
+      return;
+    }
+    this.#state = "BUY_STOCK";
   }
 
   #isValidPurchase(cart) {
     const totalStocks = cart.reduce(
-      (count, { selectedStocks }) => count += selectedStocks,
+      (count, { selectedStocks }) => (count += selectedStocks),
       0,
     );
     const isSelectedHotelsActive = cart.every(({ hotelName }) =>
@@ -137,7 +146,8 @@ export class Game {
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
       const playerInfo = this.#currentPlayer.getDetails();
-      return { hotels, playerInfo };
+      this.#state = "PLACE_TILE";
+      return { hotels, playerInfo, state: this };
     }
   }
 

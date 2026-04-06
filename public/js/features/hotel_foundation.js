@@ -6,7 +6,7 @@ import {
 } from "../ui_renderers.js";
 
 export const buildAHotel = (tileContainer) => {
-  alert("build hotel");
+  // alert("build hotel");
 
   const allHotels = document.querySelectorAll(".hotel-container");
   Array.from(allHotels).forEach((hotel) => {
