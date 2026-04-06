@@ -15,4 +15,8 @@ export class playerSession {
   getPlayerName(sessionId) {
     return this.#sessions.get(`${sessionId}`);
   }
+
+  hasSessionId(sessionId) {
+    return this.#sessions.has(`${sessionId}`);
+  }
 }

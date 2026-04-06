@@ -1,4 +1,4 @@
-import { listenerForBuyingStocks } from "./listeners.js";
+import { listenerForBuyingStocks } from "./handlers/hotel_selection_handler.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -90,6 +90,7 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
     const counter = hotelCard.querySelector(".counter");
     counter.classList.remove("hidden");
   }
+  if (isActive) hotelContainer.classList.add("active");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;

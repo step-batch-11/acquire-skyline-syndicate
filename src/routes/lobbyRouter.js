@@ -32,6 +32,7 @@ const createGame = async (context) => {
   const lobbyInstance = context.get("lobby");
 
   if (lobbyInstance.isFull()) {
+    // insert the player inside the game.
     const mockPlayers = ["yash", "pradipta"];
     context.set("game", createGameInstance(mockPlayers));
   }

@@ -1,9 +1,9 @@
-import { handleTilePlacement } from "./event_handlers.js";
+import { handleTilePlacement } from "./handlers/event_handlers.js";
 import { canPlaceTile } from "./validators.js";
 import {
   listenerForFoundingHotel,
   listenerForHotelSelection,
-} from "./listeners.js";
+} from "./handlers/hotel_selection_handler.js";
 import { renderBankSection } from "./ui_renderers.js";
 import { gameState } from "./request.js";
 
@@ -15,7 +15,7 @@ export const buildAHotel = (tileContainer) => {
 
   const allHotels = document.querySelectorAll(".hotel-container");
   Array.from(allHotels).forEach((hotel) => {
-    if (!hotel.classList.contains("dim")) hotel.classList.add("inactive");
+    if (!hotel.classList.contains("active")) hotel.classList.add("inactive");
   });
 
   let hotelToFound = "";
