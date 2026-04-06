@@ -110,11 +110,13 @@ export class Game {
   }
 
   expandHotel(tileId) {
-    this.#hotels.expand(tileId);
+    const tilesOnBoard = this.#board.getPlacedTiles();
+    this.#hotels.expand(tileId, tilesOnBoard);
     this.#state = "EXPAND_HOTEL";
   }
 
   buildHotel(hotelName) {
+    if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);

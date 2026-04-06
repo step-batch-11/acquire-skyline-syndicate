@@ -61,7 +61,8 @@ describe("Hotels entity tests", () => {
     it("should add tile into its adjacent hotel chain", () => {
       const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
-      const updatedHotel = hotelsInstance.expand("3a");
+      const tilesOnBoard = [{ id: "1a" }, { "id": "2a" }];
+      const updatedHotel = hotelsInstance.expand("3a", tilesOnBoard);
       assertEquals(updatedHotel.getTiles().length, 3);
     });
   });

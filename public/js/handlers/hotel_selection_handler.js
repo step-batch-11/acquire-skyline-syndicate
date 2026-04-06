@@ -1,16 +1,8 @@
 import { postData } from "../request.js";
 import { extractSelectedStocks } from "../utils.js";
-import {
-  handleAssignTile,
-  handleCartUpdation,
-  TOTAL_SELECTED_STOCKS,
-} from "./event_handlers.js";
-import {
-  renderBankSection,
-  renderBoard,
-  renderHeldStocks,
-  renderUserSection,
-} from "../ui_renderers.js";
+import { handleAssignTile, handleCartUpdation } from "./event_handlers.js";
+import { renderBankSection, renderUserSection } from "../ui_renderers.js";
+import { TOTAL_SELECTED_STOCKS } from "./event_handlers.js";
 
 export const listenerForCart = (e) => {
   const action = e.target.dataset.action;
@@ -27,32 +19,4 @@ export const listenerForBuyingStocks = async (e) => {
   renderBankSection(hotels);
   renderUserSection(playerInfo);
   handleAssignTile();
-};
-
-export const listenerForHotelSelection = (e) => {
-  e.preventDefault();
-  return event.target.parentNode.id;
-};
-
-export const listenerForFoundingHotel = async (
-  e,
-  hotelToFound,
-  _tileContainer,
-  bankContainer,
-) => {
-  e.preventDefault();
-  const { hotels, tilesOnBoard, currentPlayer } = await postData(
-    "/turn/build-hotel",
-    {
-      hotelToFound,
-    },
-  );
-
-  bankContainer.removeEventListener("click", listenerForHotelSelection);
-
-  const foundBtn = bankContainer.querySelector("#found");
-  foundBtn.classList.add("hidden");
-  renderBankSection(hotels);
-  renderBoard(tilesOnBoard, hotels);
-  renderHeldStocks(currentPlayer.stocks);
 };

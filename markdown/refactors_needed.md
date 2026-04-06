@@ -217,3 +217,17 @@ lobby.get("/create-game", createGame);
 lobby.get("/start-game", gameState);
 lobby.get("/active-players", activePlayers);
 ```
+
+# board_events.js
+
+- [ ] put one listener for the whole bank section.
+- [ ] find a better way to select the hotels
+- [ ] find better way to handel inactive hotels selection case.
+
+# ideas :
+
+- [ ] in future send the data in this format :
+
+```js
+{"gameState" : game.currentState(), message }
+```
