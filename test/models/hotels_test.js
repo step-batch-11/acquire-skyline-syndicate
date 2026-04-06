@@ -3,6 +3,7 @@ import { assertEquals } from "@std/assert";
 import { Hotels } from "../../src/models/hotels.js";
 import { Tile } from "../../src/models/tile.js";
 
+// why outside?
 let hotelsInstance;
 
 describe("Hotels entity tests", () => {
@@ -57,7 +58,7 @@ describe("Hotels entity tests", () => {
   });
 
   describe("expand", () => {
-    it.ignore("should add tile into its adjacent hotel chain", () => {
+    it("should add tile into its adjacent hotel chain", () => {
       const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
       hotelsInstance.addTilesToHotel("Tower", tilesOfTower);
       const updatedHotel = hotelsInstance.expand("3a");
@@ -66,18 +67,37 @@ describe("Hotels entity tests", () => {
   });
 
   describe("calculate the stock price of the selected stocks", () => {
-    const hotels = [
-      { name: "sackson", scale: 0 },
-      {
-        name: "Tower",
-        scale: 0,
-      },
-    ];
-    const hotelsInstance = Hotels.instantiateHotels(hotels);
-    const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
-    hotelsInstance.addTilesToHotel("sackson", tilesOfTower);
-    const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+    it("calculate the stock price of the selected stocks", () => {
+      const hotels = [
+        { name: "sackson", scale: 0 },
+        {
+          name: "Tower",
+          scale: 0,
+        },
+      ];
+      const hotelsInstance = Hotels.instantiateHotels(hotels);
+      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      hotelsInstance.addTilesToHotel("sackson", tilesOfTower);
+      const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
 
-    assertEquals(hotelsInstance.calculateMoneyToDeduct(cart), 400);
+      assertEquals(hotelsInstance.calculateMoneyToDeduct(cart), 400);
+    });
+  });
+
+  describe("Test for founding a hotel", () => {
+    it("found a hotel should found the hotel with given tiles", () => {
+      const hotelName = "Tower";
+      const originTile = "2a";
+      const adjacentTilesForHotel = ["2b", "3b", "3c"];
+      hotelsInstance.foundHotel(
+        hotelName,
+        new Tile(originTile),
+        adjacentTilesForHotel,
+      );
+      const hotels = hotelsInstance.getHotels();
+      const towerTiles = hotels.find((hotel) => hotel.name === hotelName).tiles
+        .length;
+      assertEquals(towerTiles, 4);
+    });
   });
 });

@@ -2,8 +2,7 @@ import { Hono } from "hono";
 export const lobby = new Hono();
 
 const startGame = (c) => {
-  const lobby = c.get("lobby");
-  const game = lobby.getGame();
+  const game = c.get("game");
   return c.json(game.currentState());
 };
 
@@ -29,9 +28,9 @@ const activePlayers = (c) => {
 };
 
 const createGame = async (c) => {
-  const lobby = c.get("lobby");
-  const players = lobby.getActivePlayers();
-  lobby.createGame(players);
+  const createGame = c.get("createGame"); 
+  const mockPlayers = ["yash", "pradipta"]; 
+  createGame(mockPlayers);
   return await c.redirect("/pages/game.html", 302);
 };
 

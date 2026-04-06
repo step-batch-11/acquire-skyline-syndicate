@@ -3,72 +3,79 @@ export class Tile {
   #rowLabels;
   #maxCol;
   #minCol;
+  #neighbourDeltas;
   constructor(tileId) {
     this.#maxCol = 12;
     this.#minCol = 1;
     this.#rowLabels = "abcdefghi";
     this.id = tileId;
-  }
-
-  splitTile(tile) {
-    return { col: tile.slice(0, tile.length - 1), row: tile.slice(-1) };
-  }
-
-  updateColumn(col, dc) {
-    const newCol = col + dc;
-    if (newCol < this.#minCol) return 1;
-    if (newCol > this.#maxCol) return 12;
-    return newCol;
-  }
-
-  updateRowIndex(row, dr) {
-    const newRow = this.getRowIndex(row) + dr;
-    if (newRow < 0) return 0;
-    if (newRow > 8) return 8;
-    return newRow;
-  }
-
-  neighbourTiles() {
-    const neighbours = [
+    this.#neighbourDeltas = [
       { columnDelta: 1, rowDelta: 0 },
       { columnDelta: -1, rowDelta: 0 },
       { columnDelta: 0, rowDelta: 1 },
       { columnDelta: 0, rowDelta: -1 },
     ];
-    const currentTile = this.splitTile(this.id);
+  }
 
-    const adjacents = neighbours.map(({ columnDelta, rowDelta }) => {
-      const updatedCol = this.updateColumn(
-        Number(currentTile.col),
-        columnDelta,
-      );
-      const updatedRowIndex = this.updateRowIndex(currentTile.row, rowDelta);
-      const updatedRow = this.#rowLabels[updatedRowIndex];
+  #getRowIndex(row) {
+    return this.#rowLabels.indexOf(row);
+  }
 
-      return `${updatedCol}${updatedRow}`;
-    });
-    return adjacents;
+  #isValidColumn(col) {
+    return col >= this.#minCol && col <= this.#maxCol;
+  }
+
+  #isValidRow(row) {
+    return this.#getRowIndex(row) !== -1;
+  }
+
+  splitTile(tile) {
+    return { col: Number(tile.slice(0, -1)), row: tile.slice(-1) };
+  }
+
+  #getUpdatedRow(row, rowDelta) {
+    const rowIndex = this.#getRowIndex(row);
+    return this.#rowLabels[rowIndex + rowDelta];
+  }
+
+  #getUpdatedPosition({ columnDelta, rowDelta }) {
+    const { col, row } = this.splitTile(this.id);
+
+    return {
+      newColumn: col + columnDelta,
+      newRow: this.#getUpdatedRow(row, rowDelta),
+    };
+  }
+
+  addNeighbour(delta) {
+    const { newColumn, newRow } = this.#getUpdatedPosition(delta);
+
+    return this.#isValidRow(newRow) && this.#isValidColumn(newColumn)
+      ? `${newColumn}${newRow}`
+      : null;
+  }
+
+  #neighbourTiles() {
+    return this.#neighbourDeltas
+      .map((delta) => this.addNeighbour(delta))
+      .filter(Boolean);
   }
 
   isNeighbouringTile(tile) {
-    if (this.id === tile.id) return false;
-
-    const currentTilePosition = this.splitTile(this.id);
-    const newTilePosition = this.splitTile(tile.id);
-
-    const rowDifference = Math.abs(
-      this.getRowIndex(currentTilePosition.row) -
-        this.getRowIndex(newTilePosition.row),
-    );
-    const columnDifference = Math.abs(
-      currentTilePosition.col - newTilePosition.col,
-    );
-    const difference = rowDifference + columnDifference;
-
-    return difference === 1;
+    return this.#neighbourTiles().includes(tile.id);
   }
 
-  getRowIndex(row) {
-    return Number(this.#rowLabels.indexOf(row));
+  getAllConnectedTiles(tilesOnBoard, connecteds = []) {
+    if (connecteds.includes(this.id)) return connecteds;
+
+    connecteds.push(this.id);
+    this.#neighbourTiles().forEach((tile) => {
+      if (tilesOnBoard.some((tileOnBoard) => tileOnBoard.id === tile)) {
+        const tileInstance = new Tile(tile);
+        tileInstance.getAllConnectedTiles(tilesOnBoard, connecteds);
+      }
+    });
+
+    return connecteds;
   }
 }

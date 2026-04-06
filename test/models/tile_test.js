@@ -77,4 +77,23 @@ describe("TILE", () => {
       assertEquals(tile1.isNeighbouringTile(tile2), true);
     });
   });
+
+  describe("getAllConnectedTiles", () => {
+    it("should return all the connected tiles which are on board", () => {
+      const tile = new Tile("1a");
+      const placedTiles = ["2a", "2b", "3c", "4c"].map(
+        (placedTile) => new Tile(placedTile),
+      );
+      const connecteds = tile.getAllConnectedTiles(placedTiles);
+      assertEquals(connecteds, ["1a", "2a", "2b"])
+    });
+    it("should return all the connected tiles which are on board", () => {
+      const tile = new Tile("1a");
+      const placedTiles = ["2a", "2b", "3b", "3c", "4c"].map(
+        (placedTile) => new Tile(placedTile),
+      );
+      const connecteds = tile.getAllConnectedTiles(placedTiles);
+      assertEquals(connecteds, ["1a", "2a", "2b", "3b", "3c", "4c"])
+    });
+  });
 });

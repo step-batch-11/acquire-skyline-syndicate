@@ -22,15 +22,11 @@ export class Board {
 
   hasAdjacentForLastTile() {
     return this.#placedTiles.some((placedTile) =>
-      this.lastTile.isNeighbouringTile(placedTile)
+      this.lastTile.isNeighbouringTile(placedTile),
     );
   }
 
   adjacentTilesOfLastTile() {
-    return this.lastTile
-      .neighbourTiles()
-      .filter((tile) =>
-        this.#placedTiles.find((placedTile) => placedTile.id === tile)
-      );
+    return this.lastTile.getAllConnectedTiles(this.#placedTiles);
   }
 }

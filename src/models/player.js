@@ -38,7 +38,6 @@ export class Player {
   removeTile(tileId) {
     const tileIndex = this.#tiles.findIndex(({ id }) => id === tileId);
     this.#tiles.splice(tileIndex, 1);
-    return structuredClone(this.#tiles);
   }
 
   addStocks(hotelName, noOfStocks) {
@@ -48,7 +47,6 @@ export class Player {
 
   addNewTile(tile) {
     this.#tiles.push(...tile);
-    return this.getTileIds();
   }
 
   deductMoney(moneyToDeduct) {
