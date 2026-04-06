@@ -1,4 +1,4 @@
-export const bankData = [
+export const hotels = [
   {
     name: "continental",
     tiles: [],
