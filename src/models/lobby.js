@@ -5,7 +5,7 @@ import { Player } from "./player.js";
 import { Game } from "./game.js";
 import { shuffle } from "@std/random/shuffle";
 import { Tile } from "./tile.js";
-import { hotels } from "../mock-data/hotels.js";
+import { hotels } from "../mock-data/hotels_data.js";
 
 const shuffleTiles = (tiles, shuffleFn = shuffle) => {
   return shuffleFn(tiles);
@@ -59,5 +59,9 @@ export class Lobby {
 
   getGame() {
     return this.#game;
+  }
+
+  isFull() {
+    return true;
   }
 }

@@ -21,10 +21,11 @@ export class Game {
 
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
+    console.log({ initialBoardTiles });
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#players.forEach((player) => {
       const initialPlayerTiles = this.#deck.drawTiles(6);
-      player.addInitialTiles(initialPlayerTiles);
+      player.addInitialTiles(initialPlayerTiles.map((tile) => tile));
     });
   }
 
@@ -46,7 +47,8 @@ export class Game {
 
     return (
       this.#hotels.isAnyInActiveHotel() &&
-      this.#board.hasAdjacentForLastTile() && notInAnyHotel
+      this.#board.hasAdjacentForLastTile() &&
+      notInAnyHotel
     );
   }
 
@@ -114,7 +116,7 @@ export class Game {
     this.#hotels.deductStocks(cart);
     const hotels = this.#hotels.getHotels();
     cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks),
+      this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
     );
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     this.#currentPlayer.deductMoney(moneyToDeduct);

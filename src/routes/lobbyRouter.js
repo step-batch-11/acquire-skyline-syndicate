@@ -27,11 +27,18 @@ const activePlayers = (c) => {
   return c.json(players);
 };
 
-const createGame = async (c) => {
-  const createGame = c.get("createGame"); 
-  const mockPlayers = ["yash", "pradipta"]; 
-  createGame(mockPlayers);
-  return await c.redirect("/pages/game.html", 302);
+const createGame = async (context) => {
+  const createGame_ = context.get("createGame");
+  console.log(createGame_);
+
+  const lobbyInstance = context.get("lobby");
+
+  if (lobbyInstance.isFull()) {
+    const mockPlayers = ["yash", "pradipta"];
+    context.set("game", createGame_(mockPlayers));
+  }
+
+  return await context.json({ "done": true });
 };
 
 lobby.post("/join", joinLobby);

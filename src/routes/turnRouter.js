@@ -2,6 +2,10 @@ import { Hono } from "hono";
 
 export const turn = new Hono();
 
+const currentState = (c) => {
+  const game = c.get("game");
+  return c.json(game.currentState());
+};
 const placeTile = async (c) => {
   const { tile } = await c.req.json();
   const game = c.get("game");
@@ -33,3 +37,4 @@ turn.post("/placeTile", placeTile);
 turn.post("/buildHotel", buildHotel);
 turn.post("/assignNewTileToPlayer", assignNewTile);
 turn.post("/buy-stocks", buyStocks);
+turn.get("/currentState", currentState);

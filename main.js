@@ -6,7 +6,9 @@ const main = () => {
   const port = Deno.env.get("PORT") || 8000;
 
   const lobbyInstance = new Lobby();
-  const app = createApp(lobbyInstance, createGame);
+  const mockPlayers = ["yash", "pradipta"];
+  const game = createGame(mockPlayers);
+  const app = createApp(lobbyInstance, game);
   Deno.serve({ port }, app.fetch);
 };
 

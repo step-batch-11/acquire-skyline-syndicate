@@ -25,7 +25,7 @@ export class Player {
     return {
       id: this.#id,
       name: this.#name,
-      tiles: structuredClone(this.getTileIds()),
+      tiles: this.getTileIds(),
       money: this.#money,
       stocks: structuredClone(this.#stocks),
     };

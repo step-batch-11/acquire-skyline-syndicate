@@ -88,11 +88,11 @@ describe("Hotels entity tests", () => {
     it("found a hotel should found the hotel with given tiles", () => {
       const hotelName = "Tower";
       const originTile = "2a";
-      const adjacentTilesForHotel = ["2b", "3b", "3c"];
+      const allConnectedTiles = ["2a", "2b", "3b", "3c"];
       hotelsInstance.foundHotel(
         hotelName,
         new Tile(originTile),
-        adjacentTilesForHotel,
+        allConnectedTiles,
       );
       const hotels = hotelsInstance.getHotels();
       const towerTiles = hotels.find((hotel) => hotel.name === hotelName).tiles

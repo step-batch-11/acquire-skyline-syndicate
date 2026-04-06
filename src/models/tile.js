@@ -55,21 +55,21 @@ export class Tile {
       : null;
   }
 
-  #neighbourTiles() {
+  neighbourTiles() {
     return this.#neighbourDeltas
       .map((delta) => this.addNeighbour(delta))
       .filter(Boolean);
   }
 
   isNeighbouringTile(tile) {
-    return this.#neighbourTiles().includes(tile.id);
+    return this.neighbourTiles().includes(tile.id);
   }
 
   getAllConnectedTiles(tilesOnBoard, connecteds = []) {
     if (connecteds.includes(this.id)) return connecteds;
 
     connecteds.push(this.id);
-    this.#neighbourTiles().forEach((tile) => {
+    this.neighbourTiles().forEach((tile) => {
       if (tilesOnBoard.some((tileOnBoard) => tileOnBoard.id === tile)) {
         const tileInstance = new Tile(tile);
         tileInstance.getAllConnectedTiles(tilesOnBoard, connecteds);

@@ -23,14 +23,14 @@ export class Hotels {
 
   isTileInAnyHotel(tileId) {
     return Object.values(this.#hotels).some((hotel) =>
-      hotel.tileIncludes(tileId),
+      hotel.tileIncludes(tileId)
     );
   }
 
   getAdjacentHotelChains(tiles) {
     const adjacents = new Set(tiles);
     return this.getHotels().filter(({ tiles }) =>
-      tiles.some((tile) => adjacents.has(tile.id)),
+      tiles.some((tile) => adjacents.has(tile.id))
     );
   }
 

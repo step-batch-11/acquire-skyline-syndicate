@@ -205,8 +205,11 @@ addNewTile(tile) {
       operation. Instead it can return the currentState of the game. If the
       request is related to game.
 
-# lobbyRouter : 
-- [ ] Request that changes the state, it should be not be get. change it to post frontend and backend both. 
+# lobbyRouter :
+
+- [ ] Request that changes the state, it should be not be get. change it to post
+      frontend and backend both.
+
 ```js
 lobby.post("/join", joinLobby);
 lobby.get("/state", currentState);

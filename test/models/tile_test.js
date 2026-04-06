@@ -85,7 +85,7 @@ describe("TILE", () => {
         (placedTile) => new Tile(placedTile),
       );
       const connecteds = tile.getAllConnectedTiles(placedTiles);
-      assertEquals(connecteds, ["1a", "2a", "2b"])
+      assertEquals(connecteds, ["1a", "2a", "2b"]);
     });
     it("should return all the connected tiles which are on board", () => {
       const tile = new Tile("1a");
@@ -93,7 +93,7 @@ describe("TILE", () => {
         (placedTile) => new Tile(placedTile),
       );
       const connecteds = tile.getAllConnectedTiles(placedTiles);
-      assertEquals(connecteds, ["1a", "2a", "2b", "3b", "3c", "4c"])
+      assertEquals(connecteds, ["1a", "2a", "2b", "3b", "3c", "4c"]);
     });
   });
 });

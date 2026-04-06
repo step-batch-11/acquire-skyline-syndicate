@@ -1,6 +1,5 @@
 export const handleShiftTurn = (context) => {
-  const lobby = context.get("lobby");
-  const game = lobby.getGame();
+  const game = context.get("game");
   game.shiftTurn();
   const currentGameState = game.currentState();
   return context.json(currentGameState);
