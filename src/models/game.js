@@ -39,8 +39,13 @@ export class Game {
   }
 
   #isBuildPossible() {
+    const adjacentTiles = this.#board.lastTile.neighbourTiles();
+    const tileNotInAnyHotel = !adjacentTiles.some((tile) =>
+      this.#hotels.isTileInAnyHotel(tile)
+    );
     return (
-      this.#hotels.isAnyInActiveHotel() && this.#board.hasAdjacentForLastTile()
+      this.#hotels.isAnyInActiveHotel() &&
+      this.#board.hasAdjacentForLastTile() && tileNotInAnyHotel
     );
   }
 
@@ -51,8 +56,8 @@ export class Game {
   }
 
   #isExpansion() {
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
-    return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile.id));
+    const adjacentTiles = this.#board.lastTile.neighbourTiles();
+    return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
   #actionForTilePlacement(tileId) {
