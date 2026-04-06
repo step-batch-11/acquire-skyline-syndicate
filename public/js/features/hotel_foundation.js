@@ -19,6 +19,7 @@ export const buildAHotel = (tileContainer) => {
 class HotelFoundationState {
   #selectedHotel;
   #tileContainer;
+  #previouslySelectedHotel;
 
   constructor(tileContainer) {
     this.#selectedHotel = null;
@@ -32,11 +33,16 @@ class HotelFoundationState {
 
   #handleHotelSelection(e) {
     e.preventDefault();
-    const selectedHotel = event.target;
-    if (selectedHotel.classList.contains("active")) {
-      return null;
+    const selectedHotel = e.target;
+    this.#previouslySelectedHotel &&
+      this.#previouslySelectedHotel.classList.remove("selected");
+    if (selectedHotel.classList.contains("hotel-container")) {
+      selectedHotel.classList.add("selected");
     }
-    return selectedHotel.parentNode.id;
+    this.#previouslySelectedHotel = selectedHotel;
+    return selectedHotel.classList.contains("active")
+      ? null
+      : selectedHotel.parentNode.id;
   }
 
   async #handleHotelFoundation(e, hotelToFound) {
@@ -64,13 +70,16 @@ class HotelFoundationState {
     const foundBtn = bankContainer.querySelector("#found");
     foundBtn.classList.remove("hidden");
     foundBtn.addEventListener("click", (e) => {
-      this.#handleHotelFoundation(
-        e,
-        this.#selectedHotel,
-        this.#tileContainer,
-        bankContainer,
-      );
-      bankContainer.removeEventListener("click", this.#handleHotelSelection);
+      if (this.#selectedHotel) {
+        this.#handleHotelFoundation(
+          e,
+          this.#selectedHotel,
+          this.#tileContainer,
+          bankContainer,
+        );
+        foundBtn.classList.add("hidden");
+        bankContainer.removeEventListener("click", this.#handleHotelSelection);
+      }
     });
   }
 }
