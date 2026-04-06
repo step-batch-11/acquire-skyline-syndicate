@@ -1,19 +1,36 @@
 export class Lobby {
-  #players = [];
+  #minPlayers = 2;
+  #maxPlayers = 6;
+  #host;
+  #lobbyId;
+  #players;
   #lobbyState = "waiting";
-  #threshold = 2;
-  #game;
-  constructor() {}
 
-  addPlayerToLobby(playerName) {
-    this.#players.push(playerName);
+  constructor() {
+    this.#players = new Set();
+  }
+
+  setPlayer(playerId) {
+    this.#players.add(playerId);
   }
 
   currentState() {
-    if (this.#players.length >= this.#threshold) {
+    if (this.#players.size >= this.#minPlayers) {
       this.#lobbyState = "ready";
     }
     return this.#lobbyState;
+  }
+
+  setHost(playerId) {
+    this.#host = playerId;
+  }
+
+  setLobby(lobbyId) {
+    this.#lobbyId = lobbyId;
+  }
+
+  get lobbyId() {
+    return this.#lobbyId;
   }
 
   getActivePlayers() {
@@ -21,6 +38,6 @@ export class Lobby {
   }
 
   isFull() {
-    return true;
+    return this.#players.size >= this.#maxPlayers;
   }
 }

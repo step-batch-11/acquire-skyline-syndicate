@@ -25,6 +25,22 @@ header {
   letter-spacing: 2px;
 }
 
+.lobby-id-box {
+  margin-top: 50px;
+  display: inline-flex;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f5f5f5;
+  font-family: monospace;
+  font-size: large;
+}
+
+button {
+  cursor: pointer;
+}
+
 #players-name-display {
   margin-top: 30px;
 }

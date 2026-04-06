@@ -10,8 +10,10 @@ const login = async (c) => {
   const formData = await c.req.formData();
   const playerName = formData.get("player_name");
   const sessionId = crypto.randomUUID();
+  const playerId = crypto.randomUUID();
   const sessions = c.get("sessions");
-  sessions.addPlayer(sessionId, playerName);
+  sessions.setSession(sessionId, playerId);
+  sessions.setPlayerId(playerId, playerName);
   setCookie(c, "sessionId", sessionId);
   return c.redirect("pages/menu.html", 302);
 };
@@ -19,7 +21,8 @@ const login = async (c) => {
 const getPlayerName = (c) => {
   const sessionId = getCookie(c, "sessionId");
   const sessions = c.get("sessions");
-  const playerName = sessions.getPlayerName(sessionId);
+  const playerId = sessions.getPlayerId(sessionId);
+  const playerName = sessions.getPlayerName(playerId);
   return c.json({ playerName });
 };
 

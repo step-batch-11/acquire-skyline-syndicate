@@ -1,11 +1,11 @@
 import { renderLobby } from "./lobby_setup.js";
-import { getLobbyState, listActivePlayers } from "./request.js";
+import { getLobbyDetails, getLobbyState } from "./request.js";
 
 globalThis.onload = () => {
   const id = setInterval(async () => {
     const { state } = await getLobbyState();
-    const activePlayers = await listActivePlayers();
-    renderLobby(state, activePlayers);
+    const lobbyDetails = await getLobbyDetails();
+    renderLobby(state, lobbyDetails);
     if (state === "ready") {
       clearInterval(id);
 

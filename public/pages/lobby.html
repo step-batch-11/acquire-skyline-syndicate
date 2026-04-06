@@ -1,50 +1,64 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lobby</title>
+    <link rel="stylesheet" href="../styles/lobby.css" />
+    <script type="module" src="../js/lobby.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lobby</title>
-  <link rel="stylesheet" href="../styles/lobby.css">
-  <script type="module" src="../js/lobby.js"></script>
-</head>
+  <body>
+    <template id="lobby-id-template">
+      <span id="lobbyId">ABCD1234</span>
+    </template>
 
-<body>
+    <template id="name-display-template">
+      <h2>
+        <li id="name"></li>
+      </h2>
+    </template>
 
-  <template id="name-display-template">
-    <h2>
-      <li id="name"></li>
-    </h2>
-  </template>
-
-  <template id="waiting-icon-template">
-    <div class="waiting-container">
-      <div class="spinner"></div>
-      <h3>WAITING FOR PLAYERS...</h3>
-    </div>
-  </template>
-
-  <template id="starting-icon-template">
-    <div class="starting-container">
-      <h3>GAME STARTING...</h3>
-      <div class="progress-bar">
-        <div class="progress"></div>
+    <template id="waiting-icon-template">
+      <div class="waiting-container">
+        <div class="spinner"></div>
+        <h3>WAITING FOR PLAYERS...</h3>
       </div>
-    </div>
-  </template>
+    </template>
 
-  <header>
-    <h1>LOBBY</h1>
-  </header>
+    <template id="starting-icon-template">
+      <div class="starting-container">
+        <h3>GAME STARTING...</h3>
+        <div class="progress-bar">
+          <div class="progress"></div>
+        </div>
+      </div>
+    </template>
 
-  <section id="players-name-display">
-    <section>
-      <ol id="players-list"></ol>
-    </section>
-  </section>
+    <header>
+      <h1>LOBBY</h1>
+    </header>
 
-  <section id="buffer-container"></section>
+    <main>
+      <div class="lobby-info">
+        <div class="lobby-id-box">
+          <span>Lobby ID: </span>
+          <div id="lobby-id-container">
+            <span id="lobbyId">ABCD1234</span>
+          </div>
+          <button id="copyBtn">Copy</button>
+        </div>
 
-</body>
+        <p id="copyStatus"></p>
+      </div>
 
+      <section id="players-name-display">
+        <section>
+          <ol id="players-list"></ol>
+        </section>
+      </section>
+
+      <section id="buffer-container"></section>
+    </main>
+  </body>
 </html>

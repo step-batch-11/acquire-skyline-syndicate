@@ -25,7 +25,7 @@ const renderNames = (activePlayers) => {
   listContainer.append(...elementsList);
 };
 
-export const renderLobby = (state, activePlayers) => {
+export const renderLobby = (state, lobbyDetails) => {
   renderBuffer(state);
-  renderNames(activePlayers);
+  renderNames(lobbyDetails.playerNames);
 };

@@ -11,8 +11,8 @@ export const getLobbyState = async () => {
   return await getData("/lobby/state");
 };
 
-export const listActivePlayers = async () => {
-  const response = await fetch("/lobby/active-players");
+export const getLobbyDetails = async () => {
+  const response = await fetch("/lobby/lobby-details");
   return await response.json();
 };
 
