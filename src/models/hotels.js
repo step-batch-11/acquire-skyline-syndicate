@@ -74,7 +74,16 @@ export class Hotels {
     }, 0);
   }
 
-  isHotelActive(hotelName) {
-    return this.#hotels[hotelName].isActive();
+  areHotelsActive(cart) {
+    return cart.every(({ hotelName }) => {
+      const hotel = hotelName.toLowerCase();
+      return this.#hotels[hotel].isActive();
+    });
+  }
+
+  hasEnoughStocksToBuy(cart) {
+    return cart.every(({ hotelName, selectedStocks }) =>
+      this.#hotels[hotelName].canDeductStocksFromHotel(selectedStocks)
+    );
   }
 }

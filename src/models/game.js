@@ -74,15 +74,19 @@ export class Game {
     this.#state = "NO_ACTION";
   }
 
-  #isValidPurchase(cart) {
+  #areStocksValid(cart) {
     const totalStocks = cart.reduce(
       (count, { selectedStocks }) => count += selectedStocks,
       0,
     );
-    const isSelectedHotelsActive = cart.every(({ hotelName }) =>
-      this.#hotels.isHotelActive(hotelName.toLowerCase())
-    );
-    return totalStocks <= 3 && isSelectedHotelsActive;
+
+    return totalStocks <= 3 && totalStocks >= 0;
+  }
+
+  #isValidPurchase(cart) {
+    return this.#areStocksValid(cart) &&
+      this.#hotels.areHotelsActive(cart) &&
+      this.#hotels.hasEnoughStocksToBuy(cart);
   }
 
   placeTile(tileId) {
@@ -124,6 +128,8 @@ export class Game {
 
   buyStocks(cart) {
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    // console.log((this.#isValidPurchase(cart)));
+
     const isValidBuy = this.#isValidPurchase(cart) &&
       this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
 

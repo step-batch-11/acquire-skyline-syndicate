@@ -50,7 +50,7 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-const createTradeConfirmationBtn = () => {
+const createBuilHotelsBtn = () => {
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("button-container");
   const button = cloneElement("#button");
@@ -89,8 +89,8 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
     hotelContainer.classList.add("dim");
     const counter = hotelCard.querySelector(".counter");
     counter.classList.remove("hidden");
+    hotelContainer.classList.add("active");
   }
-  if (isActive) hotelContainer.classList.add("active");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
@@ -105,7 +105,7 @@ export const renderBankSection = (hotels) => {
   const hotelCards = hotels.map(addHotelData);
 
   bankSection.replaceChildren(...hotelCards);
-  const button = createTradeConfirmationBtn();
+  const button = createBuilHotelsBtn();
   const buyButton = createBuyButton();
   bankSection.append(button);
   bankSection.append(buyButton);
