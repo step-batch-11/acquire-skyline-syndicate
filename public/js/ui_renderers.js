@@ -119,10 +119,7 @@ const addDetailsToCard = (stockCard, name, count) => {
 };
 
 const cloneStockCards = () => {
-  return Array.from(
-    { length: 7 },
-    () => cloneElement("#stock-template"),
-  );
+  return Array.from({ length: 7 }, () => cloneElement("#stock-template"));
 };
 
 export const renderHeldStocks = (stocks) => {
