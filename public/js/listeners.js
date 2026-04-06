@@ -38,7 +38,7 @@ export const listenerForFoundingHotel = async (
 ) => {
   e.preventDefault();
   const { hotels, tilesOnBoard, currentPlayer } = await postData(
-    "/turn/buildHotel",
+    "/turn/build-hotel",
     {
       hotelToFound,
     },

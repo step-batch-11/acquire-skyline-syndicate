@@ -7,6 +7,37 @@
   <title>Basic layout</title>
   <link rel="stylesheet" href="../styles/game.css" />
   <script type="module" src="../js/game.js"></script>
+</head>
+
+<body>
+  <main>
+    <div class="market-notification-players">
+      <div class="notification-box"></div>
+      <div class="player-market">
+        <div class="players">
+        </div>
+        <div class="board"></div>
+      </div>
+    </div>
+    <div class="bank">
+      <!-- Bank Section -->
+    </div>
+  </main>
+  <footer>
+    <div class="amount-container">
+      <p></p>
+    </div>
+    <div class="stocks"></div>
+    <div class="tiles tiles-in-hand"></div>
+  </footer>
+  
+  <template id="player-template">
+    <div class="player-container">
+      <div class="player-profile"></div>
+      <div class="player-name"></div>
+    </div>
+  </template>
+
   <template id="board-tile">
     <div class="tile">
       <p>1a</p>
@@ -44,35 +75,6 @@
       <div class="hotel-container"></div>
     </section>
   </template>
-</head>
-
-<body>
-  <template id="player-template">
-    <div class="player-container">
-      <div class="player-profile"></div>
-      <div class="player-name"></div>
-    </div>
-  </template>
-  <main>
-    <div class="market-notification-players">
-      <div class="notification-box"></div>
-      <div class="player-market">
-        <div class="players">
-        </div>
-        <div class="board"></div>
-      </div>
-    </div>
-    <div class="bank">
-      <!-- Bank Section -->
-    </div>
-  </main>
-  <footer>
-    <div class="amount-container">
-      <p></p>
-    </div>
-    <div class="stocks"></div>
-    <div class="tiles tiles-in-hand"></div>
-  </footer>
 </body>
 
 </html>

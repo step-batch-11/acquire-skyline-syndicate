@@ -4,6 +4,7 @@ import { logger } from "hono/logger";
 import { getCookie, setCookie } from "hono/cookie";
 import { lobby } from "./routes/lobbyRouter.js";
 import { turn } from "./routes/turnRouter.js";
+import { handleShiftTurn } from "./handlers/game_handler.js";
 
 const login = async (c) => {
   const formData = await c.req.formData();
@@ -42,6 +43,7 @@ export const createApp = (lobbyInstance, game, sessions) => {
 
   app.route("/lobby", lobby);
   app.route("/turn", turn);
+  app.post("/shift-turn", handleShiftTurn);
   app.post("/login", login);
 
   // app.get("/pages/menu.html", requireLogin);

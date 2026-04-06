@@ -3,8 +3,8 @@ export const getData = async (endPoint) => {
   return await response.json();
 };
 
-export const startGame = async () => {
-  return await getData("/turn/currentState");
+export const gameState = async () => {
+  return await getData("/turn/current-state");
 };
 
 export const getLobbyState = async () => {

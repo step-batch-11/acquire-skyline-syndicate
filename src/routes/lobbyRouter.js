@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 export const lobby = new Hono();
 
-const startGame = (c) => {
+const gameState = (c) => {
   const game = c.get("game");
   return c.json(game.currentState());
 };
@@ -28,14 +28,12 @@ const activePlayers = (c) => {
 };
 
 const createGame = async (context) => {
-  const createGame_ = context.get("createGame");
-  console.log(createGame_);
-
+  const createGameInstance = context.get("createGame");
   const lobbyInstance = context.get("lobby");
 
   if (lobbyInstance.isFull()) {
     const mockPlayers = ["yash", "pradipta"];
-    context.set("game", createGame_(mockPlayers));
+    context.set("game", createGameInstance(mockPlayers));
   }
 
   return await context.json({ "done": true });
@@ -43,6 +41,6 @@ const createGame = async (context) => {
 
 lobby.post("/join", joinLobby);
 lobby.get("/state", currentState);
-lobby.get("/createGame", createGame);
-lobby.get("/startGame", startGame);
+lobby.get("/create-game", createGame);
+lobby.get("/start-game", gameState);
 lobby.get("/active-players", activePlayers);
