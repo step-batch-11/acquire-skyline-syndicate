@@ -112,6 +112,7 @@ export class Game {
   }
 
   buildHotel(hotelName) {
+    if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);

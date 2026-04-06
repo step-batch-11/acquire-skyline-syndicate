@@ -1,5 +1,5 @@
-import { turnActions } from "../board_events.js";
-import { assignNewTiles, updateTiles } from "../game_state.js";
+import { turnActions } from "../actions.js";
+import { assignNewTiles, updateTiles } from "../request.js";
 import { renderGame } from "../initial_setup.js";
 import { removeFocus } from "../utils.js";
 import { renderBoard, renderTilesInHand } from "../ui_renderers.js";
