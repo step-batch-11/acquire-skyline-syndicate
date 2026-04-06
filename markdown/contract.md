@@ -5,7 +5,7 @@
 - /lobby
   - [/create](#lobbycreate)
   - [/join](#lobbyjoin)
-  - [/start-game](#lobbystartgame)
+  - [/start-game](#lobbygameState)
 
 - [/currentGameState](#currentgamestate)
 

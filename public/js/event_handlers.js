@@ -1,6 +1,6 @@
 import { turnActions } from "./board_events.js";
 import { assignNewTiles, updateTiles } from "./game_state.js";
-import { initializeGameSetup } from "./initial_setup.js";
+import { renderGame } from "./initial_setup.js";
 import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
 import { removeFocus } from "./utils.js";
 
@@ -28,7 +28,7 @@ export const handleTilePlacement = async (
 export const handleShiftTurn = async () => {
   const currentState = await fetch("/shift-turn", { method: "post" });
   const data = await currentState.json();
-  initializeGameSetup(data);
+  renderGame(data);
 };
 
 export const handleAssignTile = async () => {

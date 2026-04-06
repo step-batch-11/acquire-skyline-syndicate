@@ -4,6 +4,8 @@ import {
   listenerForFoundingHotel,
   listenerForHotelSelection,
 } from "./listeners.js";
+import { renderBankSection } from "./ui_renderers.js";
+import { gameState } from "./request.js";
 
 export const buildAHotel = (tileContainer) => {
   alert("build hotel");
@@ -29,8 +31,10 @@ export const buildAHotel = (tileContainer) => {
   });
 };
 
-const expandHotel = (_tileContainer) => {
+const expandHotel = async (_tileContainer) => {
   alert("hotel expanded");
+  const { hotels } = await gameState();
+  renderBankSection(hotels);
 };
 
 export const turnActions = {

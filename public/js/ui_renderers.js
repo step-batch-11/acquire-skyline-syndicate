@@ -28,14 +28,14 @@ const addColorToHotelTiles = (hotels) => {
   });
 };
 
-export const renderBoard = (tilesOnBoard, hotels) => {
+export const renderBoard = (tilesOnBoard, hotelsOnBoard) => {
   const board = document.querySelector(".board");
   tilesOnBoard.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile.id}`);
     tileContainer.classList.add("tiles-in-market");
   });
 
-  addColorToHotelTiles(hotels);
+  addColorToHotelTiles(hotelsOnBoard);
 };
 
 export const renderTilesInHand = (playerTiles) => {

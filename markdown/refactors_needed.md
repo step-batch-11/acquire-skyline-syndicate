@@ -214,6 +214,6 @@ addNewTile(tile) {
 lobby.post("/join", joinLobby);
 lobby.get("/state", currentState);
 lobby.get("/create-game", createGame);
-lobby.get("/start-game", startGame);
+lobby.get("/start-game", gameState);
 lobby.get("/active-players", activePlayers);
 ```
