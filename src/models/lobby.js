@@ -5,7 +5,7 @@ import { Player } from "./player.js";
 import { Game } from "./game.js";
 import { shuffle } from "@std/random/shuffle";
 import { Tile } from "./tile.js";
-import { bankData } from "../bank_data.js";
+import { hotels } from "../mock-data/hotels.js";
 
 const shuffleTiles = (tiles, shuffleFn = shuffle) => {
   return shuffleFn(tiles);
@@ -52,9 +52,8 @@ export class Lobby {
 
     const deck = new Deck(shuffleTiles(tiles));
     const board = new Board();
-    const hotelsManager = Hotels.instantiateHotels(bankData);
+    const hotelsManager = Hotels.instantiateHotels(hotels);
     const players = activePlayers.map((player, i) => new Player(player, i));
-    // const player = new Player("Gopi", 1);
     this.#game = new Game(deck, board, hotelsManager, players);
     this.#game.init();
   }
