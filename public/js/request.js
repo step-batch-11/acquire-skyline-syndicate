@@ -1,10 +1,10 @@
-const getData = async (endPoint) => {
+export const getData = async (endPoint) => {
   const response = await fetch(endPoint);
   return await response.json();
 };
 
-export const startGame = async () => {
-  return await getData("/lobby/startGame");
+export const gameState = async () => {
+  return await getData("/turn/current-state");
 };
 
 export const getLobbyState = async () => {

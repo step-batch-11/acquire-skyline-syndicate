@@ -33,18 +33,17 @@ export const listenerForHotelSelection = (e) => {
 export const listenerForFoundingHotel = async (
   e,
   hotelToFound,
-  tileContainer,
+  _tileContainer,
   bankContainer,
 ) => {
   e.preventDefault();
   const { hotels, tilesOnBoard, currentPlayer } = await postData(
-    "/turn/buildHotel",
+    "/turn/build-hotel",
     {
       hotelToFound,
     },
   );
-  tileContainer.classList.add(`board-${hotelToFound}-icon`);
-  tileContainer.innerText = "";
+
   bankContainer.removeEventListener("click", listenerForHotelSelection);
 
   const foundBtn = bankContainer.querySelector("#found");

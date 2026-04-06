@@ -1,8 +1,9 @@
-import { createBoard, initializeGameSetup } from "./initial_setup.js";
-import { startGame } from "./request.js";
+import { createBoard, renderGame } from "./initial_setup.js";
+import { gameState } from "./request.js";
 
 globalThis.onload = async () => {
-  const initialData = await startGame();
+  const gameData = await gameState();
   createBoard();
-  initializeGameSetup(initialData);
+
+  renderGame(gameData);
 };
