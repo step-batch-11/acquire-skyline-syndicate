@@ -85,7 +85,7 @@ export class Game {
 
   #isValidPurchase(cart) {
     return this.#areStocksValid(cart) &&
-      this.#hotels.areHotelsActive(cart) &&
+      this.#hotels.areCartHotelsActive(cart) &&
       this.#hotels.hasEnoughStocksToBuy(cart);
   }
 
@@ -130,8 +130,6 @@ export class Game {
 
   buyStocks(cart) {
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
-    // console.log((this.#isValidPurchase(cart)));
-
     const isValidBuy = this.#isValidPurchase(cart) &&
       this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
 
@@ -139,7 +137,7 @@ export class Game {
       this.#hotels.deductStocks(cart);
       const hotels = this.#hotels.getHotels();
       cart.forEach(({ hotelName, selectedStocks }) =>
-        this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
+        this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
       const playerInfo = this.#currentPlayer.getDetails();

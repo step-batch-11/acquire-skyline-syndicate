@@ -33,7 +33,6 @@ class HotelFoundationState {
   #handleHotelSelection(e) {
     e.preventDefault();
     const selectedHotel = event.target;
-    console.log(selectedHotel);
     if (selectedHotel.classList.contains("active")) {
       return null;
     }

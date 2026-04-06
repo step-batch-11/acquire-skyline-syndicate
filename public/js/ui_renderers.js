@@ -50,9 +50,7 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-const createBuilHotelsBtn = () => {
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
+const createBuilHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
@@ -61,12 +59,10 @@ const createBuilHotelsBtn = () => {
   return buttonContainer;
 };
 
-const createBuyButton = () => {
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
-
+const createConfirmButton = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "confirm";
+  button.id = "confirm";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
@@ -105,10 +101,12 @@ export const renderBankSection = (hotels) => {
   const hotelCards = hotels.map(addHotelData);
 
   bankSection.replaceChildren(...hotelCards);
-  const button = createBuilHotelsBtn();
-  const buyButton = createBuyButton();
-  bankSection.append(button);
-  bankSection.append(buyButton);
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+  const buildBtn = createBuilHotelsBtn(buttonContainer);
+  const confirmBtn = createConfirmButton(buttonContainer);
+  bankSection.append(buildBtn);
+  bankSection.append(confirmBtn);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {
