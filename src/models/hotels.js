@@ -73,4 +73,8 @@ export class Hotels {
         selectedStocks);
     }, 0);
   }
+
+  isHotelActive(hotelName) {
+    return this.#hotels[hotelName].isActive();
+  }
 }

@@ -52,4 +52,8 @@ export class Player {
   deductMoney(moneyToDeduct) {
     this.#money -= moneyToDeduct;
   }
+
+  hasEnoughMoney(moneyToDeduct) {
+    return moneyToDeduct <= this.#money;
+  }
 }

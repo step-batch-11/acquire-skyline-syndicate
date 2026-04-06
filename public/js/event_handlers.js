@@ -4,7 +4,7 @@ import { renderGame } from "./initial_setup.js";
 import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
 import { removeFocus } from "./utils.js";
 
-const TOTAL_SELECTED_STOCKS = [];
+export const TOTAL_SELECTED_STOCKS = [];
 const noOp = () => {};
 
 export const handleTilePlacement = async (

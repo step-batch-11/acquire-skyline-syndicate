@@ -78,4 +78,14 @@ describe("Player entity tests", () => {
       assertEquals(player.money, 5000);
     });
   });
+
+  describe("testing if user has sufficient fund to buy stocks", () => {
+    it("if player have enough money to buy", () => {
+      assertEquals(playerInstance.hasEnoughMoney(200), true);
+    });
+
+    it("if player do not have enough money to buy", () => {
+      assertEquals(playerInstance.hasEnoughMoney(7000), false);
+    });
+  });
 });

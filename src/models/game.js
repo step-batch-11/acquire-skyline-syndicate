@@ -74,6 +74,17 @@ export class Game {
     this.#state = "NO_ACTION";
   }
 
+  #isValidPurchase(cart) {
+    const totalStocks = cart.reduce(
+      (count, { selectedStocks }) => count += selectedStocks,
+      0,
+    );
+    const isSelectedHotelsActive = cart.every(({ hotelName }) =>
+      this.#hotels.isHotelActive(hotelName.toLowerCase())
+    );
+    return totalStocks <= 3 && isSelectedHotelsActive;
+  }
+
   placeTile(tileId) {
     if (this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
@@ -112,15 +123,20 @@ export class Game {
   }
 
   buyStocks(cart) {
-    this.#hotels.deductStocks(cart);
-    const hotels = this.#hotels.getHotels();
-    cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
-    );
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
-    this.#currentPlayer.deductMoney(moneyToDeduct);
-    const playerInfo = this.#currentPlayer.getDetails();
-    return { hotels, playerInfo };
+    const isValidBuy = this.#isValidPurchase(cart) &&
+      this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
+
+    if (isValidBuy) {
+      this.#hotels.deductStocks(cart);
+      const hotels = this.#hotels.getHotels();
+      cart.forEach(({ hotelName, selectedStocks }) =>
+        this.#currentPlayer.addStocks(hotelName.toLowerCase(), selectedStocks)
+      );
+      this.#currentPlayer.deductMoney(moneyToDeduct);
+      const playerInfo = this.#currentPlayer.getDetails();
+      return { hotels, playerInfo };
+    }
   }
 
   shiftTurn() {

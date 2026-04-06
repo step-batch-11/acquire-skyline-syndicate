@@ -1,4 +1,4 @@
-import { handleAssignTile } from "./event_handlers.js";
+import { handleAssignTile, TOTAL_SELECTED_STOCKS } from "./event_handlers.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { postData } from "./request.js";
 import {
@@ -20,6 +20,7 @@ export const listenerForBuyingStocks = async (e) => {
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
   const { hotels, playerInfo } = await postData("/turn/buy-stocks", cart);
+  TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
   renderUserSection(playerInfo);
   handleAssignTile();

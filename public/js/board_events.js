@@ -51,6 +51,7 @@ export const addListenerToBoard = (tilesInPlayerHand) => {
     if (canPlaceTile(tileContainer, tilesInPlayerHand)) {
       handleTilePlacement(board, tileContainer, tilesInPlayerHand);
       board.removeEventListener("click", tileSelectionListener);
+      activateBuyingStocks();
     }
   };
 
