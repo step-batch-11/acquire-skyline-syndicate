@@ -1,29 +1,3 @@
-import { Deck } from "./deck.js";
-import { Board } from "./board.js";
-import { Hotels } from "./hotels.js";
-import { Player } from "./player.js";
-import { Game } from "./game.js";
-import { shuffle } from "@std/random/shuffle";
-import { Tile } from "./tile.js";
-import { hotels } from "../mock-data/hotels.js";
-
-const shuffleTiles = (tiles, shuffleFn = shuffle) => {
-  return shuffleFn(tiles);
-};
-
-const createRowTiles = (col) => {
-  const rowLabel = "abcdefghi";
-  return Array.from(
-    { length: 9 },
-    (_, row) => new Tile(`${col + 1}${rowLabel[row]}`),
-  );
-};
-
-const createTiles = () =>
-  Array.from({ length: 12 }, (_, col) => createRowTiles(col)).flatMap(
-    (tile) => tile,
-  );
-
 export class Lobby {
   #players = [];
   #lobbyState = "waiting";
@@ -45,20 +19,5 @@ export class Lobby {
 
   getActivePlayers() {
     return [...this.#players];
-  }
-
-  createGame(activePlayers) {
-    const tiles = createTiles();
-
-    const deck = new Deck(shuffleTiles(tiles));
-    const board = new Board();
-    const hotelsManager = Hotels.instantiateHotels(hotels);
-    const players = activePlayers.map((player, i) => new Player(player, i));
-    this.#game = new Game(deck, board, hotelsManager, players);
-    this.#game.init();
-  }
-
-  getGame() {
-    return this.#game;
   }
 }
