@@ -3,7 +3,7 @@ import { expandHotel } from "../features/expand_hotel.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
 import { highlightPlayableTiles } from "../utils.js";
 
-const handlePlaceTile = (_gameData) => {
+const handlePlaceTile = (gameData) => {
   const { currentPlayer } = gameData;
   highlightPlayableTiles(currentPlayer.tiles);
   addListenerToBoard(currentPlayer.tiles);
@@ -13,9 +13,14 @@ const handleBuyStocks = (_gameData) => {
   console.log("buy the stocks");
 };
 
-const gameStates = {
+const handleBuildHotel = (gameData) => {
+  handlePlaceTile(gameData);
+  buildAHotel();
+};
+
+export const gameStates = {
   "PLACE_TILE": handlePlaceTile,
-  "BUILD_HOTEL": buildAHotel,
+  "BUILD_HOTEL": handleBuildHotel,
   "EXPAND_HOTEL": expandHotel,
   "BUY_STOCK": handleBuyStocks,
 };

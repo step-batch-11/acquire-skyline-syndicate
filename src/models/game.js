@@ -146,13 +146,13 @@ export class Game {
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
       const playerInfo = this.#currentPlayer.getDetails();
-      this.#state = "PLACE_TILE";
-      return { hotels, playerInfo, state: this };
+      return { hotels, playerInfo, state: this.#state };
     }
   }
 
   shiftTurn() {
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
+    this.#state = "PLACE_TILE";
   }
 }

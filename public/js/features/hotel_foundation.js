@@ -6,8 +6,6 @@ import {
 } from "../ui_renderers.js";
 
 export const buildAHotel = (tileContainer) => {
-  // alert("build hotel");
-
   const allHotels = document.querySelectorAll(".hotel-container");
   Array.from(allHotels).forEach((hotel) => {
     if (!hotel.classList.contains("active")) hotel.classList.add("inactive");
@@ -32,7 +30,7 @@ class HotelFoundationState {
 
   #handleHotelSelection(e) {
     e.preventDefault();
-    const selectedHotel = event.target;
+    const selectedHotel = e.target;
     console.log(selectedHotel);
     if (selectedHotel.classList.contains("active")) {
       return null;
