@@ -72,7 +72,7 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
+const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
@@ -80,7 +80,7 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   const hotelContainer = hotelCard.querySelector(".hotel-container");
   hotelContainer.classList.add(`${name}-icon`);
 
-  if (tiles.length > 0) hotelContainer.classList.add("dim");
+  if (isActive) hotelContainer.classList.add("dim");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;

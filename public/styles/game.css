@@ -16,7 +16,7 @@
 }
 
 main {
-  
+
   height: 83vh;
   margin: 0.3em 0 0 0.3em;
   display: flex;
@@ -104,7 +104,7 @@ main {
   margin: 5%;
 }
 
-.player-profile{
+.player-profile {
   height: 30px;
   width: 30px;
   border: 1.5px solid black;
@@ -234,6 +234,7 @@ footer {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .hotel-name {
@@ -337,6 +338,23 @@ footer {
 
 .tower-icon {
   background-image: url("/assets/tower.svg");
+}
+
+.inactive {
+  animation: glowInactiveHotels 1s linear infinite;
+}
+
+@keyframes glowInactiveHotels {
+
+  0%,
+  100% {
+    transform: scale(100%);
+  }
+
+  50% {
+    transform: scale(120%);
+  }
+
 }
 
 .board-tower-icon {
