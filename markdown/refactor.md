@@ -8,3 +8,6 @@
 - [ ] fix the order of rendering in initial game setup
 - [ ] remove redundant createTileElement
 - [ ] possibility for templates for creating dom elements
+
+# yash/pradipta
+- rename the src/handlers to src/controllers. Also file names inside them. 
