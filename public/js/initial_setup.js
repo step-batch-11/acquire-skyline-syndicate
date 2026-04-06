@@ -26,7 +26,6 @@ export const createBoard = () => {
 };
 
 export const initializeGameSetup = (initialData) => {
-  console.log({ initialData });
   const { tilesOnBoard, currentPlayer, hotels, players } = initialData;
   const board = document.querySelector(".board");
   renderPlayers(players, currentPlayer);

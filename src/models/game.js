@@ -21,7 +21,6 @@ export class Game {
 
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
-    console.log({ initialBoardTiles });
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#players.forEach((player) => {
       const initialPlayerTiles = this.#deck.drawTiles(6);

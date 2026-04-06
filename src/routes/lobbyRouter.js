@@ -28,14 +28,12 @@ const activePlayers = (c) => {
 };
 
 const createGame = async (context) => {
-  const createGame_ = context.get("createGame");
-  console.log(createGame_);
-
+  const createGameInstance = context.get("createGame");
   const lobbyInstance = context.get("lobby");
 
   if (lobbyInstance.isFull()) {
     const mockPlayers = ["yash", "pradipta"];
-    context.set("game", createGame_(mockPlayers));
+    context.set("game", createGameInstance(mockPlayers));
   }
 
   return await context.json({ "done": true });
