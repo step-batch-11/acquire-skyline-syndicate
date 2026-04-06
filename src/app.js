@@ -17,7 +17,7 @@ export const createApp = (lobbyInstance, game) => {
 
   app.route("/lobby", lobby);
   app.route("/turn", turn);
-  app.post("/shiftTurn", handleShiftTurn);
+  app.post("/shift-turn", handleShiftTurn);
   app.get("*", serveStatic({ root: "public" }));
   return app;
 };

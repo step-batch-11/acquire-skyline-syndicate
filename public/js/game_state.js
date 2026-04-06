@@ -2,7 +2,7 @@ import { postData } from "./request.js";
 
 export const updateTiles = async (tile) => {
   const updatedTiles = await postData(
-    "/turn/placeTile",
+    "/turn/place-tile",
     { tile },
   );
   return updatedTiles;
@@ -10,7 +10,7 @@ export const updateTiles = async (tile) => {
 
 export const assignNewTiles = async () => {
   const currentState = await postData(
-    "/turn/assignNewTileToPlayer",
+    "/turn/assign-new-tile-to-player",
   );
   return currentState;
 };

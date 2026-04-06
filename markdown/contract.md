@@ -5,18 +5,18 @@
 - /lobby
   - [/create](#lobbycreate)
   - [/join](#lobbyjoin)
-  - [/startGame](#lobbystartgame)
+  - [/start-game](#lobbystartgame)
 
 - [/currentGameState](#currentgamestate)
 
 - /turn
-  - [/placeTile](#turnplacetile)
-  - [/buildHotel](#turnbuildhotel)
+  - [/place-tile](#turnplacetile)
+  - [/build-hotel](#turnbuildhotel)
   - [/buyStock](#turnbuystocks)
   - [/assignTileToPlayer](#turnassigntiletoplayer)
   - [/merge]
 
-/shiftTurn
+/shift-turn
 
 /winner
 
@@ -76,7 +76,7 @@ action: assign player to the room, adds player to the players' list,
 response: /lobby
 ```
 
-### /lobby/startGame
+### /lobby/start-game
 
 ```
 This endpoint will be triggered when the host starts the game
@@ -103,7 +103,7 @@ action: fetches the current board state, player hand based on sessionId, current
 response: provides the current board state, current player, player hand based on sessionId, current hotels, players' order
 ```
 
-### /turn/placeTile
+### /turn/place-tile
 
 ```
 This endpoint will be triggered when turn is going on and user places a tile
@@ -118,7 +118,7 @@ action: adds a tile to the placed tiles, and removes from the current player han
 response: action for the placing tile (building, merging, free tile)
 ```
 
-### /turn/buildHotel
+### /turn/build-hotel
 
 ```
 This endpoint will be triggered when turn is going on and user builds a hotel
@@ -162,7 +162,7 @@ action: assigns a random tile to the current player
 respnse: gives updated player's hand back
 ```
 
-### /shiftTurn
+### /shift-turn
 
 ```
 This endpoint is triggered when the player ends the turn 

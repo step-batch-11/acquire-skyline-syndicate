@@ -4,7 +4,7 @@ const getData = async (endPoint) => {
 };
 
 export const startGame = async () => {
-  return await getData("/turn/currentState");
+  return await getData("/turn/current-state");
 };
 
 export const getLobbyState = async () => {

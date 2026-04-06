@@ -33,8 +33,8 @@ const buyStocks = async (c) => {
   return c.json(res);
 };
 
-turn.post("/placeTile", placeTile);
-turn.post("/buildHotel", buildHotel);
-turn.post("/assignNewTileToPlayer", assignNewTile);
+turn.post("/place-tile", placeTile);
+turn.post("/build-hotel", buildHotel);
+turn.post("/assign-new-tile-to-player", assignNewTile);
 turn.post("/buy-stocks", buyStocks);
-turn.get("/currentState", currentState);
+turn.get("/current-state", currentState);

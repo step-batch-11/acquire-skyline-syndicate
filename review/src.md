@@ -38,7 +38,7 @@
 
 ### API
 
-- /createGame (GET) --> should be POST because there is some operation
+- /create-game (GET) --> should be POST because there is some operation
 - inconsistent naming case for "/active-players" use camel case
 - "await" is not needed for c.redirect inside createGame
 

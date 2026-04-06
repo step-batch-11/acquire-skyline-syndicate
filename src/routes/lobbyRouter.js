@@ -43,6 +43,6 @@ const createGame = async (context) => {
 
 lobby.post("/join", joinLobby);
 lobby.get("/state", currentState);
-lobby.get("/createGame", createGame);
-lobby.get("/startGame", startGame);
+lobby.get("/create-game", createGame);
+lobby.get("/start-game", startGame);
 lobby.get("/active-players", activePlayers);

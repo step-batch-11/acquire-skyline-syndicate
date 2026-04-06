@@ -26,7 +26,7 @@ export const handleTilePlacement = async (
 };
 
 export const handleShiftTurn = async () => {
-  const currentState = await fetch("/shiftTurn", { method: "post" });
+  const currentState = await fetch("/shift-turn", { method: "post" });
   const data = await currentState.json();
   initializeGameSetup(data);
 };
