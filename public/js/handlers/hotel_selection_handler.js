@@ -1,16 +1,12 @@
-
-
-import { postData } from "../request.js"
+import { postData } from "../request.js";
 import { extractSelectedStocks } from "../utils.js";
-import {handleAssignTile,
-handleCartUpdation} from "./event_handlers.js"
+import { handleAssignTile, handleCartUpdation } from "./event_handlers.js";
 import {
   renderBankSection,
   renderBoard,
   renderHeldStocks,
   renderUserSection,
 } from "../ui_renderers.js";
-
 
 export const listenerForCart = (e) => {
   const action = e.target.dataset.action;

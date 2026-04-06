@@ -35,7 +35,7 @@ const expandHotel = async (_tileContainer) => {
   alert("hotel expanded");
   const { hotels } = await gameState();
   renderBankSection(hotels);
-}
+};
 
 export const turnActions = {
   BUILD_HOTEL: buildAHotel,

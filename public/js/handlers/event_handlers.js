@@ -1,10 +1,8 @@
-
 import { turnActions } from "../board_events.js";
 import { assignNewTiles, updateTiles } from "../game_state.js";
 import { renderGame } from "../initial_setup.js";
 import { removeFocus } from "../utils.js";
 import { renderBoard, renderTilesInHand } from "../ui_renderers.js";
-
 
 const TOTAL_SELECTED_STOCKS = [];
 const noOp = () => {};
