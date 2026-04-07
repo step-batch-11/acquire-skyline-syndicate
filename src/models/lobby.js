@@ -33,10 +33,6 @@ export class Lobby {
     this.#lobbyState = STARTED;
   }
 
-  // transitionToStart() {
-  //   this.#lobbyState = this.#lobbyStates.started;
-  // }
-
   setHost(playerId) {
     this.#host = playerId;
   }

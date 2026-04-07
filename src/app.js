@@ -44,7 +44,6 @@ const startGame = (c) => {
   );
   gameManagaer.createGame(playerNameIds);
   lobby.transitionToStart();
-  // return c.body(null, 204);
   return c.redirect("/pages/lobby.html", 302);
 };
 

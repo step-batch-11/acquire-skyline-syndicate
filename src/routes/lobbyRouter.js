@@ -34,13 +34,6 @@ const joinLobby = async (c) => {
   return c.redirect("/pages/lobby.html", 302);
 };
 
-// const currentState = (c) => {
-//   const lobby = c.get("lobby");
-//   const sessions = c.get("sessions");
-
-//   return c.json({ state: lobby.currentState(playerId) });
-// };
-
 const lobbyDetails = (c) => {
   const sessionId = getCookie(c, "sessionId");
   const sessions = c.get("sessions");
