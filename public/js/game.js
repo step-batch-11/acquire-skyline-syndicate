@@ -11,6 +11,7 @@ export const polling = () => {
       renderGame(gameData);
       handleGameState(gameData);
     }
+
     currentState = gameData.state;
   }, 1000);
 };

@@ -74,6 +74,7 @@ export class Game {
     }
     if (this.#isExpansion()) {
       this.expandHotel(tileId);
+      this.#state = "EXPAND_HOTEL";
       return;
     }
     if (this.#isBuildPossible()) {

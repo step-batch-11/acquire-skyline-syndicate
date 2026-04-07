@@ -13,14 +13,9 @@ const handleBuyStocks = (_gameData) => {
   console.log("buy the stocks");
 };
 
-const handleBuildHotel = (gameData) => {
-  handlePlaceTile(gameData);
-  buildAHotel();
-};
-
 export const gameStates = {
   "PLACE_TILE": handlePlaceTile,
-  "BUILD_HOTEL": handleBuildHotel,
+  "BUILD_HOTEL": buildAHotel,
   "EXPAND_HOTEL": expandHotel,
   "BUY_STOCK": handleBuyStocks,
 };
