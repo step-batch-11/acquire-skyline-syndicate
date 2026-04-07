@@ -20,7 +20,7 @@ globalThis.onload = () => {
 
     if (state === STARTED) {
       setTimeout(async () => {
-        const response = await fetch("/game");
+        const response = await fetch("/game/join-game");
         globalThis.location.href = response.url;
       }, startTimer);
       clearInterval(id);

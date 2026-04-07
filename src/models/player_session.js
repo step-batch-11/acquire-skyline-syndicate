@@ -1,4 +1,4 @@
-export class playerSession {
+export class PlayerSession {
   #sessions;
   #playerIds;
   constructor() {

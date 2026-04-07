@@ -4,7 +4,7 @@ import { gameState } from "./request.js";
 
 let currentState;
 
-export const polling = () => {
+const polling = () => {
   setInterval(async () => {
     const gameData = await gameState();
     if (currentState !== gameData.state) {
