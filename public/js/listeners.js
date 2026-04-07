@@ -67,3 +67,10 @@ export const addListenerToCopyBtn = (copyBtn) => {
     }
   });
 };
+
+export const addListenerToStartBtn = (startBtn) => {
+  startBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    await fetch("/start-game");
+  });
+};

@@ -12,8 +12,7 @@ export const getLobbyState = async () => {
 };
 
 export const getLobbyDetails = async () => {
-  const response = await fetch("/lobby/lobby-details");
-  return await response.json();
+  return await getData("/lobby/lobby-details");
 };
 
 export const postData = async (endPoint, content) => {

@@ -1,22 +1,30 @@
-import { addListenerToCopyBtn } from "./listeners.js";
-import { renderLobby } from "./lobby_setup.js";
-import { getLobbyDetails, getLobbyState } from "./request.js";
+import { lobbyStates, times } from "../config.js";
+import { addListenerToCopyBtn, addListenerToStartBtn } from "./listeners.js";
+import { renderLobby, renderStartBtn } from "./lobby_setup.js";
+import { getLobbyDetails } from "./request.js";
+const { READY, STARTED } = lobbyStates;
 
+const { ping, startTimer } = times;
 globalThis.onload = () => {
+  const startBtn = document.getElementById("start-button-container");
+  addListenerToStartBtn(startBtn);
   const copyBtn = document.getElementById("copyBtn");
   addListenerToCopyBtn(copyBtn);
 
   const id = setInterval(async () => {
-    const { state } = await getLobbyState();
-    const lobbyDetails = await getLobbyDetails();
+    // const { state } = await getLobbyState();
+    const { state, lobbyDetails } = await getLobbyDetails();
     renderLobby(state, lobbyDetails);
-    if (state === "ready") {
-      clearInterval(id);
-
-      setTimeout(async () => {
-        const response = await fetch("/lobby/create-game");
-        globalThis.location.href = await response.url;
-      }, 3000);
+    if (state === READY) {
+      renderStartBtn();
     }
-  }, 1000);
+
+    if (state === STARTED) {
+      setTimeout(async () => {
+        const response = await fetch("/game");
+        globalThis.location.href = response.url;
+      }, startTimer);
+      clearInterval(id);
+    }
+  }, ping);
 };

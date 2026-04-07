@@ -34,6 +34,14 @@ const renderLobbyId = (lobbyId) => {
   idContainer.append(element);
 };
 
+export const renderStartBtn = () => {
+  const startBtnContainer = document.querySelector("#start-button-container");
+
+  const element = cloneElement("#start-btn-template");
+  startBtnContainer.innerHTML = "";
+  startBtnContainer.append(element);
+};
+
 export const renderLobby = (state, lobbyDetails) => {
   renderBuffer(state);
   renderNames(lobbyDetails.playerNames);

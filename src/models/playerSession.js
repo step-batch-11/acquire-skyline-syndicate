@@ -1,6 +1,6 @@
 export class playerSession {
-  #playerIds;
   #sessions;
+  #playerIds;
   constructor() {
     this.#sessions = new Map();
     this.#playerIds = new Map();
@@ -25,11 +25,16 @@ export class playerSession {
   getPlayerName(playerId) {
     return this.#playerIds.get(`${playerId}`);
   }
+
   getPlayerId(sessionId) {
     return this.#sessions.get(`${sessionId}`);
   }
 
   hasSessionId(sessionId) {
     return this.#sessions.has(`${sessionId}`);
+  }
+
+  getPlayerIds() {
+    return this.#playerIds;
   }
 }

@@ -33,16 +33,37 @@ const getPlayerName = (c) => {
 //   return c.redirect("/redirect-login", 302);
 // };
 
-export const createApp = (lobbyInstance, game, sessions) => {
+const startGame = (c) => {
+  const gameManagaer = c.get("gameManager");
+  const lobby = c.get("lobby");
+  const sessions = c.get("sessions");
+  const playerIds = lobby.getActivePlayersIds();
+  const playerIdsMap = sessions.getPlayerIds();
+  const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
+    playerIds.includes(playerId)
+  );
+  gameManagaer.createGame(playerNameIds);
+  lobby.transitionToStart();
+  // return c.body(null, 204);
+  return c.redirect("/pages/lobby.html", 302);
+};
+
+const redirectToGame = (c) => {
+  return c.redirect("/pages/game.html", 302);
+};
+
+export const createApp = (sessions, lobbyInstance, gameManager) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
-    context.set("game", game);
+    context.set("gameManager", gameManager);
     context.set("lobby", lobbyInstance);
-
     context.set("sessions", sessions);
     await next();
   });
+
+  app.get("/start-game", startGame);
+  app.get("/game", redirectToGame);
 
   app.route("/lobby", lobby);
   app.route("/turn", turn);

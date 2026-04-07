@@ -34,19 +34,26 @@ const joinLobby = async (c) => {
   return c.redirect("/pages/lobby.html", 302);
 };
 
-const currentState = (c) => {
-  const lobby = c.get("lobby");
-  return c.json({ state: lobby.currentState() });
-};
+// const currentState = (c) => {
+//   const lobby = c.get("lobby");
+//   const sessions = c.get("sessions");
+
+//   return c.json({ state: lobby.currentState(playerId) });
+// };
 
 const lobbyDetails = (c) => {
+  const sessionId = getCookie(c, "sessionId");
   const sessions = c.get("sessions");
   const lobby = c.get("lobby");
+  const playerId = sessions.getPlayerId(sessionId);
   const lobbyId = lobby.lobbyId;
-  const playerIds = lobby.getActivePlayers();
+  const playerIds = lobby.getActivePlayersIds();
   const playerNames = playerIds.map((id) => sessions.getPlayerName(id));
 
-  return c.json({ lobbyId, playerNames });
+  return c.json({
+    state: lobby.currentState(playerId),
+    lobbyDetails: { lobbyId, playerNames },
+  });
 };
 
 const createGame = async (context) => {
@@ -68,7 +75,7 @@ const redirectToJoinLobby = (c) => {
 lobby.get("/host", hostLobby);
 lobby.get("/join", redirectToJoinLobby);
 lobby.post("/join-lobby", joinLobby);
-lobby.get("/state", currentState);
+// lobby.get("/state", currentState);
 lobby.get("/create-game", createGame);
 lobby.get("/start-game", gameState);
 lobby.get("/lobby-details", lobbyDetails);
