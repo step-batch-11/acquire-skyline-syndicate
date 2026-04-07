@@ -64,7 +64,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(tileToPlace);
+      game.placeTile(1, tileToPlace);
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
@@ -74,7 +74,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = "12i";
-      game.placeTile(tileToPlace);
+      game.placeTile(1, tileToPlace);
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 6);
       assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
@@ -102,7 +102,7 @@ describe("Game entity tests", () => {
       const game = new Game(deck, board, hotelsInstances, players);
       game.init();
       const tileToPlace = "4e";
-      game.placeTile(tileToPlace);
+      game.placeTile(1, tileToPlace);
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
@@ -114,7 +114,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(tileToPlace);
+      game.placeTile(1, tileToPlace);
       game.assignNewTile();
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 6);
@@ -127,8 +127,8 @@ describe("Game entity tests", () => {
       "should build hotel and add a free stock of that hotel player",
       () => {
         game.init();
-        game.placeTile("1a");
-        game.placeTile("2a");
+        game.placeTile(1, "1a");
+        game.placeTile(1, "2a");
         const hotelName = "sackson";
         game.buildHotel(hotelName);
         const result = game.currentState(1);
@@ -142,8 +142,8 @@ describe("Game entity tests", () => {
   describe("buy stocks method", () => {
     it.ignore("buy the stocks of sackson", () => {
       game.init();
-      game.placeTile("2a");
-      game.placeTile("3a");
+      game.placeTile(1, "2a");
+      game.placeTile(1, "3a");
       const hotelName = "sackson";
       game.buildHotel(hotelName);
       const { playerInfo } = game.buyStocks([
@@ -158,13 +158,13 @@ describe("Game entity tests", () => {
     it.ignore("should return true if expansion is possible", () => {
       game.init();
       const initialData = game.currentState(1);
-      game.placeTile(initialData.currentPlayer.tiles[0]);
-      game.placeTile(initialData.currentPlayer.tiles[0]);
+      game.placeTile(1, initialData.currentPlayer.tiles[0]);
+      game.placeTile(1, initialData.currentPlayer.tiles[0]);
       game.buildHotel("sackson");
       const hotel = game
         .currentState()
         .hotels.find(({ name }) => name === "sackson");
-      game.placeTile(initialData.currentPlayer.tiles[0]);
+      game.placeTile(1, initialData.currentPlayer.tiles[0]);
       const updatedHotel = game
         .currentState()
         .hotels.find(({ name }) => name === "sackson");

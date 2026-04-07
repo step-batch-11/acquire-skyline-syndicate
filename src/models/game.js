@@ -126,8 +126,16 @@ export class Game {
     );
   }
 
-  placeTile(tileId) {
-    if (this.#state === "PLACE_TILE" && this.#isValidTilePlacement(tileId)) {
+  #isActivePlayer(requestedPlayerId) {
+    return this.#currentPlayer.id === requestedPlayerId;
+  }
+
+  placeTile(requestedPlayerId, tileId) {
+    if (
+      this.#state === "PLACE_TILE" &&
+      this.#isValidTilePlacement(tileId) &&
+      this.#isActivePlayer(requestedPlayerId)
+    ) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#actionForTilePlacement(tileId);
 
@@ -151,8 +159,11 @@ export class Game {
     this.#hotels.expand(tileId, tilesOnBoard);
   }
 
-  buildHotel(hotelName) {
-    if (this.#state !== "BUILD_HOTEL") {
+  buildHotel(requestedPlayerId, hotelName) {
+    if (
+      this.#state !== "BUILD_HOTEL" &&
+      this.#isActivePlayer(requestedPlayerId)
+    ) {
       return;
     }
     if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
@@ -168,8 +179,11 @@ export class Game {
     this.#currentPlayer.addNewTile(tile);
   }
 
-  buyStocks(cart) {
-    if (this.#state !== "BUY_STOCK") {
+  buyStocks(requestedPlayerId, cart) {
+    if (
+      this.#state !== "BUY_STOCK" &&
+      this.#isActivePlayer(requestedPlayerId)
+    ) {
       return;
     }
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
@@ -189,8 +203,11 @@ export class Game {
     }
   }
 
-  shiftTurn() {
-    if (this.#state !== "SHIFT_TURN") {
+  shiftTurn(requestedPlayerId) {
+    if (
+      this.#state !== "SHIFT_TURN" &&
+      this.#isActivePlayer(requestedPlayerId)
+    ) {
       return;
     }
     this.assignNewTile();
