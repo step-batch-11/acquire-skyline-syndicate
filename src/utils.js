@@ -23,11 +23,6 @@ export const createTiles = () => {
 };
 
 export const createGame = (activePlayers) => {
-  // playerNameIds: [
-  //   [ "8673be37-c245-4660-9d55-b9941c91ca92", "Som" ],
-  //   [ "4b163aed-c2b6-49a7-9e16-ce0be347b264", "Haider" ]
-  // ]
-
   const tiles = createTiles();
 
   const deck = new Deck(shuffleTiles(tiles.map((tile) => new Tile(tile))));

@@ -38,14 +38,21 @@ export class Hotels {
     this.#hotels[hotelName].addTiles(tiles);
   }
 
-  expand(tileId) {
+  expand(tileId, tilesOnBoard) {
+    const tile = new Tile(tileId);
+
     const hotel = Object.values(this.#hotels).find((hotel) => {
       const tiles = hotel.getTiles();
 
-      return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
+      return tiles.some((hotelTile) => hotelTile.isNeighbouringTile(tile));
     });
 
-    hotel.addTiles([new Tile(tileId)]);
+    const allConnectedTiles = tile.getAllConnectedTiles(tilesOnBoard);
+    const hotelTiles = hotel.getTiles().map((tile) => tile.id);
+    const connectedFreeTiles = allConnectedTiles.filter((connectedTile) =>
+      !hotelTiles.includes(connectedTile)
+    );
+    hotel.addTiles(connectedFreeTiles.map((tile) => new Tile(tile)));
     return hotel;
   }
 
@@ -60,7 +67,7 @@ export class Hotels {
 
   deductStocks(cart) {
     cart.forEach(({ hotelName, selectedStocks }) => {
-      this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
+      this.#hotels[hotelName].decreaseStockCount(selectedStocks);
     });
   }
 
@@ -68,9 +75,37 @@ export class Hotels {
 
   calculateMoneyToDeduct(cart) {
     return cart.reduce((calculatedMoney, { hotelName, selectedStocks }) => {
-      return (calculatedMoney +=
-        this.#hotels[hotelName.toLowerCase()].calculateStockPrice() *
+      return (calculatedMoney += this.#hotels[hotelName].calculateStockPrice() *
         selectedStocks);
     }, 0);
+  }
+
+  isHotelActive(hotelName) {
+    return this.#hotels[hotelName].isActive();
+  }
+
+  areCartHotelsActive(cart) {
+    return cart.every(({ hotelName }) => {
+      return this.#hotels[hotelName].isActive();
+    });
+  }
+
+  hasEnoughStocksToBuy(cart) {
+    return cart.every(({ hotelName, selectedStocks }) =>
+      this.#hotels[hotelName].canDeductStocksFromHotel(selectedStocks)
+    );
+  }
+
+  getHotelsState() {
+    return Object
+      .values(this.#hotels)
+      .map((hotel) => hotel.getHotelState());
+  }
+
+  loadGameState(hotels) {
+    console.log(hotels, this.#hotels);
+    hotels.forEach((hotelInfo) => {
+      this.#hotels[hotelInfo.name].loadGameState(hotelInfo);
+    });
   }
 }

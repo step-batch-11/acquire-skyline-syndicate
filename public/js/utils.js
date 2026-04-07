@@ -1,4 +1,5 @@
-export const highlightPlayableTiles = (board, playerTiles) => {
+export const highlightPlayableTiles = (playerTiles) => {
+  const board = document.querySelector(".board");
   playerTiles.forEach((tile) => {
     const tileContainer = board.querySelector(`#tile-${tile}`);
     tileContainer.classList.add("tiles-in-player-hand");
@@ -18,7 +19,7 @@ export const extractSelectedStocks = (cart, hotelHeader) => {
   );
   const hotelName = hotelHeader.querySelector(".hotel-name").innerText;
   if (selectedStocks > 0) {
-    cart.push({ hotelName, selectedStocks });
+    cart.push({ hotelName: hotelName.toLowerCase(), selectedStocks });
   }
   return cart;
 };

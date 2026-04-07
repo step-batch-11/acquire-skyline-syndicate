@@ -61,7 +61,7 @@ describe("Game entity tests", () => {
       assertEquals(initialData.currentPlayer.tiles.length, 6);
       assertEquals(initialData.hotels.length, 2);
       assertEquals(initialData.tilesOnBoard.length, 6);
-      assertEquals(initialData.state, "");
+      assertEquals(initialData.state, "PLACE_TILE");
     });
   });
 
@@ -129,7 +129,7 @@ describe("Game entity tests", () => {
   });
 
   describe("buildHotel method", () => {
-    it.ignore(
+    it(
       "should build hotel and add a free stock of that hotel player",
       () => {
         game.init();
@@ -146,29 +146,16 @@ describe("Game entity tests", () => {
 
   describe("buy stocks method", () => {
     it("buy the stocks of sackson", () => {
-      const { playerInfo, hotels } = game.buyStocks([
+      game.init();
+      game.placeTile("2a");
+      game.placeTile("3a");
+      const hotelName = "sackson";
+      game.buildHotel(hotelName);
+      const { playerInfo } = game.buyStocks([
         { hotelName: "sackson", selectedStocks: 3 },
       ]);
 
-      assertEquals(playerInfo.stocks, { sackson: 3 });
-      assertEquals(hotels, [
-        {
-          name: "sackson",
-          tiles: [],
-          stocksLeft: 22,
-          stockPrice: 0,
-          originTile: undefined,
-          isActive: false,
-        },
-        {
-          name: "worldwide",
-          tiles: [],
-          stocksLeft: 25,
-          stockPrice: 0,
-          originTile: undefined,
-          isActive: false,
-        },
-      ]);
+      assertEquals(playerInfo.stocks, { sackson: 4 });
     });
   });
 

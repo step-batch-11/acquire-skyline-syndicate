@@ -1,9 +1,27 @@
-import { createBoard, renderGame } from "./initial_setup.js";
+import { handleGameState } from "./config/state_config.js";
+import { renderGame } from "./initial_setup.js";
 import { gameState } from "./request.js";
+
+let currentState;
+
+export const polling = () => {
+  setInterval(async () => {
+    const gameData = await gameState();
+    if (currentState !== gameData.state) {
+      renderGame(gameData);
+      handleGameState(gameData);
+    }
+
+    currentState = gameData.state;
+  }, 1000);
+};
 
 globalThis.onload = async () => {
   const gameData = await gameState();
-  createBoard();
+  currentState = gameData.state;
 
   renderGame(gameData);
+  handleGameState(gameData);
+
+  polling();
 };

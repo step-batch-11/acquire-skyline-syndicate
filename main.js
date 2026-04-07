@@ -9,12 +9,10 @@ const main = () => {
 
   const lobby = new Lobby();
   const sessions = new playerSession();
-  // const mockPlayers = ["yash", "pradipta"];
-  // const game = createGame(mockPlayers);
 
   const gameManager = new GameManager(createGame);
-  // const app = createApp(lobbyInstance, game, sessions);
-  const app = createApp(sessions, lobby, gameManager);
+  const isDevMode = Deno.env.get("dev");
+  const app = createApp(sessions, lobby, gameManager, isDevMode);
   Deno.serve({ port }, app.fetch);
 };
 

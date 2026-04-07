@@ -1,10 +1,10 @@
-import { turnActions } from "./board_events.js";
-import { assignNewTiles, updateTiles } from "./game_state.js";
-import { renderGame } from "./initial_setup.js";
-import { renderBoard, renderTilesInHand } from "./ui_renderers.js";
-import { removeFocus } from "./utils.js";
+import { assignNewTiles, updateTiles } from "../request.js";
+import { renderGame } from "../initial_setup.js";
+import { removeFocus } from "../utils.js";
+import { renderBoard, renderTilesInHand } from "../ui_renderers.js";
+import { gameStates } from "../config/state_config.js";
 
-const TOTAL_SELECTED_STOCKS = [];
+export const TOTAL_SELECTED_STOCKS = [];
 const noOp = () => {};
 
 export const handleTilePlacement = async (
@@ -21,7 +21,7 @@ export const handleTilePlacement = async (
   removeFocus(board, tilesInPlayerHand);
   renderBoard(tilesOnBoard, hotels);
   renderTilesInHand(currentPlayer.tiles);
-  const action = turnActions[state] || noOp;
+  const action = gameStates[state] || noOp;
   action(tileContainer);
 };
 

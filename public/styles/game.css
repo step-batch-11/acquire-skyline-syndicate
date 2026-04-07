@@ -241,7 +241,7 @@ footer {
   text-transform: capitalize;
 }
 
-.dim {
+.active {
   opacity: 40%;
 }
 
@@ -400,4 +400,9 @@ footer {
 
 .empty {
   border: 1px dashed black;
+}
+
+.selected {
+  border: 1px solid black;
+  /* background-color: red; */
 }

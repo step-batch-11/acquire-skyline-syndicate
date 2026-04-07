@@ -70,4 +70,27 @@ export class Hotel {
     this.addTiles(adjacentTiles);
     this.decreaseStockCount(1);
   }
+
+  canDeductStocksFromHotel(stocks) {
+    return this.#stocks >= stocks && stocks >= 0;
+  }
+
+  getHotelState() {
+    return {
+      name: this.#name,
+      tiles: this.#tiles,
+      stocks: this.#stocks,
+      priceOffset: this.#priceOffset,
+      originTile: this.#originTile,
+    };
+  }
+
+  loadGameState(hotelInfo) {
+    console.log(hotelInfo);
+    this.#name = hotelInfo.name;
+    this.#tiles = hotelInfo.tiles;
+    this.#stocks = hotelInfo.stocks;
+    this.#priceOffset = hotelInfo.priceOffset;
+    this.#originTile = hotelInfo.originTile;
+  }
 }

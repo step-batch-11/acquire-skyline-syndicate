@@ -12,7 +12,6 @@ globalThis.onload = () => {
   addListenerToCopyBtn(copyBtn);
 
   const id = setInterval(async () => {
-    // const { state } = await getLobbyState();
     const { state, lobbyDetails } = await getLobbyDetails();
     renderLobby(state, lobbyDetails);
     if (state === READY) {

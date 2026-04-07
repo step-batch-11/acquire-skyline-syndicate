@@ -1,5 +1,7 @@
-import { handleAssignTile } from "./event_handlers.js";
-import { handleCartUpdation } from "./event_handlers.js";
+import {
+  handleAssignTile,
+  handleCartUpdation,
+} from "./handlers/event_handlers.js";
 import { postData } from "./request.js";
 import {
   renderBankSection,

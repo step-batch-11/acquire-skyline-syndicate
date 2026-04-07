@@ -3,14 +3,12 @@ import { Hono } from "hono";
 export const turn = new Hono();
 
 const currentState = (c) => {
-  // const game = c.get("game");
   const gameManagaer = c.get("gameManager");
   const game = gameManagaer.getGame();
   return c.json(game.currentState());
 };
 const placeTile = async (c) => {
   const { tile } = await c.req.json();
-  // const game = c.get("game");
   const gameManagaer = c.get("gameManager");
   const game = gameManagaer.getGame();
   game.placeTile(tile);
@@ -19,7 +17,6 @@ const placeTile = async (c) => {
 
 const buildHotel = async (c) => {
   const { hotelToFound } = await c.req.json();
-  // const game = c.get("game");
   const gameManagaer = c.get("gameManager");
   const game = gameManagaer.getGame();
   game.buildHotel(hotelToFound);
@@ -27,7 +24,6 @@ const buildHotel = async (c) => {
 };
 
 const assignNewTile = (c) => {
-  // const game = c.get("game");
   const gameManagaer = c.get("gameManager");
   const game = gameManagaer.getGame();
   game.assignNewTile();
@@ -36,7 +32,6 @@ const assignNewTile = (c) => {
 
 const buyStocks = async (c) => {
   const cart = await c.req.json();
-  // const game = c.get("game");
   const gameManagaer = c.get("gameManager");
   const game = gameManagaer.getGame();
   const res = game.buyStocks(cart);

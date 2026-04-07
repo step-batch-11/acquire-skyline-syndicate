@@ -1,4 +1,4 @@
-import { listenerForCart } from "./listeners.js";
+import { listenerForCart } from "./handlers/hotel_selection_handler.js";
 import { renderBankSection } from "./ui_renderers.js";
 
 export const renderHotelSection = (hotels) => {
