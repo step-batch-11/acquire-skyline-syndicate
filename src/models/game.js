@@ -28,13 +28,19 @@ export class Game {
     });
   }
 
-  currentState() {
+  currentState(requestedPlayerId) {
     return {
-      currentPlayer: this.#currentPlayer.getDetails(),
+      player: this.#players
+        .find((player) => player.id === requestedPlayerId)
+        .getDetails(),
+      currentPlayer: { name: this.#currentPlayer.name },
       hotels: this.#hotels.getHotels(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
-      players: this.#players.map((player) => player.getDetails()),
+      players: this.#players.map((player) => ({
+        name: player.name,
+      })),
+      isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
     };
   }
 
@@ -67,15 +73,13 @@ export class Game {
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
-  #distributeBonus() {
-  }
+  #distributeBonus() {}
 
   #stakeHolders(hotelName) {
     return this.#players.filter((player) => player.hasStock(hotelName));
   }
 
   #mergeHotels(adjacentHotelChains) {
-    console.log({ adjacentHotelChains });
     const sortedHotels = adjacentHotelChains.sort(
       (a, b) => a.tiles.length - b.tiles.length,
     );
@@ -123,7 +127,6 @@ export class Game {
   }
 
   placeTile(tileId) {
-    console.log("state", this.#state);
     if (this.#state === "PLACE_TILE" && this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#actionForTilePlacement(tileId);

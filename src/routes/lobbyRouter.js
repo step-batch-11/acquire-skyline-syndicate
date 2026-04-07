@@ -59,7 +59,7 @@ const createGame = async (context) => {
     context.set("game", createGameInstance(mockPlayers));
   }
 
-  return await context.json({ "done": true });
+  return await context.json({ done: true });
 };
 
 const redirectToJoinLobby = (c) => {

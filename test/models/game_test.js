@@ -18,7 +18,7 @@ describe("Game entity tests", () => {
   beforeEach(() => {
     board = new Board();
     players = ["Gopi", "Haider"].map(
-      (playerName, id) => new Player(playerName, id),
+      (playerName, id) => new Player(playerName, id + 1),
     );
     hotelsInstances = Hotels.instantiateHotels(hotels);
     const tiles = [
@@ -50,9 +50,9 @@ describe("Game entity tests", () => {
   describe("init method", () => {
     it("should return the initial data which game needs", () => {
       game.init();
-      const initialData = game.currentState();
+      const initialData = game.currentState(1);
       assertEquals(initialData.currentPlayer.name, "Gopi");
-      assertEquals(initialData.currentPlayer.tiles.length, 6);
+      assertEquals(initialData.player.tiles.length, 6);
       assertEquals(initialData.hotels.length, 7);
       assertEquals(initialData.tilesOnBoard.length, 6);
       assertEquals(initialData.state, "PLACE_TILE");
@@ -62,21 +62,21 @@ describe("Game entity tests", () => {
   describe("placeTile method", () => {
     it("Should return the new player tiles after removing the placed tile", () => {
       game.init();
-      const initialData = game.currentState();
-      const tileToPlace = initialData.currentPlayer.tiles[0];
+      const initialData = game.currentState(1);
+      const tileToPlace = initialData.player.tiles[0];
       game.placeTile(tileToPlace);
-      const result = game.currentState();
-      assertEquals(result.currentPlayer.tiles.length, 5);
+      const result = game.currentState(1);
+      assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
     });
 
     it("Should not place tile on the board, if tile is not in player hand.", () => {
       game.init();
-      const initialData = game.currentState();
+      const initialData = game.currentState(1);
       const tileToPlace = "12i";
       game.placeTile(tileToPlace);
-      const result = game.currentState();
-      assertEquals(result.currentPlayer.tiles.length, 6);
+      const result = game.currentState(1);
+      assertEquals(result.player.tiles.length, 6);
       assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
     });
 
@@ -103,8 +103,8 @@ describe("Game entity tests", () => {
       game.init();
       const tileToPlace = "4e";
       game.placeTile(tileToPlace);
-      const result = game.currentState();
-      assertEquals(result.currentPlayer.tiles.length, 5);
+      const result = game.currentState(1);
+      assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
     });
   });
@@ -112,12 +112,12 @@ describe("Game entity tests", () => {
   describe("assignNewTile method", () => {
     it("Should assign new Tile to the player and return the new player tile", () => {
       game.init();
-      const initialData = game.currentState();
-      const tileToPlace = initialData.currentPlayer.tiles[0];
+      const initialData = game.currentState(1);
+      const tileToPlace = initialData.player.tiles[0];
       game.placeTile(tileToPlace);
       game.assignNewTile();
-      const result = game.currentState();
-      assertEquals(result.currentPlayer.tiles.length, 6);
+      const result = game.currentState(1);
+      assertEquals(result.player.tiles.length, 6);
       assertEquals(result.tilesOnBoard.length, 7);
     });
   });
@@ -131,7 +131,7 @@ describe("Game entity tests", () => {
         game.placeTile("2a");
         const hotelName = "sackson";
         game.buildHotel(hotelName);
-        const result = game.currentState();
+        const result = game.currentState(1);
         const stock = result.currentPlayer.stocks[hotelName];
 
         assertEquals(stock, 1);
@@ -157,17 +157,17 @@ describe("Game entity tests", () => {
   describe("isExpansion", () => {
     it.ignore("should return true if expansion is possible", () => {
       game.init();
-      const initialData = game.currentState();
+      const initialData = game.currentState(1);
       game.placeTile(initialData.currentPlayer.tiles[0]);
       game.placeTile(initialData.currentPlayer.tiles[0]);
       game.buildHotel("sackson");
-      const hotel = game.currentState().hotels.find(({ name }) =>
-        name === "sackson"
-      );
+      const hotel = game
+        .currentState()
+        .hotels.find(({ name }) => name === "sackson");
       game.placeTile(initialData.currentPlayer.tiles[0]);
-      const updatedHotel = game.currentState().hotels.find(({ name }) =>
-        name === "sackson"
-      );
+      const updatedHotel = game
+        .currentState()
+        .hotels.find(({ name }) => name === "sackson");
       assertEquals(hotel.tiles.length + 1, updatedHotel.tiles.length);
     });
   });

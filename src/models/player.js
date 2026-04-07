@@ -13,6 +13,14 @@ export class Player {
     this.#stocks = {};
   }
 
+  get id() {
+    return this.#id;
+  }
+
+  get name() {
+    return this.#name;
+  }
+
   getTileIds() {
     return this.#tiles.map((tile) => tile.id);
   }

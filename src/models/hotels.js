@@ -35,7 +35,6 @@ export class Hotels {
   }
 
   getHotel(hotelName) {
-    console.log(this.#hotels);
     return this.#hotels[hotelName];
   }
 
@@ -54,8 +53,8 @@ export class Hotels {
 
     const allConnectedTiles = tile.getAllConnectedTiles(tilesOnBoard);
     const hotelTiles = hotel.getTiles().map((tile) => tile.id);
-    const connectedFreeTiles = allConnectedTiles.filter((connectedTile) =>
-      !hotelTiles.includes(connectedTile)
+    const connectedFreeTiles = allConnectedTiles.filter(
+      (connectedTile) => !hotelTiles.includes(connectedTile),
     );
     hotel.addTiles(connectedFreeTiles.map((tile) => new Tile(tile)));
     return hotel;
@@ -102,13 +101,10 @@ export class Hotels {
   }
 
   getHotelsState() {
-    return Object
-      .values(this.#hotels)
-      .map((hotel) => hotel.getHotelState());
+    return Object.values(this.#hotels).map((hotel) => hotel.getHotelState());
   }
 
   loadGameState(hotels) {
-    console.log(hotels, this.#hotels);
     hotels.forEach((hotelInfo) => {
       this.#hotels[hotelInfo.name].loadGameState(hotelInfo);
     });

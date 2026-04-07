@@ -5,9 +5,9 @@ import { addHotelData, createConfirmButton } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
 
 const handlePlaceTile = (gameData) => {
-  const { currentPlayer } = gameData;
-  highlightPlayableTiles(currentPlayer.tiles);
-  addListenerToBoard(currentPlayer.tiles);
+  const { player } = gameData;
+  highlightPlayableTiles(player.tiles);
+  addListenerToBoard(player.tiles);
 };
 
 const handleBuyStocks = (gameData) => {
@@ -31,7 +31,6 @@ export const gameStates = {
 };
 
 export const handleGameState = (gameData) => {
-  console.log({ gameData });
   const { state } = gameData;
 
   gameStates[state](gameData);

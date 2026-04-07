@@ -91,7 +91,6 @@ export class Hotel {
   }
 
   loadGameState(hotelInfo) {
-    console.log(hotelInfo);
     this.#name = hotelInfo.name;
     this.#tiles = hotelInfo.tiles;
     this.#stocks = hotelInfo.stocks;

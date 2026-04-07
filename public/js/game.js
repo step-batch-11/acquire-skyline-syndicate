@@ -9,7 +9,9 @@ export const polling = () => {
     const gameData = await gameState();
     if (currentState !== gameData.state) {
       renderGame(gameData);
-      handleGameState(gameData);
+      if (gameData.isActivePlayer) {
+        handleGameState(gameData);
+      }
     }
 
     currentState = gameData.state;
@@ -18,12 +20,13 @@ export const polling = () => {
 
 globalThis.onload = async () => {
   const gameData = await gameState();
-  console.log(gameData);
-
   currentState = gameData.state;
 
   renderGame(gameData);
-  handleGameState(gameData);
+
+  if (gameData.isActivePlayer) {
+    handleGameState(gameData);
+  }
 
   polling();
 };
