@@ -50,9 +50,7 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-const createTradeConfirmationBtn = () => {
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
+const createBuilHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
@@ -61,12 +59,10 @@ const createTradeConfirmationBtn = () => {
   return buttonContainer;
 };
 
-const createBuyButton = () => {
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
-
+const createConfirmButton = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "confirm";
+  button.id = "confirm";
   button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
@@ -89,8 +85,8 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
     hotelContainer.classList.add("dim");
     const counter = hotelCard.querySelector(".counter");
     counter.classList.remove("hidden");
+    hotelContainer.classList.add("active");
   }
-  if (isActive) hotelContainer.classList.add("active");
 
   hotelCard.querySelector(".hotel-name").textContent = name;
   hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
@@ -105,10 +101,12 @@ export const renderBankSection = (hotels) => {
   const hotelCards = hotels.map(addHotelData);
 
   bankSection.replaceChildren(...hotelCards);
-  const button = createTradeConfirmationBtn();
-  const buyButton = createBuyButton();
-  bankSection.append(button);
-  bankSection.append(buyButton);
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+  const buildBtn = createBuilHotelsBtn(buttonContainer);
+  const confirmBtn = createConfirmButton(buttonContainer);
+  bankSection.append(buildBtn);
+  bankSection.append(confirmBtn);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {

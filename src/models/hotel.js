@@ -70,4 +70,8 @@ export class Hotel {
     this.addTiles(adjacentTiles);
     this.decreaseStockCount(1);
   }
+
+  canDeductStocksFromHotel(stocks) {
+    return this.#stocks >= stocks && stocks >= 0;
+  }
 }

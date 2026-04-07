@@ -19,7 +19,7 @@ export const extractSelectedStocks = (cart, hotelHeader) => {
   );
   const hotelName = hotelHeader.querySelector(".hotel-name").innerText;
   if (selectedStocks > 0) {
-    cart.push({ hotelName, selectedStocks });
+    cart.push({ hotelName: hotelName.toLowerCase(), selectedStocks });
   }
   return cart;
 };

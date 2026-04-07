@@ -67,7 +67,7 @@ export class Hotels {
 
   deductStocks(cart) {
     cart.forEach(({ hotelName, selectedStocks }) => {
-      this.#hotels[hotelName.toLowerCase()].decreaseStockCount(selectedStocks);
+      this.#hotels[hotelName].decreaseStockCount(selectedStocks);
     });
   }
 
@@ -75,13 +75,24 @@ export class Hotels {
 
   calculateMoneyToDeduct(cart) {
     return cart.reduce((calculatedMoney, { hotelName, selectedStocks }) => {
-      return (calculatedMoney +=
-        this.#hotels[hotelName.toLowerCase()].calculateStockPrice() *
+      return (calculatedMoney += this.#hotels[hotelName].calculateStockPrice() *
         selectedStocks);
     }, 0);
   }
 
   isHotelActive(hotelName) {
     return this.#hotels[hotelName].isActive();
+  }
+
+  areCartHotelsActive(cart) {
+    return cart.every(({ hotelName }) => {
+      return this.#hotels[hotelName].isActive();
+    });
+  }
+
+  hasEnoughStocksToBuy(cart) {
+    return cart.every(({ hotelName, selectedStocks }) =>
+      this.#hotels[hotelName].canDeductStocksFromHotel(selectedStocks)
+    );
   }
 }
