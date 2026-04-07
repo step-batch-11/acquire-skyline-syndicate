@@ -1,6 +1,6 @@
-import { renderHotelSection } from "./bank_setup.js";
 import { renderPlayers } from "./players_sections.js";
 import {
+  renderBankSection,
   renderBoard as renderBoardState,
   renderUserSection,
 } from "./ui_renderers.js";
@@ -30,10 +30,10 @@ export const createBoard = () => {
 };
 
 export const renderGame = (gameData) => {
-  const { tilesOnBoard, currentPlayer, hotels, players } = gameData;
+  const { tilesOnBoard, currentPlayer, player, hotels, players } = gameData;
   createBoard();
   renderBoardState(tilesOnBoard, hotels);
   renderPlayers(players, currentPlayer);
-  renderUserSection(currentPlayer);
-  renderHotelSection(hotels);
+  renderUserSection(player);
+  renderBankSection(hotels);
 };

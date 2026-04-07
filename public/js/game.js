@@ -9,11 +9,13 @@ const polling = () => {
     const gameData = await gameState();
     if (currentState !== gameData.state) {
       renderGame(gameData);
-      handleGameState(gameData);
+      if (gameData.isActivePlayer) {
+        handleGameState(gameData);
+      }
     }
 
     currentState = gameData.state;
-  }, 1000);
+  }, 500);
 };
 
 globalThis.onload = async () => {
@@ -21,7 +23,10 @@ globalThis.onload = async () => {
   currentState = gameData.state;
 
   renderGame(gameData);
-  handleGameState(gameData);
+
+  if (gameData.isActivePlayer) {
+    handleGameState(gameData);
+  }
 
   polling();
 };

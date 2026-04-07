@@ -1,4 +1,4 @@
-import { hotels } from "./mock-data/hotels_data.js";
+import { hotels } from "./configs/hotels_data.js";
 import { Board } from "./models/board.js";
 import { Deck } from "./models/deck.js";
 import { Game } from "./models/game.js";
@@ -29,6 +29,22 @@ export const createGame = (activePlayers) => {
   const board = new Board();
   const hotelsManager = Hotels.instantiateHotels(hotels);
   const players = activePlayers.map(([id, name]) => new Player(name, id));
+  const game = new Game(deck, board, hotelsManager, players);
+  game.init();
+  return game;
+};
+
+export const models = {
+  "Tile": Tile,
+};
+
+export const injectData = (activePlayers) => {
+  const tiles = createTiles();
+
+  const deck = new Deck(shuffleTiles(tiles.map((tile) => new Tile(tile))));
+  const board = new Board();
+  const hotelsManager = Hotels.instantiateHotels(hotels);
+  const players = activePlayers.map((player, i) => new Player(player, i));
   const game = new Game(deck, board, hotelsManager, players);
   game.init();
   return game;

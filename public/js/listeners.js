@@ -1,7 +1,4 @@
-import {
-  handleAssignTile,
-  handleCartUpdation,
-} from "./handlers/event_handlers.js";
+import { handleCartUpdation } from "./handlers/event_handlers.js";
 import { postData } from "./request.js";
 import {
   renderBankSection,
@@ -24,7 +21,6 @@ export const listenerForBuyingStocks = async (e) => {
   const { hotels, playerInfo } = await postData("/turn/buy-stocks", cart);
   renderBankSection(hotels);
   renderUserSection(playerInfo);
-  handleAssignTile();
 };
 
 export const listenerForHotelSelection = (e) => {

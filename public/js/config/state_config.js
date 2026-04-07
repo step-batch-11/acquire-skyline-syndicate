@@ -1,28 +1,37 @@
 import { addListenerToBoard } from "../board_events.js";
-import { expandHotel } from "../features/expand_hotel.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
+import { handleShiftTurn } from "../handlers/event_handlers.js";
+import { addHotelData, createConfirmButton } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
 
 const handlePlaceTile = (gameData) => {
-  const { currentPlayer } = gameData;
-  highlightPlayableTiles(currentPlayer.tiles);
-  addListenerToBoard(currentPlayer.tiles);
+  const { player } = gameData;
+  highlightPlayableTiles(player.tiles);
+  addListenerToBoard(player.tiles);
 };
 
-const handleBuyStocks = (_gameData) => {
-  console.log("buy the stocks");
+const handleBuyStocks = (gameData) => {
+  const { hotels } = gameData;
+  const bankSection = document.querySelector(".bank");
+  const hotelCards = hotels.map((hotel) => addHotelData(hotel, true));
+
+  bankSection.replaceChildren(...hotelCards);
+  const buttonContainer = document.createElement("div");
+  buttonContainer.classList.add("button-container");
+  const confirmBtn = createConfirmButton(buttonContainer);
+
+  bankSection.append(confirmBtn);
 };
 
 export const gameStates = {
-  "PLACE_TILE": handlePlaceTile,
-  "BUILD_HOTEL": buildAHotel,
-  "EXPAND_HOTEL": expandHotel,
-  "BUY_STOCK": handleBuyStocks,
+  PLACE_TILE: handlePlaceTile,
+  BUILD_HOTEL: buildAHotel,
+  BUY_STOCK: handleBuyStocks,
+  SHIFT_TURN: handleShiftTurn,
 };
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
-  console.log({ state });
 
   gameStates[state](gameData);
 };

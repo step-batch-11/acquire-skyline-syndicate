@@ -1,4 +1,7 @@
-import { listenerForBuyingStocks } from "./handlers/hotel_selection_handler.js";
+import {
+  listenerForBuyingStocks,
+  listenerForCart,
+} from "./handlers/hotel_selection_handler.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -50,16 +53,15 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-const createBuilHotelsBtn = (buttonContainer) => {
+export const createBuilHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
-  button.classList.add("hidden");
   buttonContainer.append(button);
   return buttonContainer;
 };
 
-const createConfirmButton = (buttonContainer) => {
+export const createConfirmButton = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "confirm";
   button.id = "confirm";
@@ -73,7 +75,10 @@ const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
+export const addHotelData = (
+  { name, tiles, stocksLeft, stockPrice, isActive },
+  isBuyState = false,
+) => {
   const hotelCard = cloneElement("#hotel-card");
   hotelCard.setAttribute("id", name);
   const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
@@ -83,9 +88,13 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
 
   if (isActive) {
     hotelContainer.classList.add("dim");
+    hotelContainer.classList.add("active");
+  }
+
+  if (isBuyState && isActive) {
     const counter = hotelCard.querySelector(".counter");
     counter.classList.remove("hidden");
-    hotelContainer.classList.add("active");
+    counter.addEventListener("click", listenerForCart);
   }
 
   hotelCard.querySelector(".hotel-name").textContent = name;
@@ -98,15 +107,9 @@ const addHotelData = ({ name, tiles, stocksLeft, stockPrice, isActive }) => {
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
-  const hotelCards = hotels.map(addHotelData);
+  const hotelCards = hotels.map((hotel) => addHotelData(hotel));
 
   bankSection.replaceChildren(...hotelCards);
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
-  const buildBtn = createBuilHotelsBtn(buttonContainer);
-  const confirmBtn = createConfirmButton(buttonContainer);
-  bankSection.append(buildBtn);
-  bankSection.append(confirmBtn);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {

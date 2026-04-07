@@ -11,7 +11,6 @@ const main = () => {
   const lobby = new Lobby();
   const sessions = new PlayerSession();
   const gameManager = new GameManager(createGame);
-
   const app = createApp(sessions, lobby, gameManager, isDevMode);
   Deno.serve({ port }, app.fetch);
 };

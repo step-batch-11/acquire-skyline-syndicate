@@ -1,9 +1,10 @@
-import { Player } from "./models/player.js";
-import { Tile } from "./models/tile.js";
+import { Player } from "../models/player.js";
+import { Tile } from "../models/tile.js";
 
 export const saveGameState = async (c) => {
   const fileName = await c.req.query("name");
-  const game = c.get("game");
+  const gameManager = c.get("gameManager");
+  const game = gameManager.getGame();
   const data = game.getCurrentGameState();
   Deno.writeTextFileSync(
     `./game-states/${fileName}.json`,
@@ -14,7 +15,8 @@ export const saveGameState = async (c) => {
 };
 
 export const loadGameState = async (c) => {
-  const game = c.get("game");
+  const gameManager = c.get("gameManager");
+  const game = gameManager.getGame();
   const fileName = await c.req.query("name");
   const jsondata = Deno.readTextFileSync(`./game-states/${fileName}.json`);
   const data = createInstances(JSON.parse(jsondata));

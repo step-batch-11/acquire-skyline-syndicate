@@ -4,12 +4,6 @@ export class LobbyController {
   constructor() {
   }
 
-  // gameState(c) {
-  //   const gameManager = c.get("gameManager");
-  //   const game = gameManager.getGame()
-  //   return c.json(game.currentState());
-  // }
-
   hostLobby(c) {
     const sessions = c.get("sessions");
     const sessionId = getCookie(c, "sessionId");
@@ -51,18 +45,6 @@ export class LobbyController {
       lobbyDetails: { lobbyId, playerNames },
     });
   }
-
-  // async createGame(c) {
-  //   const createGameInstance = c.get("createGame");
-  //   const lobbyInstance = c.get("lobby");
-
-  //   if (lobbyInstance.isFull()) {
-  //     const mockPlayers = ["yash", "pradipta"];
-  //     c.set("game", createGameInstance(mockPlayers));
-  //   }
-
-  //   return await c.json({ "done": true });
-  // }
 
   redirectToJoinLobby(c) {
     return c.redirect("/pages/join_lobby.html", 302);

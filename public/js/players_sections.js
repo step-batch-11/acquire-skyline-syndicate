@@ -6,15 +6,13 @@ export const renderPlayers = (players, currentPlayer) => {
   players.forEach(({ name }, id) => {
     const playerClone = playerTemplate.content.cloneNode(true);
     playerClone.querySelector(".player-name").textContent = name;
-    playerClone.querySelector(".player-name").setAttribute(
-      "id",
-      `player-${id + 1}`,
-    );
+    playerClone
+      .querySelector(".player-name")
+      .setAttribute("id", `player-${id + 1}`);
     if (name === currentPlayer.name) {
-      playerClone.querySelector(".player-profile").setAttribute(
-        "class",
-        "player-profile active-player",
-      );
+      playerClone
+        .querySelector(".player-profile")
+        .setAttribute("class", "player-profile active-player");
     }
     playersSection.appendChild(playerClone);
   });

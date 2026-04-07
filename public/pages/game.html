@@ -1,80 +1,86 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic layout</title>
+    <link rel="stylesheet" href="../styles/game.css" />
+    <script type="module" src="../js/game.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic layout</title>
-  <link rel="stylesheet" href="../styles/game.css" />
-  <script type="module" src="../js/game.js"></script>
-</head>
-
-<body>
-  <main>
-    <div class="market-notification-players">
-      <div class="notification-box"></div>
-      <div class="player-market">
-        <div class="players">
+  <body>
+    <main>
+      <div class="market-notification-players">
+        <div class="notification-box"></div>
+        <div class="player-market">
+          <div class="players"></div>
+          <div class="board"></div>
         </div>
-        <div class="board"></div>
       </div>
-    </div>
-    <div class="bank">
-      <!-- Bank Section -->
-    </div>
-  </main>
-  <footer>
-    <div class="amount-container">
-      <p></p>
-    </div>
-    <div class="stocks"></div>
-    <div class="tiles tiles-in-hand"></div>
-  </footer>
-  
-  <template id="player-template">
-    <div class="player-container">
-      <div class="player-profile"></div>
-      <div class="player-name"></div>
-    </div>
-  </template>
+      <div class="bank">
+        <!-- Bank Section -->
+      </div>
+    </main>
+    <footer>
+      <div class="amount-container">
+        <p></p>
+      </div>
+      <div class="stocks"></div>
+      <div class="tiles tiles-in-hand"></div>
+    </footer>
 
-  <template id="board-tile">
-    <div class="tile">
-      <p>1a</p>
-    </div>
-  </template>
+    <template id="player-template">
+      <div class="player-container">
+        <div class="player-profile"></div>
+        <div class="player-name"></div>
+      </div>
+    </template>
 
-  <template id="button">
-    <button class="confirm-btn"></button>
-  </template>
+    <template id="board-tile">
+      <div class="tile">
+        <p>1a</p>
+      </div>
+    </template>
 
-  <template id="stock-template">
-    <div class="stock empty">
-      <h3 class="stock-name"></h3>
-      <span class="count"></span>
-    </div>
-  </template>
+    <template id="button">
+      <button class="confirm-btn"></button>
+    </template>
 
-  <template id="hotel-card">
-    <section class="hotel">
-      <div class="hotel-info">
-        <div class="hotel-card-header">
-          <h3 class="hotel-name"></h3>
-          <div class="counter hidden">
-            <button data-action="decr">-</button>
-            <data class="cart-value" value="0">0</data>
-            <button data-action="incr">+</button>
+    <template id="stock-template">
+      <div class="stock empty">
+        <h3 class="stock-name"></h3>
+        <span class="count"></span>
+      </div>
+    </template>
+
+    <template id="counter-template">
+      <div class="counter">
+        <button data-action="decr">-</button>
+        <data class="cart-value" value="0">0</data>
+        <button data-action="incr">+</button>
+      </div>
+    </template>
+
+    <template id="hotel-card">
+      <section class="hotel">
+        <div class="hotel-info">
+          <div class="hotel-card-header">
+            <h3 class="hotel-name"></h3>
+            <div class="counter hidden">
+              <button type="button" data-action="decr">-</button>
+              <data class="cart-value" value="0">0</data>
+              <button type="button" data-action="incr">+</button>
+            </div>
+          </div>
+          <div class="information">
+            <div id="price">$ 400</div>
+            <div id="tiles">% 3</div>
+            <div id="stock-left">& 25</div>
           </div>
         </div>
-        <div class="information">
-          <div id="price">$ 400</div>
-          <div id="tiles">% 3</div>
-          <div id="stock-left">& 25</div>
+        <div class="hotel-container">
         </div>
-      </div>
-      <div class="hotel-container"></div>
-    </section>
-  </template>
-</body>
-
+      </section>
+    </template>
+  </body>
 </html>

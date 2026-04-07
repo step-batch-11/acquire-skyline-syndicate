@@ -4,13 +4,8 @@ import { logger } from "hono/logger";
 import { createLobbyRouter } from "./routes/lobby_router.js";
 import { createTurnRouter } from "./routes/turn_router.js";
 import { handleShiftTurn } from "./controllers/game_controller.js";
-import { loadGameState, saveGameState } from "./dev_controller.js";
+import { loadGameState, saveGameState } from "./controllers/dev_controller.js";
 import { createGameRouter } from "./routes/game_router.js";
-// import {
-//   getPlayerName,
-//   login,
-//   redirectToLogin,
-// } from "./controllers/login_controller.js";
 import { createLoginRouter } from "./routes/login_router.js";
 
 // const requireLogin = async (c, next) => {
@@ -45,7 +40,7 @@ export const createApp = (sessions, lobbyInstance, gameManager, isDevMode) => {
 
   if (isDevMode) {
     app.get("/save", saveGameState);
-    app.get("state", loadGameState);
+    app.get("/state", loadGameState);
   }
 
   app.get("*", serveStatic({ root: "public" }));

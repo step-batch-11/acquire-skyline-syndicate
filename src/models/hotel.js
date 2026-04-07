@@ -27,6 +27,11 @@ export class Hotel {
     this.#tiles.push(...tiles);
   }
 
+  dissolve() {
+    this.#tiles = [];
+    this.#stocks = 25;
+  }
+
   getTiles() {
     return [...this.#tiles];
   }
@@ -86,7 +91,6 @@ export class Hotel {
   }
 
   loadGameState(hotelInfo) {
-    console.log(hotelInfo);
     this.#name = hotelInfo.name;
     this.#tiles = hotelInfo.tiles;
     this.#stocks = hotelInfo.stocks;

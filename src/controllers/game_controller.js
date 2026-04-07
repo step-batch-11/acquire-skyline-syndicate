@@ -3,7 +3,7 @@ export class GameController {
   }
 
   startGame(c) {
-    const gameManagaer = c.get("gameManager");
+    const gameManager = c.get("gameManager");
     const lobby = c.get("lobby");
     const sessions = c.get("sessions");
     const playerIds = lobby.getActivePlayersIds();
@@ -11,7 +11,7 @@ export class GameController {
     const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
       playerIds.includes(playerId)
     );
-    gameManagaer.createGame(playerNameIds);
+    gameManager.createGame(playerNameIds);
     lobby.transitionToStart();
     return c.redirect("/pages/lobby.html", 302);
   }

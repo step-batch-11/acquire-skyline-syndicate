@@ -1,5 +1,5 @@
 import { Tile } from "./tile.js";
-
+new Tile();
 export class Game {
   #deck;
   #board;
@@ -28,13 +28,19 @@ export class Game {
     });
   }
 
-  currentState() {
+  currentState(requestedPlayerId) {
     return {
-      currentPlayer: this.#currentPlayer.getDetails(),
+      player: this.#players
+        .find((player) => player.id === requestedPlayerId)
+        .getDetails(),
+      currentPlayer: { name: this.#currentPlayer.name },
       hotels: this.#hotels.getHotels(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: this.#state,
-      players: this.#players.map((player) => player.getDetails()),
+      players: this.#players.map((player) => ({
+        name: player.name,
+      })),
+      isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
     };
   }
 
@@ -62,26 +68,45 @@ export class Game {
     return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
-  #isGoingToMerge() {
+  #getAdjacentHotelChains() {
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
-    return this.#hotels.getAdjacentHotelChains(adjacentTiles).length > 1;
+    return this.#hotels.getAdjacentHotelChains(adjacentTiles);
+  }
+
+  #distributeBonus() {}
+
+  #stakeHolders(hotelName) {
+    return this.#players.filter((player) => player.hasStock(hotelName));
+  }
+
+  #mergeHotels(adjacentHotelChains) {
+    const sortedHotels = adjacentHotelChains.sort(
+      (a, b) => a.tiles.length - b.tiles.length,
+    );
+
+    const [defunctHotel, survivingHotel] = sortedHotels.map((hotel) =>
+      this.#hotels.getHotel(hotel.name)
+    );
+    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
+    const stakeholders = this.#stakeHolders(defunctHotel.name);
+    this.#distributeBonus(stakeholders);
+    defunctHotel.dissolve();
   }
 
   #actionForTilePlacement(tileId) {
-    if (this.#isGoingToMerge()) {
-      this.#state = "MERGE";
-      return;
-    }
-    if (this.#isExpansion()) {
-      this.expandHotel(tileId);
-      this.#state = "EXPAND_HOTEL";
+    const adjacentHotelChains = this.#getAdjacentHotelChains();
+    if (adjacentHotelChains.length > 1) {
+      this.#mergeHotels(adjacentHotelChains);
+      this.#state = "BUY_STOCK";
       return;
     }
     if (this.#isBuildPossible()) {
-      this.#state = "BUILD_HOTEL";
-      return;
+      return "BUILD_HOTEL";
     }
-    this.#state = "BUY_STOCK";
+    if (this.#isExpansion()) {
+      this.expandHotel(tileId);
+    }
+    return "BUY_STOCK";
   }
 
   #areStocksValid(cart) {
@@ -94,15 +119,17 @@ export class Game {
   }
 
   #isValidPurchase(cart) {
-    return this.#areStocksValid(cart) &&
+    return (
+      this.#areStocksValid(cart) &&
       this.#hotels.areCartHotelsActive(cart) &&
-      this.#hotels.hasEnoughStocksToBuy(cart);
+      this.#hotels.hasEnoughStocksToBuy(cart)
+    );
   }
 
   placeTile(tileId) {
-    if (this.#isValidTilePlacement(tileId)) {
+    if (this.#state === "PLACE_TILE" && this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
-      this.#actionForTilePlacement(tileId);
+      this.#state = this.#actionForTilePlacement(tileId);
 
       const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
@@ -122,15 +149,18 @@ export class Game {
   expandHotel(tileId) {
     const tilesOnBoard = this.#board.getPlacedTiles();
     this.#hotels.expand(tileId, tilesOnBoard);
-    this.#state = "EXPAND_HOTEL";
   }
 
   buildHotel(hotelName) {
+    if (this.#state !== "BUILD_HOTEL") {
+      return;
+    }
     if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
+    this.#state = "BUY_STOCK";
   }
 
   assignNewTile() {
@@ -139,6 +169,9 @@ export class Game {
   }
 
   buyStocks(cart) {
+    if (this.#state !== "BUY_STOCK") {
+      return;
+    }
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const isValidBuy = this.#isValidPurchase(cart) &&
       this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
@@ -150,12 +183,17 @@ export class Game {
         this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
+      this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
       return { hotels, playerInfo, state: this.#state };
     }
   }
 
   shiftTurn() {
+    if (this.#state !== "SHIFT_TURN") {
+      return;
+    }
+    this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     this.#state = "PLACE_TILE";
