@@ -27,6 +27,11 @@ export class Hotel {
     this.#tiles.push(...tiles);
   }
 
+  dissolve() {
+    this.#tiles = [];
+    this.#stocks = 25;
+  }
+
   getTiles() {
     return [...this.#tiles];
   }

@@ -1,5 +1,5 @@
 import { Tile } from "./tile.js";
-
+new Tile();
 export class Game {
   #deck;
   #board;
@@ -62,14 +62,39 @@ export class Game {
     return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
-  #isGoingToMerge() {
+  #getAdjacentHotelChains() {
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
-    return this.#hotels.getAdjacentHotelChains(adjacentTiles).length > 1;
+    return this.#hotels.getAdjacentHotelChains(adjacentTiles);
+  }
+
+  #distributeBonus() {
+  }
+
+  #stakeHolders(hotelName) {
+    return this.#players.filter((player) => player.hasStock(hotelName));
+  }
+
+  #mergeHotels(adjacentHotelChains) {
+    console.log({ adjacentHotelChains });
+    const sortedHotels = adjacentHotelChains.sort(
+      (a, b) => a.tiles.length - b.tiles.length,
+    );
+
+    const [defunctHotel, survivingHotel] = sortedHotels.map((hotel) =>
+      this.#hotels.getHotel(hotel.name)
+    );
+    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
+    const stakeholders = this.#stakeHolders(defunctHotel.name);
+    this.#distributeBonus(stakeholders);
+    defunctHotel.dissolve();
   }
 
   #actionForTilePlacement(tileId) {
-    if (this.#isGoingToMerge()) {
-      return "MERGE";
+    const adjacentHotelChains = this.#getAdjacentHotelChains();
+    if (adjacentHotelChains.length > 1) {
+      this.#mergeHotels(adjacentHotelChains);
+      this.#state = "BUY_STOCK";
+      return;
     }
     if (this.#isBuildPossible()) {
       return "BUILD_HOTEL";

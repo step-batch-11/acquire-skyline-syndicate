@@ -17,6 +17,10 @@ export class Player {
     return this.#tiles.map((tile) => tile.id);
   }
 
+  hasStock(hotelName) {
+    return hotelName in this.#stocks;
+  }
+
   isPlayerTile(tileId) {
     return this.getTileIds().includes(tileId);
   }

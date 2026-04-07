@@ -7,11 +7,12 @@ import { Hotels } from "../../src/models/hotels.js";
 import { Player } from "../../src/models/player.js";
 import { Tile } from "../../src/models/tile.js";
 
+import { hotels } from "../../src/configs/hotels_data.js";
+
 describe("Game entity tests", () => {
   let game;
   let board;
-  let hotels;
-  let hotelsInfo;
+  let hotelsInstances;
   let players;
 
   beforeEach(() => {
@@ -19,14 +20,7 @@ describe("Game entity tests", () => {
     players = ["Gopi", "Haider"].map(
       (playerName, id) => new Player(playerName, id),
     );
-    hotelsInfo = [
-      { name: "sackson", scale: 0 },
-      {
-        name: "worldwide",
-        scale: 100,
-      },
-    ];
-    hotels = Hotels.instantiateHotels(hotelsInfo);
+    hotelsInstances = Hotels.instantiateHotels(hotels);
     const tiles = [
       "1a",
       "2a",
@@ -51,16 +45,15 @@ describe("Game entity tests", () => {
     ];
     const tilesInstances = tiles.map((tile) => new Tile(tile));
     const deck = new Deck(tilesInstances, () => tilesInstances);
-    game = new Game(deck, board, hotels, players);
+    game = new Game(deck, board, hotelsInstances, players);
   });
-
   describe("init method", () => {
     it("should return the initial data which game needs", () => {
       game.init();
       const initialData = game.currentState();
       assertEquals(initialData.currentPlayer.name, "Gopi");
       assertEquals(initialData.currentPlayer.tiles.length, 6);
-      assertEquals(initialData.hotels.length, 2);
+      assertEquals(initialData.hotels.length, 7);
       assertEquals(initialData.tilesOnBoard.length, 6);
       assertEquals(initialData.state, "PLACE_TILE");
     });
@@ -106,7 +99,7 @@ describe("Game entity tests", () => {
       ];
       const tilesInstances = tiles.map((tile) => new Tile(tile));
       const deck = new Deck(tilesInstances, () => tilesInstances);
-      const game = new Game(deck, board, hotels, players);
+      const game = new Game(deck, board, hotelsInstances, players);
       game.init();
       const tileToPlace = "4e";
       game.placeTile(tileToPlace);
@@ -176,6 +169,13 @@ describe("Game entity tests", () => {
         name === "sackson"
       );
       assertEquals(hotel.tiles.length + 1, updatedHotel.tiles.length);
+    });
+  });
+
+  describe("given someone place tile adjacent to two unequal hotel chains", () => {
+    it("", () => {
+      // const continentalTiles = ["1a", "2a"];
+      // const imperialTiles = ["4a", "5a"];
     });
   });
 });

@@ -5,7 +5,7 @@ import { getCookie, setCookie } from "hono/cookie";
 import { lobby } from "./routes/lobbyRouter.js";
 import { turn } from "./routes/turnRouter.js";
 import { handleShiftTurn } from "./handlers/game_handler.js";
-import { loadGameState, saveGameState } from "./dev_controller.js";
+import { loadGameState, saveGameState } from "./handlers/dev_controller.js";
 
 const login = async (c) => {
   const formData = await c.req.formData();
@@ -72,7 +72,7 @@ export const createApp = (sessions, lobbyInstance, gameManager, isDevMode) => {
 
   if (isDevMode) {
     app.get("/save", saveGameState);
-    app.get("state", loadGameState);
+    app.get("/state", loadGameState);
   }
 
   // app.get("/pages/menu.html", requireLogin);

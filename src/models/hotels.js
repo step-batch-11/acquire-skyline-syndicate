@@ -34,6 +34,11 @@ export class Hotels {
     );
   }
 
+  getHotel(hotelName) {
+    console.log(this.#hotels);
+    return this.#hotels[hotelName];
+  }
+
   addTilesToHotel(hotelName, tiles) {
     this.#hotels[hotelName].addTiles(tiles);
   }

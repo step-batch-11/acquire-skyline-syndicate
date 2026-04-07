@@ -11,6 +11,7 @@ const main = () => {
   const sessions = new playerSession();
 
   const gameManager = new GameManager(createGame);
+  gameManager.createGame(["yash"]);
   const isDevMode = Deno.env.get("dev");
   const app = createApp(sessions, lobby, gameManager, isDevMode);
   Deno.serve({ port }, app.fetch);
