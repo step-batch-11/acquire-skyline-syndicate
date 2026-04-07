@@ -5,6 +5,7 @@ import { getCookie, setCookie } from "hono/cookie";
 import { lobby } from "./routes/lobbyRouter.js";
 import { turn } from "./routes/turnRouter.js";
 import { handleShiftTurn } from "./handlers/game_handler.js";
+import { loadGameState, saveGameState } from "./dev_controller.js";
 
 const login = async (c) => {
   const formData = await c.req.formData();
@@ -30,7 +31,7 @@ const getPlayerName = (c) => {
 //   return c.redirect("/redirect-login", 302);
 // };
 
-export const createApp = (lobbyInstance, game, sessions) => {
+export const createApp = (lobbyInstance, game, sessions, isDevMode) => {
   const app = new Hono();
   app.use(logger());
   app.use(async (context, next) => {
@@ -45,6 +46,11 @@ export const createApp = (lobbyInstance, game, sessions) => {
   app.route("/turn", turn);
   app.post("/shift-turn", handleShiftTurn);
   app.post("/login", login);
+
+  if (isDevMode) {
+    app.get("/save", saveGameState);
+    app.get("state", loadGameState);
+  }
 
   // app.get("/pages/menu.html", requireLogin);
   app.get("/menu/get-player-name", getPlayerName);

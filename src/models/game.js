@@ -160,4 +160,28 @@ export class Game {
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     this.#state = "PLACE_TILE";
   }
+
+  getCurrentGameState() {
+    const players = this.#players.map((player) => player.getPlayerState());
+    return {
+      board: this.#board.getBoardState(),
+      deck: this.#deck.getDeckState(),
+      hotels: this.#hotels.getHotelsState(),
+      players,
+      state: this.#state,
+      // currentPlayer :this.#currentPlayer,
+      currentPlayerIndex: this.#currentPlayerIndex,
+    };
+  }
+
+  loadGameState(data) {
+    this.#state = data.state;
+    this.#currentPlayer =
+      data.players[data.currentPlayerIndex % data.players.length];
+    this.#currentPlayerIndex = data.currentPlayerIndex;
+    this.#deck.loadGameState(data.deck);
+    this.#players = data.players;
+    this.#board.loadGameState(data.board);
+    this.#hotels.loadGameState(data.hotels);
+  }
 }

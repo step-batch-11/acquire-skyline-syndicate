@@ -95,4 +95,17 @@ export class Hotels {
       this.#hotels[hotelName].canDeductStocksFromHotel(selectedStocks)
     );
   }
+
+  getHotelsState() {
+    return Object
+      .values(this.#hotels)
+      .map((hotel) => hotel.getHotelState());
+  }
+
+  loadGameState(hotels) {
+    console.log(hotels, this.#hotels);
+    hotels.forEach((hotelInfo) => {
+      this.#hotels[hotelInfo.name].loadGameState(hotelInfo);
+    });
+  }
 }

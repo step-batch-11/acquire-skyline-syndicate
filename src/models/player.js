@@ -56,4 +56,22 @@ export class Player {
   hasEnoughMoney(moneyToDeduct) {
     return moneyToDeduct <= this.#money;
   }
+
+  getPlayerState() {
+    return {
+      id: this.#id,
+      name: this.#name,
+      tiles: structuredClone(this.#tiles),
+      money: this.#money,
+      stocks: structuredClone(this.#stocks),
+    };
+  }
+
+  loadGameState(playerDetails) {
+    this.#id = playerDetails.id;
+    this.#name = playerDetails.name;
+    this.#money = playerDetails.money;
+    this.#stocks = playerDetails.stocks;
+    this.#tiles = playerDetails.tiles;
+  }
 }

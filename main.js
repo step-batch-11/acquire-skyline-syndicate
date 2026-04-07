@@ -5,12 +5,12 @@ import { createGame } from "./src/utils.js";
 
 const main = () => {
   const port = Deno.env.get("PORT") || 8000;
-
+  const isDevMode = Deno.env.get("dev");
   const lobbyInstance = new Lobby();
   const sessions = new playerSession();
   const mockPlayers = ["yash", "pradipta"];
   const game = createGame(mockPlayers);
-  const app = createApp(lobbyInstance, game, sessions);
+  const app = createApp(lobbyInstance, game, sessions, isDevMode);
   Deno.serve({ port }, app.fetch);
 };
 
