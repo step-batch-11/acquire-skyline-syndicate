@@ -1,11 +1,8 @@
-import { assignNewTiles, updateTiles } from "../request.js";
-import { renderGame } from "../initial_setup.js";
+import { updateTiles } from "../request.js";
 import { removeFocus } from "../utils.js";
-import { renderBoard, renderTilesInHand } from "../ui_renderers.js";
-import { gameStates } from "../config/state_config.js";
+import { renderBoard } from "../ui_renderers.js";
 
 export const TOTAL_SELECTED_STOCKS = [];
-const noOp = () => {};
 
 export const handleTilePlacement = async (
   board,
@@ -14,27 +11,14 @@ export const handleTilePlacement = async (
 ) => {
   const tile = tileContainer.id.split("-")[1];
 
-  const { currentPlayer, tilesOnBoard, hotels, state } = await updateTiles(
-    tile,
-  );
+  const { tilesOnBoard, hotels } = await updateTiles(tile);
 
   removeFocus(board, tilesInPlayerHand);
   renderBoard(tilesOnBoard, hotels);
-  renderTilesInHand(currentPlayer.tiles);
-  const action = gameStates[state] || noOp;
-  action(tileContainer);
 };
 
 export const handleShiftTurn = async () => {
-  const currentState = await fetch("/shift-turn", { method: "post" });
-  const data = await currentState.json();
-  renderGame(data);
-};
-
-export const handleAssignTile = async () => {
-  const currentState = await assignNewTiles();
-  renderTilesInHand(currentState.currentPlayer.tiles);
-  handleShiftTurn();
+  await fetch("/shift-turn", { method: "post" });
 };
 
 const incrementStocks = (cartElement, counterValue) => {

@@ -1,6 +1,6 @@
 import { postData } from "../request.js";
 import { extractSelectedStocks } from "../utils.js";
-import { handleAssignTile, handleCartUpdation } from "./event_handlers.js";
+import { handleCartUpdation } from "./event_handlers.js";
 import { renderBankSection, renderUserSection } from "../ui_renderers.js";
 import { TOTAL_SELECTED_STOCKS } from "./event_handlers.js";
 
@@ -18,5 +18,4 @@ export const listenerForBuyingStocks = async (e) => {
   TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
   renderUserSection(playerInfo);
-  handleAssignTile();
 };

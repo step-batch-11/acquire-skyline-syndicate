@@ -1,5 +1,6 @@
 import { postData } from "../request.js";
 import {
+  createBuilHotelsBtn,
   renderBankSection,
   renderBoard,
   renderHeldStocks,
@@ -61,6 +62,11 @@ class HotelFoundationState {
     bankContainer.addEventListener("click", (e) => {
       this.#selectedHotel = this.#handleHotelSelection(e);
     });
+
+    const buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("button-container");
+    const buildBtn = createBuilHotelsBtn(buttonContainer);
+    bankContainer.append(buildBtn);
   }
 
   #setupFoundHotel() {

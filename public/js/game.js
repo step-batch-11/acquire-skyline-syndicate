@@ -13,11 +13,13 @@ export const polling = () => {
     }
 
     currentState = gameData.state;
-  }, 1000);
+  }, 500);
 };
 
 globalThis.onload = async () => {
   const gameData = await gameState();
+  console.log(gameData);
+
   currentState = gameData.state;
 
   renderGame(gameData);

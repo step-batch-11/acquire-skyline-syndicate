@@ -69,19 +69,15 @@ export class Game {
 
   #actionForTilePlacement(tileId) {
     if (this.#isGoingToMerge()) {
-      this.#state = "MERGE";
-      return;
+      return "MERGE";
+    }
+    if (this.#isBuildPossible()) {
+      return "BUILD_HOTEL";
     }
     if (this.#isExpansion()) {
       this.expandHotel(tileId);
-      this.#state = "EXPAND_HOTEL";
-      return;
     }
-    if (this.#isBuildPossible()) {
-      this.#state = "BUILD_HOTEL";
-      return;
-    }
-    this.#state = "BUY_STOCK";
+    return "BUY_STOCK";
   }
 
   #areStocksValid(cart) {
@@ -94,15 +90,18 @@ export class Game {
   }
 
   #isValidPurchase(cart) {
-    return this.#areStocksValid(cart) &&
+    return (
+      this.#areStocksValid(cart) &&
       this.#hotels.areCartHotelsActive(cart) &&
-      this.#hotels.hasEnoughStocksToBuy(cart);
+      this.#hotels.hasEnoughStocksToBuy(cart)
+    );
   }
 
   placeTile(tileId) {
-    if (this.#isValidTilePlacement(tileId)) {
+    console.log("state", this.#state);
+    if (this.#state === "PLACE_TILE" && this.#isValidTilePlacement(tileId)) {
       this.#board.place(new Tile(tileId));
-      this.#actionForTilePlacement(tileId);
+      this.#state = this.#actionForTilePlacement(tileId);
 
       const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
@@ -122,15 +121,18 @@ export class Game {
   expandHotel(tileId) {
     const tilesOnBoard = this.#board.getPlacedTiles();
     this.#hotels.expand(tileId, tilesOnBoard);
-    this.#state = "EXPAND_HOTEL";
   }
 
   buildHotel(hotelName) {
+    if (this.#state !== "BUILD_HOTEL") {
+      return;
+    }
     if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOfLastTile();
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
+    this.#state = "BUY_STOCK";
   }
 
   assignNewTile() {
@@ -139,6 +141,9 @@ export class Game {
   }
 
   buyStocks(cart) {
+    if (this.#state !== "BUY_STOCK") {
+      return;
+    }
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const isValidBuy = this.#isValidPurchase(cart) &&
       this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
@@ -150,12 +155,17 @@ export class Game {
         this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
+      this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
       return { hotels, playerInfo, state: this.#state };
     }
   }
 
   shiftTurn() {
+    if (this.#state !== "SHIFT_TURN") {
+      return;
+    }
+    this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     this.#state = "PLACE_TILE";
