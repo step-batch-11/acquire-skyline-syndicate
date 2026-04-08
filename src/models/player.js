@@ -92,8 +92,8 @@ export class Player {
   }
 
   sellStocks(hotelName, price) {
+    this.#money = this.#money + price * this.#stocks[hotelName];
     delete this.#stocks[hotelName];
-    this.#money = this.#money + price;
   }
 
   loadGameState(playerDetails) {
