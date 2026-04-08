@@ -8,7 +8,7 @@ export class LobbyController {
     const sessions = c.get("sessions");
     const sessionId = getCookie(c, "sessionId");
     const playerId = sessions.getPlayerId(sessionId);
-    const lobbyId = crypto.randomUUID();
+    const lobbyId = Math.floor(Math.random() * 1000000);
     const lobby = c.get("lobby");
     lobby.setLobby(lobbyId);
     lobby.setHost(playerId);

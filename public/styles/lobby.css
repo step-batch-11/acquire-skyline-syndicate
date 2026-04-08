@@ -68,9 +68,15 @@ button {
   width: 50px;
   height: 50px;
   border: 6px solid rgba(255, 255, 255, 0.3);
-  border-top: 6px solid white;
+  border-top: 6px solid black;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .starting-container {
@@ -84,4 +90,29 @@ button {
   background-color: greenyellow;
   color: black;
   font-size: large;
+}
+
+.progress-bar {
+  width: 300px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background-color:  black;
+  animation: load 3s linear forwards;
+}
+
+@keyframes load {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
