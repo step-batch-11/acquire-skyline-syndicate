@@ -196,6 +196,28 @@ export class Game {
     }
   }
 
+  #areAllHotelsStable() {
+    const hotels = this.#hotels.getHotels();
+    return hotels.every((hotel) => hotel.tiles.length >= 11);
+  }
+
+  #isAnyHotelHas41Tiles() {
+    const hotels = this.#hotels.getHotels();
+    return hotels.some((hotel) => hotel.tiles.length >= 41);
+  }
+
+  #areAllHandsEmpty() {
+    return this.#players.every((player) => player.getTileIds().length === 0);
+  }
+
+  isGameEnd() {
+    return (
+      this.#areAllHotelsStable() ||
+      this.#isAnyHotelHas41Tiles() ||
+      this.#areAllHandsEmpty()
+    );
+  }
+
   shiftTurn(requestedPlayerId) {
     if (
       this.#state !== "SHIFT_TURN" &&
