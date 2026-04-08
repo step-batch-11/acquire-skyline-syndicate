@@ -2,9 +2,7 @@ import { updateTiles } from "../request.js";
 
 export const TOTAL_SELECTED_STOCKS = [];
 
-export const handleTilePlacement = async (
-  tileContainer,
-) => {
+export const handleTilePlacement = async (tileContainer) => {
   const tile = tileContainer.id.split("-")[1];
 
   await updateTiles(tile);
