@@ -69,7 +69,6 @@ const redirectToJoinLobby = (c) => {
 lobby.get("/host", hostLobby);
 lobby.get("/join", redirectToJoinLobby);
 lobby.post("/join-lobby", joinLobby);
-// lobby.get("/state", currentState);
 lobby.get("/create-game", createGame);
 lobby.get("/start-game", gameState);
 lobby.get("/lobby-details", lobbyDetails);

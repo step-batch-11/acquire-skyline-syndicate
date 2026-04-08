@@ -1,0 +1,30 @@
+export class GameController {
+  constructor() {
+  }
+
+  startGame(c) {
+    const gameManager = c.get("gameManager");
+    const lobby = c.get("lobby");
+    const sessions = c.get("sessions");
+    const playerIds = lobby.getActivePlayersIds();
+    const playerIdsMap = sessions.getPlayerIds();
+    const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
+      playerIds.includes(playerId)
+    );
+    gameManager.createGame(playerNameIds);
+    lobby.transitionToStart();
+    return c.redirect("/pages/lobby.html", 302);
+  }
+
+  redirectToGame(c) {
+    return c.redirect("/pages/game.html", 302);
+  }
+}
+
+export const handleShiftTurn = (context) => {
+  const gameManager = context.get("gameManager");
+  const game = gameManager.getGame();
+  game.shiftTurn();
+  const currentGameState = game.currentState();
+  return context.json(currentGameState);
+};
