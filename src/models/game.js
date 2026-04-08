@@ -125,6 +125,13 @@ export class Game {
   }
 
   placeTile(requestedPlayerId, tileId) {
+    console.log({
+      state: this.#state,
+      validPlacement: this.#isValidTilePlacement(tileId),
+      tileId,
+      activePlayers: this.#isActivePlayer(requestedPlayerId),
+    });
+
     if (
       this.#state === "PLACE_TILE" &&
       this.#isValidTilePlacement(tileId) &&
