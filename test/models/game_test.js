@@ -144,8 +144,6 @@ describe("Game entity tests", () => {
       game.init();
       game.placeTile(1, "2a");
       game.placeTile(1, "3a");
-      const hotelName = "sackson";
-      game.buildHotel(hotelName);
       const { playerInfo } = game.buyStocks([
         { hotelName: "sackson", selectedStocks: 3 },
       ]);
@@ -162,11 +160,11 @@ describe("Game entity tests", () => {
       game.placeTile(1, initialData.currentPlayer.tiles[0]);
       game.buildHotel("sackson");
       const hotel = game
-        .currentState()
+        .currentState(1)
         .hotels.find(({ name }) => name === "sackson");
       game.placeTile(1, initialData.currentPlayer.tiles[0]);
       const updatedHotel = game
-        .currentState()
+        .currentState(1)
         .hotels.find(({ name }) => name === "sackson");
       assertEquals(hotel.tiles.length + 1, updatedHotel.tiles.length);
     });

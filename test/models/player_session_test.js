@@ -1,11 +1,11 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
 import { assertEquals } from "@std/assert";
-import { playerSession } from "../../src/models/playerSession.js";
+import { PlayerSession } from "../../src/models/player_session.js";
 
 describe("Player Session tests", () => {
   let playerSessionInstance;
   beforeEach(() => {
-    playerSessionInstance = new playerSession();
+    playerSessionInstance = new PlayerSession();
   });
 
   describe("Setting session", () => {
