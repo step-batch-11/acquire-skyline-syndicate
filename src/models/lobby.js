@@ -1,6 +1,6 @@
-import { lobbyStates } from "../config.js";
+import { LOBBY_STATES } from "../config.js";
 
-const { READY, WAITING, STARTED } = lobbyStates;
+const { READY, WAITING, STARTED } = LOBBY_STATES;
 
 export class Lobby {
   #minPlayers = 2;

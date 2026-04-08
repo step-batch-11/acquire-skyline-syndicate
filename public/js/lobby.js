@@ -1,10 +1,10 @@
-import { lobbyStates, times } from "../config.js";
+import { LOBBY_STATES, TIMES } from "../config.js";
 import { addListenerToCopyBtn, addListenerToStartBtn } from "./listeners.js";
 import { renderLobby, renderStartBtn } from "./lobby_setup.js";
 import { getLobbyDetails } from "./request.js";
-const { READY, STARTED } = lobbyStates;
+const { READY, STARTED } = LOBBY_STATES;
 
-const { ping, startTimer } = times;
+const { PING, START_TIMER } = TIMES;
 globalThis.onload = () => {
   const startBtn = document.getElementById("start-button-container");
   addListenerToStartBtn(startBtn);
@@ -22,8 +22,8 @@ globalThis.onload = () => {
       setTimeout(async () => {
         const response = await fetch("/game/join-game");
         globalThis.location.href = response.url;
-      }, startTimer);
+      }, START_TIMER);
       clearInterval(id);
     }
-  }, ping);
+  }, PING);
 };
