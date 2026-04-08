@@ -92,7 +92,6 @@ export class Game {
     if (adjacentHotelChains.length > 1) {
       this.#initiateMerge(adjacentHotelChains);
       this.#currentService.mergeHotels();
-      // this.#state = "BUY_STOCK";
       return "BUY_STOCK";
     }
     if (this.#isBuildPossible()) {
@@ -218,7 +217,6 @@ export class Game {
       hotels: this.#hotels.getHotelsState(),
       players,
       state: this.#state,
-      // currentPlayer :this.#currentPlayer,
       currentPlayerIndex: this.#currentPlayerIndex,
     };
   }

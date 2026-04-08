@@ -7,7 +7,6 @@ export class LoginController {
   }
 
   login(c, formData) {
-    // const formData = await c.req.formData();
     const playerName = formData.get("player_name");
     const sessionId = crypto.randomUUID();
     const playerId = crypto.randomUUID();

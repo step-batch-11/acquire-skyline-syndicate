@@ -97,7 +97,6 @@ export class Player {
   }
 
   loadGameState(playerDetails) {
-    // console.log(playerDetails)
     this.#id = playerDetails.id;
     this.#name = playerDetails.name;
     this.#money = playerDetails.money;

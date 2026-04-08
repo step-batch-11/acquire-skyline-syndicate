@@ -33,7 +33,6 @@ export const createGame = (activePlayers) => {
   const deck = new Deck(shuffleTiles(tiles.map((tile) => new Tile(tile))));
   const board = new Board();
   const hotelsManager = Hotels.instantiateHotels(hotels);
-  // console.log(activePlayers);
   const players = activePlayers.map(([id, name]) => new Player(name, id));
   const game = new Game(
     deck,

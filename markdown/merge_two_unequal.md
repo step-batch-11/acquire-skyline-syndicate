@@ -19,3 +19,9 @@
 - [ ] system give them money in return
 - [ ] send the response to frontend with state. - [ ] according to the state
       ~~backend~~ frontend will display merge.
+
+# Bonus Distribution scenario
+
+[ ] One primary and one secondary shareholders [ ] Multiple primary shareholders
+[ ] Multiple secondary shareholders [ ] Primary and secondary shareholder is
+same

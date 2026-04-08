@@ -1,4 +1,3 @@
-import { Hotels } from "../models/hotels.js";
 import { Player } from "../models/player.js";
 import { Tile } from "../models/tile.js";
 

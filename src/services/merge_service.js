@@ -23,6 +23,10 @@ export default class MergeService {
     const currentStockPrice = defunctHotel.calculateStockPrice();
     const primaryBonus = 10 * currentStockPrice;
     const secondaryBonus = 5 * currentStockPrice;
+    if (stakeholders.length === 1) {
+      primary.depositMoney(primaryBonus + secondaryBonus);
+      return;
+    }
     console.log({ primaryBonus, secondaryBonus });
     primary?.depositMoney(primaryBonus);
     secondary?.depositMoney(secondaryBonus);
