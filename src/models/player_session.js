@@ -14,14 +14,6 @@ export class PlayerSession {
     this.#playerIds.set(`${playerId}`, playerName);
   }
 
-  get sessions() {
-    return this.#sessions;
-  }
-
-  get playerIds() {
-    return this.#playerIds;
-  }
-
   getPlayerName(playerId) {
     return this.#playerIds.get(`${playerId}`);
   }
@@ -32,6 +24,10 @@ export class PlayerSession {
 
   hasSessionId(sessionId) {
     return this.#sessions.has(`${sessionId}`);
+  }
+
+  hasPlayerId(playerId) {
+    return this.#playerIds.has(`${playerId}`);
   }
 
   getPlayerIds() {

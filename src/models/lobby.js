@@ -1,10 +1,10 @@
-import { LOBBY_STATES } from "../config.js";
+import { LOBBY_STATES, MAX_PLAYERS, MIN_PLAYERS } from "../config.js";
 
 const { READY, WAITING, STARTED } = LOBBY_STATES;
 
 export class Lobby {
-  #minPlayers = 2;
-  #maxPlayers = 6;
+  #minPlayers = MIN_PLAYERS;
+  #maxPlayers = MAX_PLAYERS;
   #host;
   #lobbyId;
   #players;
