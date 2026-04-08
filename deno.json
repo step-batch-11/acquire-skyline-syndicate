@@ -1,11 +1,11 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch main.js",
+    "start": "deno run -A --watch main.js",
     "test": "deno test -A",
     "test:watch": "deno test -A --watch",
     "test:coverage": "deno test -A --coverage",
     "coverage:detailed": "deno coverage --detailed",
-    "DEV_MODE": "dev=true deno run -A --watch main.js"
+    "dev": "dev=true deno run -A --watch main.js"
   },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.18",

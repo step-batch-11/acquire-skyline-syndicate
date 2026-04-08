@@ -215,8 +215,6 @@ describe("Game entity tests", () => {
 
   describe("given someone place tile adjacent to two unequal hotel chains", () => {
     it("", () => {
-      // const continentalTiles = ["1a", "2a"];
-      // const imperialTiles = ["4a", "5a"];
     });
   });
 });

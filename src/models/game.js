@@ -1,6 +1,7 @@
 import { Tile } from "./tile.js";
-new Tile();
 export class Game {
+  #currentService;
+  #mergeService;
   #deck;
   #board;
   #hotels;
@@ -8,8 +9,9 @@ export class Game {
   #state;
   #players;
   #currentPlayerIndex;
+  #createMergeService;
 
-  constructor(deck, board, hotels, players) {
+  constructor(deck, board, hotels, players, createMergeService) {
     this.#deck = deck;
     this.#board = board;
     this.#hotels = hotels;
@@ -17,6 +19,7 @@ export class Game {
     this.#currentPlayer = players[this.#currentPlayerIndex];
     this.#players = players;
     this.#state = "PLACE_TILE";
+    this.#createMergeService = createMergeService;
   }
 
   init() {
@@ -73,32 +76,24 @@ export class Game {
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
-  #distributeBonus() {}
-
-  #stakeHolders(hotelName) {
-    return this.#players.filter((player) => player.hasStock(hotelName));
-  }
-
-  #mergeHotels(adjacentHotelChains) {
-    const sortedHotels = adjacentHotelChains.sort(
-      (a, b) => a.tiles.length - b.tiles.length,
+  #initiateMerge(adjacentHotelChains) {
+    console.log("inside initiate", this.#hotels, this.#board);
+    this.#mergeService = this.#createMergeService(
+      adjacentHotelChains,
+      this.#players,
+      this.#hotels,
+      this.#board,
     );
-
-    const [defunctHotel, survivingHotel] = sortedHotels.map((hotel) =>
-      this.#hotels.getHotel(hotel.name)
-    );
-    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
-    const stakeholders = this.#stakeHolders(defunctHotel.name);
-    this.#distributeBonus(stakeholders);
-    defunctHotel.dissolve();
+    this.#currentService = this.#mergeService;
   }
 
   #actionForTilePlacement(tileId) {
     const adjacentHotelChains = this.#getAdjacentHotelChains();
     if (adjacentHotelChains.length > 1) {
-      this.#mergeHotels(adjacentHotelChains);
-      this.#state = "BUY_STOCK";
-      return;
+      this.#initiateMerge(adjacentHotelChains);
+      this.#currentService.mergeHotels();
+      // this.#state = "BUY_STOCK";
+      return "BUY_STOCK";
     }
     if (this.#isBuildPossible()) {
       return "BUILD_HOTEL";

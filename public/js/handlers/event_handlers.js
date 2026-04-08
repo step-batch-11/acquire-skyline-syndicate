@@ -13,8 +13,8 @@ export const handleTilePlacement = async (
 
   const { tilesOnBoard, hotels } = await updateTiles(tile);
 
-  removeFocus(board, tilesInPlayerHand);
-  renderBoard(tilesOnBoard, hotels);
+  // removeFocus(board, tilesInPlayerHand);
+  // renderBoard(tilesOnBoard, hotels);
 };
 
 export const handleShiftTurn = async () => {

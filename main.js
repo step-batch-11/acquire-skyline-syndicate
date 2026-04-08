@@ -11,6 +11,8 @@ const main = () => {
   const lobby = new Lobby();
   const sessions = new PlayerSession();
   const gameManager = new GameManager(createGame);
+  const mockPlayers = [["1", "yash"], ["2", "pradipta"]];
+  gameManager.createGame(mockPlayers);
   const app = createApp(sessions, lobby, gameManager, isDevMode);
   Deno.serve({ port }, app.fetch);
 };

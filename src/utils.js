@@ -6,6 +6,7 @@ import { Hotels } from "./models/hotels.js";
 import { Player } from "./models/player.js";
 import { shuffle } from "@std/random/shuffle";
 import { Tile } from "./models/tile.js";
+import MergeService from "./services/merge_service.js";
 
 export const shuffleTiles = (tiles, shuffleFn = shuffle) => {
   return shuffleFn(tiles);
@@ -22,14 +23,25 @@ export const createTiles = () => {
   return tiles;
 };
 
+const createMergeService = (affectedHotels, stakeholders, hotels, board) => {
+  return new MergeService(affectedHotels, stakeholders, hotels, board);
+};
+
 export const createGame = (activePlayers) => {
   const tiles = createTiles();
 
   const deck = new Deck(shuffleTiles(tiles.map((tile) => new Tile(tile))));
   const board = new Board();
   const hotelsManager = Hotels.instantiateHotels(hotels);
+  // console.log(activePlayers);
   const players = activePlayers.map(([id, name]) => new Player(name, id));
-  const game = new Game(deck, board, hotelsManager, players);
+  const game = new Game(
+    deck,
+    board,
+    hotelsManager,
+    players,
+    createMergeService,
+  );
   game.init();
   return game;
 };
