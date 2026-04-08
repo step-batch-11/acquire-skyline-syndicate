@@ -13,8 +13,7 @@ export class GameController {
     // const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
     //   playerIds.includes(playerId)
     // );
-    console.log({ playerIdsMap: [...playerIdsMap] });
-    gameManager.createGame([...playerIdsMap]);
+    gameManager.createGame(playerIdsMap);
     lobby.transitionToStart();
     return c.redirect("/pages/lobby.html", 302);
   }
