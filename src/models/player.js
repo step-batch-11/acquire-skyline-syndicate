@@ -43,6 +43,10 @@ export class Player {
     };
   }
 
+  getStockCount(hotelName) {
+    return this.#stocks[hotelName];
+  }
+
   addInitialTiles(tiles) {
     this.#tiles.push(...tiles);
   }
@@ -77,6 +81,19 @@ export class Player {
       money: this.#money,
       stocks: structuredClone(this.#stocks),
     };
+  }
+
+  depositMoney(money) {
+    this.#money = this.#money + money;
+  }
+
+  removeHotelStocks(hotelName) {
+    delete this.#stocks[hotelName];
+  }
+
+  sellStocks(hotelName, price) {
+    delete this.#stocks[hotelName];
+    this.#money = this.#money + price;
   }
 
   loadGameState(playerDetails) {

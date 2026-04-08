@@ -27,6 +27,6 @@ export const handleShiftTurn = (c) => {
   const game = gameManager.getGame();
   const playerId = extractRequestedPlayerId(c);
   game.shiftTurn(playerId);
-  const currentGameState = game.currentState(c);
-  return context.json(currentGameState);
+  const currentGameState = game.currentState(playerId);
+  return c.json(currentGameState);
 };

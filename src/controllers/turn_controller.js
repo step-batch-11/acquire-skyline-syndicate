@@ -2,10 +2,10 @@ import { getCookie } from "hono/cookie";
 
 export const extractRequestedPlayerId = (c) => {
   const sessions = c.get("sessions");
-  console.log(sessions);
   const sessionId = getCookie(c, "sessionId");
   return sessions.getPlayerId(sessionId);
 };
+
 export class TurnController {
   currentState(c) {
     const gameManager = c.get("gameManager");

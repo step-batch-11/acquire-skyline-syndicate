@@ -20,4 +20,4 @@
 # code smell :
 
 - same name for frontend and backend files.
-- bad test cases, mocking data rather than mocking.
+- bad test cases, mocking half data.
