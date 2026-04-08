@@ -15,9 +15,9 @@ const renderBuffer = (state) => {
 
   const element = cloneElement(bufferTemplateId);
   if (state === READY) {
-    const h3 = element.querySelector("h3")
-    h3.textContent ="";
-    h3.textContent = "START THE GAME OR WAIT FOR OTHER PLAYERS TO JOIN"
+    const h3 = element.querySelector("h3");
+    h3.textContent = "";
+    h3.textContent = "START THE GAME OR WAIT FOR OTHER PLAYERS TO JOIN";
   }
   bufferContainer.innerHTML = "";
   bufferContainer.appendChild(element);

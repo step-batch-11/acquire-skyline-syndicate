@@ -1,5 +1,5 @@
 export const LOBBY_STATES = {
-  CREATED:"created",
+  CREATED: "created",
   READY: "ready",
   WAITING: "waiting",
   STARTED: "started",
