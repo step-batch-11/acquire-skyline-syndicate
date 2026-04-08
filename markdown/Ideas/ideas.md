@@ -21,3 +21,17 @@
 
 - same name for frontend and backend files.
 - bad test cases, mocking half data.
+
+# Problem with dev mode :
+
+1. sessionId is changing everytime you login again.
+2. So when you load the data, there is no way for the currentGame to understand
+   which player to choose
+
+# fix :
+
+1. save sessions id aswell, When you load the game just put those sessions in
+   the browser cookie.
+2. Decide the behaviour of sessionId generator.
+
+- So you can assign the sessions that to the state.json file.

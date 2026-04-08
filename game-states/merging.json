@@ -142,7 +142,7 @@
   ],
   "players": [
     {
-      "id": "0",
+      "id": "1",
       "name": "yash",
       "tiles": [
         { "id": "4h" },
@@ -159,7 +159,7 @@
       "stocks": { "festival": 1, "american": 4 }
     },
     {
-      "id": "1",
+      "id": "2",
       "name": "pradipta",
       "tiles": [
         { "id": "5h" },
