@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { assertEquals} from "@std/assert";
+import { assertEquals } from "@std/assert";
 import { Hotel } from "../../src/models/hotel.js";
 import { Tile } from "../../src/models/tile.js";
 
@@ -228,7 +228,7 @@ describe("Hotel entity tests", () => {
     });
   });
 
-  it('loading the game state', () => {
+  it("loading the game state", () => {
     const hotelName = "Tower";
     const scale = 0;
     const hotel = new Hotel(hotelName, scale);
@@ -237,9 +237,9 @@ describe("Hotel entity tests", () => {
       tiles: [],
       stocks: 18,
       priceOffset: 0,
-      originTile: { id: '1a' },
+      originTile: { id: "1a" },
     };
     hotel.loadGameState(hotelData);
     assertEquals(hotel.getHotelState(), hotelData);
-  })
+  });
 });

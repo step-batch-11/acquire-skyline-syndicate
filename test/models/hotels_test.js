@@ -102,8 +102,8 @@ describe("Hotels entity tests", () => {
     });
   });
 
-  describe('save the state of the hotel', () => {
-    it('1. getting the state of the ', () => {
+  describe("save the state of the hotel", () => {
+    it("1. getting the state of the ", () => {
       const data = hotelsInstance.getHotelsState();
       const expectedData = [
         {
@@ -111,39 +111,39 @@ describe("Hotels entity tests", () => {
           tiles: [],
           stocks: 25,
           priceOffset: 0,
-          originTile: undefined
+          originTile: undefined,
         },
         {
           name: "Tower",
           tiles: [],
           stocks: 25,
           priceOffset: 0,
-          originTile: undefined
-        }
+          originTile: undefined,
+        },
       ];
       assertEquals(data, expectedData);
-    })
+    });
 
-    it('loading the game state of the hotels', () => {
+    it("loading the game state of the hotels", () => {
       const data = [
         {
           name: "sackson",
           tiles: [],
           stocks: 20,
           priceOffset: 0,
-          originTile: undefined
+          originTile: undefined,
         },
         {
           name: "Tower",
           tiles: [],
           stocks: 1,
           priceOffset: 0,
-          originTile: {id : '1a'}
-        }
+          originTile: { id: "1a" },
+        },
       ];
       hotelsInstance.loadGameState(data);
       const result = hotelsInstance.getHotelsState();
       assertEquals(result, data);
-    })
-  })
+    });
+  });
 });
