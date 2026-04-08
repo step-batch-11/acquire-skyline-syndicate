@@ -78,10 +78,12 @@ export class Hotels {
   // Have method calculateMoney and extract things outside
 
   calculateMoneyToDeduct(cart) {
-    return cart.reduce((calculatedMoney, { hotelName, selectedStocks }) => {
-      return (calculatedMoney += this.#hotels[hotelName].calculateStockPrice() *
-        selectedStocks);
-    }, 0);
+    return cart.reduce(
+      (calculatedMoney, { hotelName, selectedStocks }) =>
+        calculatedMoney +
+        this.#hotels[hotelName].calculateStockPrice() * selectedStocks,
+      0,
+    );
   }
 
   isHotelActive(hotelName) {
