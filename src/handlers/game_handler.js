@@ -1,7 +1,8 @@
-export const handleShiftTurn = (context) => {
-  const gameManager = context.get("gameManager");
+export const handleShiftTurn = (c) => {
+  const gameManager = c.get("gameManager");
   const game = gameManager.getGame();
-  game.shiftTurn();
+  const playerId = extractRequestedPlayerId(c);
+  game.shiftTurn(playerId);
   const currentGameState = game.currentState();
-  return context.json(currentGameState);
+  return c.json(currentGameState);
 };

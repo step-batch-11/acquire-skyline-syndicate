@@ -1,6 +1,7 @@
+import { extractRequestedPlayerId } from "./turn_controller.js";
+
 export class GameController {
-  constructor() {
-  }
+  constructor() {}
 
   startGame(c) {
     const gameManager = c.get("gameManager");
@@ -21,10 +22,11 @@ export class GameController {
   }
 }
 
-export const handleShiftTurn = (context) => {
-  const gameManager = context.get("gameManager");
+export const handleShiftTurn = (c) => {
+  const gameManager = c.get("gameManager");
   const game = gameManager.getGame();
-  game.shiftTurn();
-  const currentGameState = game.currentState();
+  const playerId = extractRequestedPlayerId(c);
+  game.shiftTurn(playerId);
+  const currentGameState = game.currentState(c);
   return context.json(currentGameState);
 };

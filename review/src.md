@@ -188,3 +188,29 @@
 - currentState mutates state while reading (side-effect in getter)
 
 ---
+
+## models/player.js
+
+### Naming
+
+- noOfStocks → rename to stockCount
+
+### Redundancy
+
+- getTileIds - getter
+
+---
+
+## models/tile.js
+
+### Naming
+
+- splitTile → rename to parseTileId
+
+### Consistency
+
+- tile vs tileId usage inconsistent across methods
+
+### Design
+
+- public id field while others are private (inconsistent encapsulation)

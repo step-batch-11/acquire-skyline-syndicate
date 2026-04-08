@@ -15,8 +15,8 @@ describe("Hotel entity tests", () => {
     });
   });
 
-  let tiles;
   describe("tileIncludes", () => {
+    let tiles;
     beforeEach(() => {
       tiles = ["2a", "1a"].map((id) => new Tile(id));
     });
@@ -46,32 +46,34 @@ describe("Hotel entity tests", () => {
     });
   });
 
-  describe("calculateStockPrice for sackson", () => {
-    let hotel;
-    beforeEach(() => {
-      hotel = new Hotel("sackson", 0);
-    });
-    it("should return 200 as stock price for 2 tiles  of sackson", () => {
+  describe("calculateStockPrice", () => {
+    it("should return 200 as stock price for 2 tiles of small size hotel", () => {
+      const hotel = new Hotel("sackson", 0);
       hotel.addTiles(["1a", "2a"]);
       assertEquals(hotel.calculateStockPrice(), 200);
     });
-    it("should return 300 as stock price for 3 tiles  of sackson", () => {
+    it("should return 300 as stock price for 3 tiles of small size hotel", () => {
+      const hotel = new Hotel("tower", 0);
       hotel.addTiles(["1a", "2a", "3a"]);
       assertEquals(hotel.calculateStockPrice(), 300);
     });
-    it("should return 400 as stock price for 4 tiles  of sackson", () => {
+    it("should return 500 as stock price for 4 tiles of medium size hotel", () => {
+      const hotel = new Hotel("american", 100);
       hotel.addTiles(["1a", "2a", "3a", "4a"]);
-      assertEquals(hotel.calculateStockPrice(), 400);
-    });
-    it("should return 500 as stock price for 5 tiles  of sackson", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a"]);
       assertEquals(hotel.calculateStockPrice(), 500);
     });
-    it("should return 600 as stock price for 6-10 tiles chain of sackson", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a"]);
+    it("should return 600 as stock price for 5 tiles  of medium size hotel", () => {
+      const hotel = new Hotel("festival", 100);
+      hotel.addTiles(["1a", "2a", "3a", "4a", "5a"]);
       assertEquals(hotel.calculateStockPrice(), 600);
     });
-    it("should return 700 as stock price for 11-20 tiles chain of sackson", () => {
+    it("should return 800 as stock price for 6-10 tiles of large size hotel", () => {
+      const hotel = new Hotel("continental", 200);
+      hotel.addTiles(["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a"]);
+      assertEquals(hotel.calculateStockPrice(), 800);
+    });
+    it("should return 900 as stock price for 11-20 tiles chain of large size hotel", () => {
+      const hotel = new Hotel("imperial", 200);
       hotel.addTiles([
         "1a",
         "2a",
@@ -85,9 +87,11 @@ describe("Hotel entity tests", () => {
         "11a",
         "12a",
       ]);
-      assertEquals(hotel.calculateStockPrice(), 700);
+      assertEquals(hotel.calculateStockPrice(), 900);
     });
-    it("should return 800 as stock price for 21-30 tiles chain of sackson", () => {
+    it("should return 900 as stock price for 21-30 tiles chain of medium size hotel", () => {
+      const hotel = new Hotel("worldwide", 100);
+
       hotel.addTiles([
         "1a",
         "1b",
@@ -112,9 +116,11 @@ describe("Hotel entity tests", () => {
         "12a",
         "12b",
       ]);
-      assertEquals(hotel.calculateStockPrice(), 800);
+      assertEquals(hotel.calculateStockPrice(), 900);
     });
-    it("should return 900 as stock price for 31-40 tiles chain of sackson", () => {
+    it("should return 900 as stock price for 31-40 tiles chain of small size hotel", () => {
+      const hotel = new Hotel("sackson", 0);
+
       hotel.addTiles([
         "1a",
         "1b",
@@ -152,319 +158,9 @@ describe("Hotel entity tests", () => {
       ]);
       assertEquals(hotel.calculateStockPrice(), 900);
     });
-    it("should return 900 as stock price for more than 41 tiles chain of sackson", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "1c",
-        "1d",
-        "2a",
-        "2b",
-        "2c",
-        "2d",
-        "3a",
-        "3b",
-        "3c",
-        "3d",
-        "4a",
-        "4b",
-        "4c",
-        "4d",
-        "5a",
-        "5b",
-        "5c",
-        "5d",
-        "6a",
-        "6b",
-        "6c",
-        "6d",
-        "7a",
-        "7b",
-        "7c",
-        "7d",
-        "8a",
-        "8b",
-        "8c",
-        "8d",
-        "9a",
-        "9b",
-        "9c",
-        "9d",
-        "11a",
-        "11b",
-        "11c",
-        "11d",
-        "12a",
-        "12b",
-        "12c",
-        "12d",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 1000);
-    });
-  });
-  describe("calculateStockPrice for festival", () => {
-    let hotel;
-    beforeEach(() => {
-      hotel = new Hotel("festival", 100);
-    });
-    it("should return 200 as stock price for 2 tiles  of festival", () => {
-      hotel.addTiles(["1a", "2a"]);
-      assertEquals(hotel.calculateStockPrice(), 300);
-    });
-    it("should return 300 as stock price for 3 tiles  of festival", () => {
-      hotel.addTiles(["1a", "2a", "3a"]);
-      assertEquals(hotel.calculateStockPrice(), 400);
-    });
-    it("should return 400 as stock price for 4 tiles  of festival", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a"]);
-      assertEquals(hotel.calculateStockPrice(), 500);
-    });
-    it("should return 500 as stock price for 5 tiles  of festival", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a"]);
-      assertEquals(hotel.calculateStockPrice(), 600);
-    });
-    it("should return 600 as stock price for 6-10 tiles chain of festival", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a"]);
-      assertEquals(hotel.calculateStockPrice(), 700);
-    });
-    it("should return 700 as stock price for 11-20 tiles chain of festival", () => {
-      hotel.addTiles([
-        "1a",
-        "2a",
-        "3a",
-        "4a",
-        "5a",
-        "6a",
-        "7a",
-        "8a",
-        "9a",
-        "11a",
-        "12a",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 800);
-    });
-    it("should return 800 as stock price for 21-30 tiles chain of festival", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "2a",
-        "2b",
-        "3a",
-        "3b",
-        "4a",
-        "4b",
-        "5a",
-        "5b",
-        "6a",
-        "6b",
-        "7a",
-        "7b",
-        "8a",
-        "8b",
-        "9a",
-        "9b",
-        "11a",
-        "11b",
-        "12a",
-        "12b",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 900);
-    });
-    it("should return 900 as stock price for more than 40 tiles chain of festival", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "1c",
-        "1d",
-        "2a",
-        "2b",
-        "2c",
-        "2d",
-        "3a",
-        "3b",
-        "3c",
-        "3d",
-        "4a",
-        "4b",
-        "4c",
-        "4d",
-        "5a",
-        "5b",
-        "5c",
-        "5d",
-        "6a",
-        "6b",
-        "6c",
-        "6d",
-        "7a",
-        "7b",
-        "7c",
-        "7d",
-        "8a",
-        "8b",
-        "8c",
-        "8d",
-        "9a",
-        "9b",
-        "9c",
-        "9d",
-        "11a",
-        "11b",
-        "11c",
-        "11d",
-        "12a",
-        "12b",
-        "12c",
-        "12d",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 1100);
-    });
-    it("should return 900 as stock price for more than 31-40 tiles chain of festival", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "1c",
-        "2a",
-        "2b",
-        "2c",
-        "3a",
-        "3b",
-        "3c",
-        "4a",
-        "4b",
-        "4c",
-        "5a",
-        "5b",
-        "5c",
-        "6a",
-        "6b",
-        "6c",
-        "7a",
-        "7b",
-        "7c",
-        "8a",
-        "8b",
-        "8c",
-        "9a",
-        "9b",
-        "9c",
-        "11a",
-        "11b",
-        "11c",
-        "12a",
-        "12b",
-        "12c",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 1000);
-    });
-  });
-  describe("calculateStockPrice for imperial", () => {
-    let hotel;
-    beforeEach(() => {
-      hotel = new Hotel("imperial", 200);
-    });
-    it("should return 200 as stock price for 2 tiles  of imperial", () => {
-      hotel.addTiles(["1a", "2a"]);
-      assertEquals(hotel.calculateStockPrice(), 400);
-    });
-    it("should return 300 as stock price for 3 tiles  of imperial", () => {
-      hotel.addTiles(["1a", "2a", "3a"]);
-      assertEquals(hotel.calculateStockPrice(), 500);
-    });
-    it("should return 400 as stock price for 4 tiles  of imperial", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a"]);
-      assertEquals(hotel.calculateStockPrice(), 600);
-    });
-    it("should return 500 as stock price for 5 tiles  of imperial", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a"]);
-      assertEquals(hotel.calculateStockPrice(), 700);
-    });
-    it("should return 600 as stock price for 6-10 tiles chain of imperial", () => {
-      hotel.addTiles(["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a"]);
-      assertEquals(hotel.calculateStockPrice(), 800);
-    });
-    it("should return 700 as stock price for 11-20 tiles chain of imperial", () => {
-      hotel.addTiles([
-        "1a",
-        "2a",
-        "3a",
-        "4a",
-        "5a",
-        "6a",
-        "7a",
-        "8a",
-        "9a",
-        "11a",
-        "12a",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 900);
-    });
-    it("should return 800 as stock price for 21-30 tiles chain of imperial", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "2a",
-        "2b",
-        "3a",
-        "3b",
-        "4a",
-        "4b",
-        "5a",
-        "5b",
-        "6a",
-        "6b",
-        "7a",
-        "7b",
-        "8a",
-        "8b",
-        "9a",
-        "9b",
-        "11a",
-        "11b",
-        "12a",
-        "12b",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 1000);
-    });
-    it("should return 900 as stock price for 31-40 tiles chain of imperial", () => {
-      hotel.addTiles([
-        "1a",
-        "1b",
-        "1c",
-        "2a",
-        "2b",
-        "2c",
-        "3a",
-        "3b",
-        "3c",
-        "4a",
-        "4b",
-        "4c",
-        "5a",
-        "5b",
-        "5c",
-        "6a",
-        "6b",
-        "6c",
-        "7a",
-        "7b",
-        "7c",
-        "8a",
-        "8b",
-        "8c",
-        "9a",
-        "9b",
-        "9c",
-        "11a",
-        "11b",
-        "11c",
-        "12a",
-        "12b",
-        "12c",
-      ]);
-      assertEquals(hotel.calculateStockPrice(), 1100);
-    });
-    it("should return 900 as stock price for more than 40 tiles chain of imperial", () => {
+    it("should return 1200 as stock price for more than 41 tiles chain of large size hotel", () => {
+      const hotel = new Hotel("imperial", 200);
+
       hotel.addTiles([
         "1a",
         "1b",

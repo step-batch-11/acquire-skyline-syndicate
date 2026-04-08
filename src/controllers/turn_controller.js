@@ -1,13 +1,16 @@
 import { getCookie } from "hono/cookie";
 
+export const extractRequestedPlayerId = (c) => {
+  const sessions = c.get("sessions");
+  console.log(sessions);
+  const sessionId = getCookie(c, "sessionId");
+  return sessions.getPlayerId(sessionId);
+};
 export class TurnController {
   currentState(c) {
     const gameManager = c.get("gameManager");
     const game = gameManager.getGame();
-    const sessions = c.get("sessions");
-    const sessionId = getCookie(c, "sessionId");
-    const playerId = sessions.getPlayerId(sessionId);
-
+    const playerId = extractRequestedPlayerId(c);
     return c.json(game.currentState(playerId));
   }
 
@@ -15,7 +18,8 @@ export class TurnController {
     const { tile } = await c.req.json();
     const gameManager = c.get("gameManager");
     const game = gameManager.getGame();
-    game.placeTile(tile);
+    const playerId = extractRequestedPlayerId(c);
+    game.placeTile(playerId, tile);
     return c.json({ message: "Tile placed successfully" });
   }
 
@@ -23,7 +27,8 @@ export class TurnController {
     const { hotelToFound } = await c.req.json();
     const gameManager = c.get("gameManager");
     const game = gameManager.getGame();
-    game.buildHotel(hotelToFound);
+    const playerId = extractRequestedPlayerId(c);
+    game.buildHotel(playerId, hotelToFound);
     return c.json({ message: "Tile placed successfully" });
   }
 
@@ -31,7 +36,8 @@ export class TurnController {
     const cart = await c.req.json();
     const gameManager = c.get("gameManager");
     const game = gameManager.getGame();
-    const res = game.buyStocks(cart);
+    const playerId = extractRequestedPlayerId(c);
+    const res = game.buyStocks(playerId, cart);
     return c.json(res);
   }
 }
