@@ -10,6 +10,8 @@ body {
 
 main {
   height: 100%;
+  display: flex;
+  justify-content: center;
   background: url("./acquire_theme.png");
   background-size: 100% 100%;
 }
@@ -17,9 +19,8 @@ main {
 .game-heading {
   position: relative;
   top: 0%;
-  left: 12%;
   font-weight: 900;
-  font-size: 14em;
+  font-size: 10em;
   letter-spacing: 0.12em;
   color: white;
   z-index: 0;
