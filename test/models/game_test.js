@@ -238,21 +238,19 @@ describe("Game entity tests", () => {
         "continental",
       );
 
-      assertEquals(
-        hotelTiles.length + 1,
-        updatedHotel.tiles.length,
-      );
+      assertEquals(hotelTiles.length + 1, updatedHotel.tiles.length);
     });
   });
 
-  describe("ShiftTurn", () => {
+  describe("shiftTurn", () => {
     it("should successfully shift turn to next player", () => {
       const state = "SHIFT_TURN";
       const currentPlayerIndex = 0;
       const deck = [{ id: "7e" }, { id: "8e" }];
-      const players = [{ id: 1, name: "yash" }, { id: 2, name: "som" }].map(
-        ({ id, name }) => new Player(name, id),
-      );
+      const players = [
+        { id: 1, name: "yash" },
+        { id: 2, name: "som" },
+      ].map(({ id, name }) => new Player(name, id));
 
       const placedTileIds = ["1a", "2a", "2b", "3c"].map(
         (tileId) => new Tile(tileId),
@@ -272,6 +270,424 @@ describe("Game entity tests", () => {
       game.shiftTurn(1);
       const nextPlayer = game.currentState(1).currentPlayer;
       assertEquals(nextPlayer.name, "som");
+    });
+  });
+
+  describe("isGameEnd", () => {
+    let state;
+    let currentPlayerIndex;
+    let deck;
+    let placedTileIds;
+    let lastTile;
+
+    beforeEach(() => {
+      state = "BUY_STOCK";
+      currentPlayerIndex = 1;
+      deck = [{ id: "7e" }, { id: "8e" }];
+      placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+      lastTile = new Tile("3a");
+    });
+
+    it("should return false when hotels are not stable", () => {
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: ["1a", "2a"].map((tileId) => new Tile(tileId)),
+          stocks: 24,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+      ];
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+
+      assertEquals(game.isGameEnd(), false);
+    });
+
+    it("should return true when all hotels are stable", () => {
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11e"),
+          priceOffset: 200,
+        },
+        {
+          name: "american",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("12f"),
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10a"),
+          priceOffset: 100,
+        },
+        {
+          name: "festival",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("13b"),
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10e"),
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11f"),
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+
+      assertEquals(game.isGameEnd(), true);
+    });
+
+    it("should return false when there is no 41 hotel chain", () => {
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("11e"),
+          priceOffset: 200,
+        },
+        {
+          name: "american",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("12f"),
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10a"),
+          priceOffset: 100,
+        },
+        {
+          name: "festival",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("13b"),
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10e"),
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11f"),
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      assertEquals(game.isGameEnd(), false);
+    });
+
+    it("should return true when there is one hotel of 41 hotel chain", () => {
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("11e"),
+          priceOffset: 200,
+        },
+        {
+          name: "american",
+          tiles: Array.from({ length: 41 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("12f"),
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10a"),
+          priceOffset: 100,
+        },
+        {
+          name: "festival",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("13b"),
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10e"),
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11f"),
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      assertEquals(game.isGameEnd(), true);
+    });
+
+    it("should return false when all hands are not empty", () => {
+      const players = [
+        { id: 1, name: "yash" },
+        { id: 2, name: "som" },
+        { id: 3, name: "dilli" },
+      ].map(({ id, name }) => new Player(name, id));
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("11e"),
+          priceOffset: 200,
+        },
+        {
+          name: "american",
+          tiles: Array.from({ length: 10 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("12f"),
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10a"),
+          priceOffset: 100,
+        },
+        {
+          name: "festival",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("13b"),
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10e"),
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11f"),
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+      assertEquals(game.isGameEnd(), false);
+    });
+
+    it("should return true when all hands are empty", () => {
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: [],
+          stocks: 12,
+          originTile: new Tile("11e"),
+          priceOffset: 200,
+        },
+        {
+          name: "american",
+          tiles: Array.from({ length: 10 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("12f"),
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10a"),
+          priceOffset: 100,
+        },
+        {
+          name: "festival",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("13b"),
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("10e"),
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: Array.from({ length: 11 }, () => 1),
+          stocks: 12,
+          originTile: new Tile("11f"),
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      assertEquals(game.isGameEnd(), true);
     });
   });
 });

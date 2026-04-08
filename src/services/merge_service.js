@@ -18,7 +18,7 @@ export default class MergeService {
 
   #distributeBonus(stakeholders, defunctHotel) {
     const [primary, secondary] = stakeholders.sort((a, b) =>
-      a.getStockCount(defunctHotel.name) - b.getStockCount(defunctHotel.name)
+      b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name)
     );
     const currentStockPrice = defunctHotel.calculateStockPrice();
     const primaryBonus = 10 * currentStockPrice;
