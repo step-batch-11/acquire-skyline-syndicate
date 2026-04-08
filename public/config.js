@@ -1,10 +1,10 @@
-export const lobbyStates = {
+export const LOBBY_STATES = {
   READY: "ready",
   WAITING: "waiting",
   STARTED: "started",
 };
 
-export const times = {
-  ping: 1000,
-  startTimer: 3000,
+export const TIMES = {
+  PING: 1000,
+  START_TIMER: 3000,
 };

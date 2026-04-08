@@ -88,4 +88,46 @@ describe("Player entity tests", () => {
       assertEquals(playerInstance.hasEnoughMoney(7000), false);
     });
   });
+
+  describe("getting the game state", () => {
+    it("1. getting the game state of the player", () => {
+      const playerState = playerInstance.getPlayerState();
+      const exceptedDetails = {
+        id: 1,
+        name: "Tom",
+        tiles: [],
+        stocks: {},
+        money: 6000,
+      };
+      assertEquals(playerState, exceptedDetails);
+    });
+
+    it("2. getting the player state after some actions", () => {
+      playerInstance.addStocks("sackson", 3);
+      const playerState = playerInstance.getPlayerState();
+      const exceptedDetails = {
+        id: 1,
+        name: "Tom",
+        tiles: [],
+        stocks: { "sackson": 3 },
+        money: 6000,
+      };
+      assertEquals(playerState, exceptedDetails);
+    });
+  });
+
+  describe("loading the player state", () => {
+    it("1.loading the player details", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { "sackson": 3 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      const details = playerInstance.getDetails();
+      assertEquals(details, playerDetails);
+    });
+  });
 });

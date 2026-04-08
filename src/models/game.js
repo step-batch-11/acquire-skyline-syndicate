@@ -138,7 +138,6 @@ export class Game {
     ) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#actionForTilePlacement(tileId);
-
       const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
         playerTiles,

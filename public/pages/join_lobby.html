@@ -1,26 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <title>ACQUIRE</title>
+    <link rel="stylesheet" href="../styles/join_lobby.css" />
+    <script type="module" src="../js/join_lobby.js"></script>
+  </head>
 
-<head>
-  <title>ACQUIRE</title>
-  <link rel="stylesheet" href="../styles/join_lobby.css">
-</head>
+  <body>
+    <template id="lobby-status-template">
+      <h1></h1>
+    </template>
 
-<body>
+    <header>
+      <h1>ACQUIRE</h1>
+      <p class="tagline">
+        Build Empires. Acquire Corporations. Dominate the Market.
+      </p>
+    </header>
 
-  <header>
-    <h1>ACQUIRE</h1>
-    <p class="tagline">Build Empires. Acquire Corporations. Dominate the Market.</p>
-  </header>
+    <section class="join-lobby-container">
+      <form action="/lobby/join-lobby" method="post" class="join-lobby-form">
+        <label for="lobby_id">ENTER LOBBY ID :</label>
+        <input
+          type="text"
+          name="lobby_id"
+          id="lobby_id"
+          placeholder="Lobby Id"
+          required
+        />
+        <button type="submit">ENTER</button>
+      </form>
+    </section>
 
-  <section class="join-lobby-container">
-    <form action="/lobby/join-lobby" method="post" class="join-lobby-form">
-      <label for="lobby_id">ENTER LOBBY ID :</label>
-      <input type="text" name="lobby_id" id="lobby_id" placeholder="Lobby Id" required>
-      <button type="submit">ENTER</button>
-    </form>
-  </section>
-
-</body>
-
+    <section id="lobby-status-container"></section>
+  </body>
 </html>
