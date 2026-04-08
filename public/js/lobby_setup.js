@@ -1,3 +1,7 @@
+import { LOBBY_STATES } from "../config.js";
+
+const { WAITING, READY } = LOBBY_STATES;
+
 export const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
   return template.content.querySelector("*").cloneNode(true);
@@ -5,7 +9,7 @@ export const cloneElement = (templateId) => {
 
 const renderBuffer = (state) => {
   const bufferContainer = document.querySelector("#buffer-container");
-  const bufferTemplateId = state === "waiting"
+  const bufferTemplateId = [WAITING, READY].includes(state)
     ? "#waiting-icon-template"
     : "#starting-icon-template";
 

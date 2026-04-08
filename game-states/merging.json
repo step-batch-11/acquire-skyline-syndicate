@@ -107,7 +107,7 @@
         { "id": "10f" },
         { "id": "10g" }
       ],
-      "stocks": 24,
+      "stocks": 20,
       "priceOffset": 100,
       "originTile": { "id": "11f" }
     },
@@ -145,9 +145,6 @@
       "id": "1",
       "name": "yash",
       "tiles": [
-        { "id": "4h" },
-        { "id": "3i" },
-        { "id": "7i" },
         { "id": "3d" },
         { "id": "1b" },
         { "id": "10b" },
@@ -162,9 +159,6 @@
       "id": "2",
       "name": "pradipta",
       "tiles": [
-        { "id": "5h" },
-        { "id": "2i" },
-        { "id": "4i" },
         { "id": "8i" },
         { "id": "4e" },
         { "id": "3f" },
