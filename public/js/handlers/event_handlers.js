@@ -1,20 +1,13 @@
 import { updateTiles } from "../request.js";
-import { removeFocus } from "../utils.js";
-import { renderBoard } from "../ui_renderers.js";
 
 export const TOTAL_SELECTED_STOCKS = [];
 
 export const handleTilePlacement = async (
-  board,
   tileContainer,
-  tilesInPlayerHand,
 ) => {
   const tile = tileContainer.id.split("-")[1];
 
-  const { tilesOnBoard, hotels } = await updateTiles(tile);
-
-  removeFocus(board, tilesInPlayerHand);
-  renderBoard(tilesOnBoard, hotels);
+  await updateTiles(tile);
 };
 
 export const handleShiftTurn = async () => {

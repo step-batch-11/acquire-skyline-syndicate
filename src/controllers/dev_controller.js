@@ -16,10 +16,11 @@ export const saveGameState = async (c) => {
 
 export const loadGameState = async (c) => {
   const gameManager = c.get("gameManager");
+  const lobby = c.get("lobby");
   const game = gameManager.getGame();
   const fileName = await c.req.query("name");
   const jsondata = Deno.readTextFileSync(`./game-states/${fileName}.json`);
-  const data = createInstances(JSON.parse(jsondata));
+  const data = createInstances(JSON.parse(jsondata), lobby);
   game.loadGameState(data);
   return c.redirect("/pages/game.html");
 };
@@ -33,7 +34,7 @@ const createInstances = (data) => {
   });
 
   data.players = data.players.map((playerDetails) => {
-    const player = new Player();
+    const player = new Player(playerDetails.name, playerDetails.id);
     player.loadGameState(playerDetails);
     return player;
   });

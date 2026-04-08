@@ -75,8 +75,6 @@ export class Hotels {
     });
   }
 
-  // Have method calculateMoney and extract things outside
-
   calculateMoneyToDeduct(cart) {
     return cart.reduce(
       (calculatedMoney, { hotelName, selectedStocks }) =>

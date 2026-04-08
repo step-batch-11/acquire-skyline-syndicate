@@ -8,6 +8,7 @@ export class PlayerSession {
 
   setSession(sessionId, playerId) {
     this.#sessions.set(`${sessionId}`, playerId);
+    console.log([...this.#playerIds]);
   }
 
   setPlayerId(playerId, playerName) {

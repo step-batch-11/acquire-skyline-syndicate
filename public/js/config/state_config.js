@@ -32,6 +32,6 @@ export const gameStates = {
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
-
+  console.log(state);
   gameStates[state](gameData);
 };

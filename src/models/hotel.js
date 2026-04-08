@@ -12,6 +12,10 @@ export class Hotel {
     this.#priceOffset = priceOffset;
   }
 
+  get name() {
+    return this.#name;
+  }
+
   #getNumberOfTiles() {
     const count = this.#tiles.length;
 

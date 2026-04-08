@@ -1,14 +1,15 @@
 import { getCookie, setCookie } from "hono/cookie";
 
 export class LoginController {
-  constructor() {
+  #idGenerator;
+  constructor(idGenerator = Date.now) {
+    this.#idGenerator = idGenerator;
   }
 
-  async login(c) {
-    const formData = await c.req.formData();
+  login(c, formData) {
     const playerName = formData.get("player_name");
     const sessionId = crypto.randomUUID();
-    const playerId = crypto.randomUUID();
+    const playerId = this.#idGenerator();
     const sessions = c.get("sessions");
     sessions.setSession(sessionId, playerId);
     sessions.setPlayerId(playerId, playerName);
