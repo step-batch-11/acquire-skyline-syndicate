@@ -195,26 +195,83 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe("isExpansion", () => {
-    it.ignore("should return true if expansion is possible", () => {
-      game.init();
-      const initialData = game.currentState(1);
-      game.placeTile(1, initialData.currentPlayer.tiles[0]);
-      game.placeTile(1, initialData.currentPlayer.tiles[0]);
-      game.buildHotel("sackson");
-      const hotel = game
-        .currentState(1)
-        .hotels.find(({ name }) => name === "sackson");
-      game.placeTile(1, initialData.currentPlayer.tiles[0]);
-      const updatedHotel = game
-        .currentState(1)
-        .hotels.find(({ name }) => name === "sackson");
-      assertEquals(hotel.tiles.length + 1, updatedHotel.tiles.length);
+  describe("expandHotel", () => {
+    it("should expand hotel successfully", () => {
+      const state = "PLACE_TILE";
+      const currentPlayerIndex = 1;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const hotelTiles = ["1a", "2a"].map((tileId) => new Tile(tileId));
+      const lastTile = new Tile("9a");
+      const hotels = [
+        {
+          name: "continental",
+          tiles: [...hotelTiles],
+          stocks: 24,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        hotels: [...hotels],
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      game.expandHotel("2b");
+      const findHotel = (hotels, hotelName) =>
+        hotels.find(({ name }) => name === hotelName);
+
+      const updatedHotel = findHotel(
+        game.currentState(1).hotels,
+        "continental",
+      );
+
+      assertEquals(
+        hotelTiles.length + 1,
+        updatedHotel.tiles.length,
+      );
     });
   });
 
-  describe("given someone place tile adjacent to two unequal hotel chains", () => {
-    it("", () => {
+  describe("ShiftTurn", () => {
+    it("should successfully shift turn to next player", () => {
+      const state = "SHIFT_TURN";
+      const currentPlayerIndex = 0;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }, { id: 2, name: "som" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const placedTileIds = ["1a", "2a", "2b", "3c"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const lastTile = new Tile("3a");
+
+      game.loadGameState({
+        state,
+        hotels: hotelsData,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      game.shiftTurn(1);
+      const nextPlayer = game.currentState(1).currentPlayer;
+      assertEquals(nextPlayer.name, "som");
     });
   });
 });
