@@ -36,7 +36,6 @@ export const createApp = (sessions, lobbyInstance, gameManager, isDevMode) => {
   app.route("/login", loginRouter);
 
   app.post("/shift-turn", handleShiftTurn);
-  // app.post("/login", login);
 
   if (isDevMode) {
     app.get("/save", saveGameState);

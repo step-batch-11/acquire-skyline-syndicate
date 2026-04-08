@@ -1,4 +1,5 @@
 import { handleCartUpdation } from "./handlers/event_handlers.js";
+import { renderLobbyMsg } from "./lobby_setup.js";
 import { postData } from "./request.js";
 import {
   renderBankSection,
@@ -70,5 +71,25 @@ export const addListenerToStartBtn = (startBtn) => {
   startBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     await fetch("/game/start-game");
+  });
+};
+
+export const addListenerToJoinLobbyForm = (form) => {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const response = await fetch(form.action, {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.isDone) {
+      globalThis.location.href = data.url;
+    } else {
+      renderLobbyMsg(data.msg);
+    }
   });
 };

@@ -47,3 +47,13 @@ export const renderLobby = (state, lobbyDetails) => {
   renderNames(lobbyDetails.playerNames);
   renderLobbyId(lobbyDetails.lobbyId);
 };
+
+export const renderLobbyMsg = (msg) => {
+  const lobbyStatusContainer = document.querySelector(
+    "#lobby-status-container",
+  );
+  const element = cloneElement("#lobby-status-template");
+  lobbyStatusContainer.innerHTML = "";
+  element.textContent = msg;
+  lobbyStatusContainer.append(element);
+};

@@ -18,17 +18,21 @@ export class LobbyController {
   }
 
   async joinLobby(c) {
-    const formData = await c.req.formData();
-    const _lobbyId = formData.get("lobby_id");
-
-    const sessions = c.get("sessions");
-    const sessionId = getCookie(c, "sessionId");
-
-    const playerId = sessions.getPlayerId(sessionId);
     const lobby = c.get("lobby");
-    lobby.setPlayer(playerId);
+    if (!lobby.isFull()) {
+      const formData = await c.req.formData();
 
-    return c.redirect("/pages/lobby.html", 302);
+      const _lobbyId = formData.get("lobby_id");
+
+      const sessions = c.get("sessions");
+      const sessionId = getCookie(c, "sessionId");
+
+      const playerId = sessions.getPlayerId(sessionId);
+      lobby.setPlayer(playerId);
+
+      return c.json({ isDone: true, url: "/pages/lobby.html" });
+    }
+    return c.json({ isDone: false, msg: "Lobby is full !" });
   }
 
   lobbyDetails(c) {
