@@ -9,7 +9,7 @@ export class LoginController {
   login(c, formData) {
     const playerName = formData.get("player_name");
     const sessionId = crypto.randomUUID();
-    const playerId = crypto.randomUUID();
+    const playerId = this.#idGenerator();
     const sessions = c.get("sessions");
     sessions.setSession(sessionId, playerId);
     sessions.setPlayerId(playerId, playerName);

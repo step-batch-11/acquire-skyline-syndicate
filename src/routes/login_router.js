@@ -2,8 +2,11 @@ import { Hono } from "hono";
 import { LoginController } from "../controllers/login_controller.js";
 
 const counter = () => {
-  let i = 1;
-  return () => i++;
+  let i = 0;
+  return () => {
+    i++;
+    return i + "";
+  };
 };
 
 export const createLoginRouter = () => {

@@ -4,7 +4,7 @@ import { canPlaceTile } from "./validators.js";
 const tileSelectionListener = (e, tilesInPlayerHand, board) => {
   const tileContainer = e.target.closest("div");
   if (canPlaceTile(tileContainer, tilesInPlayerHand)) {
-    handleTilePlacement(board, tileContainer, tilesInPlayerHand);
+    handleTilePlacement(tileContainer);
     board.removeEventListener("click", tileSelectionListener);
   }
 };
