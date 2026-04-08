@@ -3,11 +3,10 @@ import { assertEquals } from "@std/assert";
 import { Game } from "../../src/models/game.js";
 import { Deck } from "../../src/models/deck.js";
 import { Board } from "../../src/models/board.js";
-import { Hotels } from "../../src/models/hotels.js";
 import { Player } from "../../src/models/player.js";
 import { Tile } from "../../src/models/tile.js";
-
-import { hotels } from "../../src/configs/hotels_data.js";
+import { hotels as hotelsData } from "../../src/configs/hotels_data.js";
+import { Hotels } from "../../src/models/hotels.js";
 
 describe("Game entity tests", () => {
   let game;
@@ -20,7 +19,7 @@ describe("Game entity tests", () => {
     players = ["Gopi", "Haider"].map(
       (playerName, id) => new Player(playerName, id + 1),
     );
-    hotelsInstances = Hotels.instantiateHotels(hotels);
+    hotelsInstances = Hotels.instantiateHotels(hotelsData);
     const tiles = [
       "1a",
       "2a",
@@ -29,13 +28,13 @@ describe("Game entity tests", () => {
       "8i",
       "4e",
       "12f",
-      "11i",
+      "11f",
       "10g",
       "2d",
       "1b",
       "2e",
       "5f",
-      "7h",
+      "6f",
       "6i",
       "9i",
       "10i",
@@ -123,32 +122,76 @@ describe("Game entity tests", () => {
   });
 
   describe("buildHotel method", () => {
-    it.ignore(
-      "should build hotel and add a free stock of that hotel player",
-      () => {
-        game.init();
-        game.placeTile(1, "1a");
-        game.placeTile(1, "2a");
-        const hotelName = "sackson";
-        game.buildHotel(hotelName);
-        const result = game.currentState(1);
-        const stock = result.currentPlayer.stocks[hotelName];
+    it("should build hotel and add a free stock of that hotel player", () => {
+      const state = "BUILD_HOTEL";
+      const currentPlayerIndex = 1;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
 
-        assertEquals(stock, 1);
-      },
-    );
+      const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const lastTile = new Tile("3a");
+
+      game.loadGameState({
+        state,
+        hotels: hotelsData,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      const hotelName = "american";
+      game.buildHotel(1, hotelName);
+      const currentState = game.currentState(1);
+      const stock = currentState.player.stocks[hotelName];
+
+      assertEquals(stock, 1);
+    });
   });
 
   describe("buy stocks method", () => {
-    it.ignore("buy the stocks of sackson", () => {
-      game.init();
-      game.placeTile(1, "2a");
-      game.placeTile(1, "3a");
-      const { playerInfo } = game.buyStocks([
-        { hotelName: "sackson", selectedStocks: 3 },
+    it("buy the stocks of sackson", () => {
+      const state = "BUY_STOCK";
+      const currentPlayerIndex = 1;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const lastTile = new Tile("3a");
+
+      const hotels = [
+        {
+          name: "continental",
+          tiles: ["1a", "2a"].map((tileId) => new Tile(tileId)),
+          stocks: 24,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+      ];
+      game.loadGameState({
+        state,
+        hotels,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      const result = game.buyStocks(1, [
+        { hotelName: "continental", selectedStocks: 3 },
       ]);
 
-      assertEquals(playerInfo.stocks, { sackson: 4 });
+      assertEquals(result.playerInfo.stocks["continental"], 3);
     });
   });
 
