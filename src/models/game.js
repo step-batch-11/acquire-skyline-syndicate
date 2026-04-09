@@ -10,6 +10,7 @@ export class Game {
   #players;
   #currentPlayerIndex;
   #createMergeService;
+  #mergeState;
 
   constructor(deck, board, hotels, players, createMergeService) {
     this.#deck = deck;
@@ -56,6 +57,9 @@ export class Game {
         name: player.name,
       })),
       isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
+      mergeData: {
+        mergeState: this.#mergeState,
+      },
     };
   }
 
@@ -64,7 +68,6 @@ export class Game {
     const notInAnyHotel = !adjacentTiles.some((tile) =>
       this.#hotels.isTileInAnyHotel(tile)
     );
-
     return (
       this.#hotels.isAnyInActiveHotel() &&
       this.#board.hasAdjacentForLastTile() &&
@@ -89,6 +92,13 @@ export class Game {
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
+  #changeStateAfterMergeEnd() {
+    if (this.#mergeService.mergeState === "MERGE_END") {
+      this.#state = "BUY_STOCK";
+    }
+    this.#state = "MERGE";
+  }
+
   #initiateMerge(adjacentHotelChains) {
     this.#mergeService = this.#createMergeService(
       adjacentHotelChains,
@@ -104,15 +114,20 @@ export class Game {
     if (adjacentHotelChains.length > 1) {
       this.#initiateMerge(adjacentHotelChains);
       this.#currentService.mergeHotels();
-      return "BUY_STOCK";
+      this.#changeStateAfterMergeEnd();
+      return;
     }
+
     if (this.#isBuildPossible()) {
-      return "BUILD_HOTEL";
+      this.#state = "BUILD_HOTEL";
+      return;
     }
+
     if (this.#isExpansion()) {
       this.expandHotel(tileId);
     }
-    return "BUY_STOCK";
+
+    this.#state = "BUY_STOCK";
   }
 
   #areStocksValid(cart) {
@@ -143,7 +158,7 @@ export class Game {
       this.#isActivePlayer(requestedPlayerId)
     ) {
       this.#board.place(new Tile(tileId));
-      this.#state = this.#actionForTilePlacement(tileId);
+      this.#actionForTilePlacement(tileId);
       const playerTiles = this.#currentPlayer.removeTile(tileId);
       return {
         playerTiles,
@@ -290,3 +305,5 @@ export class Game {
     this.#hotels.loadGameState(data.hotels);
   }
 }
+
+//http://localhost:8000/state?name=merge/two_equal

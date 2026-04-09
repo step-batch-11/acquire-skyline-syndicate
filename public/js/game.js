@@ -8,6 +8,7 @@ let currentState;
 const polling = () => {
   const intervalId = setInterval(async () => {
     const gameData = await gameState();
+    // console.log(gameData.state);
     if (gameData.state === "END_GAME") {
       clearInterval(intervalId);
       handleGameState(gameData);
@@ -28,7 +29,6 @@ const polling = () => {
 globalThis.onload = async () => {
   const gameData = await gameState();
   currentState = gameData.state;
-
   renderGame(gameData);
   updateNotification(gameData);
   if (gameData.isActivePlayer) {

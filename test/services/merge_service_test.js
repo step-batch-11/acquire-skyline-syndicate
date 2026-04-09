@@ -11,35 +11,55 @@ describe("Test MergeService", () => {
   let player3;
   let players;
   let board;
+  let sackson;
+
+  let american;
 
   beforeEach(() => {
+    american = {
+      name: "tower",
+      tiles: ["4a", "5a", "6a"],
+      addTiles(tiles) {
+        this.tiles.push(...tiles);
+      },
+      getTiles() {
+        return this.tiles;
+      },
+      calculateStockPrice() {
+        return 200;
+      },
+      dissolve() {
+        this.tiles = [];
+      },
+      bonuses() {
+        return {
+          primaryBonus: this.calculateStockPrice() * 10,
+          secondaryBonus: this.calculateStockPrice() * 5,
+        };
+      },
+    };
+    sackson = {
+      name: "sackson",
+      tiles: ["1a", "2a"],
+      getTiles() {
+        return this.tiles;
+      },
+      calculateStockPrice() {
+        return 200;
+      },
+      dissolve() {
+        this.tiles = [];
+      },
+      bonuses() {
+        return {
+          primaryBonus: this.calculateStockPrice() * 10,
+          secondaryBonus: this.calculateStockPrice() * 5,
+        };
+      },
+    };
     affectedHotels = [
-      {
-        name: "sackson",
-        tiles: ["1a", "2a"],
-        getTiles() {
-          return this.tiles;
-        },
-        calculateStockPrice() {
-          return 200;
-        },
-        dissolve() {
-          this.tiles = [];
-        },
-        bonuses() {
-          return {
-            primaryBonus: this.calculateStockPrice() * 10,
-            secondaryBonus: this.calculateStockPrice() * 5,
-          };
-        },
-      },
-      {
-        name: "tower",
-        tiles: ["4a", "5a", "6a"],
-        addTiles(tiles) {
-          this.tiles.push(...tiles);
-        },
-      },
+      sackson,
+      american,
     ];
     hotels = {
       getHotel(hotelName) {
@@ -134,6 +154,14 @@ describe("Test MergeService", () => {
       assertEquals(hotels.getHotel("sackson").tiles.length, 0);
       assertEquals(hotels.getHotel("tower").tiles.length, 6);
       assertEquals(player1.money, 5400);
+    });
+  });
+
+  describe("merge two equal states", () => {
+    it("When hotel are equal then it should return 'CHOOSE_MERGE_HOTEL'", () => {
+      sackson.tiles.push("3a");
+      mergeService.mergeHotels();
+      assertEquals(mergeService.mergeState, "CHOOSE_MERGE_HOTEL");
     });
   });
 });

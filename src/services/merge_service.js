@@ -1,8 +1,10 @@
 export default class MergeService {
+  #mergeState;
   #affectedHotels;
   #players;
   #hotels;
   #board;
+
   constructor(affectedHotels, players, hotels, board) {
     this.#players = players;
     this.#affectedHotels = affectedHotels;
@@ -70,18 +72,34 @@ export default class MergeService {
     return this.#players.filter((player) => player.hasStock(hotelName));
   }
 
+  #detectMergeType(firstHotel, secondHotel) {
+    if (firstHotel.getTiles().length === secondHotel.getTiles().length) {
+      this.#mergeState = "CHOOSE_MERGE_HOTEL";
+      return;
+    }
+
+    this.#mergeState = "MERGE_END";
+  }
+
+  get mergeState() {
+    return this.#mergeState;
+  }
+
   mergeHotels() {
     const sortedHotels = this.#affectedHotels.sort(
       (a, b) => a.tiles.length - b.tiles.length,
     );
-    const [defunctHotel, survivingHotel] = sortedHotels.map((hotel) =>
+    const [firstHotel, secondHotel] = sortedHotels.map((hotel) =>
       this.#hotels.getHotel(hotel.name)
     );
-    const stakeholders = this.#stakeHolders(defunctHotel.name);
-    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
-    this.#distributeBonus(stakeholders, defunctHotel);
-    const currentStockPrice = defunctHotel.calculateStockPrice();
-    this.#sellAllStocks(stakeholders, currentStockPrice, defunctHotel.name);
-    defunctHotel.dissolve();
+
+    this.#detectMergeType(firstHotel, secondHotel);
+
+    const stakeholders = this.#stakeHolders(firstHotel.name);
+    secondHotel.addTiles([...firstHotel.getTiles(), this.#board.lastTile]);
+    this.#distributeBonus(stakeholders, firstHotel);
+    const currentStockPrice = firstHotel.calculateStockPrice();
+    this.#sellAllStocks(stakeholders, currentStockPrice, firstHotel.name);
+    firstHotel.dissolve();
   }
 }
