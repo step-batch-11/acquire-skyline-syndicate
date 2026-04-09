@@ -167,7 +167,7 @@
         { "id": "10e" }
       ],
       "money": 6000,
-      "stocks": { "festival": 1,"american": 1, "sackson": 1 }
+      "stocks": { "festival": 1, "american": 1, "sackson": 1 }
     }
   ],
   "state": "PLACE_TILE",
