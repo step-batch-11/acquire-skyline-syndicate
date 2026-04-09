@@ -34,6 +34,10 @@ export class Board {
     return tile.getAllConnectedTiles(this.#placedTiles);
   }
 
+  getAdjacentTiles(tile) {
+    return tile.neighbourTiles();
+  }
+
   getBoardState() {
     const placedTileIds = this.#placedTiles.map((tile) => tile.id);
     const lastTile = this.#lastTile.id;

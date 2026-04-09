@@ -83,7 +83,7 @@ export class Game {
     return adjacentTiles.some((tile) => this.#hotels.isTileInAnyHotel(tile));
   }
 
-  #getAdjacentHotelChains() {
+  #getAdjacentHotelChainsForLastTile() {
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
@@ -100,7 +100,7 @@ export class Game {
   }
 
   #actionForTilePlacement(tileId) {
-    const adjacentHotelChains = this.#getAdjacentHotelChains();
+    const adjacentHotelChains = this.#getAdjacentHotelChainsForLastTile();
     if (adjacentHotelChains.length > 1) {
       this.#initiateMerge(adjacentHotelChains);
       this.#currentService.mergeHotels();
@@ -179,23 +179,37 @@ export class Game {
     this.#state = "BUY_STOCK";
   }
 
-  // getAdjacentHotelChainsForDeadTiles(tile) {
-  //   const adjacentTiles = this.#board.getAdjacentTiles(tile);
-  //   return this.#hotels.getAdjacentHotelChains(adjacentTiles);
-  // }
+  #getAdjacentHotelChainsOfTile(tile) {
+    const adjacentTiles = this.#board.getAdjacentTiles(tile);
+    return this.#hotels.getAdjacentHotelChains(adjacentTiles);
+  }
 
-  // exchangeDeadTiles() {
-  //   const playerTiles = this.#currentPlayer.getTileIds();
-  //   playerTiles.forEach((tile) => {
-  //     this.#getAdjacentHotelChainsForDeadTiles(tile)
-  //   }
-  //   )
+  isDeadTile(tile) {
+    const tileId = new Tile(tile);
+    const adjacentHotelChains = this.#getAdjacentHotelChainsOfTile(tileId);
+    const stableHotels = adjacentHotelChains.filter(({ tiles }) =>
+      tiles.length > 10
+    );
+    return stableHotels.length > 1;
+  }
 
-  // }
+  exchangeDeadTiles() {
+    const playerTiles = this.#currentPlayer.getTileIds();
+    playerTiles.forEach((tile) => {
+      if (this.isDeadTile(tile)) {
+        this.#currentPlayer.removeTile(tile);
+        this.assignNewTile();
+      }
+    });
+  }
 
   assignNewTile() {
-    const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addNewTile(tile);
+    const [tile] = this.#deck.drawTiles(1);
+    if (tile === undefined) return;
+    if (this.isDeadTile(tile.id)) {
+      return this.assignNewTile();
+    }
+    this.#currentPlayer.addNewTile([tile]);
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -263,7 +277,7 @@ export class Game {
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
-    // this.exchangeDeadTiles()
+    this.exchangeDeadTiles();
     this.#state = "PLACE_TILE";
   }
 
