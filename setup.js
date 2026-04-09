@@ -1,4 +1,4 @@
-import { chromium } from "npm:playwright";
+import { chromium } from "playwright";
 
 const hostGame = async (username, playerType) => {
   const browser = await chromium.launch({
