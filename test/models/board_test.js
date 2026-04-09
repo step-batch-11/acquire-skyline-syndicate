@@ -49,7 +49,8 @@ describe("Board entity tests", () => {
       const anotherTile = new Tile("4d");
       board.place(tile);
       board.place(anotherTile);
-      const adjacentTiles = board.adjacentTilesOfLastTile();
+      const lastTile = board.lastTile;
+      const adjacentTiles = board.adjacentTilesOf(lastTile);
       assertEquals(adjacentTiles.length, 2);
     });
   });
