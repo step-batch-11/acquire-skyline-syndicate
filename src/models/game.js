@@ -179,14 +179,14 @@ export class Game {
     this.#state = "BUY_STOCK";
   }
 
-  #getAdjacentHotelChainsOfTile(tile) {
+  getAdjacentHotelChainsOfTile(tile) {
     const adjacentTiles = this.#board.getAdjacentTiles(tile);
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
   isDeadTile(tile) {
     const tileId = new Tile(tile);
-    const adjacentHotelChains = this.#getAdjacentHotelChainsOfTile(tileId);
+    const adjacentHotelChains = this.getAdjacentHotelChainsOfTile(tileId);
     const stableHotels = adjacentHotelChains.filter(({ tiles }) =>
       tiles.length > 10
     );

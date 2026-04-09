@@ -702,4 +702,12 @@ describe("Game entity tests", () => {
       assertEquals(game.isGameEnd(), true);
     });
   });
+
+  describe("checking the connected hotel chains", () => {
+    it("no connected hotel chains", () => {
+      const tileInstance = new Tile("1a");
+      const result = game.getAdjacentHotelChainsOfTile(tileInstance);
+      assertEquals(result, []);
+    });
+  });
 });
