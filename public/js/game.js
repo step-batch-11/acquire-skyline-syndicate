@@ -1,5 +1,6 @@
 import { handleGameState } from "./config/state_config.js";
 import { renderGame } from "./initial_setup.js";
+import { updateNotification } from "./notifications.js";
 import { gameState } from "./request.js";
 
 let currentState;
@@ -7,13 +8,12 @@ let currentState;
 const polling = () => {
   const intervalId = setInterval(async () => {
     const gameData = await gameState();
-
     if (gameData.state === "END_GAME") {
       clearInterval(intervalId);
       handleGameState(gameData);
       return;
     }
-
+    updateNotification(gameData);
     if (currentState !== gameData.state) {
       renderGame(gameData);
       if (gameData.isActivePlayer) {
@@ -30,7 +30,7 @@ globalThis.onload = async () => {
   currentState = gameData.state;
 
   renderGame(gameData);
-
+  updateNotification(gameData);
   if (gameData.isActivePlayer) {
     handleGameState(gameData);
   }

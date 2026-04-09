@@ -102,7 +102,8 @@ export class Game {
   }
 
   #getAdjacentHotelChains() {
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
+    const lastTile = this.#board.lastTile;
+    const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
@@ -190,11 +191,25 @@ export class Game {
     }
     if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
+    const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
     this.#state = "BUY_STOCK";
   }
+
+  // getAdjacentHotelChainsForDeadTiles(tile) {
+  //   const adjacentTiles = this.#board.getAdjacentTiles(tile);
+  //   return this.#hotels.getAdjacentHotelChains(adjacentTiles);
+  // }
+
+  // exchangeDeadTiles() {
+  //   const playerTiles = this.#currentPlayer.getTileIds();
+  //   playerTiles.forEach((tile) => {
+  //     this.#getAdjacentHotelChainsForDeadTiles(tile)
+  //   }
+  //   )
+
+  // }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
@@ -218,6 +233,7 @@ export class Game {
       cart.forEach(({ hotelName, selectedStocks }) =>
         this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
+
       this.#currentPlayer.deductMoney(moneyToDeduct);
       if (this.isGameEnd()) {
         this.#state = "END_GAME";
@@ -231,6 +247,7 @@ export class Game {
 
   #areAllHotelsStable() {
     const hotels = this.#hotels.getHotels();
+    //<S>  hotel.tiles.length > 1 && hotel.tiles.length >= 11 in every loop.
     const activeHotels = hotels.filter((hotel) => hotel.tiles.length > 1);
     return activeHotels.length > 0
       ? activeHotels.every((hotel) => hotel.tiles.length >= 11)
@@ -264,6 +281,7 @@ export class Game {
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
+    // this.exchangeDeadTiles()
     this.#state = "PLACE_TILE";
   }
 
