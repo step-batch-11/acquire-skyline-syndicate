@@ -3,5 +3,5 @@ export const canPlaceTile = (tileContainer, tilesInPlayerHand) => {
   if (containerClass === "board") return false;
 
   const playerTile = tileContainer.id.split("-")[1];
-  return tilesInPlayerHand.some((tile) => playerTile === tile.tileId);
+  return tilesInPlayerHand.some((tile) => playerTile === tile.id);
 };

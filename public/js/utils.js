@@ -2,7 +2,7 @@ export const highlightPlayableTiles = (playerTiles) => {
   const board = document.querySelector(".board");
   playerTiles.forEach((tile) => {
     if (tile.isPlayable) {
-      const tileContainer = board.querySelector(`#tile-${tile.tileId}`);
+      const tileContainer = board.querySelector(`#tile-${tile.id}`);
       tileContainer.classList.add("tiles-in-player-hand");
     }
   });
