@@ -1,6 +1,6 @@
 import { postData } from "../request.js";
 import {
-  createBuilHotelsBtn,
+  createBuildHotelsBtn,
   renderBankSection,
   renderBoard,
   renderHeldStocks,
@@ -65,7 +65,7 @@ class HotelFoundationState {
 
     const buttonContainer = document.createElement("div");
     buttonContainer.classList.add("button-container");
-    const buildBtn = createBuilHotelsBtn(buttonContainer);
+    const buildBtn = createBuildHotelsBtn(buttonContainer);
     bankContainer.append(buildBtn);
   }
 

@@ -1,7 +1,11 @@
 import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
-import { addHotelData, createConfirmButton } from "../ui_renderers.js";
+import {
+  addHotelData,
+  cloneElement,
+  createConfirmButton,
+} from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
 
 const handlePlaceTile = (gameData) => {
@@ -24,17 +28,13 @@ const handleBuyStocks = (gameData) => {
 };
 
 const handleEndGame = (gameData) => {
-  const template = document.getElementById("endGameTemplate");
-  const clone = template.content.cloneNode(true);
-
-  const overlay = clone.querySelector(".overlay");
-  const winnerEl = clone.querySelector(".winnerName");
+  const clone = cloneElement("#endGameTemplate");
+  const winnerElement = clone.querySelector(".winnerName");
   const tableBody = clone.querySelector(".playersTableBody");
-  const closeBtn = clone.querySelector(".close-btn");
 
   const { players, winner } = gameData;
 
-  winnerEl.textContent = winner;
+  winnerElement.textContent = winner;
   players.sort((a, b) => b.amount - a.amount);
   players.forEach((player) => {
     const row = document.createElement("tr");
@@ -45,12 +45,6 @@ const handleEndGame = (gameData) => {
     `;
 
     tableBody.appendChild(row);
-  });
-  closeBtn.addEventListener("click", () => overlay.remove());
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      overlay.remove();
-    }
   });
   document.body.appendChild(clone);
   requestAnimationFrame(() => {

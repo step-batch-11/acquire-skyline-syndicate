@@ -213,9 +213,10 @@ export class Game {
 
   #areAllHotelsStable() {
     const hotels = this.#hotels.getHotels();
-    return hotels
-      .filter((hotel) => hotel.tiles.length > 1)
-      .every((hotel) => hotel.tiles.length >= 11);
+    const activeHotels = hotels.filter((hotel) => hotel.tiles.length > 1);
+    return activeHotels.length > 0
+      ? activeHotels.every((hotel) => hotel.tiles.length >= 11)
+      : false;
   }
 
   #isAnyHotelHas41Tiles() {
