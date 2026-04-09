@@ -16,20 +16,54 @@ export default class MergeService {
     );
   }
 
+  #topStakeHolders(hotelName, stakeholders, bucket = []) {
+    for (let index = 1; index < stakeholders.length; index++) {
+      const stakeholder = stakeholders[index];
+      if (
+        stakeholder.getStockCount(hotelName) !==
+          bucket.at(-1).getStockCount(hotelName)
+      ) {
+        return index;
+      }
+      bucket.push(stakeholder);
+    }
+  }
+
   #distributeBonus(stakeholders, defunctHotel) {
-    const [primary, secondary] = stakeholders.sort(
+    const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
+
+    stakeholders.sort(
       (a, b) =>
         b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
     );
-    const currentStockPrice = defunctHotel.calculateStockPrice();
-    const primaryBonus = 10 * currentStockPrice;
-    const secondaryBonus = 5 * currentStockPrice;
+
     if (stakeholders.length === 1) {
-      primary.depositMoney(primaryBonus + secondaryBonus);
+      stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
       return;
     }
-    primary?.depositMoney(primaryBonus);
-    secondary?.depositMoney(secondaryBonus);
+
+    const primaryHolders = [stakeholders[0]];
+    const lastPrimary = this.#topStakeHolders(
+      defunctHotel.name,
+      stakeholders,
+      primaryHolders,
+    );
+
+    if (primaryHolders.length > 1) {
+      const bonusSum = primaryBonus + secondaryBonus;
+      const bonus = bonusSum / primaryHolders.length;
+      primaryHolders.forEach((stakeholder) => stakeholder.depositMoney(bonus));
+      return;
+    }
+    const secondaryStakeholder = [stakeholders[lastPrimary]];
+    this.#topStakeHolders(
+      defunctHotel.name,
+      stakeholders.slice(lastPrimary),
+      secondaryStakeholder,
+    );
+    primaryHolders[0].depositMoney(primaryBonus);
+    const dividedSecondaryBonus = secondaryBonus / secondaryStakeholder.length;
+    secondaryStakeholder.forEach((s) => s.depositMoney(dividedSecondaryBonus));
   }
 
   #stakeHolders(hotelName) {
