@@ -64,7 +64,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(1, tileToPlace.tileId);
+      game.placeTile(1, tileToPlace.id);
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
@@ -86,7 +86,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(1, tileToPlace.tileId);
+      game.placeTile(1, tileToPlace.id);
       game.assignNewTile();
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 6);

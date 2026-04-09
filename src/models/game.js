@@ -26,11 +26,14 @@ export class Game {
     this.#createMergeService = createMergeService;
   }
 
-  markPlayableTiles(playerTiles) {
+  #markPlayableTiles(playerTiles) {
     playerTiles.forEach((tile) => {
       const connectedTiles = this.#board.adjacentTilesOf(tile);
       const inActiveHotels = this.#hotels.isAnyInActiveHotel();
-      if (connectedTiles.length > 1 && !inActiveHotels) {
+      const areTilesPresent = connectedTiles.some((tile) =>
+        this.#hotels.isTileInAnyHotel(tile.id)
+      );
+      if (connectedTiles.length > 1 && !inActiveHotels && !areTilesPresent) {
         tile.isPlayable = false;
       }
     });
@@ -42,7 +45,7 @@ export class Game {
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#players.forEach((player) => {
       const initialPlayerTiles = this.#deck.drawTiles(6);
-      const playerTiles = this.markPlayableTiles(initialPlayerTiles);
+      const playerTiles = this.#markPlayableTiles(initialPlayerTiles);
       player.addInitialTiles(playerTiles);
     });
   }
@@ -225,7 +228,7 @@ export class Game {
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    const markedTiles = this.markPlayableTiles(tile);
+    const markedTiles = this.#markPlayableTiles(tile);
     this.#currentPlayer.addNewTile(markedTiles);
   }
 

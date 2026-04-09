@@ -51,7 +51,7 @@ describe("Player entity tests", () => {
       playerInstance.removeTile(tileToRemove);
       playerInstance.addNewTile([tileToAdd]);
       const player = playerInstance.getDetails();
-      const playerTiles = player.tiles.map((tile) => tile.tileId);
+      const playerTiles = player.tiles.map((tile) => tile.id);
       assertEquals(player.tiles.length, 6);
       assertEquals(playerTiles.includes("4a"), true);
       assertEquals(playerTiles.includes("3d"), false);

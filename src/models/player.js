@@ -23,7 +23,7 @@ export class Player {
 
   getTileIds() {
     return this.#tiles.map((tile) => ({
-      tileId: tile.id,
+      id: tile.id,
       isPlayable: tile.isPlayable,
     }));
   }
@@ -33,7 +33,7 @@ export class Player {
   }
 
   isPlayerTile(tileId) {
-    return this.getTileIds().some((tile) => tile.tileId === tileId);
+    return this.getTileIds().some((tile) => tile.id === tileId);
   }
 
   getDetails() {
