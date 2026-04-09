@@ -43,7 +43,9 @@ export const renderBoard = (tilesOnBoard, hotelsOnBoard) => {
 
 export const renderTilesInHand = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles-in-hand");
-  const playerTileElements = playerTiles.map(createTileElement);
+  const playerTileElements = playerTiles.map((tile) =>
+    createTileElement(tile.tileId)
+  );
   tilesContainer.innerHTML = "";
   tilesContainer.append(...playerTileElements);
 };

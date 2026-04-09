@@ -26,12 +26,24 @@ export class Game {
     this.#createMergeService = createMergeService;
   }
 
+  markPlayableTiles(playerTiles) {
+    playerTiles.forEach((tile) => {
+      const connectedTiles = this.#board.adjacentTilesOf(tile);
+      const inActiveHotels = this.#hotels.isAnyInActiveHotel();
+      if (connectedTiles.length > 1 && !inActiveHotels) {
+        tile.isPlayable = false;
+      }
+    });
+    return playerTiles;
+  }
+
   init() {
     const initialBoardTiles = this.#deck.drawTiles(6);
     initialBoardTiles.forEach((tile) => this.#board.place(tile));
     this.#players.forEach((player) => {
       const initialPlayerTiles = this.#deck.drawTiles(6);
-      player.addInitialTiles(initialPlayerTiles.map((tile) => tile));
+      const playerTiles = this.markPlayableTiles(initialPlayerTiles);
+      player.addInitialTiles(playerTiles);
     });
   }
 
@@ -162,9 +174,9 @@ export class Game {
     ) {
       this.#board.place(new Tile(tileId));
       this.#state = this.#actionForTilePlacement(tileId);
-      const playerTiles = this.#currentPlayer.removeTile(tileId);
+      this.#currentPlayer.removeTile(tileId);
       return {
-        playerTiles,
+        playerTiles: this.#currentPlayer.getTileIds(),
         tilesOnBoard: this.#board.getPlacedTiles(),
         state: this.#state,
       };
@@ -213,7 +225,8 @@ export class Game {
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addNewTile(tile);
+    const markedTiles = this.markPlayableTiles(tile);
+    this.#currentPlayer.addNewTile(markedTiles);
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -281,7 +294,6 @@ export class Game {
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
-    // this.exchangeDeadTiles()
     this.#state = "PLACE_TILE";
   }
 

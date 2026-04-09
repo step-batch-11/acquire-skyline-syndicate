@@ -22,7 +22,10 @@ export class Player {
   }
 
   getTileIds() {
-    return this.#tiles.map((tile) => tile.id);
+    return this.#tiles.map((tile) => ({
+      tileId: tile.id,
+      isPlayable: tile.isPlayable,
+    }));
   }
 
   hasStock(hotelName) {
@@ -30,7 +33,7 @@ export class Player {
   }
 
   isPlayerTile(tileId) {
-    return this.getTileIds().includes(tileId);
+    return this.getTileIds().some((tile) => tile.tileId === tileId);
   }
 
   getDetails() {

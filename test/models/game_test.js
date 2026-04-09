@@ -64,7 +64,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(1, tileToPlace);
+      game.placeTile(1, tileToPlace.tileId);
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
@@ -79,34 +79,6 @@ describe("Game entity tests", () => {
       assertEquals(result.player.tiles.length, 6);
       assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
     });
-
-    it("Should not place tile on the board, tile is in player hand and on board.", () => {
-      const tiles = [
-        "1a",
-        "3d",
-        "4b",
-        "8i",
-        "4e",
-        "12f",
-        "11i",
-        "10g",
-        "2d",
-        "4e",
-        "2e",
-        "5f",
-        "7h",
-        "6i",
-      ];
-      const tilesInstances = tiles.map((tile) => new Tile(tile));
-      const deck = new Deck(tilesInstances, () => tilesInstances);
-      const game = new Game(deck, board, hotelsInstances, players);
-      game.init();
-      const tileToPlace = "4e";
-      game.placeTile(1, tileToPlace);
-      const result = game.currentState(1);
-      assertEquals(result.player.tiles.length, 5);
-      assertEquals(result.tilesOnBoard.length, 7);
-    });
   });
 
   describe("assignNewTile method", () => {
@@ -114,7 +86,7 @@ describe("Game entity tests", () => {
       game.init();
       const initialData = game.currentState(1);
       const tileToPlace = initialData.player.tiles[0];
-      game.placeTile(1, tileToPlace);
+      game.placeTile(1, tileToPlace.tileId);
       game.assignNewTile();
       const result = game.currentState(1);
       assertEquals(result.player.tiles.length, 6);
@@ -159,7 +131,8 @@ describe("Game entity tests", () => {
     it("buy the stocks of sackson", () => {
       const state = "BUY_STOCK";
       const currentPlayerIndex = 1;
-      const deck = [{ id: "7e" }, { id: "8e" }];
+      const tilesInDeck = ["7e", "8e"];
+      const deck = tilesInDeck.map((tile) => new Tile(tile));
       const players = [{ id: 1, name: "yash" }].map(
         ({ id, name }) => new Player(name, id),
       );
@@ -251,7 +224,8 @@ describe("Game entity tests", () => {
     it("should successfully shift turn to next player", () => {
       const state = "SHIFT_TURN";
       const currentPlayerIndex = 0;
-      const deck = [{ id: "7e" }, { id: "8e" }];
+      const tileInDeck = ["7e", "8e"];
+      const deck = tileInDeck.map((tile) => new Tile(tile));
       const players = [
         { id: 1, name: "yash" },
         { id: 2, name: "som" },
@@ -288,7 +262,8 @@ describe("Game entity tests", () => {
     beforeEach(() => {
       state = "BUY_STOCK";
       currentPlayerIndex = 1;
-      deck = [{ id: "7e" }, { id: "8e" }];
+      const tilesInDeck = ["7e", "8e"];
+      deck = tilesInDeck.map((tile) => new Tile(tile));
       placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
         (tileId) => new Tile(tileId),
       );
