@@ -38,7 +38,7 @@ export class TurnController {
     const game = gameManager.getGame();
     const playerId = extractRequestedPlayerId(c);
     const res = game.buyStocks(playerId, cart);
-    console.log(res);
+
     return c.json(res);
   }
 }

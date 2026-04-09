@@ -17,8 +17,9 @@ export default class MergeService {
   }
 
   #distributeBonus(stakeholders, defunctHotel) {
-    const [primary, secondary] = stakeholders.sort((a, b) =>
-      b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name)
+    const [primary, secondary] = stakeholders.sort(
+      (a, b) =>
+        b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
     );
     const currentStockPrice = defunctHotel.calculateStockPrice();
     const primaryBonus = 10 * currentStockPrice;
@@ -27,7 +28,7 @@ export default class MergeService {
       primary.depositMoney(primaryBonus + secondaryBonus);
       return;
     }
-    console.log({ primaryBonus, secondaryBonus });
+
     primary?.depositMoney(primaryBonus);
     secondary?.depositMoney(secondaryBonus);
   }

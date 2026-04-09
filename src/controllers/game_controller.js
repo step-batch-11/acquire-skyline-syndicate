@@ -7,13 +7,13 @@ export class GameController {
     const gameManager = c.get("gameManager");
     const lobby = c.get("lobby");
     const sessions = c.get("sessions");
-    const playerIds = lobby.getActivePlayersIds();
-    console.log("inside lobby ", playerIds);
+    // const playerIds = lobby.getActivePlayersIds();
+
     const playerIdsMap = sessions.getPlayerIds();
     // const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
     //   playerIds.includes(playerId)
     // );
-    console.log({ playerIdsMap: [...playerIdsMap] });
+
     gameManager.createGame([...playerIdsMap]);
     lobby.transitionToStart();
     return c.redirect("/pages/lobby.html", 302);

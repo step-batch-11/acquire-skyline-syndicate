@@ -32,8 +32,6 @@ const handleEndGame = (gameData) => {
   const tableBody = clone.querySelector(".playersTableBody");
   const closeBtn = clone.querySelector(".close-btn");
 
-  console.log(gameData);
-
   const { players, winner } = gameData;
 
   winnerEl.textContent = winner;
@@ -70,6 +68,6 @@ export const gameStates = {
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
-  console.log(state);
+
   gameStates[state](gameData);
 };
