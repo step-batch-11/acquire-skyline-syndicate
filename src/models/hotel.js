@@ -101,4 +101,12 @@ export class Hotel {
     this.#priceOffset = hotelInfo.priceOffset;
     this.#originTile = hotelInfo.originTile;
   }
+
+  get primaryBonus() {
+    return this.calculateStockPrice() * 10;
+  }
+
+  get secondaryBonus() {
+    return this.calculateStockPrice() * 5;
+  }
 }

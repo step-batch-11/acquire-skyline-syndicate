@@ -1,3 +1,7 @@
+import {
+  distributeBonus,
+  sellStocks,
+} from "../services/dissolution_controller.js";
 import { Tile } from "./tile.js";
 export class Game {
   #currentService;
@@ -32,13 +36,27 @@ export class Game {
   }
 
   calculateFinalWinner() {
+    this.#hotels.getHotelEntities().forEach((hotel) => {
+      distributeBonus(this.#players, hotel);
+    });
+
+    this.#hotels.getHotelEntities().forEach((hotel) => {
+      this.#players.forEach((player) => {
+        sellStocks(player, hotel);
+      });
+    });
+
+    const players = this.#players
+      .map((player) => {
+        const { name, money } = player.getDetails();
+        return { name, money };
+      })
+      .sort((a, b) => b.money - a.money);
+
     return {
       state: this.#state,
-      players: [
-        { name: "GOPI", amount: 2000 },
-        { name: "DIllI", amount: 3000 },
-      ],
-      winner: "DILLI",
+      players,
+      winner: players[0].name,
     };
   }
 

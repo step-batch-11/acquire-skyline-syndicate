@@ -92,7 +92,7 @@ export class Player {
   }
 
   sellStocks(hotelName, price) {
-    this.#money = this.#money + price * this.#stocks[hotelName];
+    this.#money += price * this.#stocks[hotelName] || 0;
     delete this.#stocks[hotelName];
   }
 
