@@ -5,7 +5,7 @@ const hostGame = async (username, playerType) => {
     headless: false,
     args: ["--start-maximized"],
   });
-  const context = await browser.newContext();
+  const context = await browser.newContext({ viewport: null });
   const page = await context.newPage();
 
   await page.goto("http://localhost:8000/pages/login.html");
@@ -23,7 +23,7 @@ const joinGame = async (username, playerType, lobbyId) => {
     headless: false,
     args: ["--start-maximized"],
   });
-  const context = await browser.newContext();
+  const context = await browser.newContext({ viewport: null });
   const page = await context.newPage();
 
   await page.goto("http://localhost:8000/pages/login.html");
