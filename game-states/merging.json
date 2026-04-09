@@ -126,7 +126,7 @@
         { "id": "9e" },
         { "id": "5f" }
       ],
-      "stocks": 24,
+      "stocks": 22,
       "priceOffset": 100,
       "originTile": { "id": "7f" }
     },
@@ -153,7 +153,7 @@
         { "id": "2d" }
       ],
       "money": 6000,
-      "stocks": { "festival": 1, "american": 4 }
+      "stocks": { "festival": 2, "american": 4 }
     },
     {
       "id": "2",
@@ -167,7 +167,7 @@
         { "id": "10e" }
       ],
       "money": 6000,
-      "stocks": { "american": 1, "sackson": 1 }
+      "stocks": { "festival": 1, "american": 1, "sackson": 1 }
     }
   ],
   "state": "PLACE_TILE",
