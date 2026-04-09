@@ -16,6 +16,7 @@
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/testing@^1.0.17": "1.0.17",
     "npm:hono@^4.12.10": "4.12.10",
+    "npm:hono@^4.12.12": "4.12.12",
     "npm:playwright@^1.59.1": "1.59.1"
   },
   "jsr": {
@@ -91,6 +92,9 @@
     "hono@4.12.10": {
       "integrity": "sha512-mx/p18PLy5og9ufies2GOSUqep98Td9q4i/EF6X7yJgAiIopxqdfIO3jbqsi3jRgTgw88jMDEzVKi+V2EF+27w=="
     },
+    "hono@4.12.12": {
+      "integrity": "sha512-p1JfQMKaceuCbpJKAPKVqyqviZdS0eUxH9v82oWo1kb9xjQ5wA6iP3FNVAPDFlz5/p7d45lO+BpSk1tuSZMF4Q=="
+    },
     "playwright-core@1.59.1": {
       "integrity": "sha512-HBV/RJg81z5BiiZ9yPzIiClYV/QMsDCKUyogwH9p3MCP6IYjUFu/MActgYAvK0oWyV9NlwM3GLBjADyWgydVyg==",
       "bin": true
@@ -118,6 +122,7 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:hono@^4.12.12",
         "npm:playwright@^1.59.1"
       ]
     }
