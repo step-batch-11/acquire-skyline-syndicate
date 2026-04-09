@@ -53,7 +53,7 @@ const displayInitialAmount = (amount) => {
   amountContainer.innerText = `$${amount}`;
 };
 
-export const createBuilHotelsBtn = (buttonContainer) => {
+export const createBuildHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
@@ -70,7 +70,7 @@ export const createConfirmButton = (buttonContainer) => {
   return buttonContainer;
 };
 
-const cloneElement = (templateId) => {
+export const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
   return template.content.querySelector("*").cloneNode(true);
 };
