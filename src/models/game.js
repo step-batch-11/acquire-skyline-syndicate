@@ -155,26 +155,20 @@ export class Game {
   }
 
   placeTile(requestedPlayerId, tileId) {
-    if (
-      this.#state === "PLACE_TILE" &&
-      this.#isValidTilePlacement(tileId) &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      this.#board.place(new Tile(tileId));
-      this.#state = this.#actionForTilePlacement(tileId);
-      const playerTiles = this.#currentPlayer.removeTile(tileId);
-      return {
-        playerTiles,
-        tilesOnBoard: this.#board.getPlacedTiles(),
-        state: this.#state,
-      };
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
+    }
+    if (this.#state !== "PLACE_TILE") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+    if (!this.#isValidTilePlacement(tileId)) {
+      throw new Error({ msg: "INVALID TILE PLACEMENT" });
     }
 
-    return {
-      playerTiles: this.#currentPlayer.getTileIds(),
-      tilesOnBoard: this.#board.getPlacedTiles(),
-      state: "NO_ACTION",
-    };
+    this.#board.place(new Tile(tileId));
+    this.#state = this.#actionForTilePlacement(tileId);
+    this.#currentPlayer.removeTile(tileId);
+    return { msg: "TILE PLACED SUCCESSFULLY" };
   }
 
   expandHotel(tileId) {
@@ -183,18 +177,21 @@ export class Game {
   }
 
   buildHotel(requestedPlayerId, hotelName) {
-    if (
-      this.#state !== "BUILD_HOTEL" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
-    if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
+    if (this.#state !== "BUILD_HOTEL") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+    if (this.#hotels.isHotelActive(hotelName)) {
+      throw new Error({ msg: "HOTEL IS ALREADY ACTIVE" });
+    }
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
     this.#state = "BUY_STOCK";
+    return { msg: "HOTEL BUILT SUCCESSFULLY" };
   }
 
   // getAdjacentHotelChainsForDeadTiles(tile) {

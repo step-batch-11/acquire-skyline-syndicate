@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 import { Game } from "../../src/models/game.js";
 import { Deck } from "../../src/models/deck.js";
 import { Board } from "../../src/models/board.js";
@@ -72,12 +72,12 @@ describe("Game entity tests", () => {
 
     it("Should not place tile on the board, if tile is not in player hand.", () => {
       game.init();
-      const initialData = game.currentState(1);
+      const previousState = game.currentState(1);
       const tileToPlace = "12i";
-      game.placeTile(1, tileToPlace);
-      const result = game.currentState(1);
-      assertEquals(result.player.tiles.length, 6);
-      assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
+      assertThrows(() => game.placeTile(1, tileToPlace));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 6);
+      assertEquals(currentState.tilesOnBoard, previousState.tilesOnBoard);
     });
 
     it("Should not place tile on the board, tile is in player hand and on board.", () => {
@@ -107,6 +107,24 @@ describe("Game entity tests", () => {
       assertEquals(result.player.tiles.length, 5);
       assertEquals(result.tilesOnBoard.length, 7);
     });
+
+    it("Inactive player tries to place tile", () => {
+      game.init();
+      const previousState = game.currentState(1);
+      const tileToPlace = "4i";
+      assertThrows(() => game.placeTile(2, tileToPlace));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 6);
+      assertEquals(currentState.tilesOnBoard, previousState.tilesOnBoard);
+    });
+
+    it("State is not PLACE_TILE", () => {
+      game.init();
+      game.placeTile(1, "12f");
+      assertThrows(() => game.placeTile(1, "10g"));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 5);
+    });
   });
 
   describe("assignNewTile method", () => {
@@ -123,7 +141,7 @@ describe("Game entity tests", () => {
   });
 
   describe("buildHotel method", () => {
-    it("should build hotel and add a free stock of that hotel player", () => {
+    beforeEach(() => {
       const state = "BUILD_HOTEL";
       const currentPlayerIndex = 1;
       const deck = [{ id: "7e" }, { id: "8e" }];
@@ -145,13 +163,32 @@ describe("Game entity tests", () => {
         board: { placedTileIds, lastTile },
         deck,
       });
-
+    });
+    it("should build hotel and add a free stock of that hotel player", () => {
       const hotelName = "american";
-      game.buildHotel(1, hotelName);
+      const { msg } = game.buildHotel(1, hotelName);
       const currentState = game.currentState(1);
       const stock = currentState.player.stocks[hotelName];
 
       assertEquals(stock, 1);
+      assertEquals(msg, "HOTEL BUILT SUCCESSFULLY");
+    });
+
+    it("Player tries to build hotel out of turn", () => {
+      assertThrows(() => game.buildHotel(2, "american"));
+    });
+
+    it("Player tries to build hotel out of turn", () => {
+      game.buildHotel(1, "continental");
+      assertThrows(() => game.buildHotel(1, "american"));
+    });
+
+    it("Player tries to build an active hotel", () => {
+      assertThrows(() => game.buildHotel(1, "continental"));
+    });
+
+    it("Player tries to build a hotel out of turn", () => {
+      assertThrows(() => game.buildHotel(2, "imperial"));
     });
   });
 
