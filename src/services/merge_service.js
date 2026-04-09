@@ -31,7 +31,6 @@ export default class MergeService {
 
   #distributeBonus(stakeholders, defunctHotel) {
     const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
-    // console.log({ primaryBonus, secondaryBonus });
 
     stakeholders.sort(
       (a, b) =>
@@ -49,7 +48,6 @@ export default class MergeService {
       stakeholders,
       primaryHolders,
     );
-    // console.log({ primaryHolders });
 
     if (primaryHolders.length > 1) {
       const bonusSum = primaryBonus + secondaryBonus;

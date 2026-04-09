@@ -85,7 +85,9 @@
   "npm": {
     "fsevents@2.3.2": {
       "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
-      "os": ["darwin"],
+      "os": [
+        "darwin"
+      ],
       "scripts": true
     },
     "hono@4.12.10": {
