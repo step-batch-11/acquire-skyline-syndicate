@@ -89,7 +89,6 @@ export class Game {
   }
 
   #initiateMerge(adjacentHotelChains) {
-    console.log("inside initiate", this.#hotels, this.#board);
     this.#mergeService = this.#createMergeService(
       adjacentHotelChains,
       this.#players,
@@ -137,13 +136,6 @@ export class Game {
   }
 
   placeTile(requestedPlayerId, tileId) {
-    console.log({
-      state: this.#state,
-      validPlacement: this.#isValidTilePlacement(tileId),
-      tileId,
-      activePlayers: this.#isActivePlayer(requestedPlayerId),
-    });
-
     if (
       this.#state === "PLACE_TILE" &&
       this.#isValidTilePlacement(tileId) &&
@@ -210,7 +202,6 @@ export class Game {
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
       if (this.isGameEnd()) {
-        console.log("end game scenerio");
         this.#state = "END_GAME";
         return this.calculateFinalWinner();
       }

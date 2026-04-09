@@ -28,7 +28,6 @@ export default class MergeService {
       primary.depositMoney(primaryBonus + secondaryBonus);
       return;
     }
-
     primary?.depositMoney(primaryBonus);
     secondary?.depositMoney(secondaryBonus);
   }
