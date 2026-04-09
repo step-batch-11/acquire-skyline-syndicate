@@ -1,0 +1,232 @@
+{
+  "board": {
+    "placedTileIds": [
+      "8d",
+      "2i",
+      "2b",
+      "11a",
+      "6i",
+      "9b",
+      "7i",
+      "9e",
+      "8h",
+      "9h",
+      "10h",
+      "10g",
+      "1b",
+      "8b",
+      "8a",
+      "2c",
+      "1c",
+      "9g",
+      "10c",
+      "3b",
+      "12h",
+      "4b",
+      "11g",
+      "3d",
+      "11h",
+      "8f",
+      "7e",
+      "7d",
+      "6e",
+      "3e",
+      "5f",
+      "2h",
+      "2g",
+      "4e",
+      "5h",
+      "3i",
+      "4g",
+      "9a",
+      "11c",
+      "11e",
+      "9d",
+      "3g",
+      "2e",
+      "6c",
+      "6g",
+      "2a",
+      "11d"
+    ]
+  },
+  "deck": [
+    { "id": "2d" },
+    { "id": "5g" },
+    { "id": "7c" },
+    { "id": "9f" },
+    { "id": "10f" },
+    { "id": "5e" },
+    { "id": "10e" },
+    { "id": "7b" },
+    { "id": "3h" },
+    { "id": "7a" },
+    { "id": "12e" },
+    { "id": "1h" },
+    { "id": "8i" },
+    { "id": "12g" },
+    { "id": "1f" },
+    { "id": "7f" },
+    { "id": "10d" },
+    { "id": "7h" },
+    { "id": "11i" },
+    { "id": "12d" },
+    { "id": "6b" },
+    { "id": "4d" },
+    { "id": "5b" },
+    { "id": "6h" },
+    { "id": "12b" },
+    { "id": "5a" },
+    { "id": "5i" },
+    { "id": "2f" },
+    { "id": "8e" },
+    { "id": "12i" },
+    { "id": "3f" },
+    { "id": "9c" },
+    { "id": "3a" },
+    { "id": "9i" },
+    { "id": "6f" },
+    { "id": "1a" },
+    { "id": "5d" },
+    { "id": "11b" },
+    { "id": "4h" },
+    { "id": "4i" },
+    { "id": "5c" },
+    { "id": "4a" },
+    { "id": "10a" },
+    { "id": "12f" },
+    { "id": "6d" },
+    { "id": "10b" },
+    { "id": "7g" },
+    { "id": "12a" },
+    { "id": "11f" }
+  ],
+  "hotels": [
+    {
+      "name": "continental",
+      "tiles": [
+        { "id": "2h" },
+        { "id": "2i" },
+        { "id": "2g" },
+        { "id": "3i" },
+        { "id": "3g" },
+        { "id": "4g" }
+      ],
+      "stocks": 21,
+      "priceOffset": 200,
+      "originTile": { "id": "2h" }
+    },
+    {
+      "name": "imperial",
+      "tiles": [
+        { "id": "1b" },
+        { "id": "2b" },
+        { "id": "2c" },
+        { "id": "1c" },
+        { "id": "3b" },
+        { "id": "4b" },
+        { "id": "2a" }
+      ],
+      "stocks": 21,
+      "priceOffset": 200,
+      "originTile": { "id": "1b" }
+    },
+    {
+      "name": "american",
+      "tiles": [
+        { "id": "7d" },
+        { "id": "8d" },
+        { "id": "7e" },
+        { "id": "6e" },
+        { "id": "9d" },
+        { "id": "9e" }
+      ],
+      "stocks": 23,
+      "priceOffset": 100,
+      "originTile": { "id": "7d" }
+    },
+    {
+      "name": "festival",
+      "tiles": [{ "id": "7i" }, { "id": "6i" }],
+      "stocks": 18,
+      "priceOffset": 100,
+      "originTile": { "id": "7i" }
+    },
+    {
+      "name": "worldwide",
+      "tiles": [{ "id": "3e" }, { "id": "3d" }, { "id": "4e" }, { "id": "2e" }],
+      "stocks": 22,
+      "priceOffset": 100,
+      "originTile": { "id": "3e" }
+    },
+    {
+      "name": "sackson",
+      "tiles": [
+        { "id": "9h" },
+        { "id": "8h" },
+        { "id": "10h" },
+        { "id": "10g" },
+        { "id": "9g" },
+        { "id": "11g" },
+        { "id": "11h" },
+        { "id": "12h" }
+      ],
+      "stocks": 15,
+      "priceOffset": 0,
+      "originTile": { "id": "9h" }
+    },
+    {
+      "name": "tower",
+      "tiles": [{ "id": "8b" }, { "id": "9b" }, { "id": "8a" }, { "id": "9a" }],
+      "stocks": 17,
+      "priceOffset": 0,
+      "originTile": { "id": "8b" }
+    }
+  ],
+  "players": [
+    {
+      "id": "1",
+      "name": "gopi",
+      "tiles": [
+        { "id": "6a" },
+        { "id": "1i" },
+        { "id": "1e" },
+        { "id": "8g" },
+        { "id": "10i" },
+        { "id": "3c" }
+      ],
+      "money": 500,
+      "stocks": {
+        "festival": 4,
+        "sackson": 3,
+        "imperial": 4,
+        "tower": 4,
+        "continental": 1,
+        "worldwide": 1
+      }
+    },
+    {
+      "id": "2",
+      "name": "vinay",
+      "tiles": [
+        { "id": "1g" },
+        { "id": "4f" },
+        { "id": "4c" },
+        { "id": "1d" },
+        { "id": "8c" },
+        { "id": "12c" }
+      ],
+      "money": 100,
+      "stocks": {
+        "festival": 3,
+        "sackson": 7,
+        "tower": 4,
+        "american": 2,
+        "worldwide": 2,
+        "continental": 3
+      }
+    }
+  ],
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 41
+}
