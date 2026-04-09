@@ -31,6 +31,6 @@ export class PlayerSession {
   }
 
   getPlayerIds() {
-    return this.#playerIds;
+    return [...this.#playerIds];
   }
 }
