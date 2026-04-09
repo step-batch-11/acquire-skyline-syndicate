@@ -1,4 +1,4 @@
-const stakeHolders = (players, hotelName) => {
+export const stakeHolders = (players, hotelName) => {
   return players.filter((player) => player.hasStock(hotelName));
 };
 

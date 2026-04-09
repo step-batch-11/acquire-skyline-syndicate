@@ -702,4 +702,200 @@ describe("Game entity tests", () => {
       assertEquals(game.isGameEnd(), true);
     });
   });
+
+  describe("calculateFinalWinner", () => {
+    let state;
+    let currentPlayerIndex;
+    let deck;
+    let placedTileIds;
+    let lastTile;
+    let player1;
+    let player2;
+
+    beforeEach(() => {
+      state = "BUY_STOCKS";
+      currentPlayerIndex = 1;
+      deck = [{ id: "7e" }, { id: "8e" }];
+      placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+      lastTile = new Tile("3a");
+      player1 = new Player("Gopi", 1);
+      player1.addStocks("imperial", 3);
+      player1.addStocks("continental", 5);
+      player2 = new Player("Dilli", 2);
+      player2.addStocks("festival", 3);
+      player2.addStocks("continental", 3);
+      const hotels = [
+        {
+          name: "imperial",
+          tiles: [
+            {
+              id: "1a",
+            },
+            {
+              id: "2a",
+            },
+            {
+              id: "3a",
+            },
+            {
+              id: "4a",
+            },
+            {
+              id: "5a",
+            },
+            {
+              id: "6a",
+            },
+            {
+              id: "7a",
+            },
+            {
+              id: "8a",
+            },
+            {
+              id: "9a",
+            },
+            {
+              id: "10a",
+            },
+            {
+              id: "11a",
+            },
+            {
+              id: "12a",
+            },
+          ],
+          stocks: 20,
+          priceOffset: 200,
+          originTile: {
+            id: "5a",
+          },
+        },
+        {
+          name: "continental",
+          tiles: [
+            {
+              id: "1d",
+            },
+            {
+              id: "2d",
+            },
+            {
+              id: "3d",
+            },
+            {
+              id: "4d",
+            },
+            {
+              id: "5d",
+            },
+            {
+              id: "6d",
+            },
+            {
+              id: "7d",
+            },
+            {
+              id: "8d",
+            },
+            {
+              id: "9d",
+            },
+            {
+              id: "10d",
+            },
+            {
+              id: "11d",
+            },
+          ],
+          stocks: 22,
+          priceOffset: 200,
+          originTile: {
+            id: "6d",
+          },
+        },
+        {
+          name: "festival",
+          tiles: [
+            {
+              id: "1g",
+            },
+            {
+              id: "2g",
+            },
+            {
+              id: "3g",
+            },
+            {
+              id: "4g",
+            },
+            {
+              id: "5g",
+            },
+            {
+              id: "6g",
+            },
+            {
+              id: "7g",
+            },
+            {
+              id: "8g",
+            },
+            {
+              id: "9g",
+            },
+            {
+              id: "10g",
+            },
+          ],
+          stocks: 23,
+          priceOffset: 100,
+          originTile: {
+            id: "5g",
+          },
+        },
+        {
+          name: "american",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        players: [player1, player2],
+        hotels,
+        board: { placedTileIds, lastTile },
+        deck,
+        currentPlayerIndex,
+      });
+    });
+
+    it("get the winner of the game", () => {
+      const { winner, players } = game.calculateFinalWinner();
+      const [winnerOfTheGame] = players.sort((a, b) => b.money - a.money);
+      assertEquals(winner, winnerOfTheGame.name);
+    });
+  });
 });

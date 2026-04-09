@@ -46,16 +46,8 @@ export default class MergeService {
     const stakeholders = this.#stakeHolders(defunctHotel.name);
     this.#distributeBonus(stakeholders, defunctHotel);
     const currentStockPrice = defunctHotel.calculateStockPrice();
-    // sellStocks(option.sell)
-    // tradeStocks(option.trade/2)
     this.#sellAllStocks(stakeholders, currentStockPrice, defunctHotel.name);
     survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
     defunctHotel.dissolve();
   }
 }
-
-// hotels.map((h) => {
-//   const stakeholders = this.#stakeHolders(defunctHotel.name);
-//     this.#distributeBonus(stakeholders, defunctHotel);
-//     sellStocks()
-// })
