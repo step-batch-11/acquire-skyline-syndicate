@@ -84,7 +84,8 @@ export class Game {
   }
 
   #getAdjacentHotelChains() {
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
+    const lastTile = this.#board.lastTile;
+    const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
@@ -172,11 +173,25 @@ export class Game {
     }
     if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
     const lastTile = this.#board.lastTile;
-    const adjacentTiles = this.#board.adjacentTilesOfLastTile();
+    const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
     this.#state = "BUY_STOCK";
   }
+
+  // getAdjacentHotelChainsForDeadTiles(tile) {
+  //   const adjacentTiles = this.#board.getAdjacentTiles(tile);
+  //   return this.#hotels.getAdjacentHotelChains(adjacentTiles);
+  // }
+
+  // exchangeDeadTiles() {
+  //   const playerTiles = this.#currentPlayer.getTileIds();
+  //   playerTiles.forEach((tile) => {
+  //     this.#getAdjacentHotelChainsForDeadTiles(tile)
+  //   }
+  //   )
+
+  // }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
@@ -248,6 +263,7 @@ export class Game {
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
+    // this.exchangeDeadTiles()
     this.#state = "PLACE_TILE";
   }
 

@@ -1,9 +1,13 @@
 export class Board {
   #placedTiles;
-  lastTile;
+  #lastTile;
 
   constructor() {
     this.#placedTiles = [];
+  }
+
+  get lastTile() {
+    return this.#lastTile;
   }
 
   isTileOnBoard(tileId) {
@@ -17,22 +21,22 @@ export class Board {
 
   place(tile) {
     this.#placedTiles.push(tile);
-    this.lastTile = tile;
+    this.#lastTile = tile;
   }
 
   hasAdjacentForLastTile() {
     return this.#placedTiles.some((placedTile) =>
-      this.lastTile.isNeighbouringTile(placedTile)
+      this.#lastTile.isNeighbouringTile(placedTile)
     );
   }
 
-  adjacentTilesOfLastTile() {
-    return this.lastTile.getAllConnectedTiles(this.#placedTiles);
+  adjacentTilesOf(tile) {
+    return tile.getAllConnectedTiles(this.#placedTiles);
   }
 
   getBoardState() {
     const placedTileIds = this.#placedTiles.map((tile) => tile.id);
-    const lastTile = this.lastTile.tileId;
+    const lastTile = this.#lastTile.id;
     return {
       placedTileIds,
       lastTile,
@@ -40,7 +44,7 @@ export class Board {
   }
 
   loadGameState({ placedTileIds, lastTile }) {
-    this.lastTile = lastTile;
+    this.#lastTile = lastTile;
     this.#placedTiles = placedTileIds;
   }
 }
