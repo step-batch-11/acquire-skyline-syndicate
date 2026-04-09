@@ -1,0 +1,294 @@
+{
+  "board": {
+    "placedTileIds": [
+      "1a",
+      "2a",
+      "3a",
+      "4a",
+      "5a",
+      "6a",
+      "7a",
+      "8a",
+      "9a",
+      "10a",
+      "11a",
+      "12a",
+      "1b",
+      "2b",
+      "3b",
+      "4b",
+      "5b",
+      "6b",
+      "7b",
+      "8b",
+      "9b",
+      "10b",
+      "11b",
+      "12b",
+      "1c",
+      "2c",
+      "3c",
+      "4c",
+      "5c",
+      "6c",
+      "7c",
+      "8c",
+      "9c",
+      "10c",
+      "11c",
+      "12c",
+      "1d",
+      "2d",
+      "3d",
+      "4d",
+      "5d",
+      "6d",
+      "1g",
+      "2g",
+      "3g",
+      "4g",
+      "5g",
+      "6g",
+      "7g",
+      "8g",
+      "9g",
+      "10g"
+    ]
+  },
+  "deck": [],
+  "hotels": [
+    {
+      "name": "imperial",
+      "tiles": [
+        {
+          "id": "1a"
+        },
+        {
+          "id": "2a"
+        },
+        {
+          "id": "3a"
+        },
+        {
+          "id": "4a"
+        },
+        {
+          "id": "5a"
+        },
+        {
+          "id": "6a"
+        },
+        {
+          "id": "7a"
+        },
+        {
+          "id": "8a"
+        },
+        {
+          "id": "9a"
+        },
+        {
+          "id": "10a"
+        },
+        {
+          "id": "11a"
+        },
+        {
+          "id": "12a"
+        },
+        {
+          "id": "1b"
+        },
+        {
+          "id": "2b"
+        },
+        {
+          "id": "3b"
+        },
+        {
+          "id": "4b"
+        },
+        {
+          "id": "5b"
+        },
+        {
+          "id": "6b"
+        },
+        {
+          "id": "7b"
+        },
+        {
+          "id": "8b"
+        },
+        {
+          "id": "9b"
+        },
+        {
+          "id": "10b"
+        },
+        {
+          "id": "11b"
+        },
+        {
+          "id": "12b"
+        },
+        {
+          "id": "1c"
+        },
+        {
+          "id": "2c"
+        },
+        {
+          "id": "3c"
+        },
+        {
+          "id": "4c"
+        },
+        {
+          "id": "5c"
+        },
+        {
+          "id": "6c"
+        },
+        {
+          "id": "7c"
+        },
+        {
+          "id": "8c"
+        },
+        {
+          "id": "9c"
+        },
+        {
+          "id": "10c"
+        },
+        {
+          "id": "11c"
+        },
+        {
+          "id": "12c"
+        },
+        {
+          "id": "1d"
+        },
+        {
+          "id": "2d"
+        },
+        {
+          "id": "3d"
+        },
+        {
+          "id": "4d"
+        },
+        {
+          "id": "5d"
+        },
+        {
+          "id": "6d"
+        }
+      ],
+      "stocks": 8,
+      "priceOffset": 200,
+      "originTile": {
+        "id": "6b"
+      }
+    },
+    {
+      "name": "festival",
+      "tiles": [
+        {
+          "id": "1g"
+        },
+        {
+          "id": "2g"
+        },
+        {
+          "id": "3g"
+        },
+        {
+          "id": "4g"
+        },
+        {
+          "id": "5g"
+        },
+        {
+          "id": "6g"
+        },
+        {
+          "id": "7g"
+        },
+        {
+          "id": "8g"
+        },
+        {
+          "id": "9g"
+        },
+        {
+          "id": "10g"
+        }
+      ],
+      "stocks": 21,
+      "priceOffset": 100,
+      "originTile": {
+        "id": "5g"
+      }
+    },
+    {
+      "name": "continental",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 200
+    },
+    {
+      "name": "american",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100
+    },
+    {
+      "name": "worldwide",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100
+    },
+    {
+      "name": "sackson",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 0
+    },
+    {
+      "name": "tower",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 0
+    }
+  ],
+  "players": [
+    {
+      "id": "1",
+      "name": "Dilli",
+      "tiles": [],
+      "money": 9000,
+      "stocks": {
+        "imperial": 6
+      }
+    },
+    {
+      "id": "2",
+      "name": "rafiya",
+      "tiles": [
+        {
+          "id": "7d"
+        }
+      ],
+      "money": 8500,
+      "stocks": {
+        "imperial": 4,
+        "festival": 2
+      }
+    }
+  ],
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 1
+}

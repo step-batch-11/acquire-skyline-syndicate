@@ -78,9 +78,37 @@
             <div id="stock-left">& 25</div>
           </div>
         </div>
-        <div class="hotel-container">
-        </div>
+        <div class="hotel-container"></div>
       </section>
+    </template>
+
+    <template id="endGameTemplate">
+      <div class="overlay">
+        <div class="popup">
+          <span class="close-btn">✖</span>
+
+          <h2>Game Over 🎮</h2>
+
+          <div class="winner">
+            <h3>Winner:</h3>
+            <p class="winnerName"></p>
+          </div>
+
+          <div class="players">
+            <h3>Players</h3>
+
+            <table class="players-table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Amount 💰</th>
+                </tr>
+              </thead>
+              <tbody class="playersTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </template>
   </body>
 </html>

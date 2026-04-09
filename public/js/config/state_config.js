@@ -23,11 +23,49 @@ const handleBuyStocks = (gameData) => {
   bankSection.append(confirmBtn);
 };
 
+const handleEndGame = (gameData) => {
+  const template = document.getElementById("endGameTemplate");
+  const clone = template.content.cloneNode(true);
+
+  const overlay = clone.querySelector(".overlay");
+  const winnerEl = clone.querySelector(".winnerName");
+  const tableBody = clone.querySelector(".playersTableBody");
+  const closeBtn = clone.querySelector(".close-btn");
+
+  console.log(gameData);
+
+  const { players, winner } = gameData;
+
+  winnerEl.textContent = winner;
+  players.sort((a, b) => b.amount - a.amount);
+  players.forEach((player) => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${player.name}</td>
+      <td>${player.amount}</td>
+    `;
+
+    tableBody.appendChild(row);
+  });
+  closeBtn.addEventListener("click", () => overlay.remove());
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
+  });
+  document.body.appendChild(clone);
+  requestAnimationFrame(() => {
+    document.querySelector(".overlay:last-child").classList.add("active");
+  });
+};
+
 export const gameStates = {
   PLACE_TILE: handlePlaceTile,
   BUILD_HOTEL: buildAHotel,
   BUY_STOCK: handleBuyStocks,
   SHIFT_TURN: handleShiftTurn,
+  END_GAME: handleEndGame,
 };
 
 export const handleGameState = (gameData) => {

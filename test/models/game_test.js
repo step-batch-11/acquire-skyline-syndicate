@@ -46,6 +46,7 @@ describe("Game entity tests", () => {
     const deck = new Deck(tilesInstances, () => tilesInstances);
     game = new Game(deck, board, hotelsInstances, players);
   });
+
   describe("init method", () => {
     it("should return the initial data which game needs", () => {
       game.init();
@@ -187,6 +188,10 @@ describe("Game entity tests", () => {
         deck,
       });
 
+      game.assignNewTile();
+      game.assignNewTile();
+      game.assignNewTile();
+
       const result = game.buyStocks(1, [
         { hotelName: "continental", selectedStocks: 3 },
       ]);
@@ -301,6 +306,13 @@ describe("Game entity tests", () => {
           tiles: ["1a", "2a"].map((tileId) => new Tile(tileId)),
           stocks: 24,
           originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
+        {
+          name: "imperial",
+          tiles: [],
+          stocks: 25,
+          originTile: null,
           priceOffset: 200,
         },
       ];
@@ -419,35 +431,35 @@ describe("Game entity tests", () => {
         },
         {
           name: "american",
-          tiles: Array.from({ length: 11 }, () => 1),
+          tiles: Array.from({ length: 10 }, () => 1),
           stocks: 12,
           originTile: new Tile("12f"),
           priceOffset: 100,
         },
         {
           name: "worldwide",
-          tiles: Array.from({ length: 11 }, () => 1),
+          tiles: Array.from({ length: 8 }, () => 1),
           stocks: 12,
           originTile: new Tile("10a"),
           priceOffset: 100,
         },
         {
           name: "festival",
-          tiles: Array.from({ length: 11 }, () => 1),
+          tiles: Array.from({ length: 7 }, () => 1),
           stocks: 12,
           originTile: new Tile("13b"),
           priceOffset: 100,
         },
         {
           name: "sackson",
-          tiles: Array.from({ length: 11 }, () => 1),
+          tiles: Array.from({ length: 6 }, () => 1),
           stocks: 12,
           originTile: new Tile("10e"),
           priceOffset: 0,
         },
         {
           name: "tower",
-          tiles: Array.from({ length: 11 }, () => 1),
+          tiles: Array.from({ length: 8 }, () => 1),
           stocks: 12,
           originTile: new Tile("11f"),
           priceOffset: 0,

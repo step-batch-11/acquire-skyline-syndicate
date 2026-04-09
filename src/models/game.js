@@ -31,7 +31,19 @@ export class Game {
     });
   }
 
+  calculateFinalWinner() {
+    return {
+      state: this.#state,
+      players: [
+        { name: "GOPI", amount: 2000 },
+        { name: "DIllI", amount: 3000 },
+      ],
+      winner: "DILLI",
+    };
+  }
+
   currentState(requestedPlayerId) {
+    if (this.#state === "END_GAME") return this.calculateFinalWinner();
     return {
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
@@ -197,6 +209,11 @@ export class Game {
         this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
       this.#currentPlayer.deductMoney(moneyToDeduct);
+      if (this.isGameEnd()) {
+        console.log("end game scenerio");
+        this.#state = "END_GAME";
+        return this.calculateFinalWinner();
+      }
       this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
       return { hotels, playerInfo, state: this.#state };
@@ -205,7 +222,9 @@ export class Game {
 
   #areAllHotelsStable() {
     const hotels = this.#hotels.getHotels();
-    return hotels.every((hotel) => hotel.tiles.length >= 11);
+    return hotels
+      .filter((hotel) => hotel.tiles.length > 1)
+      .every((hotel) => hotel.tiles.length >= 11);
   }
 
   #isAnyHotelHas41Tiles() {
