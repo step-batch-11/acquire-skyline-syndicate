@@ -4,6 +4,7 @@ export class Tile {
   #maxCol;
   #minCol;
   #neighbourDeltas;
+  isPlayable;
   constructor(tileId) {
     this.#maxCol = 12;
     this.#minCol = 1;
@@ -15,6 +16,7 @@ export class Tile {
       { columnDelta: 0, rowDelta: 1 },
       { columnDelta: 0, rowDelta: -1 },
     ];
+    this.isPlayable = true;
   }
 
   #getRowIndex(row) {

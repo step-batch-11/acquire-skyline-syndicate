@@ -12,6 +12,10 @@ export class Hotels {
     return Object.values(this.#hotels).map((hotel) => hotel.getState());
   }
 
+  getHotelEntities() {
+    return Object.values(this.#hotels);
+  }
+
   foundHotel(hotelName, originTile, adjacentTilesForHotel) {
     const adjacents = adjacentTilesForHotel.map((tileId) => new Tile(tileId));
     this.#hotels[hotelName].found(originTile, adjacents);

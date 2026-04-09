@@ -22,7 +22,10 @@ export class Player {
   }
 
   getTileIds() {
-    return this.#tiles.map((tile) => tile.id);
+    return this.#tiles.map((tile) => ({
+      id: tile.id,
+      isPlayable: tile.isPlayable,
+    }));
   }
 
   hasStock(hotelName) {
@@ -30,7 +33,7 @@ export class Player {
   }
 
   isPlayerTile(tileId) {
-    return this.getTileIds().includes(tileId);
+    return this.getTileIds().some((tile) => tile.id === tileId);
   }
 
   getDetails() {
@@ -92,7 +95,7 @@ export class Player {
   }
 
   sellStocks(hotelName, price) {
-    this.#money = this.#money + price * this.#stocks[hotelName];
+    this.#money += price * this.#stocks[hotelName] || 0;
     delete this.#stocks[hotelName];
   }
 

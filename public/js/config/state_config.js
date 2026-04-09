@@ -41,7 +41,7 @@ const handleEndGame = (gameData) => {
 
     row.innerHTML = `
       <td>${player.name}</td>
-      <td>${player.amount}</td>
+      <td>${player.money}</td>
     `;
 
     tableBody.appendChild(row);

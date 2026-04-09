@@ -33,7 +33,7 @@ const joinGame = async (username, playerType, lobbyId) => {
   await page.click(`#${playerType}`);
 
   await page.fill("#lobby_id", lobbyId);
-  await page.click("#join-game");
+  await page.click("#join_game");
 };
 
 const { lobbyId, page } = await hostGame("Gopi", "host");

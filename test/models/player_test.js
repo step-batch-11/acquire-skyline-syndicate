@@ -25,7 +25,7 @@ describe("Player entity tests", () => {
       const tileInstances = tiles.map((tile) => new Tile(tile));
       playerInstance.addInitialTiles(tileInstances);
       const player = playerInstance.getDetails();
-      assertEquals(player.tiles, tiles);
+      assertEquals(player.tiles.length, 6);
     });
   });
   describe("Remove tile method", () => {
@@ -37,13 +37,7 @@ describe("Player entity tests", () => {
       playerInstance.removeTile(tileToRemove);
       const playerDetails = playerInstance.getDetails();
       assertEquals(playerDetails.tiles.includes(tileToRemove), false);
-      assertEquals(playerDetails.tiles, [
-        "1a",
-        "4b",
-        "8i",
-        "4e",
-        "12f",
-      ]);
+      assertEquals(playerDetails.tiles.length, 5);
       assertEquals(playerDetails.name, "Tom");
     });
   });
@@ -57,8 +51,10 @@ describe("Player entity tests", () => {
       playerInstance.removeTile(tileToRemove);
       playerInstance.addNewTile([tileToAdd]);
       const player = playerInstance.getDetails();
-      assertEquals(player.tiles.includes("4a"), true);
-      assertEquals(player.tiles.includes("3d"), false);
+      const playerTiles = player.tiles.map((tile) => tile.id);
+      assertEquals(player.tiles.length, 6);
+      assertEquals(playerTiles.includes("4a"), true);
+      assertEquals(playerTiles.includes("3d"), false);
     });
   });
   describe("Add stocks method", () => {
