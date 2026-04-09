@@ -130,4 +130,32 @@ describe("Player entity tests", () => {
       assertEquals(details, playerDetails);
     });
   });
+
+  describe("when player has stock of hotel", () => {
+    it("then it should return true", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 3 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      assertEquals(playerInstance.hasStock("sackson"), true);
+    });
+  });
+
+  describe("when player doesn't have stock of a hotel", () => {
+    it("then it should return false", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: {},
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      assertEquals(playerInstance.hasStock("sackson"), false);
+    });
+  });
 });

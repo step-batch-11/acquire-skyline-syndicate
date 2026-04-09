@@ -5,7 +5,7 @@
     "test:watch": "deno test -A --watch",
     "test:coverage": "deno test -A --coverage",
     "coverage:detailed": "deno coverage --detailed",
-    "play": "dev=true deno run -A main.js & deno run -A setup.js",
+    "play": "dev=true deno run -A main.js  & deno run -A setup.js",
     "dev": "dev=true deno run -A main.js",
     "login": "dev=true deno run -A --watch main.js & node scripts/auto_login.js"
   },

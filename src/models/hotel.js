@@ -50,6 +50,13 @@ export class Hotel {
     return numberOfTiles * 100 + this.#priceOffset;
   }
 
+  bonuses() {
+    return {
+      primaryBonus: this.calculateStockPrice() * 10,
+      secondaryBonus: this.calculateStockPrice() * 5,
+    };
+  }
+
   getState() {
     const stockPrice = this.calculateStockPrice();
     return {
