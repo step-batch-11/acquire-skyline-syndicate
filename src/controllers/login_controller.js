@@ -11,8 +11,8 @@ export class LoginController {
     const sessionId = crypto.randomUUID();
     const playerId = this.#idGenerator();
     const sessions = c.get("sessions");
-    sessions.setSession(sessionId, playerId);
-    sessions.setPlayerId(playerId, playerName);
+    sessions.session = { sessionId, playerId };
+    sessions.playerId = { playerId, playerName };
     setCookie(c, "sessionId", sessionId);
     return c.redirect("/pages/home_page.html", 302);
   }

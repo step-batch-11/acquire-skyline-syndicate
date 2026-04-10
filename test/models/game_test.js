@@ -896,7 +896,7 @@ describe("Game entity tests", () => {
       player1 = new Player("Gopi", 1);
       player1.addStocks("imperial", 3);
       player1.addStocks("continental", 5);
-      player1.addNewTile([
+      player1.addTiles([
         { id: "1c" },
         { id: "2c" },
         { id: "3c" },
@@ -908,7 +908,7 @@ describe("Game entity tests", () => {
       player2 = new Player("Dilli", 2);
       player2.addStocks("festival", 3);
       player2.addStocks("continental", 3);
-      player2.addNewTile([
+      player2.addTiles([
         { id: "1i" },
         { id: "2i" },
         { id: "3i" },
@@ -1167,14 +1167,13 @@ describe("Game entity tests", () => {
 
     describe("exchanging the dead tiles in the user hand", () => {
       it("no dead tiles in the player hand", () => {
-        const intialTiles = player2.getTileIds();
+        const intialTiles = player2.getTilesInfo();
         game.exchangeDeadTiles();
-        const exchangedTiles = player2.getTileIds();
+        const exchangedTiles = player2.getTilesInfo();
         assertEquals(intialTiles, exchangedTiles);
       });
 
       it("player hand contains dead tiles", () => {
-        // const intialTileIds = player1.getTileIds().map(x => x.id);
         game.loadGameState({
           state,
           players: [player1, player2],
@@ -1184,7 +1183,7 @@ describe("Game entity tests", () => {
           currentPlayerIndex: 0,
         });
         game.exchangeDeadTiles();
-        const exchangedTileIds = player1.getTileIds().map((x) => x.id);
+        const exchangedTileIds = player1.getTilesInfo().map((x) => x.id);
         const exceptedResult = ["2c", "3c", "4c", "5c", "6c", "7e"];
 
         assertEquals(exchangedTileIds, exceptedResult);

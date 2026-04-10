@@ -26,7 +26,7 @@ export class Board {
 
   hasAdjacentForLastTile() {
     return this.#placedTiles.some((placedTile) =>
-      this.#lastTile.isNeighbouringTile(placedTile)
+      this.#lastTile.isNeighbour(placedTile)
     );
   }
 

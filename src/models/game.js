@@ -179,14 +179,14 @@ export class Game {
       this.#state = this.#actionForTilePlacement(tileId);
       this.#currentPlayer.removeTile(tileId);
       return {
-        playerTiles: this.#currentPlayer.getTileIds(),
+        playerTiles: this.#currentPlayer.getTilesInfo(),
         tilesOnBoard: this.#board.getPlacedTiles(),
         state: this.#state,
       };
     }
 
     return {
-      playerTiles: this.#currentPlayer.getTileIds(),
+      playerTiles: this.#currentPlayer.getTilesInfo(),
       tilesOnBoard: this.#board.getPlacedTiles(),
       state: "NO_ACTION",
     };
@@ -227,7 +227,7 @@ export class Game {
   }
 
   exchangeDeadTiles() {
-    const playerTiles = this.#currentPlayer.getTileIds();
+    const playerTiles = this.#currentPlayer.getTilesInfo();
     playerTiles.forEach((tile) => {
       if (this.isDeadTile(tile.id)) {
         this.#currentPlayer.removeTile(tile.id);
@@ -243,7 +243,7 @@ export class Game {
       return this.assignNewTile();
     }
     const markedTiles = this.#markPlayableTiles([tile]);
-    this.#currentPlayer.addNewTile(markedTiles);
+    this.#currentPlayer.addTiles(markedTiles);
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -289,7 +289,7 @@ export class Game {
   }
 
   #areAllHandsEmpty() {
-    return this.#players.every((player) => player.getTileIds().length === 0);
+    return this.#players.every((player) => player.getTilesInfo().length === 0);
   }
 
   isGameEnd() {
@@ -315,10 +315,10 @@ export class Game {
   }
 
   getCurrentGameState() {
-    const players = this.#players.map((player) => player.getPlayerState());
+    const players = this.#players.map((player) => player.getDetails());
     return {
       board: this.#board.getBoardState(),
-      deck: this.#deck.getDeckState(),
+      deck: this.#deck.tiles,
       hotels: this.#hotels.getHotelsState(),
       players,
       state: this.#state,
@@ -331,7 +331,7 @@ export class Game {
     this.#currentPlayer =
       data.players[data.currentPlayerIndex % data.players.length];
     this.#currentPlayerIndex = data.currentPlayerIndex;
-    this.#deck.loadGameState(data.deck);
+    this.#deck.tiles = data.deck;
     this.#players = data.players;
     this.#board.loadGameState(data.board);
     this.#hotels.loadGameState(data.hotels);

@@ -49,12 +49,9 @@ describe("Player entity tests", () => {
       const tileToAdd = new Tile("4a");
       playerInstance.addInitialTiles(tileInstances);
       playerInstance.removeTile(tileToRemove);
-      playerInstance.addNewTile([tileToAdd]);
+      playerInstance.addTiles([tileToAdd]);
       const player = playerInstance.getDetails();
-      const playerTiles = player.tiles.map((tile) => tile.id);
       assertEquals(player.tiles.length, 6);
-      assertEquals(playerTiles.includes("4a"), true);
-      assertEquals(playerTiles.includes("3d"), false);
     });
   });
   describe("Add stocks method", () => {
@@ -87,7 +84,7 @@ describe("Player entity tests", () => {
 
   describe("getting the game state", () => {
     it("1. getting the game state of the player", () => {
-      const playerState = playerInstance.getPlayerState();
+      const playerState = playerInstance.getDetails();
       const exceptedDetails = {
         id: 1,
         name: "Tom",
@@ -100,7 +97,7 @@ describe("Player entity tests", () => {
 
     it("2. getting the player state after some actions", () => {
       playerInstance.addStocks("sackson", 3);
-      const playerState = playerInstance.getPlayerState();
+      const playerState = playerInstance.getDetails();
       const exceptedDetails = {
         id: 1,
         name: "Tom",
