@@ -748,7 +748,7 @@ footer {
   border-bottom: 1px solid #eee;
 }
 
-.notification-box {
+.notification-container {
   position: absolute;
   top: 10px;
   height: auto;
@@ -760,13 +760,25 @@ footer {
   color: white;
   font-weight: bold;
   text-align: center;
-  /* opacity: 0; */
-  /* transition: opacity 2.5s ease; */
+opacity: 1;
+  transition: opacity 1s ease;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 3s;
 }
 
+/* .animation{
+  
+} */
+
 .selected {
-  /* border: 1px solid black; */
   transform: scale(1.03);
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 #info-table {
