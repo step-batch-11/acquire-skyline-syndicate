@@ -85,7 +85,6 @@ export class Game {
   }
 
   #generateNotification(requestedPlayerId, notification) {
-    // console.log(notification);
     if (Object.keys(notification).length === 0) return {};
 
     const notificationHandler = {

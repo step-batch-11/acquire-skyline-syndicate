@@ -274,7 +274,8 @@ table {
 }
 
 .cart-count {
-  width: 39.5%;
+  font-size: 1.3em;
+  width: 36%;
   padding: 0.7em 1.2em;
   text-align: center;
   border: none;
@@ -285,10 +286,10 @@ table {
   padding: 0.7em 1.2em;
   width: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   box-sizing: border-box;
   box-shadow: 0 0 2px rgb(169, 169, 169);
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 .cart-total p {
@@ -364,6 +365,16 @@ footer {
   font-size: 1.7em;
   color: rgb(30 41 59);
   font-weight: 500;
+}
+
+.hotel-name-element {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.stock-price {
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 .stock .stock-name {

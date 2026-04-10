@@ -63,7 +63,6 @@ const createHotelData = (
   const tr = createElement("tr", "hotel-stock");
   tr.classList.add(isActive ? "inactive-element" : "active");
   tr.id = name;
-
   const hotelNameElement = createElement("span", "hotel-name-element");
   hotelNameElement.textContent = name;
 
@@ -88,7 +87,7 @@ const createHotelData = (
 const createTable = (hotels) => {
   const table = cloneElement("#table");
   const tbody = table.querySelector("tbody");
-  const tableData = hotels.map(createHotelData);
+  const tableData = hotels.map((hotel) => createHotelData(hotel, true));
   tbody.append(...tableData);
 
   return tbody;
