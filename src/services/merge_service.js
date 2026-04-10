@@ -1,8 +1,15 @@
+import { MERGE_STATE } from "../configs/merge_states.js";
+
 export default class MergeService {
+  #mergeState;
   #affectedHotels;
   #players;
   #hotels;
   #board;
+  #survivingHotel;
+  #defunctHotel;
+  #defuntHotelStakeHolders;
+
   constructor(affectedHotels, players, hotels, board) {
     this.#players = players;
     this.#affectedHotels = affectedHotels;
@@ -70,18 +77,71 @@ export default class MergeService {
     return this.#players.filter((player) => player.hasStock(hotelName));
   }
 
-  mergeHotels() {
+  #detectMergeType(firstHotel, secondHotel) {
+    if (firstHotel.getTiles().length === secondHotel.getTiles().length) {
+      this.#mergeState = MERGE_STATE.equal;
+      return;
+    }
+
+    this.#mergeState = MERGE_STATE.unequal;
+  }
+
+  get mergeState() {
+    return this.#mergeState;
+  }
+
+  #mergeTwoEqual({ hotelName }) {
+    if (this.#defunctHotel.name !== hotelName) {
+      const temp = this.#survivingHotel;
+      this.#survivingHotel = this.#defunctHotel;
+      this.#defunctHotel = temp;
+    }
+    this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
+    this.#mergeHotels();
+  }
+
+  #mergeTwoUnequal() {
+    this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
+    this.#mergeHotels();
+    this.#mergeState = MERGE_STATE.dissolution;
+  }
+
+  handleMerge(data) {
+    if (this.#mergeState === MERGE_STATE.equal) {
+      this.#mergeTwoEqual(data);
+      this.#mergeState = MERGE_STATE.dissolution;
+      return { sucess: true };
+    }
+    this.#mergeTwoUnequal();
+  }
+
+  #mergeHotels() {
+    this.#survivingHotel.addTiles([
+      ...this.#defunctHotel.getTiles(),
+      this.#board.lastTile,
+    ]);
+    this.#distributeBonus(this.#defuntHotelStakeHolders, this.#defunctHotel);
+    const currentStockPrice = this.#defunctHotel.calculateStockPrice();
+    this.#sellAllStocks(
+      this.#defuntHotelStakeHolders,
+      currentStockPrice,
+      this.#defunctHotel.name,
+    );
+    this.#defunctHotel.dissolve();
+  }
+
+  init() {
     const sortedHotels = this.#affectedHotels.sort(
       (a, b) => a.tiles.length - b.tiles.length,
     );
     const [defunctHotel, survivingHotel] = sortedHotels.map((hotel) =>
       this.#hotels.getHotel(hotel.name)
     );
-    const stakeholders = this.#stakeHolders(defunctHotel.name);
-    this.#distributeBonus(stakeholders, defunctHotel);
-    const currentStockPrice = defunctHotel.calculateStockPrice();
-    this.#sellAllStocks(stakeholders, currentStockPrice, defunctHotel.name);
-    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
-    defunctHotel.dissolve();
+    this.#defunctHotel = defunctHotel;
+    this.#survivingHotel = survivingHotel;
+    this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
+    if (this.#mergeState === MERGE_STATE.unequal) {
+      this.#mergeTwoUnequal();
+    }
   }
 }

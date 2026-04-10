@@ -28,7 +28,6 @@ const polling = () => {
 globalThis.onload = async () => {
   const gameData = await gameState();
   currentState = gameData.state;
-
   renderGame(gameData);
   updateNotification(gameData);
   if (gameData.isActivePlayer) {
