@@ -43,7 +43,7 @@ export const renderBoard = (tilesOnBoard, hotelsOnBoard) => {
 export const renderTilesInHand = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles-in-hand");
   const playerTileElements = playerTiles.map((tile) =>
-    createTileElement(tile.id),
+    createTileElement(tile.id)
   );
   tilesContainer.innerHTML = "";
   tilesContainer.append(...playerTileElements);
@@ -95,12 +95,14 @@ export const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
+  const bankHeader = cloneElement("#bank-header-template");
   const tableContainer = cloneElement("#bank-info-table");
   const tableBody = tableContainer.querySelector("tbody");
 
   const hotelCards = hotels.map((hotel) => addHotelData(hotel));
   tableBody.append(...hotelCards);
-  bankSection.append(tableContainer);
+  tableContainer.append(tableBody);
+  bankSection.replaceChildren(bankHeader, tableContainer);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {
@@ -119,7 +121,7 @@ export const renderHeldStocks = (stocks) => {
   const stocksSection = document.querySelector(".stocks");
   const stockCards = cloneStockCards();
   Object.entries(stocks).forEach(([name, count], index) =>
-    addDetailsToCard(stockCards[index], name, count),
+    addDetailsToCard(stockCards[index], name, count)
   );
   stocksSection.replaceChildren(...stockCards);
 };

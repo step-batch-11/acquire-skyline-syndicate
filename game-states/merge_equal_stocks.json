@@ -1,0 +1,106 @@
+{
+  "board": {
+    "placedTileIds": [
+      "8b",
+      "8c",
+      "9b",
+      "9c",
+      "10d",
+      "10e"
+    ],
+    "lastTile": "9c"
+  },
+
+  "deck": [
+    { "id": "4f" },
+    { "id": "11i" },
+    { "id": "6c" },
+    { "id": "4g" },
+    { "id": "5d" },
+    { "id": "1a" },
+    { "id": "1g" },
+    { "id": "3h" },
+    { "id": "1e" }
+  ],
+
+  "hotels": [
+    { "name": "continental", "tiles": [], "stocks": 25, "priceOffset": 200 },
+    { "name": "imperial", "tiles": [], "stocks": 25, "priceOffset": 200 },
+
+    {
+      "name": "american",
+      "tiles": [
+        { "id": "8b" },
+        { "id": "8c" },
+        { "id": "9b" },
+        { "id": "9c" }
+      ],
+      "stocks": 23,
+      "priceOffset": 100,
+      "originTile": { "id": "8c" }
+    },
+
+    {
+      "name": "festival",
+      "tiles": [
+        { "id": "10d" },
+        { "id": "10e" }
+      ],
+      "stocks": 22,
+      "priceOffset": 100,
+      "originTile": { "id": "10e" }
+    },
+
+    { "name": "worldwide", "tiles": [], "stocks": 25, "priceOffset": 100 },
+    { "name": "sackson", "tiles": [], "stocks": 25, "priceOffset": 0 },
+    { "name": "tower", "tiles": [], "stocks": 25, "priceOffset": 0 }
+  ],
+
+  "players": [
+    {
+      "id": "1",
+      "name": "rafiya",
+      "tiles": [
+        { "id": "4i" },
+        { "id": "6i" },
+        { "id": "5g" },
+        { "id": "1d" },
+        { "id": "6f" },
+        { "id": "10a" }
+      ],
+      "money": 6000,
+      "stocks": {}
+    },
+    {
+      "id": "2",
+      "name": "yash",
+      "tiles": [
+        { "id": "8f" },
+        { "id": "4c" },
+        { "id": "3f" },
+        { "id": "11d" },
+        { "id": "10g" },
+        { "id": "10i" }
+      ],
+      "money": 5400,
+      "stocks": { "festival": 3 }
+    },
+    {
+      "id": "3",
+      "name": "rashmika",
+      "tiles": [
+        { "id": "9d" },
+        { "id": "6h" },
+        { "id": "12e" },
+        { "id": "3i" },
+        { "id": "2b" },
+        { "id": "12a" }
+      ],
+      "money": 5100,
+      "stocks": { "american": 2 }
+    }
+  ],
+
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 2
+}

@@ -19,8 +19,10 @@ describe("Testing the dissolution controllers", () => {
   let players;
   let player1;
   let player2;
+  let player3;
   let imperial;
   let continental;
+  let festival;
   const hotelState = [
     {
       name: "imperial",
@@ -179,13 +181,19 @@ describe("Testing the dissolution controllers", () => {
   beforeEach(() => {
     player1 = new Player("Gopi", 1);
     player1.addStocks("imperial", 3);
+    player1.addStocks("festival", 3);
     player1.addStocks("continental", 5);
+    player1.addStocks("continental", 5);
+
     player2 = new Player("Dilli", 2);
     player2.addStocks("festival", 3);
     player2.addStocks("continental", 3);
-    players = [player1, player2];
+
+    player3 = new Player("Som", 3);
+    players = [player1, player2, player3];
     imperial = populatedHotelInstance(hotelState[0]);
     continental = populatedHotelInstance(hotelState[1]);
+    festival = populatedHotelInstance(hotelState[2]);
   });
 
   describe("get the stake holders of a hotel from players", () => {
@@ -194,7 +202,7 @@ describe("Testing the dissolution controllers", () => {
       stakeholders.forEach((stakeHolder) => {
         assert(stakeHolder instanceof Player);
       });
-      assertEquals(stakeholders, [player2]);
+      assertEquals(stakeholders, [player1, player2]);
     });
 
     it("get the stock holder of imperial", () => {
@@ -229,7 +237,7 @@ describe("Testing the dissolution controllers", () => {
   describe("Distribute Primary and Secondary Bonuses", () => {
     it("Imperial being CLOSED. Player is sole stakeHolder", () => {
       const previousState = player1.getDetails();
-      distributeBonus(players, imperial);
+      distributeBonus(stakeHolders(players, "imperial"), imperial);
       const currentState = player1.getDetails();
       assertEquals(
         currentState.money,
@@ -239,7 +247,7 @@ describe("Testing the dissolution controllers", () => {
 
     it("Imperial being CLOSED. Player is not a stakeHolder", () => {
       const previousState = player2.getDetails();
-      distributeBonus(players, imperial);
+      distributeBonus(stakeHolders(players, "imperial"), imperial);
       const currentState = player2.getDetails();
       assertEquals(currentState.money, previousState.money);
     });
@@ -247,7 +255,7 @@ describe("Testing the dissolution controllers", () => {
     it("Imperial being CLOSED. 2 Player are stakeHolder", () => {
       const previousState2 = player2.getDetails();
       const previousState1 = player1.getDetails();
-      distributeBonus(players, continental);
+      distributeBonus(stakeHolders(players, "continental"), continental);
       const currentState2 = player2.getDetails();
       const currentState1 = player1.getDetails();
       assertEquals(
@@ -257,6 +265,47 @@ describe("Testing the dissolution controllers", () => {
       assertEquals(
         currentState1.money,
         previousState1.money + continental.primaryBonus,
+      );
+    });
+
+    it("Festival being CLOSED. 2 Player are primary stakeHolder", () => {
+      const previousState2 = player2.getDetails();
+      const previousState1 = player1.getDetails();
+      distributeBonus(stakeHolders(players, "festival"), festival);
+      const currentState2 = player2.getDetails();
+      const currentState1 = player1.getDetails();
+      assertEquals(
+        currentState2.money,
+        previousState2.money +
+          (festival.primaryBonus + festival.secondaryBonus) / 2,
+      );
+      assertEquals(
+        currentState1.money,
+        previousState1.money +
+          (festival.primaryBonus + festival.secondaryBonus) / 2,
+      );
+    });
+
+    it("Festival being CLOSED. 1 is primary and 2 Player are secondary stakeHolder", () => {
+      player3.addStocks("festival", 5);
+      const previousState3 = player3.getDetails();
+      const previousState2 = player2.getDetails();
+      const previousState1 = player1.getDetails();
+      distributeBonus(stakeHolders(players, "festival"), festival);
+      const currentState3 = player3.getDetails();
+      const currentState2 = player2.getDetails();
+      const currentState1 = player1.getDetails();
+      assertEquals(
+        currentState3.money,
+        previousState3.money + festival.primaryBonus,
+      );
+      assertEquals(
+        currentState1.money,
+        previousState1.money + festival.secondaryBonus / 2,
+      );
+      assertEquals(
+        currentState2.money,
+        previousState2.money + festival.secondaryBonus / 2,
       );
     });
   });

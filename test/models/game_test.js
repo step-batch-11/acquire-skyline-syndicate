@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 import { Game } from "../../src/models/game.js";
 import { Deck } from "../../src/models/deck.js";
 import { Board } from "../../src/models/board.js";
@@ -72,12 +72,84 @@ describe("Game entity tests", () => {
 
     it("Should not place tile on the board, if tile is not in player hand.", () => {
       game.init();
-      const initialData = game.currentState(1);
+      const previousState = game.currentState(1);
       const tileToPlace = "12i";
+      assertThrows(() => game.placeTile(1, tileToPlace));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 6);
+      assertEquals(currentState.tilesOnBoard, previousState.tilesOnBoard);
+    });
+
+    it("Should not place tile on the board, tile is in player hand and on board.", () => {
+      const tiles = [
+        "1a",
+        "3d",
+        "4b",
+        "8i",
+        "4e",
+        "12f",
+        "11i",
+        "10g",
+        "2d",
+        "4e",
+        "2e",
+        "5f",
+        "7h",
+        "6i",
+      ];
+      const tilesInstances = tiles.map((tile) => new Tile(tile));
+      const deck = new Deck(tilesInstances, () => tilesInstances);
+      const game = new Game(deck, board, hotelsInstances, players);
+      game.init();
+      const tileToPlace = "4e";
       game.placeTile(1, tileToPlace);
       const result = game.currentState(1);
-      assertEquals(result.player.tiles.length, 6);
-      assertEquals(result.tilesOnBoard, initialData.tilesOnBoard);
+      assertEquals(result.player.tiles.length, 5);
+      assertEquals(result.tilesOnBoard.length, 7);
+    });
+
+    it("Inactive player tries to place tile", () => {
+      game.init();
+      const previousState = game.currentState(1);
+      const tileToPlace = "4i";
+      assertThrows(() => game.placeTile(2, tileToPlace));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 6);
+      assertEquals(currentState.tilesOnBoard, previousState.tilesOnBoard);
+    });
+
+    it("State is not PLACE_TILE", () => {
+      game.init();
+      game.placeTile(1, "12f");
+      assertThrows(() => game.placeTile(1, "10g"));
+      const currentState = game.currentState(1);
+      assertEquals(currentState.player.tiles.length, 5);
+    });
+
+    it("should not place the tile which is on board", () => {
+      const state = "PLACE_TILE";
+      const currentPlayerIndex = 0;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const lastTile = new Tile("3a");
+
+      game.loadGameState({
+        state,
+        hotels: hotelsData,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      assertThrows(() => game.placeTile(1, "2b"));
     });
   });
 
@@ -95,7 +167,7 @@ describe("Game entity tests", () => {
   });
 
   describe("buildHotel method", () => {
-    it("should build hotel and add a free stock of that hotel player", () => {
+    beforeEach(() => {
       const state = "BUILD_HOTEL";
       const currentPlayerIndex = 1;
       const deck = [{ id: "7e" }, { id: "8e" }];
@@ -117,25 +189,41 @@ describe("Game entity tests", () => {
         board: { placedTileIds, lastTile },
         deck,
       });
-
+    });
+    it("should build hotel and add a free stock of that hotel player", () => {
       const hotelName = "american";
-      game.buildHotel(1, hotelName);
+      const { msg } = game.buildHotel(1, hotelName);
       const currentState = game.currentState(1);
       const stock = currentState.player.stocks[hotelName];
 
       assertEquals(stock, 1);
+      assertEquals(msg, "HOTEL BUILT SUCCESSFULLY");
+    });
+
+    it("Player tries to build hotel out of turn", () => {
+      assertThrows(() => game.buildHotel(2, "american"));
+    });
+
+    it("Player tries to build hotel out of turn", () => {
+      game.buildHotel(1, "continental");
+      assertThrows(() => game.buildHotel(1, "american"));
+    });
+
+    it("Player tries to build an active hotel", () => {
+      assertThrows(() => game.buildHotel(1, "continental"));
     });
   });
 
   describe("buy stocks method", () => {
-    it("buy the stocks of sackson", () => {
+    beforeEach(() => {
       const state = "BUY_STOCK";
-      const currentPlayerIndex = 1;
-      const tilesInDeck = ["7e", "8e"];
-      const deck = tilesInDeck.map((tile) => new Tile(tile));
-      const players = [{ id: 1, name: "yash" }].map(
-        ({ id, name }) => new Player(name, id),
-      );
+      const currentPlayerIndex = 0;
+      const deck = ["7e", "8e"].map((tileId) => new Tile(tileId));
+      const player1 = new Player("yash", 1);
+      const player2 = new Player("Gopi", 2);
+      player1.deductMoney(2000);
+      player2.deductMoney(2000);
+      const players = [player1, player2];
 
       const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
         (tileId) => new Tile(tileId),
@@ -151,7 +239,15 @@ describe("Game entity tests", () => {
           originTile: new Tile("1a"),
           priceOffset: 200,
         },
+        {
+          name: "imperial",
+          tiles: ["4a", "5a"].map((tileId) => new Tile(tileId)),
+          stocks: 24,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
       ];
+
       game.loadGameState({
         state,
         hotels,
@@ -164,12 +260,52 @@ describe("Game entity tests", () => {
       game.assignNewTile();
       game.assignNewTile();
       game.assignNewTile();
+    });
 
-      const result = game.buyStocks(1, [
+    it("buy the stocks of continental", () => {
+      const previousState = game.currentState(1);
+      const { msg } = game.buyStocks(1, [
         { hotelName: "continental", selectedStocks: 3 },
       ]);
 
-      assertEquals(result.playerInfo.stocks["continental"], 3);
+      const currentState = game.currentState(1);
+
+      assertEquals(msg, "STOCKS PURCHASED SUCCESSFULLY");
+      assertEquals(
+        currentState.player.stocks.continental,
+        previousState.player.stocks.continental || 0 + 3,
+      );
+    });
+
+    it("Player tries to buy stocks out of turn", () => {
+      assertThrows(() =>
+        game.buyStocks(2, [{ hotelName: "continental", selectedStocks: 2 }])
+      );
+    });
+
+    it("Player tries to purchase the stocks which are not active", () => {
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "festival", selectedStocks: 2 }])
+      );
+    });
+
+    it("Players tries to purchase the hotel stocks which are above 3", () => {
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 4 }])
+      );
+    });
+
+    it("Player does not have enough money to buy stocks", () => {
+      assertThrows(() => {
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 4 }]);
+      });
+    });
+
+    it("Players tries to buy stocks on another state", () => {
+      game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 3 }]);
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 3 }])
+      );
     });
   });
 
@@ -221,7 +357,7 @@ describe("Game entity tests", () => {
   });
 
   describe("shiftTurn", () => {
-    it("should successfully shift turn to next player", () => {
+    beforeEach(() => {
       const state = "SHIFT_TURN";
       const currentPlayerIndex = 0;
       const tileInDeck = ["7e", "8e"];
@@ -245,10 +381,21 @@ describe("Game entity tests", () => {
         board: { placedTileIds, lastTile },
         deck,
       });
+    });
 
+    it("should successfully shift turn to next player", () => {
       game.shiftTurn(1);
       const nextPlayer = game.currentState(1).currentPlayer;
       assertEquals(nextPlayer.name, "som");
+    });
+
+    it("Players can not shift turn on other players turn", () => {
+      assertThrows(() => game.shiftTurn(2));
+    });
+
+    it("Players can not shift the turn on other state of game", () => {
+      game.shiftTurn(1);
+      assertThrows(() => game.shiftTurn(2));
     });
   });
 
@@ -678,7 +825,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe.ignore("calculateFinalWinner", () => {
+  describe("calculateFinalWinner", () => {
     let state;
     let currentPlayerIndex;
     let deck;
