@@ -326,10 +326,10 @@ export class Game {
   }
 
   getCurrentGameState() {
-    const players = this.#players.map((player) => player.getPlayerState());
+    const players = this.#players.map((player) => player.getDetails());
     return {
       board: this.#board.getBoardState(),
-      deck: this.#deck.getDeckState(),
+      deck: this.#deck.tiles,
       hotels: this.#hotels.getHotelsState(),
       players,
       state: this.#state,
