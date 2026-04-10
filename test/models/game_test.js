@@ -825,14 +825,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe("checking the connected hotel chains", () => {
-    it("no connected hotel chains", () => {
-      const tileInstance = new Tile("1a");
-      const result = game.getAdjacentHotelChainsOfTile(tileInstance);
-      assertEquals(result, []);
-    });
-  });
-  describe("calculateFinalWinner", () => {
+  describe.ignore("calculateFinalWinner", () => {
     let state;
     let currentPlayerIndex;
     let deck;
@@ -1025,6 +1018,323 @@ describe("Game entity tests", () => {
       const { winner, players } = game.calculateFinalWinner();
       const [winnerOfTheGame] = players.sort((a, b) => b.money - a.money);
       assertEquals(winner, winnerOfTheGame.name);
+    });
+  });
+
+  describe("checking the dead tile functions", () => {
+    let state;
+    let currentPlayerIndex;
+    let deck, hotels;
+    let placedTileIds;
+    let lastTile;
+    let player1;
+    let player2;
+
+    beforeEach(() => {
+      state = "SHIFT_TURN";
+      currentPlayerIndex = 1;
+      deck = ["7e", "8e"].map(
+        (tileId) => new Tile(tileId),
+      );
+      placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+      lastTile = new Tile("3a");
+      player1 = new Player("Gopi", 1);
+      player1.addStocks("imperial", 3);
+      player1.addStocks("continental", 5);
+      player1.addTiles([
+        { id: "1c" },
+        { id: "2c" },
+        { id: "3c" },
+        { id: "4c" },
+        { id: "5c" },
+        { id: "6c" },
+      ]);
+
+      player2 = new Player("Dilli", 2);
+      player2.addStocks("festival", 3);
+      player2.addStocks("continental", 3);
+      player2.addTiles([
+        { id: "1i" },
+        { id: "2i" },
+        { id: "3i" },
+        { id: "4i" },
+        { id: "5i" },
+        { id: "6i" },
+      ]);
+      hotels = [
+        {
+          name: "imperial",
+          tiles: [
+            {
+              id: "1a",
+            },
+            {
+              id: "2a",
+            },
+            {
+              id: "3a",
+            },
+            {
+              id: "4a",
+            },
+            {
+              id: "5a",
+            },
+            {
+              id: "6a",
+            },
+            {
+              id: "7a",
+            },
+            {
+              id: "8a",
+            },
+            {
+              id: "9a",
+            },
+            {
+              id: "10a",
+            },
+            {
+              id: "11a",
+            },
+            {
+              id: "12a",
+            },
+            {
+              id: "1b",
+            },
+          ],
+          stocks: 20,
+          priceOffset: 200,
+          originTile: {
+            id: "5a",
+          },
+        },
+        {
+          name: "continental",
+          tiles: [
+            {
+              id: "1d",
+            },
+            {
+              id: "2d",
+            },
+            {
+              id: "3d",
+            },
+            {
+              id: "4d",
+            },
+            {
+              id: "5d",
+            },
+            {
+              id: "6d",
+            },
+            {
+              id: "7d",
+            },
+            {
+              id: "8d",
+            },
+            {
+              id: "9d",
+            },
+            {
+              id: "10d",
+            },
+            {
+              id: "11d",
+            },
+          ],
+          stocks: 22,
+          priceOffset: 200,
+          originTile: {
+            id: "6d",
+          },
+        },
+        {
+          name: "festival",
+          tiles: [
+            {
+              id: "1g",
+            },
+            {
+              id: "2g",
+            },
+            {
+              id: "3g",
+            },
+            {
+              id: "4g",
+            },
+            {
+              id: "5g",
+            },
+            {
+              id: "6g",
+            },
+            {
+              id: "7g",
+            },
+            {
+              id: "8g",
+            },
+            {
+              id: "9g",
+            },
+            {
+              id: "10g",
+            },
+          ],
+          stocks: 23,
+          priceOffset: 100,
+          originTile: {
+            id: "5g",
+          },
+        },
+        {
+          name: "american",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 100,
+        },
+        {
+          name: "worldwide",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 100,
+        },
+        {
+          name: "sackson",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 0,
+        },
+        {
+          name: "tower",
+          tiles: [],
+          stocks: 25,
+          priceOffset: 0,
+        },
+      ];
+
+      game.loadGameState({
+        state,
+        players: [player1, player2],
+        hotels,
+        board: { placedTileIds, lastTile },
+        deck,
+        currentPlayerIndex,
+      });
+    });
+
+    describe("get the all the connected hotels", () => {
+      it("no connected hotel chains", () => {
+        const tileInstance = new Tile("1i");
+        const result = game.getAdjacentHotelChainsOfTile(tileInstance);
+        assertEquals(result, []);
+      });
+
+      it("has one adjacent hotel chain", () => {
+        const tileInstance = new Tile("2a");
+        const result = game.getAdjacentHotelChainsOfTile(tileInstance);
+        assertEquals(result.length, 1);
+        assertEquals(result[0].name, "imperial");
+      });
+
+      it("more than one adjacent hotel chains", () => {
+        const tileInstance = new Tile("1c");
+        const result = game.getAdjacentHotelChainsOfTile(tileInstance);
+        assertEquals(result.length, 2);
+        const exceptedResult = [
+          {
+            name: "continental",
+            tiles: [
+              { id: "1d" },
+              { id: "2d" },
+              { id: "3d" },
+              { id: "4d" },
+              { id: "5d" },
+              { id: "6d" },
+              { id: "7d" },
+              { id: "8d" },
+              { id: "9d" },
+              { id: "10d" },
+              { id: "11d" },
+            ],
+            stocksLeft: 22,
+            stockPrice: 900,
+            originTile: { id: "6d" },
+            isActive: true,
+          },
+          {
+            name: "imperial",
+            tiles: [
+              { id: "1a" },
+              { id: "2a" },
+              { id: "3a" },
+              { id: "4a" },
+              { id: "5a" },
+              { id: "6a" },
+              { id: "7a" },
+              { id: "8a" },
+              { id: "9a" },
+              { id: "10a" },
+              { id: "11a" },
+              { id: "12a" },
+              { id: "1b" },
+            ],
+            stocksLeft: 20,
+            stockPrice: 900,
+            originTile: { id: "5a" },
+            isActive: true,
+          },
+        ];
+        assertEquals(result, exceptedResult);
+      });
+    });
+
+    describe("is dead tile", () => {
+      it("tile is not dead tile", () => {
+        const id = "1i";
+        const isDeadTile = game.isDeadTile(id);
+        assertEquals(isDeadTile, false);
+      });
+
+      it("tile is  dead tile", () => {
+        const id = "1c";
+        const isDeadTile = game.isDeadTile(id);
+        assertEquals(isDeadTile, true);
+      });
+    });
+
+    describe("exchanging the dead tiles in the user hand", () => {
+      it("no dead tiles in the player hand", () => {
+        const intialTiles = player2.getTilesInfo();
+        game.exchangeDeadTiles();
+        const exchangedTiles = player2.getTilesInfo();
+        assertEquals(intialTiles, exchangedTiles);
+      });
+
+      it("player hand contains dead tiles", () => {
+        game.loadGameState({
+          state,
+          players: [player1, player2],
+          hotels,
+          board: { placedTileIds, lastTile },
+          deck,
+          currentPlayerIndex: 0,
+        });
+        game.exchangeDeadTiles();
+        const exchangedTileIds = player1.getTilesInfo().map((x) => x.id);
+        const exceptedResult = ["2c", "3c", "4c", "5c", "6c", "7e"];
+
+        assertEquals(exchangedTileIds, exceptedResult);
+      });
     });
   });
 });

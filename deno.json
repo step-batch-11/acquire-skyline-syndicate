@@ -9,6 +9,9 @@
     "dev": "dev=true deno run -A main.js",
     "login": "dev=true deno run -A --watch main.js >live.log & node scripts/auto_login.js"
   },
+  "compilerOptions": {
+    "lib": ["esnext", "dom"]
+  },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.18",
     "@std/random": "jsr:@std/random@^0.1.5",

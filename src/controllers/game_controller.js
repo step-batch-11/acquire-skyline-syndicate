@@ -8,9 +8,6 @@ export class GameController {
     const lobby = c.get("lobby");
     const sessions = c.get("sessions");
     const playerIdsMap = sessions.playerIds;
-    // const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
-    //   playerIds.includes(playerId)
-    // );
     gameManager.createGame(playerIdsMap);
     lobby.transitionToStart();
     return c.redirect("/pages/lobby.html", 302);

@@ -1,4 +1,3 @@
-import process from "node:process";
 const { chromium } = require("playwright");
 const URL = "http://localhost:8000";
 const createPages = async () => {
