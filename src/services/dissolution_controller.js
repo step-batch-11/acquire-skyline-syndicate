@@ -6,19 +6,52 @@ export const sellStocks = (stakeholder, defunctHotel) => {
   stakeholder.sellStocks(defunctHotel.name, defunctHotel.calculateStockPrice());
 };
 
-export const distributeBonus = (players, defunctHotel) => {
-  const stakeholders = stakeHolders(players, defunctHotel.name);
-  const [primaryStakeHolder, secondaryStakeHolder] = stakeholders.sort(
+const topStakeHolders = (hotelName, stakeholders, bucket = []) => {
+  for (let index = 1; index < stakeholders.length; index++) {
+    const stakeholder = stakeholders[index];
+    if (
+      stakeholder.getStockCount(hotelName) !==
+        bucket.at(-1).getStockCount(hotelName)
+    ) {
+      return index;
+    }
+    bucket.push(stakeholder);
+  }
+};
+
+export const distributeBonus = (stakeholders, defunctHotel) => {
+  const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
+
+  stakeholders.sort(
     (a, b) =>
       b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
   );
-  const primaryBonus = defunctHotel.primaryBonus;
-  const secondaryBonus = defunctHotel.secondaryBonus;
 
   if (stakeholders.length === 1) {
-    primaryStakeHolder.depositMoney(primaryBonus + secondaryBonus);
+    stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
     return;
   }
-  primaryStakeHolder?.depositMoney(primaryBonus);
-  secondaryStakeHolder?.depositMoney(secondaryBonus);
+
+  const primaryHolders = [stakeholders[0]];
+  const lastPrimary = topStakeHolders(
+    defunctHotel.name,
+    stakeholders,
+    primaryHolders,
+  );
+
+  if (primaryHolders.length > 1) {
+    const bonusSum = primaryBonus + secondaryBonus;
+    const bonus = bonusSum / primaryHolders.length;
+    primaryHolders.forEach((stakeholder) => stakeholder.depositMoney(bonus));
+    return;
+  }
+  const secondaryStakeholder = [stakeholders[lastPrimary]];
+  topStakeHolders(
+    defunctHotel.name,
+    stakeholders.slice(lastPrimary),
+    secondaryStakeholder,
+  );
+  primaryHolders[0].depositMoney(primaryBonus);
+  const dividedSecondaryBonus = secondaryBonus / secondaryStakeholder.length;
+  secondaryStakeholder.forEach((s) => s.depositMoney(dividedSecondaryBonus));
 };

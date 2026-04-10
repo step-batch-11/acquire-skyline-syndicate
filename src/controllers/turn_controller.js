@@ -19,8 +19,12 @@ export class TurnController {
     const gameManager = c.get("gameManager");
     const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
-    game.placeTile(playerId, tile);
-    return c.json({ message: "Tile placed successfully" });
+    try {
+      const response = game.placeTile(playerId, tile);
+      return c.json(response, 201);
+    } catch (error) {
+      return c.jon(error, 400);
+    }
   }
 
   async buildHotel(c) {
