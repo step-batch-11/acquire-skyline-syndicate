@@ -7,7 +7,7 @@ export class GameController {
     const gameManager = c.get("gameManager");
     const lobby = c.get("lobby");
     const sessions = c.get("sessions");
-    const playerIdsMap = sessions.getPlayerIds();
+    const playerIdsMap = sessions.playerIds;
     gameManager.createGame(playerIdsMap);
     lobby.transitionToStart();
     return c.redirect("/pages/lobby.html", 302);
