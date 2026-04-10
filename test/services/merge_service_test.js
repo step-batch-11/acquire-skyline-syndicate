@@ -56,7 +56,7 @@ describe("Test MergeService", () => {
     board = { lastTile: "3b" };
   });
 
-  describe.only("merge two unequal hotels", () => {
+  describe("merge two unequal hotels", () => {
     it("disolve hotel should go out of board", () => {
       const mergeService = new MergeService(
         [

@@ -160,6 +160,10 @@ export default class MergeService {
   dissolveStocks(data, currentPlayer) {
     this.#currentDissolver = currentPlayer;
     this.#sellStocks(data);
+    this.#turnOrder += 1;
+    if (this.#turnOrder >= this.#defuntHotelStakeHolders.length) {
+      this.#mergeState = "END_MERGE";
+    }
     return { "sucess": true };
   }
   getBonusHolderDetails() {

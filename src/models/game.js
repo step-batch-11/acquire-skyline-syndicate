@@ -399,11 +399,9 @@ export class Game {
 
   handleStockDissolution(body) {
     const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
-    if (res.success) {
-      this.#currentPlayerIndex += 1;
-      this.#currentPlayer =
-        this.#players[this.#currentPlayerIndex % this.#players.length];
-    }
+    this.#currentPlayerIndex += 1;
+    this.#currentPlayer =
+      this.#players[this.#currentPlayerIndex % this.#players.length];
     return res;
   }
 
