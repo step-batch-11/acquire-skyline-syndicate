@@ -45,11 +45,41 @@ export class Game {
     };
   }
 
-  #generateNotification(requestedPlayerId, notification) {
+  #getDeadTilesNotifications(requestedPlayerId, notification) {
     if (requestedPlayerId === notification.playerId) {
       return { type: notification.type, data: notification.data };
     }
     return {};
+  }
+
+  #getStocksNotifications(requestedPlayerId, notification) {
+    if (requestedPlayerId !== notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #getInsufficientFundsNotifications(requestedPlayerId, notification) {
+    if (requestedPlayerId === notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #generateNotification(requestedPlayerId, notification) {
+    // console.log(notification);
+    if (Object.keys(notification).length === 0) return {};
+
+    const notificationHandler = {
+      "DEAD_TILE_EXCHANGE": this.#getDeadTilesNotifications,
+      "BUYING_STOCKS": this.#getStocksNotifications,
+      "INSUFFICIENT_FUNDS": this.#getInsufficientFundsNotifications,
+    };
+
+    return notificationHandler[notification.type](
+      requestedPlayerId,
+      notification,
+    );
   }
 
   currentState(requestedPlayerId) {
@@ -242,19 +272,21 @@ export class Game {
   }
 
   exchangeDeadTiles() {
-    const playerPreviousTiles = this.#currentPlayer.getTilesInfo();
+    const playerPreviousTiles = this.#currentPlayer.getTileIds();
     playerPreviousTiles.forEach((tile) => {
-      if (this.isDeadTile(tile.id)) {
-        this.#currentPlayer.removeTile(tile.id);
+      if (this.isDeadTile(tile)) {
+        this.#currentPlayer.removeTile(tile);
         this.assignNewTile();
       }
     });
-    // const playerNewTiles = this.#currentPlayer.getTilesInfo();
-    // // const exchangedTiles = this.getExchangedTiles(
-    // //   playerPreviousTiles,
-    // //   playerNewTiles,
-    // // );
-    // this.#createNotificationData("DEAD_TILE_EXCHANGE", exchangedTiles);
+    const playerNewTiles = this.#currentPlayer.getTileIds();
+    const exchangedTiles = this.getExchangedTiles(
+      playerPreviousTiles,
+      playerNewTiles,
+    );
+    if (exchangedTiles.removedTiles.length !== 0) {
+      this.#createNotificationData("DEAD_TILE_EXCHANGE", exchangedTiles);
+    }
   }
 
   assignNewTile() {
@@ -340,7 +372,7 @@ export class Game {
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
-    // this.exchangeDeadTiles()
+    this.exchangeDeadTiles();
     this.#state = gameStates.placeTile;
   }
 

@@ -9,6 +9,8 @@ export default class MergeService {
   #survivingHotel;
   #defunctHotel;
   #defuntHotelStakeHolders;
+  #primaryHolder = [];
+  #secondaryHolder = [];
 
   constructor(affectedHotels, players, hotels, board) {
     this.#players = players;
