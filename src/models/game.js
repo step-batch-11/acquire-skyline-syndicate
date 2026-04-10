@@ -35,13 +35,27 @@ export class Game {
   }
 
   calculateFinalWinner() {
+    this.#hotels.getHotelEntities().forEach((hotel) => {
+      distributeBonus(this.#players, hotel);
+    });
+
+    this.#hotels.getHotelEntities().forEach((hotel) => {
+      this.#players.forEach((player) => {
+        sellStocks(player, hotel);
+      });
+    });
+
+    const players = this.#players
+      .map((player) => {
+        const { name, money } = player.getDetails();
+        return { name, money };
+      })
+      .sort((a, b) => b.money - a.money);
+
     return {
       state: this.#state,
-      players: [
-        { name: "GOPI", amount: 2000 },
-        { name: "DIllI", amount: 3000 },
-      ],
-      winner: "DILLI",
+      players,
+      winner: players[0].name,
     };
   }
 
@@ -127,8 +141,8 @@ export class Game {
   }
 
   #isValidTilePlacement(tileId) {
-    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
+    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     return true;
   }
 
@@ -189,14 +203,15 @@ export class Game {
       0,
     );
 
-    return totalStocks <= 3 && totalStocks >= 0;
+    return totalStocks <= 3;
   }
 
-  #isValidPurchase(cart) {
+  #isValidPurchase(cart, moneyToDeduct) {
     return (
       this.#areStocksValid(cart) &&
       this.#hotels.areCartHotelsActive(cart) &&
-      this.#hotels.hasEnoughStocksToBuy(cart)
+      this.#hotels.hasEnoughStocksToBuy(cart) &&
+      this.#currentPlayer.hasEnoughMoney(moneyToDeduct)
     );
   }
 
@@ -210,25 +225,20 @@ export class Game {
   }
 
   placeTile(requestedPlayerId, tileId) {
-    if (
-      this.#state === gameStates.placeTile &&
-      this.#isValidTilePlacement(tileId) &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      this.#board.place(new Tile(tileId));
-      this.#actionForTilePlacement(tileId);
-      const playerTiles = this.#currentPlayer.removeTile(tileId);
-      return {
-        playerTiles,
-        tilesOnBoard: this.#board.getPlacedTiles(),
-        state: this.#state,
-      };
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
+    }
+    if (this.#state !== "PLACE_TILE") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+    if (!this.#isValidTilePlacement(tileId)) {
+      throw new Error({ msg: "INVALID TILE PLACEMENT" });
     }
 
-    return {
-      playerTiles: this.#currentPlayer.getTilesInfo(),
-      tilesOnBoard: this.#board.getPlacedTiles(),
-    };
+    this.#board.place(new Tile(tileId));
+    this.#state = this.#actionForTilePlacement(tileId);
+    this.#currentPlayer.removeTile(tileId);
+    return { msg: "TILE PLACED SUCCESSFULLY" };
   }
 
   expandHotel(tileId) {
@@ -237,18 +247,21 @@ export class Game {
   }
 
   buildHotel(requestedPlayerId, hotelName) {
-    if (
-      this.#state !== "BUILD_HOTEL" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
-    if (this.#hotels.isHotelActive(hotelName)) return "hotel is already active";
+    if (this.#state !== "BUILD_HOTEL") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+    if (this.#hotels.isHotelActive(hotelName)) {
+      throw new Error({ msg: "HOTEL IS ALREADY ACTIVE" });
+    }
     const lastTile = this.#board.lastTile;
     const adjacentTiles = this.#board.adjacentTilesOf(lastTile);
     this.#hotels.foundHotel(hotelName, lastTile, adjacentTiles);
     this.#currentPlayer.addStocks(hotelName, 1);
     this.#state = "BUY_STOCK";
+    return { msg: "HOTEL BUILT SUCCESSFULLY" };
   }
 
   getAdjacentHotelChainsOfTile(tile) {
@@ -259,8 +272,8 @@ export class Game {
   isDeadTile(tile) {
     const newTile = new Tile(tile);
     const adjacentHotelChains = this.getAdjacentHotelChainsOfTile(newTile);
-    const stableHotels = adjacentHotelChains.filter(({ tiles }) =>
-      tiles.length > 10
+    const stableHotels = adjacentHotelChains.filter(
+      ({ tiles }) => tiles.length > 10,
     );
     return stableHotels.length > 1;
   }
@@ -301,12 +314,13 @@ export class Game {
   }
 
   buyStocks(requestedPlayerId, cart) {
-    if (
-      this.#state !== "BUY_STOCK" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
+    if (this.#state !== "BUY_STOCK") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
     const isValidBuy = this.#isValidPurchase(cart) &&
@@ -340,9 +354,10 @@ export class Game {
     const hotels = this.#hotels.getHotels();
     //<S>  hotel.tiles.length > 1 && hotel.tiles.length >= 11 in every loop.
     const activeHotels = hotels.filter((hotel) => hotel.tiles.length > 1);
-    return activeHotels.length > 0
-      ? activeHotels.every((hotel) => hotel.tiles.length >= 11)
-      : false;
+    return (
+      activeHotels.length > 0 &&
+      activeHotels.every((hotel) => hotel.tiles.length >= 11)
+    );
   }
 
   #isAnyHotelHas41Tiles() {
@@ -363,12 +378,13 @@ export class Game {
   }
 
   shiftTurn(requestedPlayerId) {
-    if (
-      this.#state !== "SHIFT_TURN" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
+    if (this.#state !== "SHIFT_TURN") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
@@ -377,10 +393,10 @@ export class Game {
   }
 
   getCurrentGameState() {
-    const players = this.#players.map((player) => player.getPlayerState());
+    const players = this.#players.map((player) => player.getDetails());
     return {
       board: this.#board.getBoardState(),
-      deck: this.#deck.getDeckState(),
+      deck: this.#deck.tiles,
       hotels: this.#hotels.getHotelsState(),
       players,
       state: this.#state,
