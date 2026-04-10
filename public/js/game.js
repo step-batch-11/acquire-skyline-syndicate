@@ -8,7 +8,6 @@ let currentState;
 const polling = () => {
   const intervalId = setInterval(async () => {
     const gameData = await gameState();
-    // console.log(gameData.state);
     if (gameData.state === "END_GAME") {
       clearInterval(intervalId);
       handleGameState(gameData);

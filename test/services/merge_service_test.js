@@ -124,21 +124,21 @@ describe("Test MergeService", () => {
     it("When there are more than one primary stakeholder of desolved hotel's ", () => {
       player1.stocks.sackson = 1;
       player2.stocks.sackson = 1;
-      mergeService.mergeHotels();
+      mergeService.init();
       assertEquals(player1.money, 4700);
       assertEquals(player2.money, 4700);
     });
 
     it("If the desolved hotel has only a single stakeholders", () => {
       delete player1.stocks.sackson;
-      mergeService.mergeHotels();
+      mergeService.init();
       assertEquals(player2.money, 7000);
     });
 
     it("A single primary and a single secondary stakeholder", () => {
       player1.stocks.sackson = 2;
       player2.stocks.sackson = 1;
-      mergeService.mergeHotels();
+      mergeService.init();
       assertEquals(hotels.getHotel("sackson").tiles.length, 0);
       assertEquals(hotels.getHotel("tower").tiles.length, 6);
       assertEquals(player1.money, 5400);
@@ -150,7 +150,7 @@ describe("Test MergeService", () => {
       player2.stocks.sackson = 1;
       player3.stocks.sackson = 1;
 
-      mergeService.mergeHotels();
+      mergeService.init();
       assertEquals(hotels.getHotel("sackson").tiles.length, 0);
       assertEquals(hotels.getHotel("tower").tiles.length, 6);
       assertEquals(player1.money, 5400);
@@ -160,8 +160,8 @@ describe("Test MergeService", () => {
   describe("merge two equal states", () => {
     it("When hotel are equal then it should return 'CHOOSE_MERGE_HOTEL'", () => {
       sackson.tiles.push("3a");
-      mergeService.mergeHotels();
-      assertEquals(mergeService.mergeState, "CHOOSE_MERGE_HOTEL");
+      mergeService.init();
+      assertEquals(mergeService.mergeState, "EQUAL_HOTEL_MERGE");
     });
   });
 });
