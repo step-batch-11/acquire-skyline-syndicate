@@ -1,5 +1,3 @@
-let lastMessage = "";
-
 const getMessage = (gameData) => {
   const { state, currentPlayer, isActivePlayer } = gameData;
 
@@ -27,9 +25,5 @@ const getMessage = (gameData) => {
 export const updateNotification = (gameData) => {
   const notificationBox = document.querySelector(".notification-box");
   const message = getMessage(gameData);
-
-  if (message !== lastMessage) {
-    notificationBox.textContent = message;
-    lastMessage = message;
-  }
+  notificationBox.textContent = message;
 };

@@ -279,9 +279,8 @@ export class Game {
     const hotels = this.#hotels.getHotels();
     //<S>  hotel.tiles.length > 1 && hotel.tiles.length >= 11 in every loop.
     const activeHotels = hotels.filter((hotel) => hotel.tiles.length > 1);
-    return activeHotels.length > 0
-      ? activeHotels.every((hotel) => hotel.tiles.length >= 11)
-      : false;
+    return activeHotels.length > 0 &&
+      activeHotels.every((hotel) => hotel.tiles.length >= 11);
   }
 
   #isAnyHotelHas41Tiles() {
