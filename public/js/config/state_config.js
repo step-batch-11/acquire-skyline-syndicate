@@ -1,5 +1,6 @@
 import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
+import { handleMerge } from "../features/merge.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
 import {
   addHotelData,
@@ -58,10 +59,10 @@ export const gameStates = {
   BUY_STOCK: handleBuyStocks,
   SHIFT_TURN: handleShiftTurn,
   END_GAME: handleEndGame,
+  MERGE: handleMerge,
 };
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
-
   gameStates[state](gameData);
 };

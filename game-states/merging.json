@@ -145,12 +145,12 @@
       "id": "1",
       "name": "yash",
       "tiles": [
-        { "id": "3d" },
-        { "id": "1b" },
-        { "id": "10b" },
-        { "id": "8g" },
-        { "id": "1e" },
-        { "id": "2d" }
+        { "id": "3d", "isPlayable": true },
+        { "id": "1b", "isPlayable": true },
+        { "id": "10b", "isPlayable": true },
+        { "id": "8g", "isPlayable": true },
+        { "id": "1e", "isPlayable": true },
+        { "id": "2d", "isPlayable": true }
       ],
       "money": 6000,
       "stocks": { "festival": 2, "american": 4 }
@@ -159,12 +159,12 @@
       "id": "2",
       "name": "pradipta",
       "tiles": [
-        { "id": "8i" },
-        { "id": "4e" },
-        { "id": "3f" },
-        { "id": "10d" },
-        { "id": "10c" },
-        { "id": "10e" }
+        { "id": "8i", "isPlayable": true },
+        { "id": "4e", "isPlayable": true },
+        { "id": "3f", "isPlayable": true },
+        { "id": "10d", "isPlayable": true },
+        { "id": "10c", "isPlayable": true },
+        { "id": "10e", "isPlayable": true }
       ],
       "money": 6000,
       "stocks": { "festival": 1, "american": 1, "sackson": 1 }
