@@ -311,8 +311,12 @@ export class Game {
   }
 
   assignNewTile() {
-    const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addTiles(tile);
+    const [tile] = this.#deck.drawTiles(1);
+    if (tile === undefined) return;
+    if (this.isDeadTile(tile.id)) {
+      return this.assignNewTile();
+    }
+    this.#currentPlayer.addTiles([tile]);
   }
 
   #createNotificationData(type, data) {
