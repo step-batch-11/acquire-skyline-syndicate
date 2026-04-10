@@ -15,6 +15,7 @@ export class Game {
   #players;
   #currentPlayerIndex;
   #createMergeService;
+  #notification = {};
   #mergeState;
 
   constructor(deck, board, hotels, players, createMergeService) {
@@ -62,6 +63,43 @@ export class Game {
     };
   }
 
+  #getDeadTilesNotifications(requestedPlayerId, notification) {
+    if (requestedPlayerId === notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #getStocksNotifications(requestedPlayerId, notification) {
+    if (requestedPlayerId !== notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #getInsufficientFundsNotifications(requestedPlayerId, notification) {
+    if (requestedPlayerId === notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #generateNotification(requestedPlayerId, notification) {
+    // console.log(notification);
+    if (Object.keys(notification).length === 0) return {};
+
+    const notificationHandler = {
+      "DEAD_TILE_EXCHANGE": this.#getDeadTilesNotifications,
+      "BUYING_STOCKS": this.#getStocksNotifications,
+      "INSUFFICIENT_FUNDS": this.#getInsufficientFundsNotifications,
+    };
+
+    return notificationHandler[notification.type](
+      requestedPlayerId,
+      notification,
+    );
+  }
+
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     if (
@@ -73,6 +111,10 @@ export class Game {
       this.#mergeState = null;
     }
     return {
+      notification: this.#generateNotification(
+        requestedPlayerId,
+        this.#notification,
+      ),
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
         .getDetails(),
@@ -144,6 +186,7 @@ export class Game {
       this.#initiateMerge(adjacentHotelChains);
       // this.#mergeService.handleMerge();
       this.#changeStateAfterMergeEnd();
+      return;
     }
 
     if (this.#isBuildPossible()) {
@@ -239,19 +282,39 @@ export class Game {
     return stableHotels.length > 1;
   }
 
+  getExchangedTiles(set1, set2) {
+    const removedTiles = set1.filter((tile) => !set2.includes(tile));
+    const newTiles = set2.filter((tile) => !set1.includes(tile));
+    return { removedTiles, newTiles };
+  }
+
   exchangeDeadTiles() {
-    const playerTiles = this.#currentPlayer.getTilesInfo();
-    playerTiles.forEach((tile) => {
-      if (this.isDeadTile(tile.id)) {
-        this.#currentPlayer.removeTile(tile.id);
+    const playerPreviousTiles = this.#currentPlayer.getTileIds();
+    playerPreviousTiles.forEach((tile) => {
+      if (this.isDeadTile(tile)) {
+        this.#currentPlayer.removeTile(tile);
         this.assignNewTile();
       }
     });
+    const playerNewTiles = this.#currentPlayer.getTileIds();
+    const exchangedTiles = this.getExchangedTiles(
+      playerPreviousTiles,
+      playerNewTiles,
+    );
+    if (exchangedTiles.removedTiles.length !== 0) {
+      this.#createNotificationData("DEAD_TILE_EXCHANGE", exchangedTiles);
+    }
   }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
     this.#currentPlayer.addTiles(tile);
+  }
+
+  #createNotificationData(type, data) {
+    this.#notification.type = type;
+    this.#notification.data = data;
+    this.#notification.playerId = this.#currentPlayer.id;
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -263,23 +326,32 @@ export class Game {
     }
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
+    const isValidBuy = this.#isValidPurchase(cart, moneyToDeduct) &&
+      hasEnoughBalance;
 
-    if (!this.#isValidPurchase(cart, moneyToDeduct)) {
-      throw new Error({ msg: "INVALID PURCHASE" });
+    if (isValidBuy) {
+      this.#hotels.deductStocks(cart);
+      const hotels = this.#hotels.getHotels();
+      cart.forEach(({ hotelName, selectedStocks }) =>
+        this.#currentPlayer.addStocks(hotelName, selectedStocks)
+      );
+
+      this.#currentPlayer.deductMoney(moneyToDeduct);
+      if (this.isGameEnd()) {
+        this.#state = "END_GAME";
+        return this.calculateFinalWinner();
+      }
+      this.#state = "SHIFT_TURN";
+      const playerInfo = this.#currentPlayer.getDetails();
+      this.#createNotificationData("BUYING_STOCKS", { cart });
+      return { hotels, playerInfo, state: this.#state };
     }
-
-    this.#hotels.deductStocks(cart);
-    cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName, selectedStocks)
-    );
-    this.#currentPlayer.deductMoney(moneyToDeduct);
-
-    if (this.isGameEnd()) {
-      this.#state = "END_GAME";
-      return this.calculateFinalWinner();
+    if (!hasEnoughBalance) {
+      this.#createNotificationData("INSUFFICIENT_FUNDS", {
+        hasEnoughBalance: false,
+      });
     }
-    this.#state = "SHIFT_TURN";
-    return { msg: "STOCKS PURCHASED SUCCESSFULLY" };
   }
 
   #areAllHotelsStable() {
