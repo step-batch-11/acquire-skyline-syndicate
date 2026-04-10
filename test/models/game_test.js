@@ -874,7 +874,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe.ignore("checking the dead tile functions", () => {
+  describe("checking the dead tile functions", () => {
     let state;
     let currentPlayerIndex;
     let deck, hotels;
