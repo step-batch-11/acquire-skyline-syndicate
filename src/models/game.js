@@ -76,7 +76,6 @@ export class Game {
   }
 
   currentState(requestedPlayerId) {
-    if (this.#state === "END_GAME") return this.calculateFinalWinner();
     return {
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
@@ -88,7 +87,7 @@ export class Game {
       players: this.#players.map((player) => ({
         name: player.name,
       })),
-      isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
+      isActivePlayer: this.#isActivePlayer(requestedPlayerId),
     };
   }
 
@@ -157,11 +156,12 @@ export class Game {
     return totalStocks <= 3;
   }
 
-  #isValidPurchase(cart) {
+  #isValidPurchase(cart, moneyToDeduct) {
     return (
       this.#areStocksValid(cart) &&
       this.#hotels.areCartHotelsActive(cart) &&
-      this.#hotels.hasEnoughStocksToBuy(cart)
+      this.#hotels.hasEnoughStocksToBuy(cart) &&
+      this.#currentPlayer.hasEnoughMoney(moneyToDeduct)
     );
   }
 
@@ -217,8 +217,8 @@ export class Game {
   isDeadTile(tile) {
     const newTile = new Tile(tile);
     const adjacentHotelChains = this.getAdjacentHotelChainsOfTile(newTile);
-    const stableHotels = adjacentHotelChains.filter(({ tiles }) =>
-      tiles.length > 10
+    const stableHotels = adjacentHotelChains.filter(
+      ({ tiles }) => tiles.length > 10,
     );
     return stableHotels.length > 1;
   }
@@ -252,10 +252,8 @@ export class Game {
     }
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
-    const isValidBuy = this.#isValidPurchase(cart) &&
-      this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
 
-    if (!isValidBuy) {
+    if (!this.#isValidPurchase(cart, moneyToDeduct)) {
       throw new Error({ msg: "INVALID PURCHASE" });
     }
 
@@ -301,17 +299,19 @@ export class Game {
   }
 
   shiftTurn(requestedPlayerId) {
-    if (
-      this.#state !== "SHIFT_TURN" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
+    if (this.#state !== "SHIFT_TURN") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+
     this.assignNewTile();
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     this.exchangeDeadTiles();
     this.#state = "PLACE_TILE";
+    return { msg: "TURN SHIFTED SUCCESSFULLY" };
   }
 
   getCurrentGameState() {

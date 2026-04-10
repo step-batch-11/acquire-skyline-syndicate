@@ -218,9 +218,7 @@ describe("Game entity tests", () => {
     beforeEach(() => {
       const state = "BUY_STOCK";
       const currentPlayerIndex = 0;
-      const deck = ["7e", "8e"].map(
-        (tileId) => new Tile(tileId),
-      );
+      const deck = ["7e", "8e"].map((tileId) => new Tile(tileId));
       const player1 = new Player("yash", 1);
       const player2 = new Player("Gopi", 2);
       player1.deductMoney(2000);
@@ -359,9 +357,9 @@ describe("Game entity tests", () => {
   });
 
   describe("shiftTurn", () => {
-    it("should successfully shift turn to next player", () => {
+    beforeEach(() => {
       const state = "SHIFT_TURN";
-      const currentPlayerIndex = 0;
+      const currentPlayerIndex = 1;
       const tileInDeck = ["7e", "8e"];
       const deck = tileInDeck.map((tile) => new Tile(tile));
       const players = [
@@ -383,10 +381,21 @@ describe("Game entity tests", () => {
         board: { placedTileIds, lastTile },
         deck,
       });
+    });
 
+    it("should successfully shift turn to next player", () => {
       game.shiftTurn(1);
-      const nextPlayer = game.currentState(1).currentPlayer;
-      assertEquals(nextPlayer.name, "som");
+      const nextPlayer = game.currentState(2).currentPlayer;
+      assertEquals(nextPlayer.name, "yash");
+    });
+
+    it("Players can not shift turn on other players turn", () => {
+      assertThrows(() => game.shiftTurn(2));
+    });
+
+    it("Players can not shift the turn on other state of game", () => {
+      game.shiftTurn(1);
+      assertThrows(() => game.shiftTurn(2));
     });
   });
 
