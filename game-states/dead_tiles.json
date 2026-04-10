@@ -1,0 +1,139 @@
+{
+  "board": {
+    "placedTileIds": [
+      "1c",
+      "2c",
+      "3c",
+      "4c",
+      "5c",
+      "6c",
+      "7c",
+      "8c",
+      "9c",
+      "10c",
+      "11c",
+      "1e",
+      "2e",
+      "3e",
+      "4e",
+      "5e",
+      "6e",
+      "7e",
+      "8e",
+      "9e",
+      "10e",
+      "11e"
+    ]
+  },
+  "deck": [
+    { "id": "12b" },
+    { "id": "1d" },
+    { "id": "2d" },
+    { "id": "3d" },
+    { "id": "9h" },
+    { "id": "11h" }
+  ],
+  "hotels": [
+    {
+      "name": "imperial",
+      "tiles": [
+        { "id": "1c" },
+        { "id": "2c" },
+        { "id": "3c" },
+        { "id": "4c" },
+        { "id": "5c" },
+        { "id": "6c" },
+        { "id": "7c" },
+        { "id": "8c" },
+        { "id": "9c" },
+        { "id": "10c" },
+        { "id": "11c" }
+      ],
+      "stocks": 20,
+      "priceOffset": 200,
+      "originTile": { "id": "6c" }
+    },
+    {
+      "name": "continental",
+      "tiles": [
+        { "id": "1e" },
+        { "id": "2e" },
+        { "id": "3e" },
+        { "id": "4e" },
+        { "id": "5e" },
+        { "id": "6e" },
+        { "id": "7e" },
+        { "id": "8e" },
+        { "id": "9e" },
+        { "id": "10e" },
+        { "id": "11e" }
+      ],
+      "stocks": 20,
+      "priceOffset": 200,
+      "originTile": { "id": "6e" }
+    },
+    {
+      "name": "festival",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100
+    },
+    {
+      "name": "american",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100
+    },
+    {
+      "name": "worldwide",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100
+    },
+    {
+      "name": "sackson",
+      "tiles": [{ "id": "1i" }, { "id": "2i" }],
+      "stocks": 25,
+      "priceOffset": 0,
+      "originTile": { "id": "1i" }
+    },
+    {
+      "name": "tower",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 0
+    }
+  ],
+  "players": [
+    {
+      "id": "1",
+      "name": "Player1",
+      "tiles": [
+        { "id": "1a" },
+        { "id": "2a" },
+        { "id": "3a" },
+        { "id": "4a" },
+        { "id": "5a" },
+        { "id": "4i" }
+      ],
+      "money": 6000,
+      "stocks": {}
+    },
+    {
+      "id": "2",
+      "name": "Player2",
+      "tiles": [
+        { "id": "5d" },
+        { "id": "6d" },
+        { "id": "7d" },
+        { "id": "9b" },
+        { "id": "10b" },
+        { "id": "5i" }
+      ],
+      "money": 6000,
+      "stocks": {}
+    }
+  ],
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 0
+}

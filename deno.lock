@@ -118,6 +118,7 @@
     ],
     "packageJson": {
       "dependencies": [
+        "npm:hono@^4.12.12",
         "npm:playwright@^1.59.1"
       ]
     }

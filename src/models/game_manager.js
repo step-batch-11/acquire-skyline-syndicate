@@ -10,7 +10,7 @@ export class GameManager {
     this.#game = this.#createGame(activePlayers);
   }
 
-  getGame() {
+  get game() {
     return this.#game;
   }
 }

@@ -222,7 +222,7 @@ describe("Hotel entity tests", () => {
         tiles: [],
         stocks: 25,
         priceOffset: 0,
-        originTile: undefined,
+        originTile: {},
       };
       assertEquals(data, exceptedData);
     });

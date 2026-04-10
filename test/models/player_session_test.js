@@ -9,12 +9,24 @@ const populatePlayerSessions = (playerSessionInstance) => {
   const playerName1 = "PLAYER_UNKNOWN1";
   const playerName2 = "PLAYER_UNKNOWN2";
   const playerName3 = "PLAYER_UNKNOWN3";
-  playerSessionInstance.setSession(sessionId1, playerId1);
-  playerSessionInstance.setSession(sessionId2, playerId2);
-  playerSessionInstance.setSession(sessionId3, playerId3);
-  playerSessionInstance.setPlayerId(playerId1, playerName1);
-  playerSessionInstance.setPlayerId(playerId2, playerName2);
-  playerSessionInstance.setPlayerId(playerId3, playerName3);
+  playerSessionInstance.session = {
+    sessionId: sessionId1,
+    playerId: playerId1,
+  };
+  playerSessionInstance.session = { sessionId2, playerId2 };
+  playerSessionInstance.session = { sessionId3, playerId3 };
+  playerSessionInstance.playerId = {
+    playerId: playerId1,
+    playerName: playerName1,
+  };
+  playerSessionInstance.playerId = {
+    playerId: playerId2,
+    playerName: playerName2,
+  };
+  playerSessionInstance.playerId = {
+    playerId: playerId3,
+    playerName: playerName3,
+  };
 };
 
 describe("Player Session tests", () => {
@@ -27,7 +39,7 @@ describe("Player Session tests", () => {
   describe("Setting session", () => {
     it("Providing valid sessionId and playerId", () => {
       const [sessionId, playerId] = ["NEW_SESSION", "NEW_PLAYER"];
-      playerSessionInstance.setSession(sessionId, playerId);
+      playerSessionInstance.session = { sessionId, playerId };
       assertEquals(playerSessionInstance.hasSessionId(sessionId), true);
     });
   });
@@ -36,8 +48,11 @@ describe("Player Session tests", () => {
     it("Providing valid playerId and playerName", () => {
       const [sessionId, playerId] = ["NEW_SESSION", "NEW_PLAYER"];
       const playerName = "NEW_NAME";
-      playerSessionInstance.setSession(sessionId, playerId);
-      playerSessionInstance.setPlayerId(playerId, playerName);
+      playerSessionInstance.session = { sessionId, playerId };
+      playerSessionInstance.playerId = {
+        playerId: playerId,
+        playerName: playerName,
+      };
       assertEquals(playerSessionInstance.hasSessionId(sessionId), true);
       assertEquals(playerSessionInstance.hasPlayerId(playerId), true);
     });
@@ -51,12 +66,30 @@ describe("Player Session tests", () => {
       const playerName1 = "NEW_NAME1";
       const playerName2 = "NEW_NAME2";
       const playerName3 = "NEW_NAME3";
-      playerSessionInstance.setSession(sessionId1, playerId1);
-      playerSessionInstance.setSession(sessionId2, playerId2);
-      playerSessionInstance.setSession(sessionId3, playerId3);
-      playerSessionInstance.setPlayerId(playerId1, playerName1);
-      playerSessionInstance.setPlayerId(playerId2, playerName2);
-      playerSessionInstance.setPlayerId(playerId3, playerName3);
+      playerSessionInstance.session = {
+        sessionId: sessionId1,
+        playerId: playerId1,
+      };
+      playerSessionInstance.session = {
+        sessionId: sessionId2,
+        playerId: playerId2,
+      };
+      playerSessionInstance.session = {
+        sessionId: sessionId3,
+        playerId: playerId3,
+      };
+      playerSessionInstance.playerId = {
+        playerId: playerId1,
+        playerName: playerName1,
+      };
+      playerSessionInstance.playerId = {
+        playerId: playerId2,
+        playerName: playerName2,
+      };
+      playerSessionInstance.playerId = {
+        playerId: playerId3,
+        playerName: playerName3,
+      };
       assertEquals(playerSessionInstance.hasSessionId(sessionId1), true);
       assertEquals(playerSessionInstance.hasSessionId(sessionId2), true);
       assertEquals(playerSessionInstance.hasSessionId(sessionId3), true);
@@ -69,7 +102,10 @@ describe("Player Session tests", () => {
   describe("Providing sessionId to get playerId", () => {
     it("sessionId already present in the sessions (i.e. VALID sessionId)", () => {
       const [sessionId1, playerId1] = ["NEW_SESSION1", "NEW_PLAYER1"];
-      playerSessionInstance.setSession(sessionId1, playerId1);
+      playerSessionInstance.session = {
+        sessionId: sessionId1,
+        playerId: playerId1,
+      };
       assertEquals(playerSessionInstance.getPlayerId(sessionId1), playerId1);
     });
   });
@@ -78,8 +114,14 @@ describe("Player Session tests", () => {
     it("playerId already present in the sessions (i.e. VALID playerId)", () => {
       const [sessionId1, playerId1] = ["NEW_SESSION1", "NEW_PLAYER1"];
       const playerName1 = "NEW_NAME1";
-      playerSessionInstance.setSession(sessionId1, playerId1);
-      playerSessionInstance.setPlayerId(playerId1, playerName1);
+      playerSessionInstance.session = {
+        sessionId: sessionId1,
+        playerId: playerId1,
+      };
+      playerSessionInstance.playerId = {
+        playerId: playerId1,
+        playerName: playerName1,
+      };
       assertEquals(playerSessionInstance.getPlayerId(sessionId1), playerId1);
       assertEquals(playerSessionInstance.getPlayerName(playerId1), playerName1);
     });
@@ -89,8 +131,14 @@ describe("Player Session tests", () => {
     it("sessionId already present in the sessions (i.e. VALID sessionId)", () => {
       const [sessionId1, playerId1] = ["NEW_SESSION1", "NEW_PLAYER1"];
       const playerName1 = "NEW_NAME1";
-      playerSessionInstance.setSession(sessionId1, playerId1);
-      playerSessionInstance.setPlayerId(playerId1, playerName1);
+      playerSessionInstance.session = {
+        sessionId: sessionId1,
+        playerId: playerId1,
+      };
+      playerSessionInstance.playerId = {
+        playerId: playerId1,
+        playerName: playerName1,
+      };
       assertEquals(
         playerSessionInstance.getPlayerName(
           playerSessionInstance.getPlayerId(sessionId1),
@@ -103,7 +151,7 @@ describe("Player Session tests", () => {
   describe("Getting player ids", () => {
     it("Players ids already present.", () => {
       assertEquals(
-        [...playerSessionInstance.getPlayerIds()],
+        [...playerSessionInstance.playerIds],
         [
           ["1234", "PLAYER_UNKNOWN1"],
           ["5678", "PLAYER_UNKNOWN2"],

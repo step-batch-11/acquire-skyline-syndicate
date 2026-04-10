@@ -7,7 +7,7 @@
     "coverage:detailed": "deno coverage --detailed",
     "play": "dev=true deno run -A main.js  & deno run -A setup.js",
     "dev": "dev=true deno run -A main.js",
-    "login": "dev=true deno run -A --watch main.js & node scripts/auto_login.js"
+    "login": "dev=true deno run -A --watch main.js >live.log & node scripts/auto_login.js"
   },
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.18",

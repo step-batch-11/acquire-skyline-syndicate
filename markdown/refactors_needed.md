@@ -38,7 +38,7 @@ getTiles() {
 expand(tileId) {
   const hotel = Object.values(this.#hotels).find((hotel) => {
     const tiles = hotel.getTiles();
-    return tiles.some((tile) => tile.isNeighbouringTile(new Tile(tileId)));
+    return tiles.some((tile) => tile.isNeighbour(new Tile(tileId)));
   });
   hotel.addTiles([new Tile(tileId)]);
   return hotel;
@@ -129,7 +129,7 @@ placeTile(tileId) {
     };
   }
   return {
-    playerTiles: this.#currentPlayer.getTileIds(),
+    playerTiles: this.#currentPlayer.getTilesInfo(),
     tilesOnBoard: this.#board.getPlacedTiles(),
     state: "NO_ACTION",
   };
@@ -185,7 +185,7 @@ createGame(activePlayers) {
 - [ ] We're using this method only inside this class. Can make it private
 
 ```js
-getTileIds() {
+getTilesInfo() {
   return this.#tiles.map((tile) => tile.id);
 }
 ```
@@ -193,9 +193,9 @@ getTileIds() {
 - [ ] Why returning tile ids after adding? Because we're returning currentState
 
 ```js
-addNewTile(tile) {
+addTiles(tile) {
   this.#tiles.push(...tile);
-  return this.getTileIds();
+  return this.getTilesInfo();
 }
 ```
 

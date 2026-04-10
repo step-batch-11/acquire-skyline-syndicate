@@ -26,12 +26,16 @@ export class Board {
 
   hasAdjacentForLastTile() {
     return this.#placedTiles.some((placedTile) =>
-      this.#lastTile.isNeighbouringTile(placedTile)
+      this.#lastTile.isNeighbour(placedTile)
     );
   }
 
   adjacentTilesOf(tile) {
     return tile.getAllConnectedTiles(this.#placedTiles);
+  }
+
+  getAdjacentTiles(tile) {
+    return tile.neighbourTiles();
   }
 
   getBoardState() {

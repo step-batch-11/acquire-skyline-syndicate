@@ -31,7 +31,6 @@ export default class MergeService {
 
   #distributeBonus(stakeholders, defunctHotel) {
     const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
-    // console.log({ primaryBonus, secondaryBonus });
 
     stakeholders.sort(
       (a, b) =>
@@ -49,7 +48,6 @@ export default class MergeService {
       stakeholders,
       primaryHolders,
     );
-    // console.log({ primaryHolders });
 
     if (primaryHolders.length > 1) {
       const bonusSum = primaryBonus + secondaryBonus;
@@ -80,10 +78,10 @@ export default class MergeService {
       this.#hotels.getHotel(hotel.name)
     );
     const stakeholders = this.#stakeHolders(defunctHotel.name);
-    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
     this.#distributeBonus(stakeholders, defunctHotel);
     const currentStockPrice = defunctHotel.calculateStockPrice();
     this.#sellAllStocks(stakeholders, currentStockPrice, defunctHotel.name);
+    survivingHotel.addTiles([...defunctHotel.getTiles(), this.#board.lastTile]);
     defunctHotel.dissolve();
   }
 }
