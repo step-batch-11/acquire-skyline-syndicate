@@ -1,7 +1,4 @@
-import {
-  listenerForBuyingStocks,
-  listenerForCart,
-} from "./handlers/hotel_selection_handler.js";
+import { listenerForCart } from "./handlers/hotel_selection_handler.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -59,15 +56,6 @@ export const createBuildHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
-  buttonContainer.append(button);
-  return buttonContainer;
-};
-
-export const createConfirmButton = (buttonContainer) => {
-  const button = cloneElement("#button");
-  button.textContent = "confirm";
-  button.id = "confirm";
-  button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
 };

@@ -14,9 +14,9 @@ export const listenerForBuyingStocks = async (e) => {
   e.preventDefault();
   const listOfHotels = document.querySelectorAll(".hotel-stock");
   const cart = [...listOfHotels].reduce(extractSelectedStocks, []);
-  const { hotels, playerInfo } = await postData("/turn/buy-stocks", cart);
+  const { hotels } = await postData("/turn/buy-stocks", cart);
   document.querySelector(".context-menu").innerHTML = "";
   TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
-  renderUserSection(playerInfo);
+  renderUserSection(player);
 };

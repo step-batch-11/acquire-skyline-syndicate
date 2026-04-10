@@ -3,11 +3,7 @@ import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
 import { handleMerge } from "../features/merge.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
-import {
-  addHotelData,
-  cloneElement,
-  createConfirmButton,
-} from "../ui_renderers.js";
+import { cloneElement } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
 import {
   listenerForBuyingStocks,
@@ -117,16 +113,6 @@ const handleBuyStocks = ({ hotels }) => {
 
   buyStockContainer.append(stocksContainer, cartContainer);
   contextMenu.replaceChildren(operationElement, buyStockContainer);
-  // old code
-  const bankSection = document.querySelector(".bank");
-  const hotelCards = hotels.map((hotel) => addHotelData(hotel, true));
-
-  bankSection.replaceChildren(...hotelCards);
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("button-container");
-  const confirmBtn = createConfirmButton(buttonContainer);
-
-  bankSection.append(confirmBtn);
 };
 
 const handleEndGame = (gameData) => {
@@ -165,5 +151,6 @@ export const gameStates = {
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
+
   gameStates[state](gameData);
 };
