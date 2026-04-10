@@ -186,6 +186,7 @@ export class Game {
       this.#initiateMerge(adjacentHotelChains);
       // this.#mergeService.handleMerge();
       this.#changeStateAfterMergeEnd();
+      return;
     }
 
     if (this.#isBuildPossible()) {
@@ -326,7 +327,7 @@ export class Game {
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
-    const isValidBuy = this.#isValidPurchase(cart) &&
+    const isValidBuy = this.#isValidPurchase(cart, moneyToDeduct) &&
       hasEnoughBalance;
 
     if (isValidBuy) {
@@ -392,7 +393,8 @@ export class Game {
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     this.exchangeDeadTiles();
-    this.#state = gameStates.placeTile;
+    this.#state = "PLACE_TILE";
+    return { msg: "TURN SHIFTED SUCCESSFULLY" };
   }
 
   getCurrentGameState() {
