@@ -11,3 +11,12 @@
   call the merge funtion,
 - detect the merge
 - according to merge determine the state : ["CHOOSE_HOTEL", "DISSOLVE_STOCK"]
+
+# first :
+
+- [ ] create a function for selling stocks.
+- [ ]
+
+# checks :
+
+- if the current player is not the current player then don't allow the request

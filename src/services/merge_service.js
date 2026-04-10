@@ -1,6 +1,8 @@
 import { MERGE_STATE } from "../configs/merge_states.js";
 
 export default class MergeService {
+  #turnOrder;
+  #currentDissolver;
   #mergeState;
   #affectedHotels;
   #players;
@@ -15,6 +17,7 @@ export default class MergeService {
     this.#affectedHotels = affectedHotels;
     this.#hotels = hotels;
     this.#board = board;
+    this.#turnOrder = 0;
   }
 
   #sellAllStocks(stakeholders, price, hotelName) {
@@ -38,12 +41,11 @@ export default class MergeService {
 
   #distributeBonus(stakeholders, defunctHotel) {
     const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
-
     stakeholders.sort(
       (a, b) =>
-        b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
+        b.getStockCount(defunctHotel.name) -
+        a.getStockCount(defunctHotel.name),
     );
-
     if (stakeholders.length === 1) {
       stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
       return;
@@ -121,13 +123,21 @@ export default class MergeService {
       this.#board.lastTile,
     ]);
     this.#distributeBonus(this.#defuntHotelStakeHolders, this.#defunctHotel);
-    const currentStockPrice = this.#defunctHotel.calculateStockPrice();
-    this.#sellAllStocks(
-      this.#defuntHotelStakeHolders,
-      currentStockPrice,
-      this.#defunctHotel.name,
-    );
     this.#defunctHotel.dissolve();
+  }
+
+  #sellStocks({ sell_count }) {
+    const hotelName = this.#defunctHotel.name;
+    const currentStockPrice = this.#defunctHotel.calculateStockPrice();
+    const stockValue = sell_count * currentStockPrice;
+    this.#currentDissolver.removeStocks(hotelName, sell_count);
+    this.#currentDissolver.depositMoney(stockValue);
+  }
+
+  dissolveStocks(data, currentPlayer) {
+    this.#currentDissolver = currentPlayer;
+    this.#sellStocks(data);
+    return { "sucess": true };
   }
 
   init() {

@@ -151,4 +151,19 @@ describe("Player entity tests", () => {
       assertEquals(playerInstance.hasStock("sackson"), false);
     });
   });
+
+  describe("testing remove Stocks", () => {
+    it("when it recieves num of stocks", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      playerInstance.removeStocks("sackson", 2);
+      assertEquals(playerInstance.getStockCount("sackson"), 8);
+    });
+  });
 });

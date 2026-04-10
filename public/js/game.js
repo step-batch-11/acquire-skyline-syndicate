@@ -8,12 +8,13 @@ let currentState;
 const polling = () => {
   const intervalId = setInterval(async () => {
     const gameData = await gameState();
+    // console.log(gameData);
     if (gameData.state === "END_GAME") {
       clearInterval(intervalId);
       handleGameState(gameData);
       return;
     }
-    updateNotification(gameData);
+    // updateNotification(gameData);
     if (currentState !== gameData.state) {
       renderGame(gameData);
       if (gameData.isActivePlayer) {

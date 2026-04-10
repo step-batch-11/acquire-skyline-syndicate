@@ -1,0 +1,126 @@
+{
+  "player": {
+    "id": "1",
+    "name": "yash",
+    "tiles": [
+      { "id": "3d", "isPlayable": true },
+      { "id": "1b", "isPlayable": true },
+      { "id": "10b", "isPlayable": true },
+      { "id": "8g", "isPlayable": true },
+      { "id": "1e", "isPlayable": true },
+      { "id": "2d", "isPlayable": true }
+    ],
+    "money": 6000,
+    "stocks": { "festival": 2, "american": 4 }
+  },
+  "currentPlayer": { "name": "pradipta" },
+  "hotels": [
+    {
+      "name": "continental",
+      "tiles": [],
+      "stocksLeft": 25,
+      "stockPrice": 0,
+      "originTile": { "id": "" },
+      "isActive": false
+    },
+    {
+      "name": "imperial",
+      "tiles": [],
+      "stocksLeft": 25,
+      "stockPrice": 0,
+      "originTile": { "id": "" },
+      "isActive": false
+    },
+    {
+      "name": "american",
+      "tiles": [
+        { "id": "11f" },
+        { "id": "11e" },
+        { "id": "12e" },
+        { "id": "10f" },
+        { "id": "10g" }
+      ],
+      "stocksLeft": 20,
+      "stockPrice": 600,
+      "originTile": { "id": "11f" },
+      "isActive": true
+    },
+    {
+      "name": "festival",
+      "tiles": [
+        { "id": "7f" },
+        { "id": "6f" },
+        { "id": "7g" },
+        { "id": "7e" },
+        { "id": "8f" },
+        { "id": "8e" },
+        { "id": "6e" },
+        { "id": "5e" },
+        { "id": "6d" },
+        { "id": "9e" },
+        { "id": "5f" }
+      ],
+      "stocksLeft": 22,
+      "stockPrice": 800,
+      "originTile": { "id": "7f" },
+      "isActive": true
+    },
+    {
+      "name": "worldwide",
+      "tiles": [],
+      "stocksLeft": 25,
+      "stockPrice": 0,
+      "originTile": { "id": "" },
+      "isActive": false
+    },
+    {
+      "name": "sackson",
+      "tiles": [{ "id": "12i" }, { "id": "11i" }, { "id": "12h" }],
+      "stocksLeft": 24,
+      "stockPrice": 300,
+      "originTile": { "id": "12i" },
+      "isActive": true
+    },
+    {
+      "name": "tower",
+      "tiles": [],
+      "stocksLeft": 25,
+      "stockPrice": 0,
+      "originTile": { "id": "" },
+      "isActive": false
+    }
+  ],
+  "tilesOnBoard": [
+    { "id": "1a" },
+    { "id": "6d" },
+    { "id": "5e" },
+    { "id": "12e" },
+    { "id": "11e" },
+    { "id": "9b" },
+    { "id": "6f" },
+    { "id": "7g" },
+    { "id": "4d" },
+    { "id": "7c" },
+    { "id": "3c" },
+    { "id": "8h" },
+    { "id": "7f" },
+    { "id": "3b" },
+    { "id": "7e" },
+    { "id": "2b" },
+    { "id": "8f" },
+    { "id": "11f" },
+    { "id": "8e" },
+    { "id": "6e" },
+    { "id": "9e" },
+    { "id": "12h" },
+    { "id": "11i" },
+    { "id": "12i" },
+    { "id": "10f" },
+    { "id": "5f" },
+    { "id": "10g" }
+  ],
+  "state": "PLACE_TILE",
+  "players": [{ "name": "yash" }, { "name": "pradipta" }],
+  "isActivePlayer": false,
+  "mergeData": { "mergeState": "STOCK_DISSOLUTION" }
+}

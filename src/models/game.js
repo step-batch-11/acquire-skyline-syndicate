@@ -48,7 +48,7 @@ export class Game {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     if (
       this.#mergeService &&
-      this.#mergeService.mergeState === "STOCK_DISSOLUTION"
+      this.#mergeService.mergeState === "END_MERGE"
     ) {
       this.#state = "BUY_STOCK";
       this.#mergeService = null;
@@ -305,6 +305,16 @@ export class Game {
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     // this.exchangeDeadTiles()
     this.#state = gameStates.placeTile;
+  }
+
+  handleStockDissolution(body) {
+    const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
+    if (res.success) {
+      this.#currentPlayerIndex += 1;
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
+    }
+    return res;
   }
 
   getCurrentGameState() {

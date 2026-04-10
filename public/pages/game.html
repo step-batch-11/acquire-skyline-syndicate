@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basic layout</title>
   <link rel="stylesheet" href="../styles/game.css" />
+  <link rel="stylesheet" href="../styles/merge.css">
   <script type="module" src="../js/game.js"></script>
 </head>
 
@@ -135,6 +136,22 @@
       <button id="hotel-2">imperial</button>
     </div>
   </template>
+
+  <template id="stock-dissolution">
+      <div id="stock-dissolution-card">
+        <h1>Exchange or Dissolve</h1>
+        <div>
+          <h3>Exchange counter : </h3>
+          <counter-btn id = "exchange-counter"></counter-btn>
+        </div>
+        <div>
+          <h3>sell counter : </h3>
+          <counter-btn id = "sell-counter" ></counter-btn>
+        </div>
+        <button id="dissolve-btn">Dissolve</button>
+      </div>
+  </template>
+
 </body>
 
 </html>
