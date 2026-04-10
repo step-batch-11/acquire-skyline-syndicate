@@ -1,140 +1,154 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic layout</title>
+    <link rel="stylesheet" href="../styles/game.css" />
+    <script type="module" src="../js/game.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic layout</title>
-  <link rel="stylesheet" href="../styles/game.css" />
-  <script type="module" src="../js/game.js"></script>
-</head>
-
-<body>
-  <aside>
-    <div class="players"></div>
-  </aside>
-  <main>
-    <div class="market-notification-players">
-      <div class="notification-box"></div>
-      <div class="player-market">
-        <div class="board"></div>
-      </div>
-    </div>
-    <footer>
-      <div class="user-hand">
-        <div class="amount-container">
-          <p></p>
+  <body>
+    <aside>
+      <div class="players"></div>
+    </aside>
+    <main>
+      <div class="market-notification-players">
+        <div class="notification-box"></div>
+        <div class="player-market">
+          <div class="board"></div>
         </div>
-        <div class="stocks"></div>
-        <div class="tiles tiles-in-hand"></div>
       </div>
-      <div class="context-menu">
-        <div></div>
+      <footer>
+        <div class="user-hand">
+          <div class="amount-container">
+            <p></p>
+          </div>
+          <div class="stocks"></div>
+          <div class="tiles tiles-in-hand"></div>
+        </div>
+        <div class="context-menu">
+          <div></div>
+        </div>
+      </footer>
+    </main>
+    <div class="bank">
+      <div class="bank-header">
+        <img src="/assets/bank.svg" alt="" />
+        <h2 class="market-info-header">Market Info</h2>
       </div>
-    </footer>
-  </main>
-  <div class="bank">
-    <!-- Bank Section -->
-  </div>
-
-  <template id="player-template">
-    <div class="player-container">
-      <div class="player-profile"></div>
-      <div class="player-name"></div>
+      <!-- Bank Section -->
     </div>
-  </template>
 
-  <template id="board-tile">
-    <div class="tile">
-      <p>1a</p>
-    </div>
-  </template>
+    <template id="player-template">
+      <div class="player-container">
+        <div class="player-profile"></div>
+        <div class="player-name"></div>
+      </div>
+    </template>
 
-  <template id="button">
-    <button class="confirm-btn"></button>
-  </template>
+    <template id="board-tile">
+      <div class="tile">
+        <p>1a</p>
+      </div>
+    </template>
 
-  <template id="stock-template">
-    <div class="stock empty">
-      <h3 class="stock-name"></h3>
-      <span class="count"></span>
-    </div>
-  </template>
+    <template id="button">
+      <button class="confirm-btn"></button>
+    </template>
 
-  <template id="counter-template">
-    <div class="counter">
-      <button data-action="decr">-</button>
-      <data class="cart-value" value="0">0</data>
-      <button data-action="incr">+</button>
-    </div>
-  </template>
+    <template id="stock-template">
+      <div class="stock empty">
+        <h3 class="stock-name"></h3>
+        <span class="count"></span>
+      </div>
+    </template>
 
-  <template id="hotel-card">
-    <section class="hotel">
-      <div class="hotel-info">
-        <div class="hotel-card-header">
-          <h3 class="hotel-name"></h3>
-          <div class="counter hidden">
-            <button type="button" data-action="decr">-</button>
-            <data class="cart-value" value="0">0</data>
-            <button type="button" data-action="incr">+</button>
+    <template id="counter-template">
+      <div class="counter">
+        <button data-action="decr">-</button>
+        <data class="cart-value" value="0">0</data>
+        <button data-action="incr">+</button>
+      </div>
+    </template>
+
+    <template id="hotel-card">
+      <section class="hotel">
+        <div class="hotel-info">
+          <div class="hotel-card-header">
+            <h3 class="hotel-name"></h3>
+            <div class="counter hidden">
+              <button type="button" data-action="decr">-</button>
+              <data class="cart-value" value="0">0</data>
+              <button type="button" data-action="incr">+</button>
+            </div>
+          </div>
+          <div class="information">
+            <div id="price">$ 400</div>
+            <div id="tiles">% 3</div>
+            <div id="stock-left">& 25</div>
           </div>
         </div>
-        <div class="information">
-          <div id="price">$ 400</div>
-          <div id="tiles">% 3</div>
-          <div id="stock-left">& 25</div>
+        <div class="hotel-container"></div>
+      </section>
+    </template>
+
+    <template id="found-hotel">
+      <div class="found-hotel-container">
+        <div class="icon"></div>
+        <div class="name"></div>
+      </div>
+    </template>
+
+    <template id="endGameTemplate">
+      <div class="overlay">
+        <div class="popup">
+          <span class="close-btn">✖</span>
+
+          <h2>Game Over 🎮</h2>
+
+          <div class="winner">
+            <h3>Winner:</h3>
+            <p class="winnerName"></p>
+          </div>
+
+          <div class="players">
+            <h3>Players</h3>
+
+            <table class="players-table">
+              <thead>
+                <tr>
+                  <th>Player</th>
+                  <th>Amount 💰</th>
+                </tr>
+              </thead>
+              <tbody class="playersTableBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="hotel-container"></div>
-    </section>
-  </template>
+    </template>
 
-  <template id="found-hotel">
-    <div class="found-hotel-container">
-      <div class="icon"></div>
-      <div class="name"></div>
-    </div>
-  </template>
-
-  <template id="endGameTemplate">
-    <div class="overlay">
-      <div class="popup">
-        <span class="close-btn">✖</span>
-
-        <h2>Game Over 🎮</h2>
-
-        <div class="winner">
-          <h3>Winner:</h3>
-          <p class="winnerName"></p>
-        </div>
-
-        <div class="players">
-          <h3>Players</h3>
-
-          <table class="players-table">
-            <thead>
-              <tr>
-                <th>Player</th>
-                <th>Amount 💰</th>
-              </tr>
-            </thead>
-            <tbody class="playersTableBody"></tbody>
-          </table>
-        </div>
+    <template id="chooseDissolvingHotel">
+      <div class="chooseHotelContainer">
+        <h1>Choose hotel to disolve.</h1>
+        <button id="hotel-1">continental</button>
+        <button id="hotel-2">imperial</button>
       </div>
-    </div>
-  </template>
+    </template>
 
-  <template id="chooseDissolvingHotel">
-    <div class="chooseHotelContainer">
-      <h1>
-        Choose hotel to disolve.
-      </h1>
-      <button id="hotel-1">continental</button>
-      <button id="hotel-2">imperial</button>
-    </div>
-  </template>
-</body>
-
+    <template id="bank-info-table">
+      <table id="info-table">
+        <thead>
+          <tr>
+            <th>Corporation</th>
+            <th>price</th>
+            <th>size</th>
+            <th>stocks</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </template>
+  </body>
 </html>

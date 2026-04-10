@@ -1,7 +1,6 @@
-import {
-  listenerForBuyingStocks,
-  listenerForCart,
-} from "./handlers/hotel_selection_handler.js";
+import { listenerForBuyingStocks } from "./handlers/hotel_selection_handler.js";
+
+import { createElement } from "../js/features/hotel_foundation.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -44,7 +43,7 @@ export const renderBoard = (tilesOnBoard, hotelsOnBoard) => {
 export const renderTilesInHand = (playerTiles) => {
   const tilesContainer = document.querySelector(".tiles-in-hand");
   const playerTileElements = playerTiles.map((tile) =>
-    createTileElement(tile.id)
+    createTileElement(tile.id),
   );
   tilesContainer.innerHTML = "";
   tilesContainer.append(...playerTileElements);
@@ -77,40 +76,31 @@ export const cloneElement = (templateId) => {
   return template.content.querySelector("*").cloneNode(true);
 };
 
-export const addHotelData = (
-  { name, tiles, stocksLeft, stockPrice, isActive },
-  isBuyState = false,
-) => {
-  const hotelCard = cloneElement("#hotel-card");
-  hotelCard.setAttribute("id", name);
-  const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
-  hotelInfoContainer.classList.add(name);
-  const hotelContainer = hotelCard.querySelector(".hotel-container");
-  hotelContainer.classList.add(`${name}-icon`);
+export const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
+  const tableRowElement = document.createElement("tr");
+  const tableDataElement = createElement("td", "name-info-section");
+  const circleElement = createElement("div", `hotel-colored-circle`);
+  circleElement.classList.add(name);
+  tableDataElement.append(circleElement, name);
 
-  if (isActive) {
-    hotelContainer.classList.add("active");
-  }
+  const rowData = [stockPrice, tiles.length, stocksLeft].map((content) => {
+    const tableDataElement = document.createElement("td");
+    tableDataElement.innerText = content;
+    return tableDataElement;
+  });
 
-  if (isBuyState && isActive) {
-    const counter = hotelCard.querySelector(".counter");
-    counter.classList.remove("hidden");
-    counter.addEventListener("click", listenerForCart);
-  }
-
-  hotelCard.querySelector(".hotel-name").textContent = name;
-  hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
-  hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
-  hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
-
-  return hotelCard;
+  tableRowElement.append(tableDataElement, ...rowData);
+  return tableRowElement;
 };
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
-  const hotelCards = hotels.map((hotel) => addHotelData(hotel));
+  const tableContainer = cloneElement("#bank-info-table");
+  const tableBody = tableContainer.querySelector("tbody");
 
-  bankSection.replaceChildren(...hotelCards);
+  const hotelCards = hotels.map((hotel) => addHotelData(hotel));
+  tableBody.append(...hotelCards);
+  bankSection.append(tableContainer);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {
@@ -129,7 +119,7 @@ export const renderHeldStocks = (stocks) => {
   const stocksSection = document.querySelector(".stocks");
   const stockCards = cloneStockCards();
   Object.entries(stocks).forEach(([name, count], index) =>
-    addDetailsToCard(stockCards[index], name, count)
+    addDetailsToCard(stockCards[index], name, count),
   );
   stocksSection.replaceChildren(...stockCards);
 };
