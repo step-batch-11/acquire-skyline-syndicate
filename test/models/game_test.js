@@ -359,7 +359,7 @@ describe("Game entity tests", () => {
   describe("shiftTurn", () => {
     beforeEach(() => {
       const state = "SHIFT_TURN";
-      const currentPlayerIndex = 1;
+      const currentPlayerIndex = 0;
       const tileInDeck = ["7e", "8e"];
       const deck = tileInDeck.map((tile) => new Tile(tile));
       const players = [
@@ -385,8 +385,8 @@ describe("Game entity tests", () => {
 
     it("should successfully shift turn to next player", () => {
       game.shiftTurn(1);
-      const nextPlayer = game.currentState(2).currentPlayer;
-      assertEquals(nextPlayer.name, "yash");
+      const nextPlayer = game.currentState(1).currentPlayer;
+      assertEquals(nextPlayer.name, "som");
     });
 
     it("Players can not shift turn on other players turn", () => {
@@ -825,7 +825,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe.ignore("calculateFinalWinner", () => {
+  describe("calculateFinalWinner", () => {
     let state;
     let currentPlayerIndex;
     let deck;

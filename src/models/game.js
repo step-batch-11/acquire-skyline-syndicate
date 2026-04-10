@@ -1,4 +1,8 @@
 import { gameStates } from "../configs/game_states_config.js";
+import {
+  distributeBonus,
+  sellStocks,
+} from "../services/dissolution_controller.js";
 import { Tile } from "./tile.js";
 export class Game {
   #currentService;
@@ -182,7 +186,6 @@ export class Game {
       this.#initiateMerge(adjacentHotelChains);
       // this.#mergeService.handleMerge();
       this.#changeStateAfterMergeEnd();
-      return;
     }
 
     if (this.#isBuildPossible()) {
@@ -236,7 +239,7 @@ export class Game {
     }
 
     this.#board.place(new Tile(tileId));
-    this.#state = this.#actionForTilePlacement(tileId);
+    this.#actionForTilePlacement(tileId);
     this.#currentPlayer.removeTile(tileId);
     return { msg: "TILE PLACED SUCCESSFULLY" };
   }
@@ -378,7 +381,7 @@ export class Game {
   }
 
   shiftTurn(requestedPlayerId) {
-    if (this.#isActivePlayer(requestedPlayerId)) {
+    if (!this.#isActivePlayer(requestedPlayerId)) {
       throw new Error({ msg: "OUT OF TURN ACTION" });
     }
     if (this.#state !== "SHIFT_TURN") {

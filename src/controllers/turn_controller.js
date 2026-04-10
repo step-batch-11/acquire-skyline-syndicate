@@ -23,7 +23,7 @@ export class TurnController {
       const response = game.placeTile(playerId, tile);
       return c.json(response, 201);
     } catch (error) {
-      return c.jon(error, 400);
+      return c.json(error, 400);
     }
   }
 
@@ -32,8 +32,12 @@ export class TurnController {
     const gameManager = c.get("gameManager");
     const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
-    game.buildHotel(playerId, hotelToFound);
-    return c.json({ message: "Tile placed successfully" });
+    try {
+      const response = game.buildHotel(playerId, hotelToFound);
+      return c.json(response);
+    } catch (error) {
+      return c.json(error, 400);
+    }
   }
 
   async buyStocks(c) {
