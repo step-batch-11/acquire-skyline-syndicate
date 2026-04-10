@@ -6,11 +6,11 @@ export class PlayerSession {
     this.#playerIds = new Map();
   }
 
-  setSession(sessionId, playerId) {
+  set session({ sessionId, playerId }) {
     this.#sessions.set(`${sessionId}`, playerId);
   }
 
-  setPlayerId(playerId, playerName) {
+  set playerId({ playerId, playerName }) {
     this.#playerIds.set(`${playerId}`, playerName);
   }
 
@@ -30,7 +30,7 @@ export class PlayerSession {
     return this.#playerIds.has(`${playerId}`);
   }
 
-  getPlayerIds() {
+  get playerIds() {
     return [...this.#playerIds];
   }
 }

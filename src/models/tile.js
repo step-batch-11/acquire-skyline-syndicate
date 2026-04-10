@@ -1,22 +1,34 @@
 export class Tile {
-  id;
+  #id;
   #rowLabels;
   #maxCol;
   #minCol;
   #neighbourDeltas;
-  isPlayable;
+  #isPlayable;
   constructor(tileId) {
     this.#maxCol = 12;
     this.#minCol = 1;
     this.#rowLabels = "abcdefghi";
-    this.id = tileId;
+    this.#id = tileId;
     this.#neighbourDeltas = [
       { columnDelta: 1, rowDelta: 0 },
       { columnDelta: -1, rowDelta: 0 },
       { columnDelta: 0, rowDelta: 1 },
       { columnDelta: 0, rowDelta: -1 },
     ];
-    this.isPlayable = true;
+    this.#isPlayable = true;
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get isPlayable() {
+    return this.#isPlayable;
+  }
+
+  set isPlayable(value) {
+    this.#isPlayable = value;
   }
 
   #getRowIndex(row) {
@@ -31,8 +43,8 @@ export class Tile {
     return this.#getRowIndex(row) !== -1;
   }
 
-  splitTile(tile) {
-    return { col: Number(tile.slice(0, -1)), row: tile.slice(-1) };
+  #parseTileId(tileId) {
+    return { col: Number(tileId.slice(0, -1)), row: tileId.slice(-1) };
   }
 
   #getUpdatedRow(row, rowDelta) {
@@ -41,7 +53,7 @@ export class Tile {
   }
 
   #getUpdatedPosition({ columnDelta, rowDelta }) {
-    const { col, row } = this.splitTile(this.id);
+    const { col, row } = this.#parseTileId(this.id);
 
     return {
       newColumn: col + columnDelta,
@@ -49,7 +61,7 @@ export class Tile {
     };
   }
 
-  addNeighbour(delta) {
+  #getNeighbour(delta) {
     const { newColumn, newRow } = this.#getUpdatedPosition(delta);
 
     return this.#isValidRow(newRow) && this.#isValidColumn(newColumn)
@@ -59,25 +71,25 @@ export class Tile {
 
   neighbourTiles() {
     return this.#neighbourDeltas
-      .map((delta) => this.addNeighbour(delta))
+      .map((delta) => this.#getNeighbour(delta))
       .filter(Boolean);
   }
 
-  isNeighbouringTile(tile) {
+  isNeighbour(tile) {
     return this.neighbourTiles().includes(tile.id);
   }
 
-  getAllConnectedTiles(tilesOnBoard, connecteds = []) {
-    if (connecteds.includes(this.id)) return connecteds;
+  getAllConnectedTiles(tilesOnBoard, connectedTiles = []) {
+    if (connectedTiles.includes(this.id)) return connectedTiles;
 
-    connecteds.push(this.id);
+    connectedTiles.push(this.id);
     this.neighbourTiles().forEach((tile) => {
       if (tilesOnBoard.some((tileOnBoard) => tileOnBoard.id === tile)) {
         const tileInstance = new Tile(tile);
-        tileInstance.getAllConnectedTiles(tilesOnBoard, connecteds);
+        tileInstance.getAllConnectedTiles(tilesOnBoard, connectedTiles);
       }
     });
 
-    return connecteds;
+    return connectedTiles;
   }
 }

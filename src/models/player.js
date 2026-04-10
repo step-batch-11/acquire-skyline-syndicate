@@ -21,7 +21,7 @@ export class Player {
     return this.#name;
   }
 
-  getTileIds() {
+  getTilesInfo() {
     return this.#tiles.map((tile) => ({
       id: tile.id,
       isPlayable: tile.isPlayable,
@@ -33,17 +33,7 @@ export class Player {
   }
 
   isPlayerTile(tileId) {
-    return this.getTileIds().some((tile) => tile.id === tileId);
-  }
-
-  getDetails() {
-    return {
-      id: this.#id,
-      name: this.#name,
-      tiles: this.getTileIds(),
-      money: this.#money,
-      stocks: structuredClone(this.#stocks),
-    };
+    return this.#tiles.some((tile) => tile.id === tileId);
   }
 
   getStockCount(hotelName) {
@@ -64,7 +54,7 @@ export class Player {
     this.#stocks[hotelName] += noOfStocks;
   }
 
-  addNewTile(tile) {
+  addTiles(tile) {
     this.#tiles.push(...tile);
   }
 
@@ -76,13 +66,13 @@ export class Player {
     return moneyToDeduct <= this.#money;
   }
 
-  getPlayerState() {
+  getDetails() {
     return {
       id: this.#id,
       name: this.#name,
-      tiles: structuredClone(this.#tiles),
+      tiles: this.getTilesInfo(),
       money: this.#money,
-      stocks: structuredClone(this.#stocks),
+      stocks: { ...this.#stocks },
     };
   }
 

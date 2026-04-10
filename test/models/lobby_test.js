@@ -13,8 +13,8 @@ describe("Lobby tests", () => {
   describe("Sets playerId", () => {
     it("Should set playerId in players", () => {
       const playerId = 1;
-      lobby.setPlayer(playerId);
-      const playerIds = lobby.getActivePlayersIds();
+      lobby.playerId = playerId;
+      const playerIds = lobby.activePlayerIds;
       assertEquals(playerIds.includes(1), true);
     });
   });
@@ -22,7 +22,7 @@ describe("Lobby tests", () => {
   describe("Sets hostId", () => {
     it("Should set hostId in host", () => {
       const playerId = 2;
-      lobby.setHost(playerId);
+      lobby.host = playerId;
 
       assertEquals(lobby.isHost(playerId), true);
     });
@@ -31,27 +31,27 @@ describe("Lobby tests", () => {
   describe("Sets lobbyId", () => {
     it("Should set lobbyId in lobbyId", () => {
       const lobbyId = 123;
-      lobby.setLobby(lobbyId);
+      lobby.lobbyId = lobbyId;
       assertEquals(lobby.lobbyId, lobbyId);
     });
   });
 
   describe("Checks is lobby full", () => {
     it("Lobby is already full", () => {
-      lobby.setPlayer(1);
-      lobby.setPlayer(2);
-      lobby.setPlayer(3);
-      lobby.setPlayer(4);
-      lobby.setPlayer(5);
-      lobby.setPlayer(6);
+      lobby.playerId = 1;
+      lobby.playerId = 2;
+      lobby.playerId = 3;
+      lobby.playerId = 4;
+      lobby.playerId = 5;
+      lobby.playerId = 6;
       assertEquals(lobby.isFull(), true);
     });
     it("Lobby is not full", () => {
-      lobby.setPlayer(1);
-      lobby.setPlayer(2);
-      lobby.setPlayer(3);
-      lobby.setPlayer(4);
-      lobby.setPlayer(5);
+      lobby.playerId = 1;
+      lobby.playerId = 2;
+      lobby.playerId = 3;
+      lobby.playerId = 4;
+      lobby.playerId = 5;
       assertEquals(lobby.isFull(), false);
     });
   });
@@ -59,18 +59,18 @@ describe("Lobby tests", () => {
   describe("Sets lobbyId", () => {
     const hostId = 1;
     beforeEach(() => {
-      lobby.setHost(hostId);
-      lobby.setPlayer(hostId);
+      lobby.host = hostId;
+      lobby.playerId = hostId;
     });
 
     it("Should return ready state to host, when 2 players joined including the host", () => {
-      lobby.setPlayer(2);
+      lobby.playerId = 2;
       assertEquals(lobby.currentState(hostId), READY);
     });
 
     it("Should return waiting state to joinees", () => {
       const joineeId = 2;
-      lobby.setPlayer(joineeId);
+      lobby.playerId = joineeId;
       assertEquals(lobby.currentState(joineeId), WAITING);
     });
   });
@@ -79,9 +79,9 @@ describe("Lobby tests", () => {
     it("Transitioning the state to started", () => {
       const hostId = 1;
       const joineeId = 2;
-      lobby.setHost(hostId);
-      lobby.setPlayer(hostId);
-      lobby.setPlayer(joineeId);
+      lobby.host = hostId;
+      lobby.playerId = hostId;
+      lobby.playerId = joineeId;
       lobby.transitionToStart();
       assertEquals(lobby.currentState(hostId), STARTED);
       assertEquals(lobby.currentState(joineeId), STARTED);

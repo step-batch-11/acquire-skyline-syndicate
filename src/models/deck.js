@@ -8,11 +8,11 @@ export class Deck {
     return this.#tiles.splice(0, count);
   }
 
-  getDeckState() {
+  get tiles() {
     return this.#tiles;
   }
 
-  loadGameState(tiles) {
+  set tiles(tiles) {
     this.#tiles = tiles;
   }
 }

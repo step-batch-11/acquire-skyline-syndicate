@@ -111,14 +111,14 @@ describe("Hotels entity tests", () => {
           tiles: [],
           stocks: 25,
           priceOffset: 0,
-          originTile: undefined,
+          originTile: {},
         },
         {
           name: "Tower",
           tiles: [],
           stocks: 25,
           priceOffset: 0,
-          originTile: undefined,
+          originTile: {},
         },
       ];
       assertEquals(data, expectedData);
@@ -131,7 +131,7 @@ describe("Hotels entity tests", () => {
           tiles: [],
           stocks: 20,
           priceOffset: 0,
-          originTile: undefined,
+          originTile: {},
         },
         {
           name: "Tower",

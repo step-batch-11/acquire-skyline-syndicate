@@ -28,7 +28,7 @@ describe("Deck entity tests", () => {
     it("getting the all the tiles in the deck", () => {
       const tiles = ["1a", "3d", "4b", "8i", "4e", "12f", "11i", "10g", "2d"];
       const deckInstance = new Deck(tiles);
-      assertEquals(deckInstance.getDeckState(), tiles);
+      assertEquals(deckInstance.tiles, tiles);
     });
 
     it("slicing some tiles in the deck", () => {
@@ -36,7 +36,7 @@ describe("Deck entity tests", () => {
       const deckInstance = new Deck(tiles);
       deckInstance.drawTiles(6);
       const expectedResult = ["11i", "10g", "2d"];
-      assertEquals(deckInstance.getDeckState(), expectedResult);
+      assertEquals(deckInstance.tiles, expectedResult);
     });
   });
 
@@ -44,8 +44,8 @@ describe("Deck entity tests", () => {
     it("injecting the tiles in the deck", () => {
       const tiles = ["1a", "3d", "4b", "8i", "4e", "12f", "11i", "10g", "2d"];
       const deckInstance = new Deck(tiles);
-      deckInstance.loadGameState(tiles);
-      assertEquals(deckInstance.getDeckState(), tiles);
+      deckInstance.tiles = tiles;
+      assertEquals(deckInstance.tiles, tiles);
     });
   });
 });
