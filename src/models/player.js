@@ -88,6 +88,10 @@ export class Player {
     delete this.#stocks[hotelName];
   }
 
+  removeStocks(hotelName, stocksCount) {
+    this.#stocks[hotelName] = this.#stocks[hotelName] - stocksCount;
+  }
+
   sellStocks(hotelName, price) {
     this.#money += price * this.#stocks[hotelName] || 0;
     delete this.#stocks[hotelName];

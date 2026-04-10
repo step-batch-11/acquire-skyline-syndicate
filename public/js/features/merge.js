@@ -1,10 +1,29 @@
 import { cloneElement } from "../ui_renderers.js";
 import { postData } from "../request.js";
+import { Counter } from "../components/inr_dcr_button.js";
 
 export const MERGE_STATE = {
   equal: "EQUAL_HOTEL_MERGE",
   unequal: "UNEQUAL_HOTEL_MERGE",
   dissolution: "STOCK_DISSOLUTION",
+};
+
+const renderStockDissolution = () => {
+  const body = document.querySelector("body");
+  customElements.define("counter-btn", Counter);
+  const tradeElement = cloneElement("#stock-dissolution");
+  const dissolveBtn = tradeElement.querySelector("#dissolve-btn");
+  const sellCounter = tradeElement.querySelector("#sell-counter");
+  const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+  dissolveBtn.addEventListener("click", async () => {
+    const tradeQuantities = {
+      "sell_count": sellCounter.count,
+      "exchange_count": exchangeCounter.count,
+    };
+    const res = await postData("/merge/dissolve", tradeQuantities);
+    if (res.sucess) body.removeChild(tradeElement);
+  });
+  body.append(tradeElement);
 };
 
 const renderEqualMerge = () => {
@@ -36,4 +55,5 @@ const renderEqualMerge = () => {
 export const handleMerge = (gameData) => {
   const mergeState = gameData.mergeData.mergeState;
   if (mergeState === MERGE_STATE.equal) renderEqualMerge();
+  if (mergeState === MERGE_STATE.dissolution) renderStockDissolution();
 };

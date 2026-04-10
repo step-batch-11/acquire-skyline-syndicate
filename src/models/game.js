@@ -106,7 +106,7 @@ export class Game {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     if (
       this.#mergeService &&
-      this.#mergeService.mergeState === "STOCK_DISSOLUTION"
+      this.#mergeService.mergeState === "END_MERGE"
     ) {
       this.#state = "BUY_STOCK";
       this.#mergeService = null;
@@ -311,8 +311,12 @@ export class Game {
   }
 
   assignNewTile() {
-    const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addTiles(tile);
+    const [tile] = this.#deck.drawTiles(1);
+    if (tile === undefined) return;
+    if (this.isDeadTile(tile.id)) {
+      return this.assignNewTile();
+    }
+    this.#currentPlayer.addTiles([tile]);
   }
 
   #createNotificationData(type, data) {
@@ -399,6 +403,14 @@ export class Game {
     this.exchangeDeadTiles();
     this.#state = "PLACE_TILE";
     return { msg: "TURN SHIFTED SUCCESSFULLY" };
+  }
+
+  handleStockDissolution(body) {
+    const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
+    this.#currentPlayerIndex += 1;
+    this.#currentPlayer =
+      this.#players[this.#currentPlayerIndex % this.#players.length];
+    return res;
   }
 
   getCurrentGameState() {

@@ -39,4 +39,4 @@ const joinGame = async (username, playerType, lobbyId) => {
 const { lobbyId, page } = await hostGame("Gopi", "host");
 await joinGame("Pradipta", "join", lobbyId);
 await page.click("#start-btn");
-// await page.goto("http://localhost:8000/state?name=merge/two_equal");
+// await page.goto("http://localhost:8000/state?name=merging");
