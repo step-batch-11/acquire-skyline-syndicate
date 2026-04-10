@@ -10,6 +10,7 @@ export class Hotel {
     this.#stocks = 25;
     this.#tiles = [];
     this.#priceOffset = priceOffset;
+    this.#originTile = {};
   }
 
   get name() {
@@ -64,7 +65,7 @@ export class Hotel {
       tiles: this.#tiles.map(({ id }) => ({ id })),
       stocksLeft: this.#stocks,
       stockPrice,
-      originTile: this.#originTile,
+      originTile: { id: this.#originTile?.id || "" },
       isActive: this.isActive(),
     };
   }

@@ -125,6 +125,9 @@
       "name": "continental",
       "tiles": [
         {
+          "id": "2c"
+        },
+        {
           "id": "1d"
         },
         {
@@ -285,5 +288,5 @@
     }
   ],
   "state": "PLACE_TILE",
-  "currentPlayerIndex": 0
+  "currentPlayerIndex": 1
 }

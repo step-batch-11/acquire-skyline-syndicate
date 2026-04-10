@@ -1,5 +1,6 @@
+import process from "node:process";
 const { chromium } = require("playwright");
-
+const URL = "http://localhost:8000";
 const createPages = async () => {
   const browser = await chromium.launch({ headless: false });
   const context1 = await browser.newContext();
@@ -12,7 +13,7 @@ const createPages = async () => {
 };
 
 const loginPlayer = async (page, name) => {
-  await page.goto("http://localhost:8000/pages/login.html");
+  await page.goto(`${URL}/pages/login.html`);
   await page.fill("#player_name", name);
   await page.click(".login-btn");
 };
@@ -36,6 +37,15 @@ const loginIntoGame = async () => {
   await joinRoom(page2, "player2");
 
   await page1.click("#start-btn");
+  return { page1, page2 };
 };
 
-loginIntoGame();
+const loadGame = async ({ page1 }, name) => {
+  await page1.goto(`${URL}/state?name=${name}`);
+};
+
+const main = async ([name]) => {
+  const res = await loginIntoGame();
+  if (name) return loadGame(res, name);
+};
+main(process.argv.slice(2));

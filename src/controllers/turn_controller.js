@@ -9,7 +9,7 @@ export const extractRequestedPlayerId = (c) => {
 export class TurnController {
   currentState(c) {
     const gameManager = c.get("gameManager");
-    const game = gameManager.getGame();
+    const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
     return c.json(game.currentState(playerId));
   }
@@ -17,7 +17,7 @@ export class TurnController {
   async placeTile(c) {
     const { tile } = await c.req.json();
     const gameManager = c.get("gameManager");
-    const game = gameManager.getGame();
+    const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
     try {
       const response = game.placeTile(playerId, tile);
@@ -30,7 +30,7 @@ export class TurnController {
   async buildHotel(c) {
     const { hotelToFound } = await c.req.json();
     const gameManager = c.get("gameManager");
-    const game = gameManager.getGame();
+    const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
     game.buildHotel(playerId, hotelToFound);
     return c.json({ message: "Tile placed successfully" });
@@ -39,7 +39,7 @@ export class TurnController {
   async buyStocks(c) {
     const cart = await c.req.json();
     const gameManager = c.get("gameManager");
-    const game = gameManager.getGame();
+    const game = gameManager.game;
     const playerId = extractRequestedPlayerId(c);
     const res = game.buyStocks(playerId, cart);
 

@@ -52,7 +52,7 @@ export class Hotels {
     const hotel = Object.values(this.#hotels).find((hotel) => {
       const tiles = hotel.getTiles();
 
-      return tiles.some((hotelTile) => hotelTile.isNeighbouringTile(tile));
+      return tiles.some((hotelTile) => hotelTile.isNeighbour(tile));
     });
 
     const allConnectedTiles = tile.getAllConnectedTiles(tilesOnBoard);
