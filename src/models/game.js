@@ -217,6 +217,7 @@ export class Game {
     return this.#hotels.getAdjacentHotelChains(adjacentTiles);
   }
 
+  //  Dead tiles function
   isDeadTile(tile) {
     const newTile = new Tile(tile);
     const adjacentHotelChains = this.getAdjacentHotelChainsOfTile(newTile);
