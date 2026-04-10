@@ -16,13 +16,28 @@
 }
 
 main {
-  height: 83vh;
+  height: 100vh;
+  width: 65%;
   margin: 0.3em 0 0 0.3em;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+body {
+  display: flex;
+  background-color: rgb(248 250 252);
+}
+
+aside {
+  background-color: rgb(199 210 222);
+  width: 10%;
+  height: 100vh;
 }
 
 :root {
-  --board-bg: rgb(207, 207, 207);
+  --board-bg: rgb(199 210 222);
   --occupied-tile-bg: rgb(100, 100, 100);
   --imperial: #f29b12;
   --continental: #5683ff;
@@ -35,8 +50,8 @@ main {
 
 .market-notification-players {
   position: relative;
-  height: 100%;
-  width: 75%;
+  height: 62vh;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,21 +65,22 @@ main {
 }
 
 .tile {
-  height: 3.5em;
-  width: 3.5em;
-  /* border: 0.2px solid black; */
+  height: 3.2em;
+  width: 3.2em;
   box-sizing: border-box;
   border-radius: 0.3em;
-  background-color: white;
+  background-color: rgb(255 255 255);
   transition: 1s;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  color: rgb(31 41 55);
 }
 
 .tile p {
-  font-size: 1.3em;
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 .tile:hover {
@@ -78,10 +94,8 @@ main {
   padding: 0.7em;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  gap: 0.5em;
+  gap: 0.4em;
   border-radius: 0.4em;
-  margin-top: 5%;
-  margin-right: 15%;
 }
 
 .tiles-in-market {
@@ -124,7 +138,7 @@ main {
 
 .bank {
   width: 25%;
-  height: 99.8%;
+  height: 100vh;
   box-shadow: -5px 0px 5px -5px gray;
   display: flex;
   flex-direction: column;
@@ -133,7 +147,104 @@ main {
   align-items: center;
 }
 
+.context-menu {
+  padding-top: 0.4em;
+  width: 100%;
+  height: 20vh;
+  margin-left: 1%;
+  box-sizing: border-box;
+}
+
+.context-menu p {
+  display: inline;
+  font-size: 1.2em;
+  color: rgb(49 46 129);
+  font-weight: 600;
+  border-bottom: 1px solid rgb(49 46 129);
+}
+
+.context-menu .build-hotel-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5em;
+}
+
+.build-hotel-container .found-hotel-container {
+  padding-right: 0.5em;
+  box-sizing: border-box;
+  height: 2.5em;
+  width: 9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 3px rgb(0, 0, 0);
+  cursor: pointer;
+  font-size: 1.2em;
+  border-radius: 0.4em;
+  text-transform: capitalize;
+}
+
+.hotels-container {
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 0.6em;
+}
+
+.build-btn {
+  cursor: pointer;
+  text-align: center;
+  align-self: flex-end;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 1.4em;
+  font-weight: 500;
+  background-color: rgb(86 130 255);
+  color: whitesmoke;
+  border: none;
+  border-radius: 7px;
+  text-transform: capitalize;
+}
+
+.build-btn:hover {
+  transition: 0.4s;
+  transform: scale(1.02);
+}
+
+.icon {
+  height: 2em;
+  width: 2em;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.user-hand {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 7fr 2fr;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: white;
+  border-bottom: 2px solid rgb(226 232 240);
+}
+
 footer {
+  width: 100%;
+  height: 36.5vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px -2px 5px -2px rgb(169, 169, 169);
+}
+
+.hotels-section {
+  display: flex;
+}
+
+/* user-hand {
   background-color: whitesmoke;
   padding: 5px;
   height: 15vh;
@@ -142,7 +253,7 @@ footer {
   width: 99.3%;
   display: grid;
   grid-template-columns: 1fr 7fr 2fr;
-}
+} */
 
 .amount-container {
   display: flex;
@@ -153,43 +264,56 @@ footer {
 .amount-container p {
   padding: 0.7em 1.4em;
   font-size: 1.4em;
-  border: 2px solid black;
 }
 
 .stocks {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.6em;
+  gap: 1em;
 }
 
 .stock {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
   align-items: center;
-  height: 90%;
-  width: 10%;
+  height: 80%;
+  width: 11%;
   color: whitesmoke;
   border-radius: 5px;
+  border: 1px solid rgb(202 213 225);
+  box-shadow: 0px 0px 4px rgb(202 213 225);
 }
 
 .stock .count {
   justify-self: flex-end;
-  font-size: 30px;
+  font-size: 1.7em;
+  color: rgb(30 41 59);
+  font-weight: 500;
 }
 
 .stock .stock-name {
-  margin-top: 5px;
+  /* max-width: 4em; */
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 5px;
+  font-size: 1em;
+  text-transform: capitalize;
+  box-sizing: border-box;
+  border-radius: 5px 5px 0px 0px;
+  text-align: center;
 }
 
 .tiles {
   height: auto;
-  width: auto;
+  width: 45%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 1em;
+  gap: 0.5em;
   margin: auto;
 }
 
@@ -218,6 +342,7 @@ footer {
   align-items: center;
   justify-content: space-around;
   width: 100%;
+  height: 100%;
 }
 
 .confirm-btn {
@@ -227,7 +352,7 @@ footer {
 }
 
 .hotel-container {
-  width: 20%;
+  /* width: 20%; */
   height: 100%;
   display: inline-block;
   background-size: contain;
@@ -241,7 +366,13 @@ footer {
 }
 
 .active {
-  opacity: 40%;
+  font-weight: 500;
+  opacity: 20%;
+}
+
+.inactive:hover {
+  transform: scale(1.03);
+  transition: 0.4s;
 }
 
 @keyframes animateTilesInPlayerHand {
@@ -259,6 +390,12 @@ footer {
   animation: animateTilesInPlayerHand 0.7s alternate-reverse infinite;
 }
 
+.imperial-info {
+  border: 1px solid var(--imperial);
+  color: var(--imperial);
+
+}
+
 .imperial {
   background-color: var(--imperial);
 }
@@ -269,6 +406,12 @@ footer {
 
 .board-imperial-icon {
   background-image: url("/hotel-on-board/imperial.svg");
+}
+
+.continental-info {
+  border: 1px solid var(--continental);
+  color: var(--continental)
+
 }
 
 .continental {
@@ -283,6 +426,11 @@ footer {
   background-image: url("/hotel-on-board/continental.svg");
 }
 
+.festival-info {
+  border: 1px solid var(--festival);
+  color: var(--festival)
+}
+
 .festival {
   background-color: var(--festival);
 }
@@ -293,6 +441,11 @@ footer {
 
 .board-festival-icon {
   background-image: url("/hotel-on-board/festival.svg");
+}
+
+.worldwide-info {
+  border: 1px solid var(--worldwide);
+  color: var(--worldwide)
 }
 
 .worldwide {
@@ -307,6 +460,11 @@ footer {
   background-image: url("/hotel-on-board/worldwide.svg");
 }
 
+.american-info {
+  border: 1px solid var(--american);
+  color: var(--american)
+}
+
 .american {
   background-color: var(--american);
 }
@@ -317,6 +475,11 @@ footer {
 
 .board-american-icon {
   background-image: url("/hotel-on-board/american.svg");
+}
+
+.sackson-info {
+  border: 1px solid var(--sackson);
+  color: var(--sackson)
 }
 
 .sackson {
@@ -331,6 +494,11 @@ footer {
   background-image: url("/hotel-on-board/sackson.svg");
 }
 
+.tower-info {
+  border: 1px solid var(--tower);
+  color: var(--tower)
+}
+
 .tower {
   background-color: var(--tower);
 }
@@ -340,7 +508,9 @@ footer {
 }
 
 .inactive {
-  animation: glowInactiveHotels 1s linear infinite;
+  font-weight: 500;
+  opacity: 100%;
+  transition: 0.4s;
 }
 
 @keyframes glowInactiveHotels {
@@ -388,7 +558,9 @@ footer {
 }
 
 .tiles-in-hand .tile {
-  border: 1px solid black;
+  width: 2.8em;
+  height: 2.8em;
+  box-shadow: 0px 0px 2px black;
 }
 
 .players {
@@ -397,11 +569,6 @@ footer {
 
 .empty {
   border: 1px dashed black;
-}
-
-.selected {
-  border: 1px solid black;
-  /* background-color: red; */
 }
 
 /* end game scenario */
@@ -487,4 +654,9 @@ footer {
   text-align: center;
   /* opacity: 0; */
   /* transition: opacity 2.5s ease; */
+}
+
+.selected {
+  /* border: 1px solid black; */
+  transform: scale(1.03);
 }

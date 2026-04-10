@@ -7,7 +7,7 @@ import { handleShiftTurn } from "./controllers/game_controller.js";
 import { loadGameState, saveGameState } from "./controllers/dev_controller.js";
 import { createGameRouter } from "./routes/game_router.js";
 import { createLoginRouter } from "./routes/login_router.js";
-
+import { merge } from "./routes/merge_router.js";
 // const requireLogin = async (c, next) => {
 //   const sessionId = getCookie(c, "sessionId");
 //   const sessions = c.get("sessions");
@@ -29,6 +29,8 @@ export const createApp = (sessions, lobbyInstance, gameManager, isDevMode) => {
     c.set("sessions", sessions);
     await next();
   });
+  // <f>
+  app.route("/merge", merge);
 
   app.route("/game", gameRouter);
   app.route("/lobby", lobbyRouter);

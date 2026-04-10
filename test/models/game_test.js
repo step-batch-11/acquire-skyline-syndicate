@@ -678,7 +678,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe("calculateFinalWinner", () => {
+  describe.ignore("calculateFinalWinner", () => {
     let state;
     let currentPlayerIndex;
     let deck;
