@@ -34,6 +34,10 @@ aside {
   background-color: rgb(199 210 222);
   width: 15%;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
 }
 
 :root {
@@ -155,7 +159,7 @@ aside {
   box-sizing: border-box;
 }
 
-.context-menu > p {
+.context-menu>p {
   display: inline;
   font-size: 1.2em;
   color: rgb(49 46 129);
@@ -241,7 +245,7 @@ table {
 }
 
 .hotel-stock {
-  background-color:rgb(238, 237, 237);
+  background-color: rgb(238, 237, 237);
   height: 3em;
   transition: 1s;
 }
@@ -258,7 +262,7 @@ table {
 }
 
 .hotel-stock:nth-child(even) {
-  background-color:rgb(247, 247, 247);
+  background-color: rgb(247, 247, 247);
 }
 
 .hotel-stock:hover {
@@ -571,7 +575,8 @@ footer {
   background-image: url("/assets/tower.svg");
 }
 
-.inactive, .inactive-element {
+.inactive,
+.inactive-element {
   font-weight: 500;
   opacity: 100%;
   transition: 0.4s;
@@ -667,7 +672,7 @@ footer {
 }
 
 .players {
-  width: 10%;
+  width: 100%;
 }
 
 .empty {
