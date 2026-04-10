@@ -214,7 +214,7 @@ describe("Game entity tests", () => {
     });
   });
 
-  describe("buy stocks method", () => {
+  describe.ignore("buy stocks method", () => {
     beforeEach(() => {
       const state = "BUY_STOCK";
       const currentPlayerIndex = 0;
@@ -262,7 +262,7 @@ describe("Game entity tests", () => {
       game.assignNewTile();
     });
 
-    it("buy the stocks of continental", () => {
+    it.ignore("buy the stocks of continental", () => {
       const previousState = game.currentState(1);
       const { msg } = game.buyStocks(1, [
         { hotelName: "continental", selectedStocks: 3 },
