@@ -17,7 +17,7 @@
 
 main {
   height: 100vh;
-  width: 65%;
+  width: 70%;
   margin: 0.3em 0 0 0.3em;
   display: flex;
   flex-direction: column;
@@ -32,7 +32,7 @@ body {
 
 aside {
   background-color: rgb(199 210 222);
-  width: 10%;
+  width: 15%;
   height: 100vh;
 }
 
@@ -150,12 +150,12 @@ aside {
 .context-menu {
   padding-top: 0.4em;
   width: 100%;
-  height: 20vh;
+  height: 25vh;
   margin-left: 1%;
   box-sizing: border-box;
 }
 
-.context-menu p {
+.context-menu > p {
   display: inline;
   font-size: 1.2em;
   color: rgb(49 46 129);
@@ -220,6 +220,79 @@ aside {
   width: 2em;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.buy-stock-container {
+  width: 100%;
+  height: 90%;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+}
+
+.stocks-container {
+  display: flex;
+  justify-content: center;
+  margin: auto 0;
+  gap: 0.8em;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.hotel-stock {
+  background-color:rgb(238, 237, 237);
+  height: 3em;
+  transition: 1s;
+}
+
+.hotel-stock td {
+  padding: 0 0.8em;
+  text-transform: capitalize;
+  border-bottom: 0.1px solid rgb(210, 209, 209);
+  border-right: 0.1px solid rgb(210, 209, 209);
+}
+
+.hotel-name {
+  text-transform: capitalize;
+}
+
+.hotel-stock:nth-child(even) {
+  background-color:rgb(247, 247, 247);
+}
+
+.hotel-stock:hover {
+  background-color: #d7dff3;
+}
+
+.cart-container {
+  border-left: 1px solid rgb(199 210 222);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.cart-count {
+  width: 39.5%;
+  padding: 0.7em 1.2em;
+  text-align: center;
+  border: none;
+  box-shadow: 0 0 2px rgb(169, 169, 169);
+}
+
+.cart-total {
+  padding: 0.7em 1.2em;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  box-shadow: 0 0 2px rgb(169, 169, 169);
+  font-size: 1.2em;
+}
+
+.cart-total p {
+  border: none;
 }
 
 .user-hand {
@@ -361,18 +434,10 @@ footer {
   cursor: pointer;
 }
 
-.hotel-name {
-  text-transform: capitalize;
-}
 
 .active {
   font-weight: 500;
   opacity: 20%;
-}
-
-.inactive:hover {
-  transform: scale(1.03);
-  transition: 0.4s;
 }
 
 @keyframes animateTilesInPlayerHand {
@@ -507,9 +572,14 @@ footer {
   background-image: url("/assets/tower.svg");
 }
 
-.inactive {
+.inactive, .inactive-element {
   font-weight: 500;
   opacity: 100%;
+  transition: 0.4s;
+}
+
+.inactive:hover {
+  transform: scale(1.03);
   transition: 0.4s;
 }
 
@@ -536,10 +606,40 @@ footer {
 
 .counter {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 15px;
-  border: 1px solid white;
   padding: 0.2em;
   border-radius: 5px;
+  font-size: 1.2em;
+}
+
+.btns {
+  width: 55%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-container button {
+  font-size: 1.1em;
+  padding: 0.5em 1em;
+  border-radius: 0.2em;
+  text-transform: capitalize;
+  cursor: pointer;
+  color: white;
+}
+
+.confirm {
+  background-color: rgb(146, 115, 248);
+  font-weight: 600;
+  border: none;
+}
+
+.skip {
+  background-color: rgb(3, 153, 3);
+  font-weight: 500;
+  border: 0.5px solid black;
 }
 
 .button-container {
@@ -548,9 +648,12 @@ footer {
 }
 
 .counter button {
+  height: 1.5em;
+  width: 1em;
+  font-size: 1.2em;
   border: none;
   background: none;
-  color: white;
+  color: black;
 }
 
 .hidden {

@@ -6,7 +6,7 @@ import {
   renderHeldStocks,
 } from "../ui_renderers.js";
 
-const createElement = (element, className) => {
+export const createElement = (element, className) => {
   const container = document.createElement(element);
   container.classList.add(className);
   return container;

@@ -15,11 +15,11 @@ export const removeFocus = (board, playerTiles) => {
   });
 };
 
-export const extractSelectedStocks = (cart, hotelHeader) => {
+export const extractSelectedStocks = (cart, hotel) => {
   const selectedStocks = parseInt(
-    hotelHeader.querySelector(".cart-value").innerText,
+    hotel.querySelector(".cart-value").value,
   );
-  const hotelName = hotelHeader.querySelector(".hotel-name").innerText;
+  const hotelName = hotel.id;
   if (selectedStocks > 0) {
     cart.push({ hotelName: hotelName.toLowerCase(), selectedStocks });
   }
