@@ -31,7 +31,7 @@ body {
 }
 
 aside {
-  background-color: yellow;
+  background-color: rgb(199 210 222);
   width: 10%;
   height: 100vh;
 }
@@ -148,9 +148,19 @@ aside {
 }
 
 .context-menu {
+  padding-top: 0.4em;
   width: 100%;
   height: 20vh;
   margin-left: 1%;
+  box-sizing: border-box;
+}
+
+.context-menu p {
+  display: inline;
+  font-size: 1.2em;
+  color: rgb(49 46 129);
+  font-weight: 600;
+  border-bottom: 1px solid rgb(49 46 129);
 }
 
 .context-menu .build-hotel-container {
@@ -186,6 +196,7 @@ aside {
 }
 
 .build-btn {
+  cursor: pointer;
   text-align: center;
   align-self: flex-end;
   margin: 0 auto;
@@ -196,6 +207,12 @@ aside {
   color: whitesmoke;
   border: none;
   border-radius: 7px;
+  text-transform: capitalize;
+}
+
+.build-btn:hover {
+  transition: 0.4s;
+  transform: scale(1.02);
 }
 
 .icon {
@@ -554,11 +571,6 @@ footer {
   border: 1px dashed black;
 }
 
-.selected {
-  /* border: 1px solid black; */
-  transform: scale(1.02);
-}
-
 /* end game scenario */
 
 .overlay {
@@ -642,4 +654,9 @@ footer {
   text-align: center;
   /* opacity: 0; */
   /* transition: opacity 2.5s ease; */
+}
+
+.selected {
+  /* border: 1px solid black; */
+  transform: scale(1.03);
 }
