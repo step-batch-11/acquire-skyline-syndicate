@@ -16,7 +16,9 @@ const incrementStocks = (cartElement, counterValue) => {
   if (counterValue < 3 && TOTAL_SELECTED_STOCKS.length < 3) {
     cartElement.textContent = counterValue + 1;
     cartElement.value = counterValue + 1;
-    TOTAL_SELECTED_STOCKS.push(1);
+    const hotel = cartElement.closest(".hotel-stock");
+    const price = hotel.querySelector(".stock-price").value;
+    TOTAL_SELECTED_STOCKS.push(price);
   }
 };
 
@@ -37,7 +39,15 @@ export const handleCartUpdation = (action, parent) => {
   if (action in clickActions) {
     const cartElement = parent.querySelector(".cart-value");
     const counterValue = Number(cartElement.value);
-
+    const cartCount = document.querySelector(".cart-count");
     clickActions[action](cartElement, counterValue);
+    cartCount.textContent = `${TOTAL_SELECTED_STOCKS.length}/3 Selected`;
+
+    const cartAmount = TOTAL_SELECTED_STOCKS.reduce(
+      (acc, curr) => acc + Number(curr),
+      0,
+    );
+    const totalAmount = document.querySelector(".total-amount");
+    totalAmount.textContent = `$${cartAmount}`;
   }
 };

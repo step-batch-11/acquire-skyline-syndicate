@@ -11,6 +11,7 @@ export default class MergeService {
   #survivingHotel;
   #defunctHotel;
   #defuntHotelStakeHolders;
+  #bonusHolderDetails = [];
 
   constructor(affectedHotels, players, hotels, board) {
     this.#players = players;
@@ -48,6 +49,12 @@ export default class MergeService {
     );
     if (stakeholders.length === 1) {
       stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
+      const name = stakeholders[0].name;
+      this.#bonusHolderDetails.push({
+        name,
+        amount: primaryBonus + secondaryBonus,
+        type: "primary",
+      });
       return;
     }
 
@@ -62,6 +69,11 @@ export default class MergeService {
       const bonusSum = primaryBonus + secondaryBonus;
       const bonus = bonusSum / primaryHolders.length;
       primaryHolders.forEach((stakeholder) => stakeholder.depositMoney(bonus));
+      this.#bonusHolderDetails = primaryHolders.map((stakeholders) => ({
+        name: stakeholders.name,
+        amount: bonus,
+        type: "primary",
+      }));
       return;
     }
     const secondaryStakeholder = [stakeholders[lastPrimary]];
@@ -73,6 +85,17 @@ export default class MergeService {
     primaryHolders[0].depositMoney(primaryBonus);
     const dividedSecondaryBonus = secondaryBonus / secondaryStakeholder.length;
     secondaryStakeholder.forEach((s) => s.depositMoney(dividedSecondaryBonus));
+    this.#bonusHolderDetails.push({
+      name: primaryHolders[0].name,
+      amount: primaryBonus,
+      type: "primary",
+    });
+    const secondaryHolderDetails = secondaryStakeholder.map((stakeholders) => ({
+      name: stakeholders.name,
+      amount: dividedSecondaryBonus,
+      type: "secondary",
+    }));
+    this.#bonusHolderDetails.push(secondaryHolderDetails);
   }
 
   #stakeHolders(hotelName) {
@@ -138,6 +161,9 @@ export default class MergeService {
     this.#currentDissolver = currentPlayer;
     this.#sellStocks(data);
     return { "sucess": true };
+  }
+  getBonusHolderDetails() {
+    return this.#bonusHolderDetails;
   }
 
   init() {

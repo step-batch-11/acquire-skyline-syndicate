@@ -28,6 +28,10 @@ export class Player {
     }));
   }
 
+  getTileIds() {
+    return this.#tiles.map((tile) => tile.id);
+  }
+
   hasStock(hotelName) {
     return hotelName in this.#stocks;
   }
