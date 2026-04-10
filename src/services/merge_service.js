@@ -95,7 +95,7 @@ export default class MergeService {
       amount: dividedSecondaryBonus,
       type: "secondary",
     }));
-    this.#bonusHolderDetails.push(secondaryHolderDetails);
+    this.#bonusHolderDetails.push(...secondaryHolderDetails);
   }
 
   #stakeHolders(hotelName) {
@@ -166,7 +166,8 @@ export default class MergeService {
     }
     return { "sucess": true };
   }
-  getBonusHolderDetails() {
+
+  getBonusHoldersDetails() {
     return this.#bonusHolderDetails;
   }
 
