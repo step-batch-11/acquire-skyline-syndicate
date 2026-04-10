@@ -1,5 +1,3 @@
-import { listenerForBuyingStocks } from "./handlers/hotel_selection_handler.js";
-
 import { createElement } from "../js/features/hotel_foundation.js";
 
 const createTileElement = (tile) => {
@@ -58,15 +56,6 @@ export const createBuildHotelsBtn = (buttonContainer) => {
   const button = cloneElement("#button");
   button.textContent = "Build";
   button.id = "found";
-  buttonContainer.append(button);
-  return buttonContainer;
-};
-
-export const createConfirmButton = (buttonContainer) => {
-  const button = cloneElement("#button");
-  button.textContent = "confirm";
-  button.id = "confirm";
-  button.addEventListener("click", listenerForBuyingStocks);
   buttonContainer.append(button);
   return buttonContainer;
 };
