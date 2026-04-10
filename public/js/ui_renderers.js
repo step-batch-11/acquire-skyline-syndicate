@@ -113,9 +113,11 @@ export const renderBankSection = (hotels) => {
 };
 
 const addDetailsToCard = (stockCard, name, count) => {
-  stockCard.classList.add(name);
+  // stockCard.classList.add(name);
   stockCard.classList.remove("empty");
-  stockCard.querySelector(".stock-name").textContent = name;
+  const stockName = stockCard.querySelector(".stock-name");
+  stockName.textContent = name;
+  stockName.classList.add(name);
   stockCard.querySelector(".count").textContent = count;
 };
 
