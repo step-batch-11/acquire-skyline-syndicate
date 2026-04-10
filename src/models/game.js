@@ -4,6 +4,7 @@ import {
   sellStocks,
 } from "../services/dissolution_controller.js";
 import { Tile } from "./tile.js";
+
 export class Game {
   #currentService;
   #mergeService = null;
@@ -63,36 +64,37 @@ export class Game {
     };
   }
 
-  #getDeadTilesNotifications(requestedPlayerId, notification) {
-    if (requestedPlayerId === notification.playerId) {
-      return { type: notification.type, data: notification.data };
-    }
-    return {};
-  }
-
-  #getStocksNotifications(requestedPlayerId, notification) {
+  #notifyInactivePlayers(requestedPlayerId, notification) {
     if (requestedPlayerId !== notification.playerId) {
       return { type: notification.type, data: notification.data };
     }
     return {};
   }
 
-  #getInsufficientFundsNotifications(requestedPlayerId, notification) {
+  #notifyCurrentPlayer(requestedPlayerId, notification) {
     if (requestedPlayerId === notification.playerId) {
       return { type: notification.type, data: notification.data };
     }
     return {};
   }
 
+  #notifyAllPlayers(_requestedPlayerId, notification) {
+    return { type: notification.type, data: notification.data };
+  }
+
   #generateNotification(requestedPlayerId, notification) {
-    // console.log(notification);
     if (Object.keys(notification).length === 0) return {};
 
     const notificationHandler = {
-      "DEAD_TILE_EXCHANGE": this.#getDeadTilesNotifications,
-      "BUYING_STOCKS": this.#getStocksNotifications,
-      "INSUFFICIENT_FUNDS": this.#getInsufficientFundsNotifications,
+      "DEAD_TILE_EXCHANGE": this.#notifyCurrentPlayer,
+      "BUYING_STOCKS": this.#notifyInactivePlayers,
+      "INSUFFICIENT_FUNDS": this.#notifyCurrentPlayer,
+      "MERGER_BONUS": this.#notifyAllPlayers,
     };
+    const intervalId = setInterval(() => {
+      this.#notification = {};
+      clearInterval(intervalId);
+    }, 1000);
 
     return notificationHandler[notification.type](
       requestedPlayerId,
@@ -178,6 +180,8 @@ export class Game {
     );
     this.#currentService = this.#mergeService;
     this.#currentService.init();
+    const bonusHoldersDetails = this.#currentService.getBonusHoldersDetails();
+    this.#createNotificationData("MERGER_BONUS", bonusHoldersDetails);
   }
 
   #actionForTilePlacement(tileId) {
