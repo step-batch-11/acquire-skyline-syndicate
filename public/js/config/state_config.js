@@ -64,5 +64,6 @@ export const gameStates = {
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
+
   gameStates[state](gameData);
 };

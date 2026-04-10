@@ -1,3 +1,9 @@
+:root {
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --accent-orange: #e36414;
+  --accent-gold: #fb8b24;
+}
+
 body {
   font-family:
     system-ui,
@@ -11,7 +17,7 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
-  background:white;
+  background: url("./acquire_theme.png");
   margin: 0;
   padding: 0;
   text-align: center;
@@ -19,10 +25,14 @@ body {
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  font-size: 24px;
-  letter-spacing: 2px;
+  display: flex;
+  justify-content: center;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 50px -12px rgba(0, 0, 0, 0.5);
+  color: rgb(30 42 59);
+  padding: 30px;
+  font-size: 1.4em;
 }
 
 .lobby-id-box {
@@ -30,14 +40,23 @@ header {
   display: inline-flex;
   gap: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 50px -12px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
-  background: #f5f5f5;
   font-family: monospace;
-  font-size: large;
+  font-size: 2em;
 }
 
 button {
+  cursor: pointer;
+}
+
+#copyBtn {
+  width: 20px;
+  height: 20px;
+  background-image: url("../assets/copy-icon.svg");
+  background-size: contain;
   cursor: pointer;
 }
 
@@ -83,7 +102,7 @@ button {
   margin-top: 40px;
 }
 
-#start-btn{
+#start-btn {
   padding: 10px 20px;
   border-radius: 5%;
   border: 1px solid black;
@@ -104,7 +123,7 @@ button {
 .progress {
   height: 100%;
   width: 0%;
-  background-color:  black;
+  background-color: black;
   animation: load 3s linear forwards;
 }
 

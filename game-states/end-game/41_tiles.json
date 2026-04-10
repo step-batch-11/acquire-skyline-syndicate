@@ -431,19 +431,24 @@
       "name": "Dilli",
       "tiles": [
         {
-          "id": "12b"
+          "id": "12b",
+          "isPlayable": true
         },
         {
-          "id": "8g"
+          "id": "8g",
+          "isPlayable": true
         },
         {
-          "id": "7g"
+          "id": "7g",
+          "isPlayable": true
         },
         {
-          "id": "5h"
+          "id": "5h",
+          "isPlayable": true
         },
         {
-          "id": "3a"
+          "id": "3a",
+          "isPlayable": true
         }
       ],
       "money": 6000,
@@ -456,22 +461,28 @@
       "name": "rafiya",
       "tiles": [
         {
-          "id": "3i"
+          "id": "3i",
+          "isPlayable": true
         },
         {
-          "id": "1h"
+          "id": "1h",
+          "isPlayable": true
         },
         {
-          "id": "9g"
+          "id": "9g",
+          "isPlayable": true
         },
         {
-          "id": "12a"
+          "id": "12a",
+          "isPlayable": true
         },
         {
-          "id": "7i"
+          "id": "7i",
+          "isPlayable": true
         },
         {
-          "id": "3i"
+          "id": "3i",
+          "isPlayable": true
         }
       ],
       "money": 6000,
