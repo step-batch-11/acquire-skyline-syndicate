@@ -7,7 +7,7 @@ export class GameController {
     const gameManager = c.get("gameManager");
     const lobby = c.get("lobby");
     const sessions = c.get("sessions");
-    const playerIdsMap = sessions.getPlayerIds();
+    const playerIdsMap = sessions.playerIds;
     // const playerNameIds = [...playerIdsMap].filter(([playerId, _]) =>
     //   playerIds.includes(playerId)
     // );
@@ -23,7 +23,7 @@ export class GameController {
 
 export const handleShiftTurn = (c) => {
   const gameManager = c.get("gameManager");
-  const game = gameManager.getGame();
+  const game = gameManager.game;
   const playerId = extractRequestedPlayerId(c);
   game.shiftTurn(playerId);
   const currentGameState = game.currentState(playerId);

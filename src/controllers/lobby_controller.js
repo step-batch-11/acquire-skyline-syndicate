@@ -10,9 +10,9 @@ export class LobbyController {
     const playerId = sessions.getPlayerId(sessionId);
     const lobbyId = Math.floor(Math.random() * 1000000);
     const lobby = c.get("lobby");
-    lobby.setLobby(lobbyId);
-    lobby.setHost(playerId);
-    lobby.setPlayer(playerId);
+    lobby.lobbyId = lobbyId;
+    lobby.host = playerId;
+    lobby.playerId = playerId;
 
     return c.redirect("/pages/lobby.html", 302);
   }
@@ -28,7 +28,7 @@ export class LobbyController {
       const sessionId = getCookie(c, "sessionId");
 
       const playerId = sessions.getPlayerId(sessionId);
-      lobby.setPlayer(playerId);
+      lobby.playerId = playerId;
 
       return c.json({ isDone: true, url: "/pages/lobby.html" });
     }
@@ -41,7 +41,7 @@ export class LobbyController {
     const lobby = c.get("lobby");
     const playerId = sessions.getPlayerId(sessionId);
     const lobbyId = lobby.lobbyId;
-    const playerIds = lobby.getActivePlayersIds();
+    const playerIds = lobby.activePlayerIds;
     const playerNames = playerIds.map((id) => sessions.getPlayerName(id));
 
     return c.json({

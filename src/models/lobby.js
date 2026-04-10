@@ -15,7 +15,7 @@ export class Lobby {
     this.#lobbyState = WAITING;
   }
 
-  setPlayer(playerId) {
+  set playerId(playerId) {
     this.#players.add(playerId);
   }
 
@@ -33,7 +33,7 @@ export class Lobby {
     this.#lobbyState = STARTED;
   }
 
-  setHost(playerId) {
+  set host(playerId) {
     this.#host = playerId;
   }
 
@@ -41,7 +41,7 @@ export class Lobby {
     return this.#host === playerId;
   }
 
-  setLobby(lobbyId) {
+  set lobbyId(lobbyId) {
     this.#lobbyId = lobbyId;
   }
 
@@ -49,7 +49,7 @@ export class Lobby {
     return this.#lobbyId;
   }
 
-  getActivePlayersIds() {
+  get activePlayerIds() {
     return [...this.#players];
   }
 

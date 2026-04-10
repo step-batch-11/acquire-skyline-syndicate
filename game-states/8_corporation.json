@@ -1,0 +1,213 @@
+{
+  "board": {
+    "placedTileIds": [
+      "8i",
+      "1b",
+      "6b",
+      "9a",
+      "3d",
+      "1c",
+      "11e",
+      "10b",
+      "1e",
+      "2e",
+      "3c",
+      "10f",
+      "10h",
+      "6i",
+      "5d",
+      "6h",
+      "6e",
+      "4g",
+      "1g",
+      "4h",
+      "4b",
+      "12d",
+      "12b",
+      "8d",
+      "7g",
+      "7a",
+      "11h",
+      "8a",
+      "6g",
+      "5a",
+      "12c"
+    ],
+    "lastTile": "12c"
+  },
+  "deck": [
+    { "id": "6c", "isPlayable": true },
+    { "id": "12g", "isPlayable": true },
+    { "id": "4i", "isPlayable": true },
+    { "id": "1i", "isPlayable": true },
+    { "id": "12i", "isPlayable": true },
+    { "id": "2f", "isPlayable": true },
+    { "id": "6a", "isPlayable": true },
+    { "id": "9c", "isPlayable": true },
+    { "id": "9b", "isPlayable": true },
+    { "id": "12a", "isPlayable": true },
+    { "id": "9i", "isPlayable": true },
+    { "id": "7d", "isPlayable": true },
+    { "id": "1a", "isPlayable": true },
+    { "id": "9g", "isPlayable": true },
+    { "id": "8h", "isPlayable": true },
+    { "id": "2a", "isPlayable": true },
+    { "id": "2i", "isPlayable": true },
+    { "id": "3g", "isPlayable": true },
+    { "id": "2h", "isPlayable": true },
+    { "id": "1h", "isPlayable": true },
+    { "id": "1f", "isPlayable": true },
+    { "id": "6f", "isPlayable": true },
+    { "id": "5e", "isPlayable": true },
+    { "id": "10e", "isPlayable": true },
+    { "id": "4a", "isPlayable": true },
+    { "id": "7e", "isPlayable": true },
+    { "id": "10a", "isPlayable": true },
+    { "id": "11c", "isPlayable": true },
+    { "id": "8e", "isPlayable": true },
+    { "id": "10d", "isPlayable": true },
+    { "id": "11a", "isPlayable": true },
+    { "id": "7f", "isPlayable": true },
+    { "id": "6d", "isPlayable": true },
+    { "id": "5f", "isPlayable": true },
+    { "id": "8f", "isPlayable": true },
+    { "id": "8c", "isPlayable": true },
+    { "id": "10i", "isPlayable": true },
+    { "id": "3a", "isPlayable": true },
+    { "id": "12f", "isPlayable": true },
+    { "id": "12e", "isPlayable": true },
+    { "id": "5g", "isPlayable": true },
+    { "id": "5b", "isPlayable": true },
+    { "id": "10c", "isPlayable": true },
+    { "id": "11b", "isPlayable": true },
+    { "id": "11f", "isPlayable": true },
+    { "id": "2g", "isPlayable": true },
+    { "id": "2b", "isPlayable": true },
+    { "id": "11g", "isPlayable": true },
+    { "id": "9e", "isPlayable": true },
+    { "id": "10g", "isPlayable": true },
+    { "id": "12h", "isPlayable": true },
+    { "id": "4c", "isPlayable": true },
+    { "id": "8b", "isPlayable": true },
+    { "id": "4d", "isPlayable": true },
+    { "id": "9d", "isPlayable": true },
+    { "id": "9h", "isPlayable": true },
+    { "id": "7c", "isPlayable": true },
+    { "id": "3b", "isPlayable": true },
+    { "id": "3e", "isPlayable": true },
+    { "id": "3i", "isPlayable": true },
+    { "id": "1d", "isPlayable": true },
+    { "id": "8g", "isPlayable": true },
+    { "id": "11d", "isPlayable": true },
+    { "id": "7b", "isPlayable": true },
+    { "id": "9f", "isPlayable": true }
+  ],
+  "hotels": [
+    {
+      "name": "continental",
+      "tiles": [
+        { "id": "12c", "isPlayable": true },
+        { "id": "12d", "isPlayable": true },
+        { "id": "12b", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 200,
+      "originTile": { "id": "12c", "isPlayable": true }
+    },
+    {
+      "name": "imperial",
+      "tiles": [
+        { "id": "8a", "isPlayable": true },
+        { "id": "9a", "isPlayable": true },
+        { "id": "7a", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 200,
+      "originTile": { "id": "8a", "isPlayable": true }
+    },
+    {
+      "name": "american",
+      "tiles": [
+        { "id": "11h", "isPlayable": true },
+        { "id": "10h", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 100,
+      "originTile": { "id": "11h", "isPlayable": true }
+    },
+    {
+      "name": "festival",
+      "tiles": [
+        { "id": "4h", "isPlayable": true },
+        { "id": "4g", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 100,
+      "originTile": { "id": "4h", "isPlayable": true }
+    },
+    {
+      "name": "worldwide",
+      "tiles": [
+        { "id": "6h", "isPlayable": true },
+        { "id": "6i", "isPlayable": true },
+        { "id": "6g", "isPlayable": true },
+        { "id": "7g", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 100,
+      "originTile": { "id": "6h", "isPlayable": true }
+    },
+    {
+      "name": "sackson",
+      "tiles": [
+        { "id": "2e", "isPlayable": true },
+        { "id": "1e", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 0,
+      "originTile": { "id": "2e", "isPlayable": true }
+    },
+    {
+      "name": "tower",
+      "tiles": [
+        { "id": "3c", "isPlayable": true },
+        { "id": "3d", "isPlayable": true }
+      ],
+      "stocks": 24,
+      "priceOffset": 0,
+      "originTile": { "id": "3c", "isPlayable": true }
+    }
+  ],
+  "players": [
+    {
+      "id": "1",
+      "name": "Rashmika",
+      "tiles": [
+        { "id": "3h", "isPlayable": true },
+        { "id": "5h", "isPlayable": true },
+        { "id": "2d", "isPlayable": true },
+        { "id": "2c", "isPlayable": true },
+        { "id": "7i", "isPlayable": true },
+        { "id": "3f", "isPlayable": true }
+      ],
+      "money": 6000,
+      "stocks": { "tower": 1, "american": 1, "continental": 1 }
+    },
+    {
+      "id": "2",
+      "name": "Mohanthi",
+      "tiles": [
+        { "id": "5i", "isPlayable": true },
+        { "id": "11i", "isPlayable": true },
+        { "id": "4e", "isPlayable": true },
+        { "id": "4f", "isPlayable": true },
+        { "id": "7h", "isPlayable": true },
+        { "id": "5c", "isPlayable": false }
+      ],
+      "money": 6000,
+      "stocks": { "sackson": 1, "worldwide": 1, "festival": 1, "imperial": 1 }
+    }
+  ],
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 25
+}

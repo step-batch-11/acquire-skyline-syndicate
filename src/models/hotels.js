@@ -12,6 +12,10 @@ export class Hotels {
     return Object.values(this.#hotels).map((hotel) => hotel.getState());
   }
 
+  getHotelEntities() {
+    return Object.values(this.#hotels);
+  }
+
   foundHotel(hotelName, originTile, adjacentTilesForHotel) {
     const adjacents = adjacentTilesForHotel.map((tileId) => new Tile(tileId));
     this.#hotels[hotelName].found(originTile, adjacents);
@@ -48,7 +52,7 @@ export class Hotels {
     const hotel = Object.values(this.#hotels).find((hotel) => {
       const tiles = hotel.getTiles();
 
-      return tiles.some((hotelTile) => hotelTile.isNeighbouringTile(tile));
+      return tiles.some((hotelTile) => hotelTile.isNeighbour(tile));
     });
 
     const allConnectedTiles = tile.getAllConnectedTiles(tilesOnBoard);

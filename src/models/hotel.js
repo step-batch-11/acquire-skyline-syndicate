@@ -10,6 +10,7 @@ export class Hotel {
     this.#stocks = 25;
     this.#tiles = [];
     this.#priceOffset = priceOffset;
+    this.#originTile = {};
   }
 
   get name() {
@@ -64,7 +65,7 @@ export class Hotel {
       tiles: this.#tiles.map(({ id }) => ({ id })),
       stocksLeft: this.#stocks,
       stockPrice,
-      originTile: this.#originTile,
+      originTile: { id: this.#originTile?.id || "" },
       isActive: this.isActive(),
     };
   }
@@ -107,5 +108,13 @@ export class Hotel {
     this.#stocks = hotelInfo.stocks;
     this.#priceOffset = hotelInfo.priceOffset;
     this.#originTile = hotelInfo.originTile;
+  }
+
+  get primaryBonus() {
+    return this.calculateStockPrice() * 10;
+  }
+
+  get secondaryBonus() {
+    return this.calculateStockPrice() * 5;
   }
 }

@@ -1,7 +1,8 @@
+import { gameStates } from "../configs/game_states_config.js";
 import { Tile } from "./tile.js";
 export class Game {
   #currentService;
-  #mergeService;
+  #mergeService = null;
   #deck;
   #board;
   #hotels;
@@ -19,7 +20,7 @@ export class Game {
     this.#currentPlayerIndex = 0;
     this.#currentPlayer = players[this.#currentPlayerIndex];
     this.#players = players;
-    this.#state = "PLACE_TILE";
+    this.#state = gameStates.placeTile;
     this.#createMergeService = createMergeService;
   }
 
@@ -45,6 +46,14 @@ export class Game {
 
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
+    if (
+      this.#mergeService &&
+      this.#mergeService.mergeState === "STOCK_DISSOLUTION"
+    ) {
+      this.#state = "BUY_STOCK";
+      this.#mergeService = null;
+      this.#mergeState = null;
+    }
     return {
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
@@ -96,6 +105,7 @@ export class Game {
     if (this.#mergeService.mergeState === "MERGE_END") {
       this.#state = "BUY_STOCK";
     }
+    this.#mergeState = this.#mergeService.mergeState;
     this.#state = "MERGE";
   }
 
@@ -107,13 +117,14 @@ export class Game {
       this.#board,
     );
     this.#currentService = this.#mergeService;
+    this.#currentService.init();
   }
 
   #actionForTilePlacement(tileId) {
     const adjacentHotelChains = this.#getAdjacentHotelChains();
     if (adjacentHotelChains.length > 1) {
       this.#initiateMerge(adjacentHotelChains);
-      this.#currentService.mergeHotels();
+      // this.#mergeService.handleMerge();
       this.#changeStateAfterMergeEnd();
       return;
     }
@@ -151,9 +162,14 @@ export class Game {
     return this.#currentPlayer.id === requestedPlayerId;
   }
 
+  merge(data) {
+    // this.#state = "BUY_STOCK"
+    return this.#currentService.handleMerge(data);
+  }
+
   placeTile(requestedPlayerId, tileId) {
     if (
-      this.#state === "PLACE_TILE" &&
+      this.#state === gameStates.placeTile &&
       this.#isValidTilePlacement(tileId) &&
       this.#isActivePlayer(requestedPlayerId)
     ) {
@@ -168,9 +184,8 @@ export class Game {
     }
 
     return {
-      playerTiles: this.#currentPlayer.getTileIds(),
+      playerTiles: this.#currentPlayer.getTilesInfo(),
       tilesOnBoard: this.#board.getPlacedTiles(),
-      state: "NO_ACTION",
     };
   }
 
@@ -205,12 +220,11 @@ export class Game {
   //     this.#getAdjacentHotelChainsForDeadTiles(tile)
   //   }
   //   )
-
   // }
 
   assignNewTile() {
     const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addNewTile(tile);
+    this.#currentPlayer.addTiles(tile);
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -257,7 +271,7 @@ export class Game {
   }
 
   #areAllHandsEmpty() {
-    return this.#players.every((player) => player.getTileIds().length === 0);
+    return this.#players.every((player) => player.getTilesInfo().length === 0);
   }
 
   isGameEnd() {
@@ -279,7 +293,7 @@ export class Game {
     this.#currentPlayer =
       this.#players[++this.#currentPlayerIndex % this.#players.length];
     // this.exchangeDeadTiles()
-    this.#state = "PLACE_TILE";
+    this.#state = gameStates.placeTile;
   }
 
   getCurrentGameState() {
@@ -299,7 +313,7 @@ export class Game {
     this.#currentPlayer =
       data.players[data.currentPlayerIndex % data.players.length];
     this.#currentPlayerIndex = data.currentPlayerIndex;
-    this.#deck.loadGameState(data.deck);
+    this.#deck.tiles = data.deck;
     this.#players = data.players;
     this.#board.loadGameState(data.board);
     this.#hotels.loadGameState(data.hotels);
