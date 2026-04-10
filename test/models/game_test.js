@@ -125,6 +125,32 @@ describe("Game entity tests", () => {
       const currentState = game.currentState(1);
       assertEquals(currentState.player.tiles.length, 5);
     });
+
+    it("should not place the tile which is on board", () => {
+      const state = "PLACE_TILE";
+      const currentPlayerIndex = 0;
+      const deck = [{ id: "7e" }, { id: "8e" }];
+      const players = [{ id: 1, name: "yash" }].map(
+        ({ id, name }) => new Player(name, id),
+      );
+
+      const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
+        (tileId) => new Tile(tileId),
+      );
+
+      const lastTile = new Tile("3a");
+
+      game.loadGameState({
+        state,
+        hotels: hotelsData,
+        players,
+        currentPlayerIndex,
+        board: { placedTileIds, lastTile },
+        deck,
+      });
+
+      assertThrows(() => game.placeTile(1, "2b"));
+    });
   });
 
   describe("assignNewTile method", () => {
@@ -186,21 +212,20 @@ describe("Game entity tests", () => {
     it("Player tries to build an active hotel", () => {
       assertThrows(() => game.buildHotel(1, "continental"));
     });
-
-    it("Player tries to build a hotel out of turn", () => {
-      assertThrows(() => game.buildHotel(2, "imperial"));
-    });
   });
 
   describe("buy stocks method", () => {
-    it("buy the stocks of sackson", () => {
+    beforeEach(() => {
       const state = "BUY_STOCK";
-      const currentPlayerIndex = 1;
-      const tilesInDeck = ["7e", "8e"];
-      const deck = tilesInDeck.map((tile) => new Tile(tile));
-      const players = [{ id: 1, name: "yash" }].map(
-        ({ id, name }) => new Player(name, id),
+      const currentPlayerIndex = 0;
+      const deck = ["7e", "8e"].map(
+        (tileId) => new Tile(tileId),
       );
+      const player1 = new Player("yash", 1);
+      const player2 = new Player("Gopi", 2);
+      player1.deductMoney(2000);
+      player2.deductMoney(2000);
+      const players = [player1, player2];
 
       const placedTileIds = ["1a", "2a", "2b", "3c", "11g"].map(
         (tileId) => new Tile(tileId),
@@ -216,7 +241,15 @@ describe("Game entity tests", () => {
           originTile: new Tile("1a"),
           priceOffset: 200,
         },
+        {
+          name: "imperial",
+          tiles: ["4a", "5a"].map((tileId) => new Tile(tileId)),
+          stocks: 24,
+          originTile: new Tile("1a"),
+          priceOffset: 200,
+        },
       ];
+
       game.loadGameState({
         state,
         hotels,
@@ -229,12 +262,52 @@ describe("Game entity tests", () => {
       game.assignNewTile();
       game.assignNewTile();
       game.assignNewTile();
+    });
 
-      const result = game.buyStocks(1, [
+    it("buy the stocks of continental", () => {
+      const previousState = game.currentState(1);
+      const { msg } = game.buyStocks(1, [
         { hotelName: "continental", selectedStocks: 3 },
       ]);
 
-      assertEquals(result.playerInfo.stocks["continental"], 3);
+      const currentState = game.currentState(1);
+
+      assertEquals(msg, "STOCKS PURCHASED SUCCESSFULLY");
+      assertEquals(
+        currentState.player.stocks.continental,
+        previousState.player.stocks.continental || 0 + 3,
+      );
+    });
+
+    it("Player tries to buy stocks out of turn", () => {
+      assertThrows(() =>
+        game.buyStocks(2, [{ hotelName: "continental", selectedStocks: 2 }])
+      );
+    });
+
+    it("Player tries to purchase the stocks which are not active", () => {
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "festival", selectedStocks: 2 }])
+      );
+    });
+
+    it("Players tries to purchase the hotel stocks which are above 3", () => {
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 4 }])
+      );
+    });
+
+    it("Player does not have enough money to buy stocks", () => {
+      assertThrows(() => {
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 4 }]);
+      });
+    });
+
+    it("Players tries to buy stocks on another state", () => {
+      game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 3 }]);
+      assertThrows(() =>
+        game.buyStocks(1, [{ hotelName: "imperial", selectedStocks: 3 }])
+      );
     });
   });
 

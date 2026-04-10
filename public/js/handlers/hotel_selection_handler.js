@@ -1,4 +1,4 @@
-import { postData } from "../request.js";
+import { gameState, postData } from "../request.js";
 import { extractSelectedStocks } from "../utils.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { renderBankSection, renderUserSection } from "../ui_renderers.js";
@@ -14,8 +14,9 @@ export const listenerForBuyingStocks = async (e) => {
   e.preventDefault();
   const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
   const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
-  const { hotels, playerInfo } = await postData("/turn/buy-stocks", cart);
+  await postData("/turn/buy-stocks", cart);
+  const { hotels, player } = await gameState();
   TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
-  renderUserSection(playerInfo);
+  renderUserSection(player);
 };

@@ -106,8 +106,8 @@ export class Game {
   }
 
   #isValidTilePlacement(tileId) {
-    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     if (this.#board.isTileOnBoard(tileId)) return false;
+    if (!this.#currentPlayer.isPlayerTile(tileId)) return false;
     return true;
   }
 
@@ -154,7 +154,7 @@ export class Game {
       0,
     );
 
-    return totalStocks <= 3 && totalStocks >= 0;
+    return totalStocks <= 3;
   }
 
   #isValidPurchase(cart) {
@@ -244,41 +244,43 @@ export class Game {
   }
 
   buyStocks(requestedPlayerId, cart) {
-    if (
-      this.#state !== "BUY_STOCK" &&
-      this.#isActivePlayer(requestedPlayerId)
-    ) {
-      return;
+    if (!this.#isActivePlayer(requestedPlayerId)) {
+      throw new Error({ msg: "OUT OF TURN ACTION" });
     }
+    if (this.#state !== "BUY_STOCK") {
+      throw new Error({ msg: "INVALID STATE" });
+    }
+
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const isValidBuy = this.#isValidPurchase(cart) &&
       this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
 
-    if (isValidBuy) {
-      this.#hotels.deductStocks(cart);
-      const hotels = this.#hotels.getHotels();
-      cart.forEach(({ hotelName, selectedStocks }) =>
-        this.#currentPlayer.addStocks(hotelName, selectedStocks)
-      );
-
-      this.#currentPlayer.deductMoney(moneyToDeduct);
-      if (this.isGameEnd()) {
-        this.#state = "END_GAME";
-        return this.calculateFinalWinner();
-      }
-      this.#state = "SHIFT_TURN";
-      const playerInfo = this.#currentPlayer.getDetails();
-      return { hotels, playerInfo, state: this.#state };
+    if (!isValidBuy) {
+      throw new Error({ msg: "INVALID PURCHASE" });
     }
+
+    this.#hotels.deductStocks(cart);
+    cart.forEach(({ hotelName, selectedStocks }) =>
+      this.#currentPlayer.addStocks(hotelName, selectedStocks)
+    );
+    this.#currentPlayer.deductMoney(moneyToDeduct);
+
+    if (this.isGameEnd()) {
+      this.#state = "END_GAME";
+      return this.calculateFinalWinner();
+    }
+    this.#state = "SHIFT_TURN";
+    return { msg: "STOCKS PURCHASED SUCCESSFULLY" };
   }
 
   #areAllHotelsStable() {
     const hotels = this.#hotels.getHotels();
     //<S>  hotel.tiles.length > 1 && hotel.tiles.length >= 11 in every loop.
     const activeHotels = hotels.filter((hotel) => hotel.tiles.length > 1);
-    return activeHotels.length > 0
-      ? activeHotels.every((hotel) => hotel.tiles.length >= 11)
-      : false;
+    return (
+      activeHotels.length > 0 &&
+      activeHotels.every((hotel) => hotel.tiles.length >= 11)
+    );
   }
 
   #isAnyHotelHas41Tiles() {

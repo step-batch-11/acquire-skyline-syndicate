@@ -1,4 +1,4 @@
-import { postData } from "../request.js";
+import { gameState, postData } from "../request.js";
 import {
   createBuildHotelsBtn,
   renderBankSection,
@@ -47,14 +47,15 @@ class HotelFoundationState {
   async #handleHotelFoundation(e, hotelToFound) {
     e.preventDefault();
     if (!hotelToFound) return;
-    const response = await postData("/turn/build-hotel", {
+    await postData("/turn/build-hotel", {
       hotelToFound,
     });
 
-    const { hotels, tilesOnBoard, currentPlayer } = response;
+    const { hotels, tilesOnBoard, player } = await gameState();
+
     renderBankSection(hotels);
     renderBoard(tilesOnBoard, hotels);
-    renderHeldStocks(currentPlayer.stocks);
+    renderHeldStocks(player.stocks);
   }
 
   #setupSelectHotel() {
