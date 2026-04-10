@@ -14,6 +14,7 @@ export class Game {
   #players;
   #currentPlayerIndex;
   #createMergeService;
+  #notification = {};
 
   constructor(deck, board, hotels, players, createMergeService) {
     this.#deck = deck;
@@ -75,9 +76,20 @@ export class Game {
     };
   }
 
+  #generateNotification(requestedPlayerId, notification) {
+    if (requestedPlayerId === notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     return {
+      notification: this.#generateNotification(
+        requestedPlayerId,
+        this.#notification,
+      ),
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
         .getDetails(),
@@ -226,14 +238,26 @@ export class Game {
     return stableHotels.length > 1;
   }
 
+  getExchangedTiles(set1, set2) {
+    const removedTiles = set1.filter((tile) => !set2.includes(tile));
+    const newTiles = set2.filter((tile) => !set1.includes(tile));
+    return { removedTiles, newTiles };
+  }
+
   exchangeDeadTiles() {
-    const playerTiles = this.#currentPlayer.getTilesInfo();
-    playerTiles.forEach((tile) => {
+    const playerPreviousTiles = this.#currentPlayer.getTilesInfo();
+    playerPreviousTiles.forEach((tile) => {
       if (this.isDeadTile(tile.id)) {
         this.#currentPlayer.removeTile(tile.id);
         this.assignNewTile();
       }
     });
+    // const playerNewTiles = this.#currentPlayer.getTilesInfo();
+    // // const exchangedTiles = this.getExchangedTiles(
+    // //   playerPreviousTiles,
+    // //   playerNewTiles,
+    // // );
+    // this.#createNotificationData("DEAD_TILE_EXCHANGE", exchangedTiles);
   }
 
   assignNewTile() {
@@ -246,6 +270,12 @@ export class Game {
     this.#currentPlayer.addTiles(markedTiles);
   }
 
+  #createNotificationData(type, data) {
+    this.#notification.type = type;
+    this.#notification.data = data;
+    this.#notification.playerId = this.#currentPlayer.id;
+  }
+
   buyStocks(requestedPlayerId, cart) {
     if (
       this.#state !== "BUY_STOCK" &&
@@ -254,8 +284,9 @@ export class Game {
       return;
     }
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
     const isValidBuy = this.#isValidPurchase(cart) &&
-      this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
+      hasEnoughBalance;
 
     if (isValidBuy) {
       this.#hotels.deductStocks(cart);
@@ -271,7 +302,13 @@ export class Game {
       }
       this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
+      this.#createNotificationData("BUYING_STOCKS", { cart });
       return { hotels, playerInfo, state: this.#state };
+    }
+    if (!hasEnoughBalance) {
+      this.#createNotificationData("INSUFFICIENT_FUNDS", {
+        hasEnoughBalance: false,
+      });
     }
   }
 
