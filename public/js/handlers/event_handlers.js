@@ -8,7 +8,9 @@ export const handleTilePlacement = async (tileContainer) => {
   await updateTiles(tile);
 };
 
-export const handleShiftTurn = async () => {};
+export const handleShiftTurn = async () => {
+  await fetch("/shift-turn", { method: "post" });
+};
 
 const incrementStocks = (cartElement, counterValue) => {
   if (counterValue < 3 && TOTAL_SELECTED_STOCKS.length < 3) {
