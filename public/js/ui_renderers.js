@@ -94,25 +94,36 @@ export const renderBankSection = (hotels) => {
   bankSection.replaceChildren(bankHeader, tableContainer);
 };
 
-const addDetailsToCard = (stockCard, name, count) => {
-  stockCard.classList.remove("empty");
-  const stockName = stockCard.querySelector(".stock-name");
-  stockName.textContent = name;
-  stockName.classList.add(name);
-  stockCard.querySelector(".count").textContent = count;
-};
-
-const cloneStockCards = () => {
-  return Array.from({ length: 7 }, () => cloneElement("#stock-template"));
-};
-
 export const renderHeldStocks = (stocks) => {
   const stocksSection = document.querySelector(".stocks");
-  const stockCards = cloneStockCards();
-  Object.entries(stocks).forEach(([name, count], index) =>
-    addDetailsToCard(stockCards[index], name, count)
-  );
-  stocksSection.replaceChildren(...stockCards);
+  const hotels = [
+    "continental",
+    "imperial",
+    "worldwide",
+    "american",
+    "festival",
+    "sackson",
+    "tower",
+  ];
+
+  const cards = hotels.map((name) => {
+    const stockCard = cloneElement("#stock-template");
+    const stockName = stockCard.querySelector(".stock-name");
+    stockName.textContent = name;
+    stockName.classList.add(name);
+    stockCard.classList.add(name);
+    stockCard.querySelector(".count").textContent = 0;
+
+    if (stocks.length !== 0) {
+      Object.entries(stocks).forEach(([hotelName, count]) => {
+        const stockCountElement = stockCard.querySelector(".count");
+        stockCountElement.textContent = name === hotelName ? count : 0;
+      });
+    }
+    return stockCard;
+  });
+
+  stocksSection.replaceChildren(...cards);
 };
 
 export const renderUserSection = ({ money, tiles, stocks }) => {

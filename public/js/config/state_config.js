@@ -35,7 +35,7 @@ const cartSection = () => {
   });
 
   const confirmBtn = createElement("button", "confirm");
-  confirmBtn.textContent = "confirm";
+  confirmBtn.textContent = "Buy";
   confirmBtn.addEventListener("click", listenerForBuyingStocks);
 
   const cartTotal = createElement("div", "cart-total");

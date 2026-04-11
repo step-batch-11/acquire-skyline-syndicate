@@ -1,4 +1,3 @@
-import process from "node:process";
 const { chromium } = require("playwright");
 const URL = "http://localhost:8000";
 const createPages = async () => {
@@ -48,4 +47,4 @@ const main = async ([name]) => {
   const res = await loginIntoGame();
   if (name) return loadGame(res, name);
 };
-main(process.argv.slice(2));
+main(["end-game/41_tiles"]);
