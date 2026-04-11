@@ -22,3 +22,11 @@
 # checks :
 
 - if the current player is not the current player then don't allow the request
+
+# flow :
+
+1. merge got initiated.
+
+- we calculated the defunct hotel stakeholders.
+
+- currentDissolver becomes : the first stake holder.

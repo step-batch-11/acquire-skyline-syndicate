@@ -112,6 +112,10 @@ export class Game {
       this.#mergeService = null;
       this.#mergeState = null;
     }
+    // <change>
+    if (this.#state === "MERGE") {
+      this.#currentPlayer = this.#mergeService.currentDissolver;
+    }
     return {
       notification: this.#generateNotification(
         requestedPlayerId,
@@ -406,9 +410,9 @@ export class Game {
 
   handleStockDissolution(body) {
     const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
-    this.#currentPlayerIndex += 1;
-    this.#currentPlayer =
-      this.#players[this.#currentPlayerIndex % this.#players.length];
+    // this.#currentPlayerIndex += 1;
+    // this.#currentPlayer =
+    //   this.#players[this.#currentPlayerIndex % this.#players.length];
     return res;
   }
 

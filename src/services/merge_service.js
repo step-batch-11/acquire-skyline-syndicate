@@ -19,7 +19,7 @@ export default class MergeService {
     this.#affectedHotels = affectedHotels;
     this.#hotels = hotels;
     this.#board = board;
-    this.#turnOrder = 1;
+    this.#turnOrder = 0;
   }
 
   #sellAllStocks(stakeholders, price, hotelName) {
@@ -108,8 +108,8 @@ export default class MergeService {
       this.#mergeState = MERGE_STATE.equal;
       return;
     }
-
     this.#mergeState = MERGE_STATE.dissolution;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
   }
 
   get mergeState() {
@@ -124,6 +124,7 @@ export default class MergeService {
     }
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
     this.#mergeState = MERGE_STATE.dissolution;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
     return this.#mergeState;
   }
 
@@ -152,6 +153,7 @@ export default class MergeService {
   }
 
   #sellStocks({ sell_count }) {
+    console.log({ current: this.#currentDissolver });
     const hotelName = this.#defunctHotel.name;
     const currentStockPrice = this.#defunctHotel.calculateStockPrice();
     // const stockValue = sell_count * currentStockPrice;
@@ -169,14 +171,14 @@ export default class MergeService {
   }
 
   dissolveStocks(data, currentPlayer) {
-    this.#currentDissolver = currentPlayer;
     this.#sellStocks(data);
     this.#exchangeStocks(data);
-    this.#turnOrder += 1;
-    if (this.#turnOrder >= this.#defuntHotelStakeHolders.length) {
+    if (this.#turnOrder > this.#defuntHotelStakeHolders.length) {
       this.#mergeHotels();
       this.#mergeState = MERGE_STATE.endMerge;
     }
+    this.#turnOrder = +1;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
     return { "sucess": true };
   }
 
@@ -184,9 +186,8 @@ export default class MergeService {
     return this.#bonusHolderDetails;
   }
 
-  get nextDissolver() {
-    this.#turnOrder += 1;
-    return this.#defuntHotelStakeHolders[this.#turnOrder];
+  get currentDissolver() {
+    return this.#currentDissolver;
   }
 
   // mergeDetails () {
@@ -201,10 +202,9 @@ export default class MergeService {
       this.#hotels.getHotel(hotel.name)
     );
     this.#mergeMaker = currentPlayer;
-    this.#currentDissolver = currentPlayer;
     this.#defunctHotel = defunctHotel;
     this.#survivingHotel = survivingHotel;
-    this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
+    this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
   }
 }
