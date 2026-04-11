@@ -198,11 +198,12 @@ export default class MergeService {
     return this.#currentDissolver;
   }
 
-  // mergeDetails () {
-  //   return {
-  //     affectedHotels = this.#affectedHotels.map()
-  //   }
-  // }
+  mergeDetails() {
+    return {
+      mergeState: this.#mergeState,
+      affectedHotels: this.#affectedHotels.map((hotel) => hotel.name),
+    };
+  }
 
   init(currentPlayer) {
     const sortedHotels = this.#affectedHotels.sort(

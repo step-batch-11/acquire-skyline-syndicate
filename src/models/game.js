@@ -136,9 +136,7 @@ export class Game {
         name: player.name,
       })),
       isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
-      mergeData: {
-        mergeState: this.#mergeState,
-      },
+      mergeData: this.#mergeService?.mergeDetails(),
     };
   }
 
