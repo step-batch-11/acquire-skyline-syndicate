@@ -29,11 +29,14 @@ export const renderStockDissolution = () => {
   contextMenu.replaceChildren(tradeElement);
 };
 
-export const renderEqualMerge = () => {
+export const renderEqualMerge = (data) => {
+  const [first, second] = data.mergeData.affectedHotels;
   const dissolvingHotelPopup = cloneElement("#chooseDissolvingHotel");
   const contextMenu = document.querySelector(".context-menu");
   const hotel1 = dissolvingHotelPopup.querySelector("#hotel-1");
+  hotel1.textContent = first;
   const hotel2 = dissolvingHotelPopup.querySelector("#hotel-2");
+  hotel2.textContent = second;
   contextMenu.replaceChildren(dissolvingHotelPopup);
 
   hotel1.addEventListener("click", async () => {
