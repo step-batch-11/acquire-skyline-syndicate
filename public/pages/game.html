@@ -110,19 +110,21 @@
   <template id="chooseDissolvingHotel">
     <div class="chooseHotelContainer">
       <h1>Choose hotel to disolve.</h1>
-      <button id="hotel-1">continental</button>
-      <button id="hotel-2">imperial</button>
+      <div class="hotels-to-merge">
+        <button id="hotel-1">continental</button>
+        <button id="hotel-2">imperial</button>
+      </div>
     </div>
   </template>
 
   <template id="stock-dissolution">
       <div id="stock-dissolution-card">
         <h1>Exchange or Dissolve</h1>
-        <div>
+        <div id="exchange-counter">
           <h3>Exchange counter : </h3>
           <counter-btn id = "exchange-counter"></counter-btn>
         </div>
-        <div>
+        <div id="sell-counter">
           <h3>sell counter : </h3>
           <counter-btn id = "sell-counter" ></counter-btn>
         </div>
