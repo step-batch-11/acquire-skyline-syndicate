@@ -164,8 +164,8 @@ export class Game {
     if (this.#mergeService.mergeState === "MERGE_END") {
       this.#state = "BUY_STOCK";
     }
-    this.#mergeState = this.#mergeService.mergeState;
-    this.#state = "MERGE";
+    // this.#mergeState = this.#mergeService.mergeState;
+    this.#state = this.#mergeService.mergeState;
   }
 
   #initiateMerge(adjacentHotelChains) {
@@ -225,7 +225,9 @@ export class Game {
   }
 
   mergeEqualHotels(data) {
-    return this.#currentService.mergeEqualHotels(data);
+    const state = this.#currentService.mergeEqualHotels(data);
+    this.#state = state;
+    return state;
   }
 
   placeTile(requestedPlayerId, tileId) {
