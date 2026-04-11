@@ -9,7 +9,6 @@ import {
   listenerForBuyingStocks,
   listenerForCart,
 } from "../handlers/hotel_selection_handler.js";
-import { handleShiftTurn } from "../handlers/event_handlers.js";
 
 const handlePlaceTile = (gameData) => {
   const { player } = gameData;
