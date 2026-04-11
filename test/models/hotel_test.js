@@ -242,4 +242,12 @@ describe("Hotel entity tests", () => {
     hotel.loadGameState(hotelData);
     assertEquals(hotel.getHotelState(), hotelData);
   });
+
+  it("remove hotel stocks", () => {
+    const hotelName = "Tower";
+    const scale = 0;
+    const hotel = new Hotel(hotelName, scale);
+    hotel.removeHotelStocks(3);
+    assertEquals(hotel.stocksCount, 22);
+  });
 });

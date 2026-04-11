@@ -32,9 +32,12 @@ export class Hotel {
     this.#tiles.push(...tiles);
   }
 
+  removeHotelStocks(count) {
+    this.#stocks -= count;
+  }
+
   dissolve() {
     this.#tiles = [];
-    this.#stocks = 25;
   }
 
   getTiles() {
@@ -116,5 +119,9 @@ export class Hotel {
 
   get secondaryBonus() {
     return this.calculateStockPrice() * 5;
+  }
+
+  get stocksCount() {
+    return this.#stocks;
   }
 }

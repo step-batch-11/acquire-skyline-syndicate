@@ -1,6 +1,5 @@
 import { cloneElement } from "../ui_renderers.js";
 import { postData } from "../request.js";
-import { Counter } from "../components/inr_dcr_button.js";
 
 export const MERGE_STATE = {
   equal: "EQUAL_HOTEL_MERGE",
@@ -10,11 +9,15 @@ export const MERGE_STATE = {
 
 const renderStockDissolution = () => {
   const body = document.querySelector("body");
-  customElements.define("counter-btn", Counter);
   const tradeElement = cloneElement("#stock-dissolution");
   const dissolveBtn = tradeElement.querySelector("#dissolve-btn");
   const sellCounter = tradeElement.querySelector("#sell-counter");
   const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+  customElements.whenDefined("counter-btn").then(() => {
+    // const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+    exchangeCounter.setDelta(2);
+  });
+
   dissolveBtn.addEventListener("click", async () => {
     const tradeQuantities = {
       "sell_count": sellCounter.count,

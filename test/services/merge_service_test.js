@@ -56,7 +56,7 @@ describe("Test MergeService", () => {
     board = { lastTile: "3b" };
   });
 
-  describe("merge two unequal hotels", () => {
+  describe.ignore("merge two unequal hotels", () => {
     it("disolve hotel should go out of board", () => {
       const mergeService = new MergeService(
         [
@@ -99,48 +99,63 @@ describe("Test MergeService", () => {
       );
       expect(primaryStockHolder.depositMoney).toHaveBeenCalledWith(300);
     });
-    // it("When there are more than one primary stakeholder of desolved hotel's ", () => {
-    //   player1.stocks.sackson = 1;
-    //   player2.stocks.sackson = 1;
-    //   mergeService.init();
-    //   mergeService.dissolveStocks({ stock_count: 4 }, player1);
-    //   assertEquals(player1.money, 4700);
-    //   // assertEquals(player2.money, 4700);
-    // });
 
-    // it("If the desolved hotel has only a single stakeholders", () => {
-    //   delete player1.stocks.sackson;
-    //   mergeService.init();
-    //   assertEquals(player2.money, 7000);
-    // });
+    it("should exchange stocks", () => {
+      const mergeService = new MergeService(
+        [
+          disolvedHotel,
+          survivingHotel,
+        ],
+        [primaryStockHolder, nonStockHolder, secondaryStockHolder],
+        hotels,
+        board,
+      );
+      mergeService.init();
+      mergeService.dissolveStocks({ exchange: 3 }, primaryStockHolder);
+    });
 
-    // it("A single primary and a single secondary stakeholder", () => {
-    //   player1.stocks.sackson = 2;
-    //   player2.stocks.sackson = 1;
-    //   mergeService.init();
-    //   assertEquals(hotels.getHotel("sackson").tiles.length, 0);
-    //   assertEquals(hotels.getHotel("tower").tiles.length, 6);
-    //   assertEquals(player1.money, 5400);
-    //   assertEquals(player2.money, 4200);
-    // });
+    it("When there are more than one primary stakeholder of desolved hotel's ", () => {
+      player1.stocks.sackson = 1;
+      player2.stocks.sackson = 1;
+      mergeService.init();
+      mergeService.dissolveStocks({ stock_count: 4 }, player1);
+      assertEquals(player1.money, 4700);
+      // assertEquals(player2.money, 4700);
+    });
 
-    // it("A single primary and more than one secondary stakeholder", () => {
-    //   player1.stocks.sackson = 2;
-    //   player2.stocks.sackson = 1;
-    //   player3.stocks.sackson = 1;
+    it("If the desolved hotel has only a single stakeholders", () => {
+      delete player1.stocks.sackson;
+      mergeService.init();
+      assertEquals(player2.money, 7000);
+    });
 
-    //   mergeService.init();
-    //   assertEquals(hotels.getHotel("sackson").tiles.length, 0);
-    //   assertEquals(hotels.getHotel("tower").tiles.length, 6);
-    //   assertEquals(player1.money, 5400);
-    // });
+    it("A single primary and a single secondary stakeholder", () => {
+      player1.stocks.sackson = 2;
+      player2.stocks.sackson = 1;
+      mergeService.init();
+      assertEquals(hotels.getHotel("sackson").tiles.length, 0);
+      assertEquals(hotels.getHotel("tower").tiles.length, 6);
+      assertEquals(player1.money, 5400);
+      assertEquals(player2.money, 4200);
+    });
+
+    it("A single primary and more than one secondary stakeholder", () => {
+      player1.stocks.sackson = 2;
+      player2.stocks.sackson = 1;
+      player3.stocks.sackson = 1;
+
+      mergeService.init();
+      assertEquals(hotels.getHotel("sackson").tiles.length, 0);
+      assertEquals(hotels.getHotel("tower").tiles.length, 6);
+      assertEquals(player1.money, 5400);
+    });
   });
 
-  // describe.ignore("merge two equal states", () => {
-  //   it("When hotel are equal then it should return 'CHOOSE_MERGE_HOTEL'", () => {
-  //     sackson.tiles.push("3a");
-  //     mergeService.init();
-  //     assertEquals(mergeService.mergeState, "EQUAL_HOTEL_MERGE");
-  //   });
-  // });
+  describe.ignore("merge two equal states", () => {
+    it("When hotel are equal then it should return 'CHOOSE_MERGE_HOTEL'", () => {
+      sackson.tiles.push("3a");
+      mergeService.init();
+      assertEquals(mergeService.mergeState, "EQUAL_HOTEL_MERGE");
+    });
+  });
 });

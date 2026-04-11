@@ -1,8 +1,8 @@
+import { Counter } from "./components/inr_dcr_button.js";
 import { handleGameState } from "./config/state_config.js";
 import { renderGame } from "./initial_setup.js";
 import { updateNotification } from "./notifications.js";
 import { gameState } from "./request.js";
-
 let currentState;
 
 const polling = () => {
@@ -26,6 +26,9 @@ const polling = () => {
 };
 
 globalThis.onload = async () => {
+  if (!customElements.get("counter-btn")) {
+    customElements.define("counter-btn", Counter);
+  }
   const gameData = await gameState();
   currentState = gameData.state;
   renderGame(gameData);
