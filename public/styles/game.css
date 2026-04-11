@@ -808,11 +808,13 @@ footer {
   text-align: center;
   color: rgb(108, 107, 135);
   font-size: 1.4em;
+  text-transform: capitalize;
 }
 
 #info-table th {
   text-align: left;
   padding-left: 2em;
+  font-size: 1.6em;
 }
 
 .hotel-colored-circle {
