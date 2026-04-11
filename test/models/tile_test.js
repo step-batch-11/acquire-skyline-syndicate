@@ -96,4 +96,19 @@ describe("TILE", () => {
       assertEquals(connecteds, ["1a", "2a", "2b", "3b", "3c", "4c"]);
     });
   });
+
+  describe("set isPlayable method", () => {
+    it("should set the playable property according to given value", () => {
+      const tile = new Tile("1a");
+      const valueToSet = true;
+      tile.isPlayable = valueToSet;
+      assertEquals(tile.isPlayable, valueToSet);
+    });
+    it("should set the playable property according to given value", () => {
+      const tile = new Tile("1a");
+      const valueToSet = false;
+      tile.isPlayable = valueToSet;
+      assertEquals(tile.isPlayable, valueToSet);
+    });
+  });
 });

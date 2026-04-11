@@ -112,6 +112,7 @@ export class Game {
       this.#mergeService = null;
       this.#mergeState = null;
     }
+
     return {
       notification: this.generateNotification(
         requestedPlayerId,

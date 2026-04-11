@@ -31,7 +31,7 @@ const cartSection = () => {
   const skipBtn = createElement("button", "skip");
   skipBtn.textContent = "skip";
 
-  skipBtn.addEventListener("click", () => {});
+  skipBtn.addEventListener("click", listenerForBuyingStocks);
 
   const confirmBtn = createElement("button", "confirm");
   confirmBtn.textContent = "confirm";
