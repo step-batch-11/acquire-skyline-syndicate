@@ -276,7 +276,7 @@ export class Game {
 
     if (this.isGameEnd()) {
       this.#state = "END_GAME";
-      return this.calculateFinalWinner();
+      return { msg: "GAME_ENDS" };
     }
     this.#state = "SHIFT_TURN";
     return { msg: "STOCKS PURCHASED SUCCESSFULLY" };

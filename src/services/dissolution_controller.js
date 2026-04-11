@@ -6,52 +6,68 @@ export const sellStocks = (stakeholder, defunctHotel) => {
   stakeholder.sellStocks(defunctHotel.name, defunctHotel.calculateStockPrice());
 };
 
-const topStakeHolders = (hotelName, stakeholders, bucket = []) => {
-  for (let index = 1; index < stakeholders.length; index++) {
-    const stakeholder = stakeholders[index];
-    if (
-      stakeholder.getStockCount(hotelName) !==
-        bucket.at(-1).getStockCount(hotelName)
-    ) {
-      return index;
+const getStakeholdersByStock = (hotelName, stakeholders) => {
+  const map = new Map();
+
+  stakeholders.forEach((stakeholder) => {
+    const count = stakeholder.getStockCount(hotelName);
+
+    if (count === 0) {
+      return;
+    } // ignore non-holders
+
+    if (!map.has(count)) {
+      map.set(count, []);
     }
-    bucket.push(stakeholder);
-  }
+
+    map.get(count).push(stakeholder);
+  });
+
+  // Convert to sorted array (highest stock first)
+  return [...map.entries()]
+    .sort((a, b) => b[0] - a[0])
+    .map(([count, holders]) => ({
+      stockCount: count,
+      holders,
+    }));
+};
+
+const depositMoneyToStakeHolders = (stakeholders, bonusAmount) => {
+  const bonus = Math.floor(bonusAmount / stakeholders.length);
+  stakeholders.forEach((stakeHolder) => stakeHolder.depositMoney(bonus));
 };
 
 export const distributeBonus = (stakeholders, defunctHotel) => {
-  const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
-
-  stakeholders.sort(
-    (a, b) =>
-      b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
-  );
-
-  if (stakeholders.length === 1) {
-    stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
-    return;
-  }
-
-  const primaryHolders = [stakeholders[0]];
-  const lastPrimary = topStakeHolders(
+  const primaryBonus = defunctHotel.primaryBonus;
+  const secondaryBonus = defunctHotel.secondaryBonus;
+  const stakeHoldersByStock = getStakeholdersByStock(
     defunctHotel.name,
     stakeholders,
-    primaryHolders,
   );
 
-  if (primaryHolders.length > 1) {
-    const bonusSum = primaryBonus + secondaryBonus;
-    const bonus = bonusSum / primaryHolders.length;
-    primaryHolders.forEach((stakeholder) => stakeholder.depositMoney(bonus));
+  if (stakeHoldersByStock.length === 0) {
     return;
   }
-  const secondaryStakeholder = [stakeholders[lastPrimary]];
-  topStakeHolders(
-    defunctHotel.name,
-    stakeholders.slice(lastPrimary),
-    secondaryStakeholder,
-  );
-  primaryHolders[0].depositMoney(primaryBonus);
-  const dividedSecondaryBonus = secondaryBonus / secondaryStakeholder.length;
-  secondaryStakeholder.forEach((s) => s.depositMoney(dividedSecondaryBonus));
+
+  if (stakeHoldersByStock.length === 1) {
+    depositMoneyToStakeHolders(
+      stakeHoldersByStock[0].holders,
+      primaryBonus + secondaryBonus,
+    );
+    return;
+  }
+
+  const [primaryStackHolders, secondaryStakeHolders] = stakeHoldersByStock;
+
+  if (primaryStackHolders.holders.length > 1) {
+    depositMoneyToStakeHolders(
+      primaryStackHolders.holders,
+      primaryBonus + secondaryBonus,
+    );
+    return;
+  }
+
+  depositMoneyToStakeHolders(primaryStackHolders.holders, primaryBonus);
+  depositMoneyToStakeHolders(secondaryStakeHolders.holders, secondaryBonus);
+  return;
 };
