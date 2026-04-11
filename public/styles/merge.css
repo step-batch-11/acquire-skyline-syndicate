@@ -1,10 +1,166 @@
-#stock-dissolution-card {
+/* #stock-dissolution-card {
   background-color: #aaa;
-  /* display: flex;
-  flex-direction: column; */
-  height:400px;
-  width: 600px;
-  position: fixed;
-  top: 30%;
-  left: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+#exchange-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+.imperial-info {
+  border: 1px solid var(--imperial);
+  color: var(--imperial);
+}
+
+.continental-info {
+  border: 1px solid var(--continental);
+  color: var(--continental)
+}
+
+.festival-info {
+  border: 1px solid var(--festival);
+  color: var(--festival)
+}
+
+.worldwide-info {
+  border: 1px solid var(--worldwide);
+  color: var(--worldwide)
+}
+
+.american-info {
+  border: 1px solid var(--american);
+  color: var(--american)
+}
+
+.sackson-info {
+  border: 1px solid var(--sackson);
+  color: var(--sackson)
+}
+
+.tower-info {
+  border: 1px solid var(--tower);
+  color: var(--tower)
+}
+
+#stock-dissolution-card {
+  width: 95%;
+  height: 85%;
+  padding: 1em;
+  border-radius: 0.6em;
+  background: #f5f6fa;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#stock-dissolution-card h1 {
+  font-size: 1.5em;
+  color: #3b3f72;
+  margin-bottom: 16px;
+  text-decoration: underline;
+}
+
+#exchange-counter,
+#sell-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4em;
+  margin-bottom: 0.3em;
+  border-radius: 0.5em;
+  background: #ffffff;
+  border: 1px solid #e3e6ee;
+  transition: box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+#exchange-counter:hover,
+#sell-counter:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+#exchange-counter h3,
+#sell-counter h3 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+counter-btn {
+  display: inline-block;
+  border-radius: 0.2em;
+  font-weight: 600;
+  background: #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  transition: all 0.15s ease;
+}
+
+counter-btn:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+counter-btn:active {
+  transform: scale(0.96);
+}
+
+#exchange-counter counter-btn {
+  background: #e0f2fe;
+  border-color: #7dd3fc;
+  color: #0369a1;
+}
+
+#sell-counter counter-btn {
+  background: #e0f2fe;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+#dissolve-btn,
+.hotels-to-merge button {
+  margin-top: 14px;
+  padding: 0.8em 0.8em;
+  border-radius: 0.3em;
+  border: none;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: white;
+  background: gray;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: capitalize;
+}
+
+#dissolve-btn:hover {
+  background: #776aee;
+}
+
+#dissolve-btn:disabled {
+  background: #c7c9d1;
+  cursor: not-allowed;
+}
+
+.chooseHotelContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.hotels-to-merge {
+  width: 40%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }

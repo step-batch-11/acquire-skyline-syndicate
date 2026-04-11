@@ -41,7 +41,7 @@ export class Player {
   }
 
   getStockCount(hotelName) {
-    return this.#stocks[hotelName];
+    return this.#stocks[hotelName] || 0;
   }
 
   addInitialTiles(tiles) {
@@ -92,9 +92,12 @@ export class Player {
     this.#stocks[hotelName] = this.#stocks[hotelName] - stocksCount;
   }
 
-  sellStocks(hotelName, price) {
-    this.#money += price * this.#stocks[hotelName] || 0;
-    delete this.#stocks[hotelName];
+  sellStocks(hotelName, price, stocksCount) {
+    if (stocksCount > this.#stocks[hotelName]) {
+      throw "Invalid number of stocks";
+    }
+    this.#money += price * stocksCount || 0;
+    this.#stocks[hotelName] = this.#stocks[hotelName] - stocksCount;
   }
 
   loadGameState(playerDetails) {
