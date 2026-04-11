@@ -14,7 +14,7 @@ export const renderStockDissolution = () => {
   const sellCounter = tradeElement.querySelector("#sell-counter");
   const exchangeCounter = tradeElement.querySelector("#exchange-counter");
   customElements.whenDefined("counter-btn").then(() => {
-    // const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+    const exchangeCounter = tradeElement.querySelector("#exchange-counter");
     exchangeCounter.setDelta(2);
   });
 

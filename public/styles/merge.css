@@ -8,7 +8,7 @@
   width: 100%;
 }
 
-#exchange-counter {
+.exchange-counter {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,8 +66,8 @@
   text-decoration: underline;
 }
 
-#exchange-counter,
-#sell-counter {
+.exchange-counter,
+.sell-counter {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,13 +80,13 @@
   box-sizing: border-box;
 }
 
-#exchange-counter:hover,
-#sell-counter:hover {
+.exchange-counter:hover,
+.sell-counter:hover {
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
 }
 
-#exchange-counter h3,
-#sell-counter h3 {
+.exchange-counter h3,
+.sell-counter h3 {
   margin: 0;
   font-size: 1.4em;
   color: #6b7280;
@@ -113,13 +113,13 @@ counter-btn:active {
   transform: scale(0.96);
 }
 
-#exchange-counter counter-btn {
+.exchange-counter counter-btn {
   background: #e0f2fe;
   border-color: #7dd3fc;
   color: #0369a1;
 }
 
-#sell-counter counter-btn {
+.sell-counter counter-btn {
   background: #e0f2fe;
   border-color: #fca5a5;
   color: #b91c1c;
