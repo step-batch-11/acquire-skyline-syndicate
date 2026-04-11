@@ -7,7 +7,7 @@ export const equalHotelMergeHandler = async (c) => {
   const playerId = sessions.getPlayerId(sessionId);
   const gameManager = c.get("gameManager");
   const game = gameManager.game;
-  return c.json(game.merge(body, playerId));
+  return c.json(game.mergeEqualHotels(body, playerId));
 };
 
 export const handleStockDissolution = async (c) => {

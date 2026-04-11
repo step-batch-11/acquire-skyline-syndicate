@@ -129,7 +129,7 @@ export class Game {
       })),
       isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
       mergeData: {
-        mergeState: this.#mergeState,
+        mergeState: this.#mergeService?.mergeState,
       },
     };
   }
@@ -227,9 +227,8 @@ export class Game {
     return this.#currentPlayer.id === requestedPlayerId;
   }
 
-  merge(data) {
-    // this.#state = "BUY_STOCK"
-    return this.#currentService.handleMerge(data);
+  mergeEqualHotels(data) {
+    return this.#currentService.mergeEqualHotels(data);
   }
 
   placeTile(requestedPlayerId, tileId) {

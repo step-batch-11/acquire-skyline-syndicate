@@ -119,12 +119,12 @@
       "id": "1",
       "name": "Gopi",
       "tiles": [
-        { "id": "4a" },
-        { "id": "6c" },
-        { "id": "3g" },
-        { "id": "1f" },
-        { "id": "8i" },
-        { "id": "3d" }
+        { "id": "4a", "isPlayable": true },
+        { "id": "6c", "isPlayable": true },
+        { "id": "3g", "isPlayable": true },
+        { "id": "1f", "isPlayable": true },
+        { "id": "8i", "isPlayable": true },
+        { "id": "3d", "isPlayable": true }
       ],
       "money": 4800,
       "stocks": { "continental": 4 }
@@ -133,12 +133,12 @@
       "id": "2",
       "name": "Pradipta",
       "tiles": [
-        { "id": "8d" },
-        { "id": "2d" },
-        { "id": "8c" },
-        { "id": "9h" },
-        { "id": "1c" },
-        { "id": "6e" }
+        { "id": "8d", "isPlayable": true },
+        { "id": "2d", "isPlayable": true },
+        { "id": "8c", "isPlayable": true },
+        { "id": "9h", "isPlayable": true },
+        { "id": "1c", "isPlayable": true },
+        { "id": "6e", "isPlayable": true }
       ],
       "money": 4800,
       "stocks": { "imperial": 2, "continental": 2 }

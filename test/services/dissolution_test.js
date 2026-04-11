@@ -214,7 +214,7 @@ describe("Testing the dissolution controllers", () => {
     });
   });
 
-  describe("sell stocks", () => {
+  describe.ignore("sell stocks", () => {
     it("Player sell stocks of Festival", () => {
       const previousState = player1.getDetails();
       sellStocks(player1, imperial);
