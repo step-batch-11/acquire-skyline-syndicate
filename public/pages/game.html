@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic layout</title>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link rel="stylesheet" href="../styles/game.css" />
-    <link rel="stylesheet" href="../styles/merge.css">
-    <script type="module" src="../js/game.js"></script>
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic layout</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="../styles/game.css" />
+  <link rel="stylesheet" href="../styles/merge.css">
+  <script type="module" src="../js/game.js"></script>
+</head>
 
 <body>
   <aside>
@@ -93,7 +94,7 @@
         <h2>Game Over 🎮</h2>
 
         <div class="winner">
-          <p >🏆</p>
+          <p>🏆</p>
           <p class="winnerName"></p>
         </div>
 
@@ -125,48 +126,47 @@
   </template>
 
   <template id="stock-dissolution">
-      <div id="stock-dissolution-card">
-        <h1>Exchange or Dissolve</h1>
-        <div id="exchange-counter">
-          <h3>Exchange counter : </h3>
-          <counter-btn id = "exchange-counter"></counter-btn>
-        </div>
-        <div id="sell-counter">
-          <h3>sell counter : </h3>
-          <counter-btn id = "sell-counter" ></counter-btn>
-        </div>
-        <button id="dissolve-btn">Dissolve</button>
+    <div id="stock-dissolution-card">
+      <h1>Exchange or Dissolve</h1>
+      <div class="exchange-counter">
+        <h3>Exchange counter : </h3>
+        <counter-btn id="exchange-counter"></counter-btn>
       </div>
-  </template>
-
-    <template id="table">
-      <table>
-        <tbody></tbody>
-      </table>
-    </template>
-    <template id="bank-info-table">
-      <table id="info-table">
-        <thead>
-          <tr>
-            <th>Corporation</th>
-            <th>price</th>
-            <th>size</th>
-            <th>stocks</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </template>
-    <template id="bank-header-template">
-      <div class="bank-header">
-        <img src="/assets/bank.svg" alt="" />
-        <h2 class="market-info-header">Market Info</h2>
+      <div class="sell-counter">
+        <h3>sell counter : </h3>
+        <counter-btn id="sell-counter"></counter-btn>
       </div>
       <button id="dissolve-btn">Dissolve</button>
+    </div>
+  </template>
+
+  <template id="table">
+    <table>
+      <tbody></tbody>
+    </table>
+  </template>
+  <template id="bank-info-table">
+    <table id="info-table">
+      <thead>
+        <tr>
+          <th>Corporation</th>
+          <th>price</th>
+          <th>size</th>
+          <th>stocks</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </template>
+  <template id="bank-header-template">
+    <div class="bank-header">
+      <img src="/assets/bank.svg" alt="" />
+      <h2 class="market-info-header">Market Info</h2>
+    </div>
+    <button id="dissolve-btn">Dissolve</button>
     </div>
   </template>
 
 </body>
 
 </html>
-  
