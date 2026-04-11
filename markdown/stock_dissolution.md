@@ -30,3 +30,8 @@
 - we calculated the defunct hotel stakeholders.
 
 - currentDissolver becomes : the first stake holder.
+
+# bugs :
+
+1. changing state even though only one player have 0 stocks (check how are you
+   choosing stock holder)

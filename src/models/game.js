@@ -1,4 +1,5 @@
 import { gameStates } from "../configs/game_states_config.js";
+import { MERGE_STATE } from "../configs/merge_states.js";
 import {
   distributeBonus,
   sellStocks,
@@ -106,13 +107,16 @@ export class Game {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     if (this.#mergeService && this.#mergeService.mergeState === "END_MERGE") {
       this.#state = "BUY_STOCK";
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
       this.#mergeService = null;
       this.#mergeState = null;
     }
     // <change>
-    if (this.#state === "MERGE") {
+    if (this.#state === MERGE_STATE.dissolution) {
       this.#currentPlayer = this.#mergeService.currentDissolver;
     }
+
     return {
       notification: this.#generateNotification(
         requestedPlayerId,
