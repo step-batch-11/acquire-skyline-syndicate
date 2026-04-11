@@ -34,7 +34,7 @@ export const renderGame = (gameData) => {
 
   createBoard();
   renderBoardState(tilesOnBoard, hotels);
-  renderPlayers(players, currentPlayer);
+  renderPlayers(players, currentPlayer, player);
   renderUserSection(player);
   renderBankSection(hotels);
 };

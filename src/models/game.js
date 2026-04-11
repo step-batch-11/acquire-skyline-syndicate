@@ -87,10 +87,10 @@ export class Game {
     if (Object.keys(notification).length === 0) return {};
 
     const notificationHandler = {
-      "DEAD_TILE_EXCHANGE": this.notifyCurrentPlayer,
-      "BUYING_STOCKS": this.notifyInactivePlayers,
-      "INSUFFICIENT_FUNDS": this.notifyCurrentPlayer,
-      "MERGER_BONUS": this.notifyAllPlayers,
+      DEAD_TILE_EXCHANGE: this.notifyCurrentPlayer,
+      BUYING_STOCKS: this.notifyInactivePlayers,
+      INSUFFICIENT_FUNDS: this.notifyCurrentPlayer,
+      MERGER_BONUS: this.notifyAllPlayers,
     };
     const intervalId = setInterval(() => {
       this.#notification = {};
@@ -105,10 +105,7 @@ export class Game {
 
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
-    if (
-      this.#mergeService &&
-      this.#mergeService.mergeState === "END_MERGE"
-    ) {
+    if (this.#mergeService && this.#mergeService.mergeState === "END_MERGE") {
       this.#state = "BUY_STOCK";
       this.#currentPlayer =
         this.#players[this.#currentPlayerIndex % this.#players.length];
@@ -367,16 +364,6 @@ export class Game {
       return { hotels, playerInfo, state: this.#state };
     }
 
-    this.#hotels.deductStocks(cart);
-    cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName, selectedStocks)
-    );
-    this.#currentPlayer.deductMoney(moneyToDeduct);
-
-    if (this.isGameEnd()) {
-      this.#state = "END_GAME";
-      return { msg: "GAME_ENDS" };
-    }
     if (!hasEnoughBalance) {
       this.#createNotificationData("INSUFFICIENT_FUNDS", {
         hasEnoughBalance: false,

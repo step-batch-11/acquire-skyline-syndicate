@@ -45,8 +45,7 @@ export default class MergeService {
     const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
     stakeholders.sort(
       (a, b) =>
-        b.getStockCount(defunctHotel.name) -
-        a.getStockCount(defunctHotel.name),
+        b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
     );
     if (stakeholders.length === 1) {
       stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
@@ -100,10 +99,9 @@ export default class MergeService {
   }
 
   #stakeHolders(hotelName) {
-    return this.#players.filter((player) => player.hasStock(hotelName)).sort((
-      a,
-      b,
-    ) => b.getStockCount(hotelName) - a.getStockCount(hotelName));
+    return this.#players
+      .filter((player) => player.hasStock(hotelName))
+      .sort((a, b) => b.getStockCount(hotelName) - a.getStockCount(hotelName));
   }
 
   #detectMergeType(firstHotel, secondHotel) {
@@ -182,12 +180,12 @@ export default class MergeService {
     if (this.#turnOrder >= this.#defuntHotelStakeHolders.length - 1) {
       this.#mergeHotels();
       this.#mergeState = MERGE_STATE.endMerge;
-      return;
+      return { sucess: true };
     }
     // prompt(">>");
     this.#turnOrder += 1;
     this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
-    return { "sucess": true };
+    return { sucess: true };
   }
 
   getBonusHoldersDetails() {
