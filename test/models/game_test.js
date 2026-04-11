@@ -1337,4 +1337,17 @@ describe("Game entity tests", () => {
       });
     });
   });
+
+  describe("get current game state method", () => {
+    it("Should return the current game state", () => {
+      game.init();
+      const initialData = game.currentState(1);
+      const tileToPlace = initialData.player.tiles[0];
+      game.placeTile(1, tileToPlace.id);
+      const gameState = game.getCurrentGameState();
+      assertEquals(gameState.players.length, 2);
+      assertEquals(gameState.hotels.length, 7);
+      assertEquals(gameState.state, "BUY_STOCK");
+    });
+  });
 });

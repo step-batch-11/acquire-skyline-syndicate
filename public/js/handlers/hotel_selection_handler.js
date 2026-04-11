@@ -3,6 +3,7 @@ import { extractSelectedStocks } from "../utils.js";
 import { handleCartUpdation } from "./event_handlers.js";
 import { renderBankSection, renderUserSection } from "../ui_renderers.js";
 import { TOTAL_SELECTED_STOCKS } from "./event_handlers.js";
+import { handleShiftTurn } from "./event_handlers.js";
 
 export const listenerForCart = (e) => {
   const action = e.target.dataset.action;
@@ -19,4 +20,9 @@ export const listenerForBuyingStocks = async (e) => {
   TOTAL_SELECTED_STOCKS.length = 0;
   renderBankSection(hotels);
   renderUserSection(player);
+};
+
+export const listenerForPassingTurn = (e) => {
+  e.preventDefault();
+  handleShiftTurn();
 };

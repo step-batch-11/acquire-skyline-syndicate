@@ -9,7 +9,8 @@ export const handleTilePlacement = async (tileContainer) => {
 };
 
 export const handleShiftTurn = async () => {
-  await fetch("/shift-turn", { method: "post" });
+  const res = await fetch("/shift-turn", { method: "post" });
+  console.log(await res.json());
 };
 
 const incrementStocks = (cartElement, counterValue) => {

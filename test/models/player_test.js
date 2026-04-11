@@ -166,4 +166,17 @@ describe("Player entity tests", () => {
       assertEquals(playerInstance.getStockCount("sackson"), 8);
     });
   });
+
+  describe("remove hotel stocks method", () => {
+    it("should delete all the stocks of the given hotel", () => {
+      playerInstance.addStocks("Sackson", 3);
+      playerInstance.addStocks("Tower", 5);
+      const hotelToRemove = "Sackson";
+      playerInstance.removeHotelStocks(hotelToRemove);
+      const result = playerInstance.getDetails();
+      const playerStocks = Object.keys(result.stocks);
+      assertEquals(playerStocks.includes(hotelToRemove), false);
+      assertEquals(playerStocks.includes("Tower"), true);
+    });
+  });
 });

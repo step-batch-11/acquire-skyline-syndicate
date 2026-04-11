@@ -2,13 +2,14 @@ import { createElement } from "../features/hotel_foundation.js";
 import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
 import { handleMerge } from "../features/merge.js";
-import { handleShiftTurn } from "../handlers/event_handlers.js";
 import { cloneElement } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
 import {
   listenerForBuyingStocks,
   listenerForCart,
+  listenerForPassingTurn,
 } from "../handlers/hotel_selection_handler.js";
+import { handleShiftTurn } from "../handlers/event_handlers.js";
 
 const handlePlaceTile = (gameData) => {
   const { player } = gameData;
@@ -31,8 +32,7 @@ const cartSection = () => {
   const skipBtn = createElement("button", "skip");
   skipBtn.textContent = "skip";
 
-  skipBtn.addEventListener("click", () => {
-  });
+  skipBtn.addEventListener("click", listenerForBuyingStocks);
 
   const confirmBtn = createElement("button", "confirm");
   confirmBtn.textContent = "confirm";
