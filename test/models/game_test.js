@@ -1337,4 +1337,78 @@ describe("Game entity tests", () => {
       });
     });
   });
+  describe("checking methods of the notifications", () => {
+    describe("notify inactive players", () => {
+      it("the request is the inactive player", () => {
+        const notification = {
+          playerId: 1,
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const result = game.notifyInactivePlayers(0, notification);
+        const exceptedResult = {
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        assertEquals(result, exceptedResult);
+      });
+
+      it("the requester  is the active player", () => {
+        const notification = {
+          playerId: 1,
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const result = game.notifyInactivePlayers(1, notification);
+        assertEquals(result, {});
+      });
+    });
+
+    describe("notify current player", () => {
+      it("the requester is active player", () => {
+        const notification = {
+          playerId: 1,
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const result = game.notifyCurrentPlayer(0, notification);
+        assertEquals(result, {});
+      });
+      it("the requester  is the inactive player", () => {
+        const notification = {
+          playerId: 1,
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const exceptedResult = {
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const result = game.notifyCurrentPlayer(1, notification);
+        assertEquals(result, exceptedResult);
+      });
+    });
+    describe("notify all players", () => {
+      it("random requestor", () => {
+        const notification = {
+          playerId: 1,
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const exceptedResult = {
+          type: "BUY_STOCKS",
+          data: [{ hotelName: "imperial", selectedStocks: 3 }],
+        };
+        const result = game.notifyAllPlayers(10, notification);
+        assertEquals(result, exceptedResult);
+      });
+    });
+
+    describe("generate the notification", () => {
+      it("no notification is present", () => {
+        const result = game.generateNotification(2, {});
+        assertEquals(result, {});
+      });
+    });
+  });
 });

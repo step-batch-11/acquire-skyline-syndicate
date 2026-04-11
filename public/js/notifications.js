@@ -1,13 +1,11 @@
 const getDeadNotificationMessage = ({ removedTiles, newTiles }) =>
   `These ${removedTiles} are exchaged with ${newTiles}`;
 
-const getStocksPurchaseNotification = ({ cart }) =>
+const getStocksPurchaseNotification = ({ cart, playerName }) =>
   cart.reduce(
-    (
-      msg,
-      details,
-    ) => (msg += `${details.selectedStocks} of ${details.hotelName} \n\t`),
-    `Player purchased `,
+    (msg, details) =>
+      msg += `${details.selectedStocks} shares of ${details.hotelName} \n\t`,
+    `${playerName} purchased `,
   );
 
 const getInsufficientFundsNotification = ({ _hasEnoughBalance }) =>
@@ -37,7 +35,7 @@ export const updateNotification = (notification) => {
   if (Object.keys(notification).length === 0) return;
   const notificationBox = document.querySelector(".notification-box");
   notificationBox.classList.add("notification-container");
-  notificationBox.classList.toggle(".hidden");
+  // notificationBox.classList.remove(".hidden");
   setTimeout(() => {
     notificationBox.classList.remove("notification-container");
     notificationBox.textContent = "";

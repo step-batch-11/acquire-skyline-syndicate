@@ -41,7 +41,7 @@ export class Player {
   }
 
   getStockCount(hotelName) {
-    return this.#stocks[hotelName];
+    return this.#stocks[hotelName] || 0;
   }
 
   addInitialTiles(tiles) {
