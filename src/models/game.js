@@ -136,7 +136,7 @@ export class Game {
   #isBuildPossible() {
     const adjacentTiles = this.#board.lastTile.neighbourTiles();
     const notInAnyHotel = !adjacentTiles.some((tile) =>
-      this.#hotels.isTileInAnyHotel(tile),
+      this.#hotels.isTileInAnyHotel(tile)
     );
     return (
       this.#hotels.isAnyInActiveHotel() &&
@@ -334,14 +334,14 @@ export class Game {
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
-    const isValidBuy =
-      this.#isValidPurchase(cart, moneyToDeduct) && hasEnoughBalance;
+    const isValidBuy = this.#isValidPurchase(cart, moneyToDeduct) &&
+      hasEnoughBalance;
 
     if (isValidBuy) {
       this.#hotels.deductStocks(cart);
       const hotels = this.#hotels.getHotels();
       cart.forEach(({ hotelName, selectedStocks }) =>
-        this.#currentPlayer.addStocks(hotelName, selectedStocks),
+        this.#currentPlayer.addStocks(hotelName, selectedStocks)
       );
 
       this.#currentPlayer.deductMoney(moneyToDeduct);
@@ -358,7 +358,7 @@ export class Game {
 
     this.#hotels.deductStocks(cart);
     cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName, selectedStocks),
+      this.#currentPlayer.addStocks(hotelName, selectedStocks)
     );
     this.#currentPlayer.deductMoney(moneyToDeduct);
 
