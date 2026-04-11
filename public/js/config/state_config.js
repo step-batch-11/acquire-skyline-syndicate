@@ -34,7 +34,7 @@ const cartSection = () => {
   skipBtn.addEventListener("click", listenerForBuyingStocks);
 
   const confirmBtn = createElement("button", "confirm");
-  confirmBtn.textContent = "confirm";
+  confirmBtn.textContent = "Buy";
   confirmBtn.addEventListener("click", listenerForBuyingStocks);
 
   const cartTotal = createElement("div", "cart-total");
@@ -62,7 +62,6 @@ const createHotelData = (
   const tr = createElement("tr", "hotel-stock");
   tr.classList.add(isActive ? "inactive-element" : "active");
   tr.id = name;
-
   const hotelNameElement = createElement("span", "hotel-name-element");
   hotelNameElement.textContent = name;
 

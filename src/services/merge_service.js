@@ -19,7 +19,7 @@ export default class MergeService {
     this.#affectedHotels = affectedHotels;
     this.#hotels = hotels;
     this.#board = board;
-    this.#turnOrder = 1;
+    this.#turnOrder = 0;
   }
 
   #sellAllStocks(stakeholders, price, hotelName) {
@@ -45,8 +45,7 @@ export default class MergeService {
     const { primaryBonus, secondaryBonus } = defunctHotel.bonuses();
     stakeholders.sort(
       (a, b) =>
-        b.getStockCount(defunctHotel.name) -
-        a.getStockCount(defunctHotel.name),
+        b.getStockCount(defunctHotel.name) - a.getStockCount(defunctHotel.name),
     );
     if (stakeholders.length === 1) {
       stakeholders[0].depositMoney(primaryBonus + secondaryBonus);
@@ -100,7 +99,9 @@ export default class MergeService {
   }
 
   #stakeHolders(hotelName) {
-    return this.#players.filter((player) => player.hasStock(hotelName));
+    return this.#players
+      .filter((player) => player.hasStock(hotelName))
+      .sort((a, b) => b.getStockCount(hotelName) - a.getStockCount(hotelName));
   }
 
   #detectMergeType(firstHotel, secondHotel) {
@@ -108,8 +109,8 @@ export default class MergeService {
       this.#mergeState = MERGE_STATE.equal;
       return;
     }
-
     this.#mergeState = MERGE_STATE.dissolution;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
   }
 
   get mergeState() {
@@ -124,12 +125,12 @@ export default class MergeService {
     }
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
     this.#mergeState = MERGE_STATE.dissolution;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
     return this.#mergeState;
   }
 
   #mergeTwoUnequal() {
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
-    // this.#mergeHotels();
     this.#mergeState = MERGE_STATE.endMerge;
   }
 
@@ -152,10 +153,13 @@ export default class MergeService {
   }
 
   #sellStocks({ sell_count }) {
+    // console.log({ current: this.#currentDissolver });
     const hotelName = this.#defunctHotel.name;
     const currentStockPrice = this.#defunctHotel.calculateStockPrice();
     // const stockValue = sell_count * currentStockPrice;
     this.#currentDissolver.sellStocks(hotelName, currentStockPrice, sell_count);
+    this.#defunctHotel.increaseStockCount(sell_count);
+    // <change>
     // this.#currentDissolver.depositMoney(stockValue);
   }
 
@@ -164,33 +168,38 @@ export default class MergeService {
     const survivingHotelName = this.#survivingHotel.name;
     const exchangedStock = Math.floor(exchange_count / 2);
     this.#survivingHotel.removeHotelStocks(exchangedStock);
+    this.#defunctHotel.increaseStockCount(exchange_count);
     this.#currentDissolver.removeStocks(defunctHotelName, exchange_count);
     this.#currentDissolver.addStocks(survivingHotelName, exchangedStock);
   }
 
-  dissolveStocks(data, currentPlayer) {
-    this.#currentDissolver = currentPlayer;
+  dissolveStocks(data, _currentPlayer) {
     this.#sellStocks(data);
     this.#exchangeStocks(data);
-    this.#turnOrder += 1;
-    if (this.#turnOrder >= this.#defuntHotelStakeHolders.length) {
+
+    if (this.#turnOrder >= this.#defuntHotelStakeHolders.length - 1) {
       this.#mergeHotels();
       this.#mergeState = MERGE_STATE.endMerge;
+      return { sucess: true };
     }
-    return { "sucess": true };
+    // prompt(">>");
+    this.#turnOrder += 1;
+    this.#currentDissolver = this.#defuntHotelStakeHolders[this.#turnOrder];
+    return { sucess: true };
   }
 
   getBonusHoldersDetails() {
     return this.#bonusHolderDetails;
   }
 
-  get nextDissolver() {
-    this.#turnOrder += 1;
-    return this.#defuntHotelStakeHolders[this.#turnOrder];
+  get currentDissolver() {
+    return this.#currentDissolver;
   }
 
   // mergeDetails () {
-
+  //   return {
+  //     affectedHotels = this.#affectedHotels.map()
+  //   }
   // }
 
   init(currentPlayer) {
@@ -201,10 +210,10 @@ export default class MergeService {
       this.#hotels.getHotel(hotel.name)
     );
     this.#mergeMaker = currentPlayer;
-    this.#currentDissolver = currentPlayer;
     this.#defunctHotel = defunctHotel;
     this.#survivingHotel = survivingHotel;
-    this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
+
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
+    this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
   }
 }

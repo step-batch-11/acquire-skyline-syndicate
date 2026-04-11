@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Basic layout</title>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <link rel="stylesheet" href="../styles/game.css" />
-    <link rel="stylesheet" href="../styles/merge.css">
-    <script type="module" src="../js/game.js"></script>
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic layout</title>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <link rel="stylesheet" href="../styles/game.css" />
+  <link rel="stylesheet" href="../styles/merge.css">
+  <script type="module" src="../js/game.js"></script>
+</head>
 
 <body>
   <aside>
@@ -58,9 +59,16 @@
   </template>
 
   <template id="stock-template">
-    <div class="stock empty">
+    <div class="stock">
       <h3 class="stock-name"></h3>
       <span class="count"></span>
+    </div>
+  </template>
+
+  <template id="found-hotel">
+    <div class="found-hotel-container">
+      <div class="icon"></div>
+      <div class="name"></div>
     </div>
   </template>
 
@@ -87,21 +95,21 @@
         <h2>Game Over 🎮</h2>
 
         <div class="winner">
-          <h3>Winner:</h3>
+          <p>🏆</p>
           <p class="winnerName"></p>
         </div>
 
         <div class="players">
-          <h3>Players</h3>
 
           <table class="players-table">
             <thead>
               <tr>
                 <th>Player</th>
-                <th>Amount 💰</th>
+                <th>Amount</th>
               </tr>
             </thead>
-            <tbody class="playersTableBody"></tbody>
+            <tbody class="playersTableBody">
+            </tbody>
           </table>
         </div>
       </div>
@@ -119,46 +127,20 @@
   </template>
 
   <template id="stock-dissolution">
-      <div id="stock-dissolution-card">
-        <h1>Exchange or Dissolve</h1>
-        <div id="exchange-counter">
-          <h3>Exchange counter : </h3>
-          <counter-btn id = "exchange-counter"></counter-btn>
-        </div>
-        <div id="sell-counter">
-          <h3>sell counter : </h3>
-          <counter-btn id = "sell-counter" ></counter-btn>
-        </div>
-        <button id="dissolve-btn">Dissolve</button>
+    <div id="stock-dissolution-card">
+      <h1>Exchange or Dissolve</h1>
+      <div class="exchange-counter">
+        <h3>Exchange counter : </h3>
+        <counter-btn id="exchange-counter"></counter-btn>
       </div>
+      <div class="sell-counter">
+        <h3>sell counter : </h3>
+        <counter-btn id="sell-counter"></counter-btn>
+      </div>
+      <button id="dissolve-btn">Dissolve</button>
+    </div>
   </template>
 
-    <template id="table">
-      <table>
-        <tbody></tbody>
-      </table>
-    </template>
-    <template id="bank-info-table">
-      <table id="info-table">
-        <thead>
-          <tr>
-            <th>Corporation</th>
-            <th>price</th>
-            <th>size</th>
-            <th>stocks</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </template>
-    <template id="bank-header-template">
-      <div class="bank-header">
-        <img src="/assets/bank.svg" alt="" />
-        <h2 class="market-info-header">Market Info</h2>
-      </div>
-    </template>
-  </body>
-</html>
   <template id="table">
     <table>
       <tbody></tbody>
@@ -182,8 +164,10 @@
       <img src="/assets/bank.svg" alt="" />
       <h2 class="market-info-header">Market Info</h2>
     </div>
+    <button id="dissolve-btn">Dissolve</button>
+    </div>
   </template>
+
 </body>
 
 </html>
-  

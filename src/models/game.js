@@ -107,8 +107,14 @@ export class Game {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
     if (this.#mergeService && this.#mergeService.mergeState === "END_MERGE") {
       this.#state = "BUY_STOCK";
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
       this.#mergeService = null;
       this.#mergeState = null;
+    }
+    // <change>
+    if (this.#state === MERGE_STATE.dissolution) {
+      this.#currentPlayer = this.#mergeService.currentDissolver;
     }
 
     return {
@@ -352,20 +358,12 @@ export class Game {
       this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
       const playerName = this.#currentPlayer.name;
-      this.#createNotificationData("BUYING_STOCKS", { cart, playerName });
+      if (moneyToDeduct != 0) {
+        this.#createNotificationData("BUYING_STOCKS", { cart, playerName });
+      }
       return { hotels, playerInfo, state: this.#state };
     }
 
-    this.#hotels.deductStocks(cart);
-    cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName, selectedStocks)
-    );
-    this.#currentPlayer.deductMoney(moneyToDeduct);
-
-    if (this.isGameEnd()) {
-      this.#state = "END_GAME";
-      return { msg: "GAME_ENDS" };
-    }
     if (!hasEnoughBalance) {
       this.#createNotificationData("INSUFFICIENT_FUNDS", {
         hasEnoughBalance: false,
@@ -381,6 +379,11 @@ export class Game {
       activeHotels.length > 0 &&
       activeHotels.every((hotel) => hotel.tiles.length >= 11)
     );
+  }
+  mergeEqualHotels(body) {
+    const res = this.#mergeService.mergeEqualHotels(body);
+    this.#state = res;
+    return res;
   }
 
   #isAnyHotelHas41Tiles() {
@@ -421,9 +424,9 @@ export class Game {
 
   handleStockDissolution(body) {
     const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
-    this.#currentPlayerIndex += 1;
-    this.#currentPlayer =
-      this.#players[this.#currentPlayerIndex % this.#players.length];
+    // this.#currentPlayerIndex += 1;
+    // this.#currentPlayer =
+    //   this.#players[this.#currentPlayerIndex % this.#players.length];
     return res;
   }
 

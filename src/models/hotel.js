@@ -113,6 +113,10 @@ export class Hotel {
     this.#originTile = hotelInfo.originTile;
   }
 
+  increaseStockCount(count) {
+    this.#stocks += count;
+  }
+
   get primaryBonus() {
     return this.calculateStockPrice() * 10;
   }

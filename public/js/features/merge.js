@@ -14,7 +14,7 @@ export const renderStockDissolution = () => {
   const sellCounter = tradeElement.querySelector("#sell-counter");
   const exchangeCounter = tradeElement.querySelector("#exchange-counter");
   customElements.whenDefined("counter-btn").then(() => {
-    // const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+    const exchangeCounter = tradeElement.querySelector("#exchange-counter");
     exchangeCounter.setDelta(2);
   });
 
@@ -40,11 +40,13 @@ export const renderEqualMerge = () => {
     await postData("/merge/two-equal-merge", {
       hotelName: hotel1.textContent,
     });
+    contextMenu.innerHTML = "";
   });
 
   hotel2.addEventListener("click", async () => {
     await postData("/merge/two-equal-merge", {
       hotelName: hotel2.textContent,
     });
+    contextMenu.innerHTML = "";
   });
 };
