@@ -357,6 +357,16 @@ export class Game {
       return { hotels, playerInfo, state: this.#state };
     }
 
+    this.#hotels.deductStocks(cart);
+    cart.forEach(({ hotelName, selectedStocks }) =>
+      this.#currentPlayer.addStocks(hotelName, selectedStocks)
+    );
+    this.#currentPlayer.deductMoney(moneyToDeduct);
+
+    if (this.isGameEnd()) {
+      this.#state = "END_GAME";
+      return { msg: "GAME_ENDS" };
+    }
     if (!hasEnoughBalance) {
       this.#createNotificationData("INSUFFICIENT_FUNDS", {
         hasEnoughBalance: false,

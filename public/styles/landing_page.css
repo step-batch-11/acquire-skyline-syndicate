@@ -24,7 +24,7 @@ main {
   letter-spacing: 0.12em;
   color: white;
   z-index: 0;
-  animation: headingArrival 4s ease-in;
+  animation: headingArrival 2s ease-in;
   animation-fill-mode: forwards;
   height: 1.1em;
   width: 6em;
