@@ -1,10 +1,5 @@
 import { gameState, postData } from "../request.js";
-import {
-  cloneElement,
-  renderBankSection,
-  renderBoard,
-  renderHeldStocks,
-} from "../ui_renderers.js";
+import { cloneElement } from "../ui_renderers.js";
 
 export const createElement = (element, className) => {
   const container = document.createElement(element);
@@ -77,11 +72,7 @@ class HotelFoundationState {
       hotelToFound,
     });
 
-    const { hotels, tilesOnBoard, player } = await gameState();
-
-    renderBankSection(hotels);
-    renderBoard(tilesOnBoard, hotels);
-    renderHeldStocks(player.stocks);
+    await gameState();
   }
 
   #setupSelectHotel() {

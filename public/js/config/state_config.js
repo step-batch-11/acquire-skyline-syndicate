@@ -1,7 +1,7 @@
 import { createElement } from "../features/hotel_foundation.js";
 import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
-import { handleMerge } from "../features/merge.js";
+import { renderEqualMerge, renderStockDissolution } from "../features/merge.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
 import { cloneElement } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
@@ -31,8 +31,7 @@ const cartSection = () => {
   const skipBtn = createElement("button", "skip");
   skipBtn.textContent = "skip";
 
-  skipBtn.addEventListener("click", () => {
-  });
+  skipBtn.addEventListener("click", () => {});
 
   const confirmBtn = createElement("button", "confirm");
   confirmBtn.textContent = "confirm";
@@ -88,7 +87,7 @@ const createHotelData = (
 const createTable = (hotels) => {
   const table = cloneElement("#table");
   const tbody = table.querySelector("tbody");
-  const tableData = hotels.map(createHotelData);
+  const tableData = hotels.map((hotel) => createHotelData(hotel, true));
   tbody.append(...tableData);
 
   return tbody;
@@ -134,6 +133,11 @@ const handleEndGame = (gameData) => {
 
     tableBody.appendChild(row);
   });
+
+  const closeBtn = document.querySelector(".close-btn");
+  closeBtn.addEventListener("click", () => {
+    globalThis.location.href = "/pages/home_page.html";
+  });
   document.body.appendChild(clone);
   requestAnimationFrame(() => {
     document.querySelector(".overlay:last-child").classList.add("active");
@@ -146,11 +150,12 @@ export const gameStates = {
   BUY_STOCK: handleBuyStocks,
   SHIFT_TURN: handleShiftTurn,
   END_GAME: handleEndGame,
-  MERGE: handleMerge,
+  EQUAL_HOTEL_MERGE: renderEqualMerge,
+  STOCK_DISSOLUTION: renderStockDissolution,
 };
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
 
-  gameStates[state](gameData);
+  gameStates[state]?.(gameData);
 };

@@ -356,6 +356,7 @@ export class Game {
       this.#createNotificationData("BUYING_STOCKS", { cart, playerName });
       return { hotels, playerInfo, state: this.#state };
     }
+
     if (!hasEnoughBalance) {
       this.#createNotificationData("INSUFFICIENT_FUNDS", {
         hasEnoughBalance: false,
