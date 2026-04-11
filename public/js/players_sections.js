@@ -1,8 +1,9 @@
-export const renderPlayers = (players, currentPlayer) => {
+export const renderPlayers = (players, currentPlayer, player) => {
   const playersSection = document.querySelector(".players");
   playersSection.replaceChildren();
   const playerTemplate = document.querySelector("#player-template");
-
+  const profile = document.querySelector(".profile");
+  profile.textContent = player.name;
   players.forEach(({ name }, id) => {
     const playerClone = playerTemplate.content.cloneNode(true);
     playerClone.querySelector(".player-name").textContent = name;

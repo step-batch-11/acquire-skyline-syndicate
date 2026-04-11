@@ -43,11 +43,13 @@ export const renderEqualMerge = (data) => {
     await postData("/merge/two-equal-merge", {
       hotelName: hotel1.textContent,
     });
+    contextMenu.innerHTML = "";
   });
 
   hotel2.addEventListener("click", async () => {
     await postData("/merge/two-equal-merge", {
       hotelName: hotel2.textContent,
     });
+    contextMenu.innerHTML = "";
   });
 };
