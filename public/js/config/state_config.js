@@ -7,7 +7,6 @@ import { highlightPlayableTiles } from "../utils.js";
 import {
   listenerForBuyingStocks,
   listenerForCart,
-  listenerForPassingTurn,
 } from "../handlers/hotel_selection_handler.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
 
