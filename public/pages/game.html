@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Basic layout</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <link rel="stylesheet" href="../styles/game.css" />
     <link rel="stylesheet" href="../styles/merge.css">
     <script type="module" src="../js/game.js"></script>
@@ -15,7 +16,7 @@
   </aside>
   <main>
     <div class="market-notification-players">
-      <div class="notification-box"></div>
+      <div class="notification-box hidden"></div>
       <div class="player-market">
         <div class="board"></div>
       </div>
@@ -114,16 +115,6 @@
     </div>
   </template>
 
-  <template id="chooseDissolvingHotel">
-    <div class="chooseHotelContainer">
-      <h1>
-        Choose hotel to disolve.
-      </h1>
-      <button id="hotel-1">continental</button>
-      <button id="hotel-2">imperial</button>
-    </div>
-  </template>
-
   <template id="stock-dissolution">
       <div id="stock-dissolution-card">
         <h1>Exchange or Dissolve</h1>
@@ -192,3 +183,4 @@
 </body>
 
 </html>
+  
