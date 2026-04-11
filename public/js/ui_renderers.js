@@ -82,16 +82,71 @@ export const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
   return tableRowElement;
 };
 
+let chart = null;
+
+const createChart = (hotels) => {
+  const container = document.querySelector("#chart");
+  container.innerHTML = "";
+
+  const hotelsName = hotels.map((h) => h.name);
+  const stockPrices = hotels.map((h) => h.stockPrice);
+
+  const options = {
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+
+    colors: [
+      "#5683ff",
+      "#f29b12",
+      "#0ea5e9",
+      "#43aa90",
+      "#2f6f83",
+      "#b91c1c",
+      "#f9735b",
+    ],
+
+    plotOptions: {
+      bar: {
+        distributed: true,
+        columnWidth: "65%",
+      },
+    },
+
+    legend: {
+      show: false,
+    },
+
+    series: [
+      {
+        name: "Stock Price",
+        data: stockPrices,
+      },
+    ],
+
+    xaxis: {
+      categories: hotelsName,
+    },
+  };
+
+  chart = new ApexCharts(container, options);
+  chart.render();
+};
+
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
   const bankHeader = cloneElement("#bank-header-template");
   const tableContainer = cloneElement("#bank-info-table");
   const tableBody = tableContainer.querySelector("tbody");
+  const chartElement = createElement("div", "chart-element");
+  chartElement.id = "chart";
 
   const hotelCards = hotels.map((hotel) => addHotelData(hotel));
   tableBody.append(...hotelCards);
   tableContainer.append(tableBody);
-  bankSection.replaceChildren(bankHeader, tableContainer);
+  bankSection.replaceChildren(bankHeader, tableContainer, chartElement);
+  createChart(hotels);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {

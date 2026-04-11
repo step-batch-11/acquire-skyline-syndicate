@@ -31,8 +31,7 @@ const cartSection = () => {
   const skipBtn = createElement("button", "skip");
   skipBtn.textContent = "skip";
 
-  skipBtn.addEventListener("click", () => {
-  });
+  skipBtn.addEventListener("click", () => {});
 
   const confirmBtn = createElement("button", "confirm");
   confirmBtn.textContent = "confirm";
@@ -88,7 +87,7 @@ const createHotelData = (
 const createTable = (hotels) => {
   const table = cloneElement("#table");
   const tbody = table.querySelector("tbody");
-  const tableData = hotels.map(createHotelData);
+  const tableData = hotels.map((hotel) => createHotelData(hotel, true));
   tbody.append(...tableData);
 
   return tbody;
@@ -133,6 +132,11 @@ const handleEndGame = (gameData) => {
     `;
 
     tableBody.appendChild(row);
+  });
+
+  const closeBtn = document.querySelector(".close-btn");
+  closeBtn.addEventListener("click", () => {
+    globalThis.location.href = "/pages/home_page.html";
   });
   document.body.appendChild(clone);
   requestAnimationFrame(() => {

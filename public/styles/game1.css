@@ -23,6 +23,7 @@ main {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  background-color: #FCF6F0;
 }
 
 body {
@@ -31,7 +32,8 @@ body {
 }
 
 aside {
-  background-color: rgb(199 210 222);
+  /* background-color: rgb(199 210 222); */
+  background-color: #F2EBE5;
   width: 15%;
   height: 100vh;
   display: flex;
@@ -73,13 +75,16 @@ aside {
   width: 3.2em;
   box-sizing: border-box;
   border-radius: 0.3em;
-  background-color: rgb(255 255 255);
+  /* background-color: rgb(255 255 255); */
   transition: 1s;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
-  color: rgb(31 41 55);
+  background-color: white;
+  color: var(--text-primary);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
 }
 
 .tile p {
@@ -88,6 +93,8 @@ aside {
 }
 
 .tile:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
   cursor: pointer;
 }
 
@@ -121,6 +128,12 @@ aside {
   margin: 5%;
 }
 
+.player-name {
+  font-weight: 600;
+  color: #2A2438;
+  font-size: 1.1em;
+}
+
 .player-profile {
   height: 30px;
   width: 30px;
@@ -146,13 +159,14 @@ aside {
   box-shadow: -5px 0px 5px -5px gray;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 10px;
   align-items: center;
-  background-color: white;
+  /* background-color: white; */
+  background-color: #F2EBE5;
 }
 
 #chart {
-  margin: auto;
+  font-size: 1.3em;
 }
 
 .context-menu {
@@ -309,8 +323,13 @@ table {
   grid-template-columns: 1fr 7fr 2fr;
   padding: 5px;
   box-sizing: border-box;
-  background-color: white;
+  /* background-color: white; */
+  background-color: #F4EDE7;
   border-bottom: 2px solid rgb(226 232 240);
+}
+
+.user-hand>p {
+  color: #3A828A;
 }
 
 footer {
@@ -680,7 +699,8 @@ footer {
 }
 
 .empty {
-  border: 1px dashed black;
+  background-color: #EAE3DB;
+  border: 1px dashed #D9D0C7;
 }
 
 /* end game scenario */
@@ -842,4 +862,242 @@ footer {
 .bank-header img {
   width: 30px;
   height: 30px;
+}
+
+:root {
+  --bg-main: #F8FAFC;
+  --bg-soft: #F1F5F9;
+  --bg-panel: #FFFFFF;
+
+  --text-primary: #1E293B;
+  --text-secondary: #64748B;
+
+  --border-light: #E2E8F0;
+  --shadow-soft: rgba(0, 0, 0, 0.08);
+
+  --board-bg: #C7D2FE;
+  --occupied-tile-bg: #475569;
+
+  /* Hotel colors */
+  --imperial: #F59E0B;
+  --continental: #3B82F6;
+  --festival: #10B981;
+  --worldwide: #0F766E;
+  --american: #06B6D4;
+  --sackson: #DC2626;
+  --tower: #F97316;
+}
+
+/* ---------------- BASE ---------------- */
+
+body {
+  background-color: var(--bg-main);
+}
+
+main {
+  background-color: var(--bg-soft);
+}
+
+aside,
+.bank {
+  background-color: var(--bg-panel);
+}
+
+.bank {
+  box-shadow: -6px 0px 15px var(--shadow-soft);
+}
+
+.board {
+  background-color: var(--board-bg);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    inset 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.player-name {
+  color: var(--text-primary);
+}
+
+.player-profile {
+  border: 1.5px solid var(--border-light);
+}
+
+.active-player {
+  background-color: #F59E0B;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+
+/* ---------------- BUTTONS ---------------- */
+
+.build-btn,
+.confirm,
+.skip {
+  color: white;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.25);
+  transition: all 0.15s ease;
+}
+
+.build-btn {
+  background-color: #4F46E5;
+}
+
+.confirm {
+  background-color: #6366F1;
+}
+
+.skip {
+  background-color: #16A34A;
+}
+
+.build-btn:active,
+.confirm:active,
+.skip:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* ---------------- STOCK TABLE ---------------- */
+
+.hotel-stock {
+  background-color: #F8FAFC;
+}
+
+.hotel-stock:nth-child(even) {
+  background-color: #F1F5F9;
+}
+
+.hotel-stock td {
+  border-bottom: 1px solid var(--border-light);
+  border-right: 1px solid var(--border-light);
+}
+
+.hotel-stock:hover {
+  background-color: #E0E7FF;
+}
+
+/* ---------------- CART / HAND ---------------- */
+
+.cart-container {
+  border-left: 1px solid var(--border-light);
+}
+
+.cart-count,
+.cart-total {
+  box-shadow: 0 2px 6px var(--shadow-soft);
+}
+
+.user-hand {
+  background-color: #F8FAFC;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.user-hand>p {
+  color: var(--text-secondary);
+}
+
+/* ---------------- STOCK CARDS ---------------- */
+
+.stock {
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  box-shadow: 0 3px 8px var(--shadow-soft);
+}
+
+.stock .count {
+  color: var(--text-primary);
+}
+
+/* ---------------- EMPTY TILE ---------------- */
+
+.empty {
+  background-color: #F1F5F9;
+  border: 1px dashed #CBD5E1;
+}
+
+/* ---------------- OVERLAY ---------------- */
+
+.overlay {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+}
+
+.popup {
+  background: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------------- NOTIFICATIONS ---------------- */
+
+.notification-container {
+  background: linear-gradient(135deg, #1E293B, #334155);
+  color: white;
+  border-radius: 8px;
+}
+
+/* ---------------- INFO TABLE (FIXED + ENHANCED) ---------------- */
+
+#info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1em;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  color: var(--text-primary);
+}
+
+/* Header */
+#info-table thead tr {
+  background: linear-gradient(to right, #EEF2FF, #F8FAFC);
+}
+
+#info-table thead tr th {
+  color: var(--text-secondary);
+  font-size: 1.1em;
+  font-weight: 600;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Body cells */
+#info-table td {
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2em;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Row striping */
+#info-table tbody tr:nth-child(even) {
+  background-color: #F8FAFC;
+}
+
+/* Hover effect */
+#info-table tbody tr:hover {
+  background-color: #EDE9FE;
+  transition: 0.2s ease;
+}
+
+/* First column emphasis */
+#info-table td:first-child,
+#info-table th:first-child {
+  text-align: left;
+  padding-left: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ---------------- MISC ---------------- */
+
+.market-info-header {
+  color: var(--text-primary);
+}
+
+.counter button {
+  color: var(--text-primary);
 }
