@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basic layout</title>
-  <link rel="stylesheet" href="../styles/game.css" />
-  <script type="module" src="../js/game.js"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic layout</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="../styles/game.css" />
+    <link rel="stylesheet" href="../styles/merge.css">
+    <script type="module" src="../js/game.js"></script>
+  </head>
 
 <body>
   <aside>
@@ -15,7 +16,6 @@
   </aside>
   <main>
     <div class="market-notification-players">
-      <div class="notification-box"></div>
       <div class="player-market">
         <div class="board"></div>
       </div>
@@ -34,6 +34,7 @@
     </footer>
   </main>
   <div class="bank">
+    <div></div>
     <!-- Bank Section -->
   </div>
 
@@ -67,27 +68,6 @@
       <data class="cart-value" value="0">0</data>
       <button data-action="incr">+</button>
     </div>
-  </template>
-
-  <template id="hotel-card">
-    <section class="hotel">
-      <div class="hotel-info">
-        <div class="hotel-card-header">
-          <h3 class="hotel-name"></h3>
-          <div class="counter hidden">
-            <button type="button" data-action="decr">-</button>
-            <data class="cart-value" value="0">0</data>
-            <button type="button" data-action="incr">+</button>
-          </div>
-        </div>
-        <div class="information">
-          <div id="price">$ 400</div>
-          <div id="tiles">% 3</div>
-          <div id="stock-left">& 25</div>
-        </div>
-      </div>
-      <div class="hotel-container"></div>
-    </section>
   </template>
 
   <template id="found-hotel">
@@ -128,6 +108,14 @@
 
   <template id="chooseDissolvingHotel">
     <div class="chooseHotelContainer">
+      <h1>Choose hotel to disolve.</h1>
+      <button id="hotel-1">continental</button>
+      <button id="hotel-2">imperial</button>
+    </div>
+  </template>
+
+  <template id="chooseDissolvingHotel">
+    <div class="chooseHotelContainer">
       <h1>
         Choose hotel to disolve.
       </h1>
@@ -135,6 +123,73 @@
       <button id="hotel-2">imperial</button>
     </div>
   </template>
+
+  <template id="stock-dissolution">
+      <div id="stock-dissolution-card">
+        <h1>Exchange or Dissolve</h1>
+        <div>
+          <h3>Exchange counter : </h3>
+          <counter-btn id = "exchange-counter"></counter-btn>
+        </div>
+        <div>
+          <h3>sell counter : </h3>
+          <counter-btn id = "sell-counter" ></counter-btn>
+        </div>
+        <button id="dissolve-btn">Dissolve</button>
+      </div>
+  </template>
+
+    <template id="table">
+      <table>
+        <tbody></tbody>
+      </table>
+    </template>
+    <template id="bank-info-table">
+      <table id="info-table">
+        <thead>
+          <tr>
+            <th>Corporation</th>
+            <th>price</th>
+            <th>size</th>
+            <th>stocks</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </template>
+    <template id="bank-header-template">
+      <div class="bank-header">
+        <img src="/assets/bank.svg" alt="" />
+        <h2 class="market-info-header">Market Info</h2>
+      </div>
+    </template>
+  </body>
+</html>
+  <template id="table">
+    <table>
+      <tbody></tbody>
+    </table>
+  </template>
+  <template id="bank-info-table">
+    <table id="info-table">
+      <thead>
+        <tr>
+          <th>Corporation</th>
+          <th>price</th>
+          <th>size</th>
+          <th>stocks</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </template>
+  <template id="bank-header-template">
+    <div class="bank-header">
+      <img src="/assets/bank.svg" alt="" />
+      <h2 class="market-info-header">Market Info</h2>
+    </div>
+  </template>
 </body>
 
 </html>
+  

@@ -1,7 +1,4 @@
-import {
-  listenerForBuyingStocks,
-  listenerForCart,
-} from "./handlers/hotel_selection_handler.js";
+import { createElement } from "../js/features/hotel_foundation.js";
 
 const createTileElement = (tile) => {
   const tileContainer = document.createElement("div");
@@ -63,54 +60,93 @@ export const createBuildHotelsBtn = (buttonContainer) => {
   return buttonContainer;
 };
 
-export const createConfirmButton = (buttonContainer) => {
-  const button = cloneElement("#button");
-  button.textContent = "confirm";
-  button.id = "confirm";
-  button.addEventListener("click", listenerForBuyingStocks);
-  buttonContainer.append(button);
-  return buttonContainer;
-};
-
 export const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
   return template.content.querySelector("*").cloneNode(true);
 };
 
-export const addHotelData = (
-  { name, tiles, stocksLeft, stockPrice, isActive },
-  isBuyState = false,
-) => {
-  const hotelCard = cloneElement("#hotel-card");
-  hotelCard.setAttribute("id", name);
-  const hotelInfoContainer = hotelCard.querySelector(".hotel-info");
-  hotelInfoContainer.classList.add(name);
-  const hotelContainer = hotelCard.querySelector(".hotel-container");
-  hotelContainer.classList.add(`${name}-icon`);
+export const addHotelData = ({ name, tiles, stocksLeft, stockPrice }) => {
+  const tableRowElement = document.createElement("tr");
+  const tableDataElement = createElement("td", "name-info-section");
+  const circleElement = createElement("div", `hotel-colored-circle`);
+  circleElement.classList.add(name);
+  tableDataElement.append(circleElement, name);
 
-  if (isActive) {
-    hotelContainer.classList.add("active");
-  }
+  const rowData = [stockPrice, tiles.length, stocksLeft].map((content) => {
+    const tableDataElement = document.createElement("td");
+    tableDataElement.innerText = content;
+    return tableDataElement;
+  });
 
-  if (isBuyState && isActive) {
-    const counter = hotelCard.querySelector(".counter");
-    counter.classList.remove("hidden");
-    counter.addEventListener("click", listenerForCart);
-  }
+  tableRowElement.append(tableDataElement, ...rowData);
+  return tableRowElement;
+};
 
-  hotelCard.querySelector(".hotel-name").textContent = name;
-  hotelCard.querySelector("#price").textContent = `$ ${stockPrice}`;
-  hotelCard.querySelector("#tiles").textContent = `🧱 ${tiles.length}`;
-  hotelCard.querySelector("#stock-left").textContent = `📈 ${stocksLeft}`;
+let chart = null;
 
-  return hotelCard;
+const createChart = (hotels) => {
+  const container = document.querySelector("#chart");
+  container.innerHTML = "";
+
+  const hotelsName = hotels.map((h) => h.name);
+  const stockPrices = hotels.map((h) => h.stockPrice);
+
+  const options = {
+    chart: {
+      type: "bar",
+      height: 350,
+    },
+
+    colors: [
+      "#5683ff",
+      "#f29b12",
+      "#0ea5e9",
+      "#43aa90",
+      "#2f6f83",
+      "#b91c1c",
+      "#f9735b",
+    ],
+
+    plotOptions: {
+      bar: {
+        distributed: true,
+        columnWidth: "65%",
+      },
+    },
+
+    legend: {
+      show: false,
+    },
+
+    series: [
+      {
+        name: "Stock Price",
+        data: stockPrices,
+      },
+    ],
+
+    xaxis: {
+      categories: hotelsName,
+    },
+  };
+
+  chart = new ApexCharts(container, options);
+  chart.render();
 };
 
 export const renderBankSection = (hotels) => {
   const bankSection = document.querySelector(".bank");
-  const hotelCards = hotels.map((hotel) => addHotelData(hotel));
+  const bankHeader = cloneElement("#bank-header-template");
+  const tableContainer = cloneElement("#bank-info-table");
+  const tableBody = tableContainer.querySelector("tbody");
+  const chartElement = createElement("div", "chart-element");
+  chartElement.id = "chart";
 
-  bankSection.replaceChildren(...hotelCards);
+  const hotelCards = hotels.map((hotel) => addHotelData(hotel));
+  tableBody.append(...hotelCards);
+  tableContainer.append(tableBody);
+  bankSection.replaceChildren(bankHeader, tableContainer, chartElement);
+  createChart(hotels);
 };
 
 const addDetailsToCard = (stockCard, name, count) => {

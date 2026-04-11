@@ -4,6 +4,7 @@ import {
   sellStocks,
 } from "../services/dissolution_controller.js";
 import { Tile } from "./tile.js";
+
 export class Game {
   #currentService;
   #mergeService = null;
@@ -15,6 +16,7 @@ export class Game {
   #players;
   #currentPlayerIndex;
   #createMergeService;
+  #notification = {};
   #mergeState;
 
   constructor(deck, board, hotels, players, createMergeService) {
@@ -62,17 +64,56 @@ export class Game {
     };
   }
 
+  #notifyInactivePlayers(requestedPlayerId, notification) {
+    if (requestedPlayerId !== notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #notifyCurrentPlayer(requestedPlayerId, notification) {
+    if (requestedPlayerId === notification.playerId) {
+      return { type: notification.type, data: notification.data };
+    }
+    return {};
+  }
+
+  #notifyAllPlayers(_requestedPlayerId, notification) {
+    return { type: notification.type, data: notification.data };
+  }
+
+  #generateNotification(requestedPlayerId, notification) {
+    if (Object.keys(notification).length === 0) return {};
+
+    const notificationHandler = {
+      DEAD_TILE_EXCHANGE: this.#notifyCurrentPlayer,
+      BUYING_STOCKS: this.#notifyInactivePlayers,
+      INSUFFICIENT_FUNDS: this.#notifyCurrentPlayer,
+      MERGER_BONUS: this.#notifyAllPlayers,
+    };
+    const intervalId = setInterval(() => {
+      this.#notification = {};
+      clearInterval(intervalId);
+    }, 1000);
+
+    return notificationHandler[notification.type](
+      requestedPlayerId,
+      notification,
+    );
+  }
+
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
-    if (
-      this.#mergeService &&
-      this.#mergeService.mergeState === "STOCK_DISSOLUTION"
-    ) {
+    if (this.#mergeService && this.#mergeService.mergeState === "END_MERGE") {
       this.#state = "BUY_STOCK";
       this.#mergeService = null;
       this.#mergeState = null;
     }
     return {
+      notification: this.#generateNotification(
+        requestedPlayerId,
+        this.#notification,
+      ),
       player: this.#players
         .find((player) => player.id === requestedPlayerId)
         .getDetails(),
@@ -85,7 +126,7 @@ export class Game {
       })),
       isActivePlayer: this.#currentPlayer.id === requestedPlayerId,
       mergeData: {
-        mergeState: this.#mergeState,
+        mergeState: this.#mergeService?.mergeState,
       },
     };
   }
@@ -136,6 +177,8 @@ export class Game {
     );
     this.#currentService = this.#mergeService;
     this.#currentService.init();
+    const bonusHoldersDetails = this.#currentService.getBonusHoldersDetails();
+    this.#createNotificationData("MERGER_BONUS", bonusHoldersDetails);
   }
 
   #actionForTilePlacement(tileId) {
@@ -144,6 +187,7 @@ export class Game {
       this.#initiateMerge(adjacentHotelChains);
       // this.#mergeService.handleMerge();
       this.#changeStateAfterMergeEnd();
+      return;
     }
 
     if (this.#isBuildPossible()) {
@@ -180,9 +224,8 @@ export class Game {
     return this.#currentPlayer.id === requestedPlayerId;
   }
 
-  merge(data) {
-    // this.#state = "BUY_STOCK"
-    return this.#currentService.handleMerge(data);
+  mergeEqualHotels(data) {
+    return this.#currentService.mergeEqualHotels(data);
   }
 
   placeTile(requestedPlayerId, tileId) {
@@ -239,19 +282,43 @@ export class Game {
     return stableHotels.length > 1;
   }
 
+  getExchangedTiles(set1, set2) {
+    const removedTiles = set1.filter((tile) => !set2.includes(tile));
+    const newTiles = set2.filter((tile) => !set1.includes(tile));
+    return { removedTiles, newTiles };
+  }
+
   exchangeDeadTiles() {
-    const playerTiles = this.#currentPlayer.getTilesInfo();
-    playerTiles.forEach((tile) => {
-      if (this.isDeadTile(tile.id)) {
-        this.#currentPlayer.removeTile(tile.id);
+    const playerPreviousTiles = this.#currentPlayer.getTileIds();
+    playerPreviousTiles.forEach((tile) => {
+      if (this.isDeadTile(tile)) {
+        this.#currentPlayer.removeTile(tile);
         this.assignNewTile();
       }
     });
+    const playerNewTiles = this.#currentPlayer.getTileIds();
+    const exchangedTiles = this.getExchangedTiles(
+      playerPreviousTiles,
+      playerNewTiles,
+    );
+    if (exchangedTiles.removedTiles.length !== 0) {
+      this.#createNotificationData("DEAD_TILE_EXCHANGE", exchangedTiles);
+    }
   }
 
   assignNewTile() {
-    const tile = this.#deck.drawTiles(1);
-    this.#currentPlayer.addTiles(tile);
+    const [tile] = this.#deck.drawTiles(1);
+    if (tile === undefined) return;
+    if (this.isDeadTile(tile.id)) {
+      return this.assignNewTile();
+    }
+    this.#currentPlayer.addTiles([tile]);
+  }
+
+  #createNotificationData(type, data) {
+    this.#notification.type = type;
+    this.#notification.data = data;
+    this.#notification.playerId = this.#currentPlayer.id;
   }
 
   buyStocks(requestedPlayerId, cart) {
@@ -263,9 +330,26 @@ export class Game {
     }
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
+    const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
+    const isValidBuy = this.#isValidPurchase(cart, moneyToDeduct) &&
+      hasEnoughBalance;
 
-    if (!this.#isValidPurchase(cart, moneyToDeduct)) {
-      throw new Error({ msg: "INVALID PURCHASE" });
+    if (isValidBuy) {
+      this.#hotels.deductStocks(cart);
+      const hotels = this.#hotels.getHotels();
+      cart.forEach(({ hotelName, selectedStocks }) =>
+        this.#currentPlayer.addStocks(hotelName, selectedStocks)
+      );
+
+      this.#currentPlayer.deductMoney(moneyToDeduct);
+      if (this.isGameEnd()) {
+        this.#state = "END_GAME";
+        return this.calculateFinalWinner();
+      }
+      this.#state = "SHIFT_TURN";
+      const playerInfo = this.#currentPlayer.getDetails();
+      this.#createNotificationData("BUYING_STOCKS", { cart });
+      return { hotels, playerInfo, state: this.#state };
     }
 
     this.#hotels.deductStocks(cart);
@@ -278,8 +362,11 @@ export class Game {
       this.#state = "END_GAME";
       return { msg: "GAME_ENDS" };
     }
-    this.#state = "SHIFT_TURN";
-    return { msg: "STOCKS PURCHASED SUCCESSFULLY" };
+    if (!hasEnoughBalance) {
+      this.#createNotificationData("INSUFFICIENT_FUNDS", {
+        hasEnoughBalance: false,
+      });
+    }
   }
 
   #areAllHotelsStable() {
@@ -323,6 +410,14 @@ export class Game {
     this.exchangeDeadTiles();
     this.#state = "PLACE_TILE";
     return { msg: "TURN SHIFTED SUCCESSFULLY" };
+  }
+
+  handleStockDissolution(body) {
+    const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
+    this.#currentPlayerIndex += 1;
+    this.#currentPlayer =
+      this.#players[this.#currentPlayerIndex % this.#players.length];
+    return res;
   }
 
   getCurrentGameState() {

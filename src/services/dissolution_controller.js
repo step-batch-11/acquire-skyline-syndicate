@@ -3,7 +3,12 @@ export const stakeHolders = (players, hotelName) => {
 };
 
 export const sellStocks = (stakeholder, defunctHotel) => {
-  stakeholder.sellStocks(defunctHotel.name, defunctHotel.calculateStockPrice());
+  const stockCount = stakeholder.getStockCount(defunctHotel.name);
+  stakeholder.sellStocks(
+    defunctHotel.name,
+    defunctHotel.calculateStockPrice(),
+    stockCount,
+  );
 };
 
 const getStakeholdersByStock = (hotelName, stakeholders) => {

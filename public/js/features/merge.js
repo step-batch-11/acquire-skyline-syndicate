@@ -7,6 +7,28 @@ export const MERGE_STATE = {
   dissolution: "STOCK_DISSOLUTION",
 };
 
+const renderStockDissolution = () => {
+  const body = document.querySelector("body");
+  const tradeElement = cloneElement("#stock-dissolution");
+  const dissolveBtn = tradeElement.querySelector("#dissolve-btn");
+  const sellCounter = tradeElement.querySelector("#sell-counter");
+  const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+  customElements.whenDefined("counter-btn").then(() => {
+    // const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+    exchangeCounter.setDelta(2);
+  });
+
+  dissolveBtn.addEventListener("click", async () => {
+    const tradeQuantities = {
+      "sell_count": sellCounter.count,
+      "exchange_count": exchangeCounter.count,
+    };
+    const res = await postData("/merge/dissolve", tradeQuantities);
+    if (res.sucess) body.removeChild(tradeElement);
+  });
+  body.append(tradeElement);
+};
+
 const renderEqualMerge = () => {
   const dissolvingHotelPopup = cloneElement("#chooseDissolvingHotel");
   const body = document.querySelector("body");
@@ -36,4 +58,5 @@ const renderEqualMerge = () => {
 export const handleMerge = (gameData) => {
   const mergeState = gameData.mergeData.mergeState;
   if (mergeState === MERGE_STATE.equal) renderEqualMerge();
+  if (mergeState === MERGE_STATE.dissolution) renderStockDissolution();
 };

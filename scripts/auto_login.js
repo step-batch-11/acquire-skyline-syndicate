@@ -5,13 +5,11 @@ const createPages = async () => {
   const browser = await chromium.launch({ headless: false });
   const context1 = await browser.newContext();
   const context2 = await browser.newContext();
-  const context3 = await browser.newContext();
 
   const page1 = await context1.newPage();
   const page2 = await context2.newPage();
-  const page3 = await context3.newPage();
 
-  return { page1, page2, page3 };
+  return { page1, page2 };
 };
 
 const loginPlayer = async (page, name) => {
@@ -33,14 +31,13 @@ const joinRoom = async (page, name) => {
 };
 
 const loginIntoGame = async () => {
-  const { page1, page2, page3 } = await createPages();
+  const { page1, page2 } = await createPages();
 
   await hostGame(page1, "player1");
   await joinRoom(page2, "player2");
-  await joinRoom(page3, "player3");
 
   await page1.click("#start-btn");
-  return { page1, page2, page3 };
+  return { page1, page2 };
 };
 
 const loadGame = async ({ page1 }, name) => {

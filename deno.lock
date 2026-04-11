@@ -15,6 +15,7 @@
     "jsr:@std/path@^1.1.4": "1.1.4",
     "jsr:@std/random@~0.1.5": "0.1.5",
     "jsr:@std/testing@^1.0.17": "1.0.17",
+    "npm:@types/node@*": "24.2.0",
     "npm:hono@^4.12.10": "4.12.10",
     "npm:playwright@^1.59.1": "1.59.1"
   },
@@ -83,6 +84,12 @@
     }
   },
   "npm": {
+    "@types/node@24.2.0": {
+      "integrity": "sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "fsevents@2.3.2": {
       "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
       "os": ["darwin"],
@@ -104,7 +111,13 @@
         "fsevents"
       ],
       "bin": true
+    },
+    "undici-types@7.10.0": {
+      "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
     }
+  },
+  "remote": {
+    "https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.esm.js": "2f4fd05664bbb707924c23542f629f1babdd530580aed84c49bc475f4aff9a01"
   },
   "workspace": {
     "dependencies": [

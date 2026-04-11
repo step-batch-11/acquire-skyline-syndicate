@@ -1,7 +1,6 @@
-import { gameState, postData } from "../request.js";
+import { postData } from "../request.js";
 import { extractSelectedStocks } from "../utils.js";
 import { handleCartUpdation } from "./event_handlers.js";
-import { renderBankSection, renderUserSection } from "../ui_renderers.js";
 import { TOTAL_SELECTED_STOCKS } from "./event_handlers.js";
 
 export const listenerForCart = (e) => {
@@ -12,11 +11,9 @@ export const listenerForCart = (e) => {
 
 export const listenerForBuyingStocks = async (e) => {
   e.preventDefault();
-  const listOfHotelHeader = document.querySelectorAll(".hotel-card-header");
-  const cart = [...listOfHotelHeader].reduce(extractSelectedStocks, []);
+  const listOfHotels = document.querySelectorAll(".hotel-stock");
+  const cart = [...listOfHotels].reduce(extractSelectedStocks, []);
   await postData("/turn/buy-stocks", cart);
-  const { hotels, player } = await gameState();
+  document.querySelector(".context-menu").innerHTML = "";
   TOTAL_SELECTED_STOCKS.length = 0;
-  renderBankSection(hotels);
-  renderUserSection(player);
 };

@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 import { Player } from "../../src/models/player.js";
 import { Tile } from "../../src/models/tile.js";
 
@@ -149,6 +149,49 @@ describe("Player entity tests", () => {
       };
       playerInstance.loadGameState(playerDetails);
       assertEquals(playerInstance.hasStock("sackson"), false);
+    });
+  });
+
+  describe("testing remove Stocks", () => {
+    it("when it recieves num of stocks", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      playerInstance.removeStocks("sackson", 2);
+      assertEquals(playerInstance.getStockCount("sackson"), 8);
+    });
+  });
+  describe("testing sell Stocks", () => {
+    it("when it recieves valid num of stocks to sell", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      playerInstance.sellStocks("sackson", 100, 5);
+      assertEquals(playerInstance.getStockCount("sackson"), 5);
+      assertEquals(playerInstance.getDetails().money, 6500);
+    });
+
+    it("when it recieves invalid num of stocks", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      assertThrows(() => playerInstance.sellStocks("sackson", 100, 20));
+      assertEquals(playerInstance.getDetails().money, 6000);
     });
   });
 });
