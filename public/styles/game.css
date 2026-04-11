@@ -759,7 +759,8 @@ footer {
   width: 40%;
   padding: 10px;
   border-radius: 8px;
-  background: rgb(68, 68, 68);
+  /* background-color: var(--occupied-tile-bg); */
+  /* background: rgb(68, 68, 68); */
   color: white;
   font-weight: bold;
   text-align: center;
