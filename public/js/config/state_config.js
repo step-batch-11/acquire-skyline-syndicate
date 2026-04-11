@@ -31,7 +31,7 @@ const cartSection = () => {
   const skipBtn = createElement("button", "skip");
   skipBtn.textContent = "skip";
 
-  skipBtn.addEventListener("click", () => {});
+  skipBtn.addEventListener("click", listenerForBuyingStocks);
 
   const confirmBtn = createElement("button", "confirm");
   confirmBtn.textContent = "confirm";
@@ -134,7 +134,7 @@ const handleEndGame = (gameData) => {
     tableBody.appendChild(row);
   });
 
-  const closeBtn = document.querySelector(".close-btn");
+  const closeBtn = clone.querySelector(".close-btn");
   closeBtn.addEventListener("click", () => {
     globalThis.location.href = "/pages/home_page.html";
   });
