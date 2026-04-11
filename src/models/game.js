@@ -361,7 +361,9 @@ export class Game {
       this.#state = "SHIFT_TURN";
       const playerInfo = this.#currentPlayer.getDetails();
       const playerName = this.#currentPlayer.name;
-      this.#createNotificationData("BUYING_STOCKS", { cart, playerName });
+      if (moneyToDeduct != 0) {
+        this.#createNotificationData("BUYING_STOCKS", { cart, playerName });
+      }
       return { hotels, playerInfo, state: this.#state };
     }
 

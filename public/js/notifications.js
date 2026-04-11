@@ -1,5 +1,5 @@
 const getDeadNotificationMessage = ({ removedTiles, newTiles }) =>
-  `These ${removedTiles} are exchaged with ${newTiles}`;
+  `${removedTiles} tiles are exchaged with ${newTiles}`;
 
 const getStocksPurchaseNotification = ({ cart, playerName }) =>
   cart.reduce(
@@ -35,7 +35,6 @@ export const updateNotification = (notification) => {
   if (Object.keys(notification).length === 0) return;
   const notificationBox = document.querySelector(".notification-box");
   notificationBox.classList.add("notification-container");
-  // notificationBox.classList.remove(".hidden");
   setTimeout(() => {
     notificationBox.classList.remove("notification-container");
     notificationBox.textContent = "";
