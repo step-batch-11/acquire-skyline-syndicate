@@ -243,39 +243,11 @@ describe("Hotel entity tests", () => {
     assertEquals(hotel.getHotelState(), hotelData);
   });
 
-  describe("dissolve method", () => {
-    it("should change the hotel stocks into full and clear all the hotel tiles", () => {
-      const hotelName = "Tower";
-      const scale = 0;
-      const hotel = new Hotel(hotelName, scale);
-      const tiles = ["2a", "1a"].map((id) => new Tile(id));
-      hotel.addTiles(tiles);
-      hotel.decreaseStockCount(2);
-      hotel.dissolve();
-      const hotelState = hotel.getState();
-      assertEquals(hotelState.tiles.length, 0);
-      assertEquals(hotelState.stocksLeft, 25);
-    });
-  });
-
-  describe("can deduct money from hotel method", () => {
-    it("Should return true if given stocks are less than or equal to number of stocks in hotel", () => {
-      const hotelName = "Tower";
-      const scale = 0;
-      const hotel = new Hotel(hotelName, scale);
-      const tiles = ["2a", "1a"].map((id) => new Tile(id));
-      hotel.addTiles(tiles);
-      const result = hotel.canDeductStocksFromHotel(15);
-      assertEquals(result, true);
-    });
-    it("Should return false if given stocks are greater than the number of stocks in hotel", () => {
-      const hotelName = "Tower";
-      const scale = 0;
-      const hotel = new Hotel(hotelName, scale);
-      const tiles = ["2a", "1a"].map((id) => new Tile(id));
-      hotel.addTiles(tiles);
-      const result = hotel.canDeductStocksFromHotel(30);
-      assertEquals(result, false);
-    });
+  it("remove hotel stocks", () => {
+    const hotelName = "Tower";
+    const scale = 0;
+    const hotel = new Hotel(hotelName, scale);
+    hotel.removeHotelStocks(3);
+    assertEquals(hotel.stocksCount, 22);
   });
 });

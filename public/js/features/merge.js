@@ -1,6 +1,5 @@
 import { cloneElement } from "../ui_renderers.js";
 import { postData } from "../request.js";
-import { Counter } from "../components/inr_dcr_button.js";
 
 export const MERGE_STATE = {
   equal: "EQUAL_HOTEL_MERGE",
@@ -8,52 +7,44 @@ export const MERGE_STATE = {
   dissolution: "STOCK_DISSOLUTION",
 };
 
-const renderStockDissolution = () => {
-  const body = document.querySelector("body");
-  customElements.define("counter-btn", Counter);
+export const renderStockDissolution = () => {
+  const contextMenu = document.querySelector(".context-menu");
   const tradeElement = cloneElement("#stock-dissolution");
   const dissolveBtn = tradeElement.querySelector("#dissolve-btn");
   const sellCounter = tradeElement.querySelector("#sell-counter");
   const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+  customElements.whenDefined("counter-btn").then(() => {
+    // const exchangeCounter = tradeElement.querySelector("#exchange-counter");
+    exchangeCounter.setDelta(2);
+  });
+
   dissolveBtn.addEventListener("click", async () => {
     const tradeQuantities = {
-      "sell_count": sellCounter.count,
-      "exchange_count": exchangeCounter.count,
+      sell_count: sellCounter.count,
+      exchange_count: exchangeCounter.count,
     };
     const res = await postData("/merge/dissolve", tradeQuantities);
-    if (res.sucess) body.removeChild(tradeElement);
+    if (res.sucess) contextMenu.innerHTML = "";
   });
-  body.append(tradeElement);
+  contextMenu.replaceChildren(tradeElement);
 };
 
-const renderEqualMerge = () => {
+export const renderEqualMerge = () => {
   const dissolvingHotelPopup = cloneElement("#chooseDissolvingHotel");
-  const body = document.querySelector("body");
-  body.appendChild(dissolvingHotelPopup);
-  const hotel1 = document.querySelector("#hotel-1");
-  const hotel2 = document.querySelector("#hotel-2");
+  const contextMenu = document.querySelector(".context-menu");
+  const hotel1 = dissolvingHotelPopup.querySelector("#hotel-1");
+  const hotel2 = dissolvingHotelPopup.querySelector("#hotel-2");
+  contextMenu.replaceChildren(dissolvingHotelPopup);
+
   hotel1.addEventListener("click", async () => {
-    const response = await postData("/merge/two-equal-merge", {
+    await postData("/merge/two-equal-merge", {
       hotelName: hotel1.textContent,
     });
-
-    if (response.sucess === true) {
-      body.removeChild(dissolvingHotelPopup);
-    }
   });
 
-  hotel2.addEventListener("click", () => {
-    const response = postData("/merge/two-equal-merge", {
+  hotel2.addEventListener("click", async () => {
+    await postData("/merge/two-equal-merge", {
       hotelName: hotel2.textContent,
     });
-    if (response.sucess === true) {
-      body.removeChild(dissolvingHotelPopup);
-    }
   });
-};
-
-export const handleMerge = (gameData) => {
-  const mergeState = gameData.mergeData.mergeState;
-  if (mergeState === MERGE_STATE.equal) renderEqualMerge();
-  if (mergeState === MERGE_STATE.dissolution) renderStockDissolution();
 };

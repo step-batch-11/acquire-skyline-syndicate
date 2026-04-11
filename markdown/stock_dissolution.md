@@ -11,11 +11,13 @@
   call the merge funtion,
 - detect the merge
 - according to merge determine the state : ["CHOOSE_HOTEL", "DISSOLVE_STOCK"]
+- maintain the current merge player order inside the merge_service,
+- after each dissolving just change the value of current player to player who is
+  currently merging.
 
 # first :
 
 - [ ] create a function for selling stocks.
-- [ ]
 
 # checks :
 

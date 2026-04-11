@@ -116,6 +116,9 @@
       "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
     }
   },
+  "remote": {
+    "https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.esm.js": "2f4fd05664bbb707924c23542f629f1babdd530580aed84c49bc475f4aff9a01"
+  },
   "workspace": {
     "dependencies": [
       "jsr:@ashishkujoy/deno-coverage-checker@^0.0.9",

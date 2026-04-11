@@ -1,9 +1,11 @@
 export class Counter extends HTMLElement {
   #count;
+  #delta;
 
   constructor() {
     super();
     this.#count = 0;
+    this.#delta = 1;
     this.color = "black";
     this.attachShadow({ mode: "open" });
   }
@@ -12,6 +14,10 @@ export class Counter extends HTMLElement {
     this.render();
     // this.addHoverEffect();
     this.addCounterBtns();
+  }
+
+  setDelta(delta) {
+    this.#delta = delta;
   }
 
   updateCount() {
@@ -24,13 +30,13 @@ export class Counter extends HTMLElement {
     const decrementBtn = this.shadowRoot.querySelector("#decrement");
 
     incrementBtn.addEventListener("click", () => {
-      this.#count = this.#count + 1;
+      this.#count = this.#count + this.#delta;
       this.updateCount();
     });
 
     decrementBtn.addEventListener("click", () => {
       if (this.#count <= 0) return;
-      this.#count = this.#count - 1;
+      this.#count = this.#count - this.#delta;
       this.updateCount();
     });
   }

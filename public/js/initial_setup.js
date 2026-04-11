@@ -31,6 +31,7 @@ export const createBoard = () => {
 
 export const renderGame = (gameData) => {
   const { tilesOnBoard, currentPlayer, player, hotels, players } = gameData;
+
   createBoard();
   renderBoardState(tilesOnBoard, hotels);
   renderPlayers(players, currentPlayer);

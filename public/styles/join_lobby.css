@@ -1,3 +1,9 @@
+:root {
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --accent-orange: #e36414;
+  --accent-gold: #fb8b24;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -13,23 +19,24 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+  background: url("./acquire_theme.png");
   color: black;
   text-align: center;
 }
 
 header {
   padding: 40px 20px 20px 20px;
-  border-bottom: 1px solid black;
+  /* border-bottom: 1px solid black; */
 }
 
 header h1 {
-  font-size: 48px;
+  font-size: 60px;
   letter-spacing: 4px;
   margin-bottom: 10px;
 }
 
 .tagline {
-  font-size: 16px;
+  font-size: 20px;
   color: black;
 }
 
@@ -37,19 +44,27 @@ header h1 {
   margin-top: 50px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .join-lobby-form {
-  background: rgba(0, 0, 0, 0.4);
+  width: 20%;
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 50px -12px rgba(0, 0, 0, 0.5);
   padding: 30px;
   border-radius: 15px;
-  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 320px; */
 }
 
 .join-lobby-form label {
   display: block;
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 20px;
+  font-weight: 800;
 }
 
 .join-lobby-form input {
@@ -66,7 +81,11 @@ header h1 {
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background-color: black;
+  background: linear-gradient(
+    to right,
+    var(--accent-orange),
+    var(--accent-gold)
+  );
   color: white;
   font-size: 16px;
   cursor: pointer;

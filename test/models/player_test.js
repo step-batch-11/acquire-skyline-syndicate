@@ -1,5 +1,5 @@
 import { beforeEach, describe, it } from "@std/testing/bdd";
-import { assertEquals } from "@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 import { Player } from "../../src/models/player.js";
 import { Tile } from "../../src/models/tile.js";
 
@@ -166,17 +166,32 @@ describe("Player entity tests", () => {
       assertEquals(playerInstance.getStockCount("sackson"), 8);
     });
   });
+  describe("testing sell Stocks", () => {
+    it("when it recieves valid num of stocks to sell", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      playerInstance.sellStocks("sackson", 100, 5);
+      assertEquals(playerInstance.getStockCount("sackson"), 5);
+      assertEquals(playerInstance.getDetails().money, 6500);
+    });
 
-  describe("remove hotel stocks method", () => {
-    it("should delete all the stocks of the given hotel", () => {
-      playerInstance.addStocks("Sackson", 3);
-      playerInstance.addStocks("Tower", 5);
-      const hotelToRemove = "Sackson";
-      playerInstance.removeHotelStocks(hotelToRemove);
-      const result = playerInstance.getDetails();
-      const playerStocks = Object.keys(result.stocks);
-      assertEquals(playerStocks.includes(hotelToRemove), false);
-      assertEquals(playerStocks.includes("Tower"), true);
+    it("when it recieves invalid num of stocks", () => {
+      const playerDetails = {
+        id: 1,
+        name: "good",
+        tiles: [],
+        stocks: { sackson: 10 },
+        money: 6000,
+      };
+      playerInstance.loadGameState(playerDetails);
+      assertThrows(() => playerInstance.sellStocks("sackson", 100, 20));
+      assertEquals(playerInstance.getDetails().money, 6000);
     });
   });
 });
