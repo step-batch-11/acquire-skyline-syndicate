@@ -1,6 +1,6 @@
 import { LOBBY_STATES, MAX_PLAYERS, MIN_PLAYERS } from "../config.js";
 
-const { READY, WAITING, STARTED } = LOBBY_STATES;
+const { READY, WAITING, STARTED, CREATED } = LOBBY_STATES;
 
 export class Lobby {
   #minPlayers = MIN_PLAYERS;
@@ -20,6 +20,9 @@ export class Lobby {
   }
 
   currentState(playerId) {
+    if (this.isHost(playerId) && this.#players.size === 1) {
+      return CREATED;
+    }
     if (
       this.#players.size >= this.#minPlayers && this.isHost(playerId) &&
       this.#lobbyState === WAITING

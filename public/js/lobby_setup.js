@@ -1,6 +1,6 @@
 import { LOBBY_STATES } from "../config.js";
 
-const { WAITING, READY } = LOBBY_STATES;
+const { WAITING, READY, CREATED } = LOBBY_STATES;
 
 export const cloneElement = (templateId) => {
   const template = document.querySelector(templateId);
@@ -9,7 +9,7 @@ export const cloneElement = (templateId) => {
 
 const renderBuffer = (state) => {
   const bufferContainer = document.querySelector("#buffer-container");
-  const bufferTemplateId = [WAITING, READY].includes(state)
+  const bufferTemplateId = [WAITING, READY, CREATED].includes(state)
     ? "#waiting-icon-template"
     : "#starting-icon-template";
 
@@ -18,6 +18,12 @@ const renderBuffer = (state) => {
     const h3 = element.querySelector("h3");
     h3.textContent = "";
     h3.textContent = "START THE GAME OR WAIT FOR OTHER PLAYERS TO JOIN";
+  }
+
+  if (state === CREATED) {
+    const h3 = element.querySelector("h3");
+    h3.textContent = "";
+    h3.textContent = "WAITING FOR OTHER PLAYERS TO JOIN";
   }
   bufferContainer.innerHTML = "";
   bufferContainer.appendChild(element);
