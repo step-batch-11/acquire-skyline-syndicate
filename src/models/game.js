@@ -1,4 +1,5 @@
 import { gameStates } from "../configs/game_states_config.js";
+import { MERGE_STATE } from "../configs/merge_states.js";
 import {
   distributeBonus,
   sellStocks,
@@ -86,10 +87,10 @@ export class Game {
     if (Object.keys(notification).length === 0) return {};
 
     const notificationHandler = {
-      "DEAD_TILE_EXCHANGE": this.notifyCurrentPlayer,
-      "BUYING_STOCKS": this.notifyInactivePlayers,
-      "INSUFFICIENT_FUNDS": this.notifyCurrentPlayer,
-      "MERGER_BONUS": this.notifyAllPlayers,
+      DEAD_TILE_EXCHANGE: this.notifyCurrentPlayer,
+      BUYING_STOCKS: this.notifyInactivePlayers,
+      INSUFFICIENT_FUNDS: this.notifyCurrentPlayer,
+      MERGER_BONUS: this.notifyAllPlayers,
     };
     const intervalId = setInterval(() => {
       this.#notification = {};
@@ -104,10 +105,7 @@ export class Game {
 
   currentState(requestedPlayerId) {
     if (this.#state === "END_GAME") return this.calculateFinalWinner();
-    if (
-      this.#mergeService &&
-      this.#mergeService.mergeState === "END_MERGE"
-    ) {
+    if (this.#mergeService && this.#mergeService.mergeState === "END_MERGE") {
       this.#state = "BUY_STOCK";
       this.#mergeService = null;
       this.#mergeState = null;
@@ -138,7 +136,7 @@ export class Game {
   #isBuildPossible() {
     const adjacentTiles = this.#board.lastTile.neighbourTiles();
     const notInAnyHotel = !adjacentTiles.some((tile) =>
-      this.#hotels.isTileInAnyHotel(tile)
+      this.#hotels.isTileInAnyHotel(tile),
     );
     return (
       this.#hotels.isAnyInActiveHotel() &&
@@ -165,11 +163,11 @@ export class Game {
   }
 
   #changeStateAfterMergeEnd() {
-    if (this.#mergeService.mergeState === "MERGE_END") {
-      this.#state = "BUY_STOCK";
+    if (this.#mergeService.mergeState === MERGE_STATE.equal) {
+      this.#state = MERGE_STATE.equal;
+      return;
     }
-    this.#mergeState = this.#mergeService.mergeState;
-    this.#state = "MERGE";
+    this.#state = MERGE_STATE.dissolution;
   }
 
   #initiateMerge(adjacentHotelChains) {
@@ -336,14 +334,14 @@ export class Game {
 
     const moneyToDeduct = this.#hotels.calculateMoneyToDeduct(cart);
     const hasEnoughBalance = this.#currentPlayer.hasEnoughMoney(moneyToDeduct);
-    const isValidBuy = this.#isValidPurchase(cart, moneyToDeduct) &&
-      hasEnoughBalance;
+    const isValidBuy =
+      this.#isValidPurchase(cart, moneyToDeduct) && hasEnoughBalance;
 
     if (isValidBuy) {
       this.#hotels.deductStocks(cart);
       const hotels = this.#hotels.getHotels();
       cart.forEach(({ hotelName, selectedStocks }) =>
-        this.#currentPlayer.addStocks(hotelName, selectedStocks)
+        this.#currentPlayer.addStocks(hotelName, selectedStocks),
       );
 
       this.#currentPlayer.deductMoney(moneyToDeduct);
@@ -360,7 +358,7 @@ export class Game {
 
     this.#hotels.deductStocks(cart);
     cart.forEach(({ hotelName, selectedStocks }) =>
-      this.#currentPlayer.addStocks(hotelName, selectedStocks)
+      this.#currentPlayer.addStocks(hotelName, selectedStocks),
     );
     this.#currentPlayer.deductMoney(moneyToDeduct);
 
