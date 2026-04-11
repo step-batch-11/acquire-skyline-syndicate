@@ -1,7 +1,11 @@
 import { createElement } from "../features/hotel_foundation.js";
 import { addListenerToBoard } from "../board_events.js";
 import { buildAHotel } from "../features/hotel_foundation.js";
-import { handleMerge } from "../features/merge.js";
+import {
+  handleMerge,
+  renderEqualMerge,
+  renderStockDissolution,
+} from "../features/merge.js";
 import { handleShiftTurn } from "../handlers/event_handlers.js";
 import { cloneElement } from "../ui_renderers.js";
 import { highlightPlayableTiles } from "../utils.js";
@@ -151,10 +155,12 @@ export const gameStates = {
   SHIFT_TURN: handleShiftTurn,
   END_GAME: handleEndGame,
   MERGE: handleMerge,
+  EQUAL_HOTEL_MERGE: renderEqualMerge,
+  STOCK_DISSOLUTION: renderStockDissolution,
 };
 
 export const handleGameState = (gameData) => {
   const { state } = gameData;
 
-  gameStates[state](gameData);
+  gameStates[state]?.(gameData);
 };
