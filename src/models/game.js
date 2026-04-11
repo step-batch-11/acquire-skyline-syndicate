@@ -1,4 +1,5 @@
 import { gameStates } from "../configs/game_states_config.js";
+import { MERGE_STATE } from "../configs/merge_states.js";
 import {
   distributeBonus,
   sellStocks,
@@ -109,8 +110,14 @@ export class Game {
       this.#mergeService.mergeState === "END_MERGE"
     ) {
       this.#state = "BUY_STOCK";
+      this.#currentPlayer =
+        this.#players[this.#currentPlayerIndex % this.#players.length];
       this.#mergeService = null;
       this.#mergeState = null;
+    }
+    // <change>
+    if (this.#state === MERGE_STATE.dissolution) {
+      this.#currentPlayer = this.#mergeService.currentDissolver;
     }
 
     return {
@@ -165,11 +172,11 @@ export class Game {
   }
 
   #changeStateAfterMergeEnd() {
-    if (this.#mergeService.mergeState === "MERGE_END") {
-      this.#state = "BUY_STOCK";
+    if (this.#mergeService.mergeState === MERGE_STATE.equal) {
+      this.#state = MERGE_STATE.equal;
+      return;
     }
-    this.#mergeState = this.#mergeService.mergeState;
-    this.#state = "MERGE";
+    this.#state = MERGE_STATE.dissolution;
   }
 
   #initiateMerge(adjacentHotelChains) {
@@ -386,6 +393,11 @@ export class Game {
       activeHotels.every((hotel) => hotel.tiles.length >= 11)
     );
   }
+  mergeEqualHotels(body) {
+    const res = this.#mergeService.mergeEqualHotels(body);
+    this.#state = res;
+    return res;
+  }
 
   #isAnyHotelHas41Tiles() {
     const hotels = this.#hotels.getHotels();
@@ -425,9 +437,9 @@ export class Game {
 
   handleStockDissolution(body) {
     const res = this.#mergeService.dissolveStocks(body, this.#currentPlayer);
-    this.#currentPlayerIndex += 1;
-    this.#currentPlayer =
-      this.#players[this.#currentPlayerIndex % this.#players.length];
+    // this.#currentPlayerIndex += 1;
+    // this.#currentPlayer =
+    //   this.#players[this.#currentPlayerIndex % this.#players.length];
     return res;
   }
 
