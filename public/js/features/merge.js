@@ -8,7 +8,7 @@ export const MERGE_STATE = {
 };
 
 export const renderStockDissolution = () => {
-  const body = document.querySelector("body");
+  const contextMenu = document.querySelector(".context-menu");
   const tradeElement = cloneElement("#stock-dissolution");
   const dissolveBtn = tradeElement.querySelector("#dissolve-btn");
   const sellCounter = tradeElement.querySelector("#sell-counter");
@@ -24,9 +24,9 @@ export const renderStockDissolution = () => {
       exchange_count: exchangeCounter.count,
     };
     const res = await postData("/merge/dissolve", tradeQuantities);
-    if (res.sucess) body.removeChild(tradeElement);
+    if (res.sucess) contextMenu.innerHTML = "";
   });
-  body.append(tradeElement);
+  contextMenu.replaceChildren(tradeElement);
 };
 
 export const renderEqualMerge = () => {
@@ -47,11 +47,4 @@ export const renderEqualMerge = () => {
       hotelName: hotel2.textContent,
     });
   });
-};
-
-export const handleMerge = (gameData) => {
-  const mergeState = gameData.mergeData.mergeState;
-
-  if (mergeState === MERGE_STATE.equal) renderEqualMerge();
-  if (mergeState === MERGE_STATE.dissolution) renderStockDissolution();
 };
