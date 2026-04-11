@@ -7,5 +7,5 @@ export const LOBBY_STATES = {
 
 export const TIMES = {
   PING: 1000,
-  START_TIMER: 1000,
+  START_TIMER: 3000,
 };
