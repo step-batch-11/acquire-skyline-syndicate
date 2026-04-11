@@ -31,7 +31,7 @@ body {
 }
 
 aside {
-  background-color: rgb(199 210 222);
+  background-color: rgb(255, 255, 255);
   width: 15%;
   height: 100vh;
   display: flex;
@@ -54,7 +54,7 @@ aside {
 
 .market-notification-players {
   position: relative;
-  height: 62vh;
+  height: 70vh;
   width: 60%;
   display: flex;
   flex-direction: column;
@@ -117,7 +117,7 @@ aside {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 5%;
+  margin-top: 4em;
 }
 
 .player-profile {
@@ -281,7 +281,8 @@ table {
 }
 
 .cart-count {
-  width: 39.5%;
+  font-size: 1.3em;
+  width: 36%;
   padding: 0.7em 1.2em;
   text-align: center;
   border: none;
@@ -292,10 +293,10 @@ table {
   padding: 0.7em 1.2em;
   width: 50%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   box-sizing: border-box;
   box-shadow: 0 0 2px rgb(169, 169, 169);
-  font-size: 1.2em;
+  font-size: 1.3em;
 }
 
 .cart-total p {
@@ -323,17 +324,6 @@ footer {
 .hotels-section {
   display: flex;
 }
-
-/* user-hand {
-  background-color: whitesmoke;
-  padding: 5px;
-  height: 15vh;
-  box-shadow: 0px 0px 5px gray;
-  margin-left: 0.3em;
-  width: 99.3%;
-  display: grid;
-  grid-template-columns: 1fr 7fr 2fr;
-} */
 
 .amount-container {
   display: flex;
@@ -369,8 +359,17 @@ footer {
 .stock .count {
   justify-self: flex-end;
   font-size: 1.7em;
-  color: rgb(30 41 59);
   font-weight: 500;
+}
+
+.hotel-name-element {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.stock-price {
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 .stock .stock-name {
@@ -632,22 +631,21 @@ footer {
 .cart-container button {
   font-size: 1.1em;
   padding: 0.5em 1em;
-  border-radius: 0.2em;
+  border-radius: 0.3em;
   text-transform: capitalize;
   cursor: pointer;
   color: white;
 }
 
 .confirm {
-  background-color: rgb(146, 115, 248);
+  background-color: var(--festival);
   font-weight: 600;
   border: none;
 }
-
 .skip {
-  background-color: rgb(3, 153, 3);
-  font-weight: 500;
-  border: 0.5px solid black;
+  background-color: var(--sackson);
+  font-weight: 600;
+  border: none;
 }
 
 .button-container {
@@ -672,17 +670,13 @@ footer {
   width: 2.8em;
   height: 2.8em;
   box-shadow: 0px 0px 2px black;
+  background-color: rgb(100 100 100);
+  color: whitesmoke;
 }
 
 .players {
   width: 100%;
 }
-
-.empty {
-  border: 1px dashed black;
-}
-
-/* end game scenario */
 
 .overlay {
   position: fixed;
@@ -720,6 +714,10 @@ footer {
   transition: transform 0.3s ease;
 }
 
+.popup h2 {
+  font-size: 2.3em;
+}
+
 .overlay.active .popup {
   transform: scale(1);
 }
@@ -733,15 +731,30 @@ footer {
 }
 
 .winner p {
-  font-size: 20px;
+  font-size: 1.8em;
   font-weight: bold;
   color: #28a745;
+}
+
+.winner {
+  padding: 10px 5px;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
 }
 
 .players-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+}
+
+.players-table th {
+  font-size: 1.3em;
+}
+
+.players-table tr {
+  font-size: 1.3em;
 }
 
 .players-table th,
@@ -753,26 +766,23 @@ footer {
 
 .notification-container {
   position: absolute;
-  top: 10px;
+  top: -1;
   height: auto;
   min-height: 40px;
   width: 40%;
   padding: 10px;
   border-radius: 8px;
-  background-color: var(--occupied-tile-bg);
-  /* background: rgb(68, 68, 68); */
-  color: white;
+  background: #f0f1f0;
+  backdrop-filter: blur(20px);
+  color: rgb(31 41 55);
   font-weight: bold;
   text-align: center;
   opacity: 1;
   transition: opacity 1s ease;
   animation: fadeOut 1s ease forwards;
   animation-delay: 3s;
+  border: 1px solid var(--continental);
 }
-
-/* .animation{
-  
-} */
 
 .selected {
   transform: scale(1.03);
@@ -786,7 +796,6 @@ footer {
 }
 
 #info-table {
-  /* border: 1px solid black; */
   margin-top: 1em;
   border-collapse: collapse;
   width: 100%;
@@ -844,4 +853,13 @@ footer {
 .bank-header img {
   width: 30px;
   height: 30px;
+}
+
+.current-player-profile {
+  background-color: red;
+  padding: 15px;
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 500;
 }

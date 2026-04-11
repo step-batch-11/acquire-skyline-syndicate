@@ -47,4 +47,4 @@ const main = async ([name]) => {
   const res = await loginIntoGame();
   if (name) return loadGame(res, name);
 };
-main(process.argv.slice(2));
+main(["end-game/41_tiles"]);
