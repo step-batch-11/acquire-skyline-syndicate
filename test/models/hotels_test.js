@@ -3,10 +3,8 @@ import { assertEquals } from "@std/assert";
 import { Hotels } from "../../src/models/hotels.js";
 import { Tile } from "../../src/models/tile.js";
 
-// why outside?
-let hotelsInstance;
-
 describe("Hotels entity tests", () => {
+  let hotelsInstance;
   beforeEach(() => {
     const hotels = [
       { name: "sackson", scale: 0 },
@@ -144,6 +142,48 @@ describe("Hotels entity tests", () => {
       hotelsInstance.loadGameState(data);
       const result = hotelsInstance.getHotelsState();
       assertEquals(result, data);
+    });
+  });
+
+  describe("get hotel method", () => {
+    it("should return the given hotel data from hotels", () => {
+      const hotelName = "Tower";
+      const hotel = hotelsInstance.getHotel(hotelName);
+      const hotelState = hotel.getState();
+      assertEquals(hotel.name, hotelName);
+      assertEquals(hotelState.stocksLeft, 25);
+      assertEquals(hotelState.tiles, []);
+    });
+  });
+
+  describe("are cart hotels active method", () => {
+    it("should return false if the given hotel is not active in market", () => {
+      const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+      const result = hotelsInstance.areCartHotelsActive(cart);
+      assertEquals(result, false);
+    });
+    it("should return true if the given hotel is active in market", () => {
+      const hotels = [
+        { name: "sackson", scale: 0 },
+        {
+          name: "Tower",
+          scale: 0,
+        },
+      ];
+      const hotelsInstance = Hotels.instantiateHotels(hotels);
+      const tilesOfTower = ["2a", "1a"].map((id) => new Tile(id));
+      hotelsInstance.addTilesToHotel("sackson", tilesOfTower);
+      const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+      const result = hotelsInstance.areCartHotelsActive(cart);
+      assertEquals(result, true);
+    });
+  });
+
+  describe("has enough money to buy stocks", () => {
+    it("should return true if the money is sufficient to buy funds", () => {
+      const cart = [{ hotelName: "sackson", selectedStocks: 2 }];
+      const result = hotelsInstance.hasEnoughStocksToBuy(cart);
+      assertEquals(result, true);
     });
   });
 });

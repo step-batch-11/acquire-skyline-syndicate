@@ -54,4 +54,16 @@ describe("Board entity tests", () => {
       assertEquals(adjacentTiles.length, 2);
     });
   });
+  describe("get board state method", () => {
+    it("Should return the current state of the board", () => {
+      const board = new Board();
+      const tile = new Tile("3d");
+      const anotherTile = new Tile("4d");
+      board.place(tile);
+      board.place(anotherTile);
+      const boardState = board.getBoardState();
+      assertEquals(boardState.placedTileIds.length, 2);
+      assertEquals(boardState.lastTile, "4d");
+    });
+  });
 });
