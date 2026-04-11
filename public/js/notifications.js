@@ -1,11 +1,11 @@
 const getDeadNotificationMessage = ({ removedTiles, newTiles }) =>
   `These ${removedTiles} are exchaged with ${newTiles}`;
 
-const getStocksPurchaseNotification = ({ cart }) =>
+const getStocksPurchaseNotification = ({ cart, playerName }) =>
   cart.reduce(
     (msg, details) =>
-      msg += `${details.selectedStocks} of ${details.hotelName} \n\t`,
-    `Player purchased `,
+      msg += `${details.selectedStocks} shares of ${details.hotelName} \n\t`,
+    `${playerName} purchased `,
   );
 
 const getInsufficientFundsNotification = ({ _hasEnoughBalance }) =>
