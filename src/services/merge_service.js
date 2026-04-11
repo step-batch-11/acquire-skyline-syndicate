@@ -133,7 +133,6 @@ export default class MergeService {
 
   #mergeTwoUnequal() {
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
-    // this.#mergeHotels();
     this.#mergeState = MERGE_STATE.endMerge;
   }
 
@@ -200,7 +199,9 @@ export default class MergeService {
   }
 
   // mergeDetails () {
-
+  //   return {
+  //     affectedHotels = this.#affectedHotels.map()
+  //   }
   // }
 
   init(currentPlayer) {
@@ -213,6 +214,7 @@ export default class MergeService {
     this.#mergeMaker = currentPlayer;
     this.#defunctHotel = defunctHotel;
     this.#survivingHotel = survivingHotel;
+
     this.#defuntHotelStakeHolders = this.#stakeHolders(this.#defunctHotel.name);
     this.#detectMergeType(this.#defunctHotel, this.#survivingHotel);
   }

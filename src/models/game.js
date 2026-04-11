@@ -172,11 +172,11 @@ export class Game {
   }
 
   #changeStateAfterMergeEnd() {
-    if (this.#mergeService.mergeState === "MERGE_END") {
-      this.#state = "BUY_STOCK";
+    if (this.#mergeService.mergeState === MERGE_STATE.equal) {
+      this.#state = MERGE_STATE.equal;
+      return;
     }
-    this.#mergeState = this.#mergeService.mergeState;
-    this.#state = "MERGE";
+    this.#state = MERGE_STATE.dissolution;
   }
 
   #initiateMerge(adjacentHotelChains) {
@@ -390,6 +390,11 @@ export class Game {
       activeHotels.length > 0 &&
       activeHotels.every((hotel) => hotel.tiles.length >= 11)
     );
+  }
+  mergeEqualHotels(body) {
+    const res = this.#mergeService.mergeEqualHotels(body);
+    this.#state = res;
+    return res;
   }
 
   #isAnyHotelHas41Tiles() {
