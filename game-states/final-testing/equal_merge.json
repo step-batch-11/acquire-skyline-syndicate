@@ -1,0 +1,127 @@
+{
+  "board": {
+    "placedTileIds": [
+      "5d","5e","5f","5g","5h",
+      "7d","7e","7f","7g","7h"
+    ],
+    "lastTile": "7h"
+  },
+  "deck": [
+    { "id": "6e", "isPlayable": true },
+    { "id": "3a", "isPlayable": true },
+    { "id": "9c", "isPlayable": true }
+  ],
+  "hotels": [
+    {
+      "name": "sackson",
+      "tiles": [
+        { "id": "5d" },
+        { "id": "5e" },
+        { "id": "5f" },
+        { "id": "5g" },
+        { "id": "5h" }
+      ],
+      "stocks": 20,
+      "priceOffset": 0,
+      "originTile": { "id": "5e" }
+    },
+    {
+      "name": "tower",
+      "tiles": [
+        { "id": "7d" },
+        { "id": "7e" },
+        { "id": "7f" },
+        { "id": "7g" },
+        { "id": "7h" }
+      ],
+      "stocks": 20,
+      "priceOffset": 0,
+      "originTile": { "id": "7e" }
+    },
+    {
+      "name": "american",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100,
+      "originTile": null
+    },
+    {
+      "name": "festival",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100,
+      "originTile": null
+    },
+    {
+      "name": "worldwide",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100,
+      "originTile": null
+    },
+    {
+      "name": "imperial",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 200,
+      "originTile": null
+    },
+    {
+      "name": "continental",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 200,
+      "originTile": null
+    }
+  ],
+  "players": [
+    {
+      "id": "1",
+      "name": "yash",
+      "tiles": [
+        { "id": "6e", "isPlayable": true },
+        { "id": "2a", "isPlayable": true },
+        { "id": "3b", "isPlayable": true },
+        { "id": "4c", "isPlayable": true },
+        { "id": "8a", "isPlayable": true },
+        { "id": "9b", "isPlayable": true }
+      ],
+      "money": 6000,
+      "stocks": { "sackson": 3 }
+    },
+    {
+      "id": "2",
+      "name": "pradipta",
+      "tiles": [
+        { "id": "6c", "isPlayable": true },
+        { "id": "6g", "isPlayable": true },
+        { "id": "8c", "isPlayable": true },
+        { "id": "9c", "isPlayable": true },
+        { "id": "10a", "isPlayable": true },
+        { "id": "11b", "isPlayable": true }
+      ],
+      "money": 6000,
+      "stocks": { "tower": 3 }
+    },
+    {
+      "id": "3",
+      "name": "alex",
+      "tiles": [
+        { "id": "4e", "isPlayable": true },
+        { "id": "8e", "isPlayable": true },
+        { "id": "9e", "isPlayable": true },
+        { "id": "10e", "isPlayable": true },
+        { "id": "11e", "isPlayable": true },
+        { "id": "12e", "isPlayable": true }
+      ],
+      "money": 6000,
+      "stocks": { "sackson": 1, "tower": 1 }
+    }
+  ],
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 0,
+  "mergePreview": {
+    "tile": "6e",
+    "chains": ["sackson", "tower"]
+  }
+}

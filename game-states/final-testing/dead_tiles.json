@@ -76,7 +76,7 @@
   "players": [
     {
       "id": "1",
-      "name": "rafiya",
+      "name": "Player1",
       "tiles": [
         { "id": "1a", "isPlayable": true },
         { "id": "2a", "isPlayable": true },
@@ -90,7 +90,7 @@
     },
     {
       "id": "2",
-      "name": "yash",
+      "name": "Player2",
       "tiles": [
         { "id": "5d", "isPlayable": false },
         { "id": "6d", "isPlayable": false },
@@ -104,7 +104,7 @@
     },
     {
       "id": "3",
-      "name": "rashmika",
+      "name": "Player3",
       "tiles": [
         { "id": "8d", "isPlayable": false },
         { "id": "3d", "isPlayable": false },

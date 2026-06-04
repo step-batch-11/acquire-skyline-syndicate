@@ -1,0 +1,129 @@
+{
+  "board": {
+    "placedTileIds": [
+      "5d","5e","5f","5g","5h",
+      "7d","7e","7f","7g",
+      "9d","9e","9f","9g","9h",
+      "11d","11e","11f","11g","11h"
+    ],
+    "lastTile": "11h"
+  },
+
+  "deck": [],
+
+  "hotels": [
+    {
+      "name": "imperial",
+      "tiles": [
+        { "id": "5d" },{ "id": "5e" },{ "id": "5f" },{ "id": "5g" },{ "id": "5h" }
+      ],
+      "stocks": 22,
+      "priceOffset": 200,
+      "originTile": { "id": "5e" }
+    },
+    {
+      "name": "continental",
+      "tiles": [
+        { "id": "7d" },{ "id": "7e" },{ "id": "7f" },{ "id": "7g" }
+      ],
+      "stocks": 23,
+      "priceOffset": 200,
+      "originTile": { "id": "7e" }
+    },
+    {
+      "name": "american",
+      "tiles": [
+        { "id": "9d" },{ "id": "9e" },{ "id": "9f" },{ "id": "9g" },{ "id": "9h" }
+      ],
+      "stocks": 22,
+      "priceOffset": 100,
+      "originTile": { "id": "9e" }
+    },
+    {
+      "name": "festival",
+      "tiles": [
+        { "id": "11d" },{ "id": "11e" },{ "id": "11f" },{ "id": "11g" },{ "id": "11h" }
+      ],
+      "stocks": 21,
+      "priceOffset": 100,
+      "originTile": { "id": "11e" }
+    },
+    {
+      "name": "worldwide",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 100,
+      "originTile": null
+    },
+    {
+      "name": "sackson",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 0,
+      "originTile": null
+    },
+    {
+      "name": "tower",
+      "tiles": [],
+      "stocks": 25,
+      "priceOffset": 0,
+      "originTile": null
+    }
+  ],
+
+  "players": [
+    {
+      "id": "1",
+      "name": "rafiya",
+      "tiles": [
+        { "id": "6e", "isPlayable": true },
+        { "id": "2a", "isPlayable": true },
+        { "id": "3a", "isPlayable": true },
+        { "id": "4a", "isPlayable": true },
+        { "id": "8a", "isPlayable": true },
+        { "id": "12a", "isPlayable": true }
+      ],
+      "money": 9000,
+      "stocks": {
+        "imperial": 3,
+        "continental": 2
+      }
+    },
+    {
+      "id": "2",
+      "name": "yash",
+      "tiles": [
+        { "id": "8e", "isPlayable": true },
+        { "id": "10e", "isPlayable": true },
+        { "id": "1a", "isPlayable": true },
+        { "id": "2b", "isPlayable": true },
+        { "id": "3b", "isPlayable": true },
+        { "id": "4b", "isPlayable": true }
+      ],
+      "money": 8500,
+      "stocks": {
+        "american": 3,
+        "festival": 3
+      }
+    },
+    {
+      "id": "3",
+      "name": "rashmika",
+      "tiles": [
+        { "id": "10d", "isPlayable": true },
+        { "id": "10f", "isPlayable": true },
+        { "id": "8d", "isPlayable": true },
+        { "id": "8f", "isPlayable": true },
+        { "id": "6d", "isPlayable": true },
+        { "id": "6f", "isPlayable": true }
+      ],
+      "money": 8700,
+      "stocks": {
+        "festival": 1
+      }
+    }
+  ],
+
+  "state": "PLACE_TILE",
+  "currentPlayerIndex": 0
+}
